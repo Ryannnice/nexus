@@ -61,4 +61,37 @@
 
     sections.forEach(function (s) { observer.observe(s); });
   }
+
+  /* ---- resource filter (pill-tabs) ---- */
+  var filterBar = document.getElementById('resFilter');
+  if (filterBar) {
+    var groups = document.querySelectorAll('.res-group');
+    var resNote = document.querySelector('.res-note');
+    filterBar.addEventListener('click', function (e) {
+      var btn = e.target.closest('.pill-tab');
+      if (!btn) return;
+      var cat = btn.getAttribute('data-filter');
+
+      filterBar.querySelectorAll('.pill-tab').forEach(function (p) {
+        p.classList.toggle('active', p === btn);
+      });
+      groups.forEach(function (g) {
+        var show = cat === 'all' || g.getAttribute('data-cat') === cat;
+        g.classList.toggle('is-hidden', !show);
+      });
+      // the "持续补充" note only makes sense in the full view
+      if (resNote) resNote.style.display = (cat === 'all') ? '' : 'none';
+    });
+  }
+
+  /* ---- back-to-top ---- */
+  var toTop = document.getElementById('toTop');
+  if (toTop) {
+    window.addEventListener('scroll', function () {
+      toTop.classList.toggle('show', window.scrollY > 600);
+    }, { passive: true });
+    toTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 })();

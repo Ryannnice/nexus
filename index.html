@@ -5,9 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TEAM NEXUS — 次世代智能体、泛在系统与规模化工程研究组</title>
   <meta name="description" content="NEXUS — Next-generation Engineering for X-Agents, Ubiquitous Systems, and Scale. 来自粤港澳、内地及海外顶尖高校的 AI 爱好者联合研究团队。" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="alternate icon" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
+
+  <!-- Open Graph / 社交分享卡 -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="TEAM NEXUS — 联结英才，规模智能，顶峰相见" />
+  <meta property="og:description" content="次世代智能体、泛在系统与规模化工程研究组。来自粤港澳、内地及海外 13 所顶尖高校的 AI 爱好者联合团队。" />
+  <meta property="og:url" content="https://ryannnice.github.io/nexus/" />
+  <meta property="og:image" content="https://ryannnice.github.io/nexus/assets/og-cover.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="TEAM NEXUS — 联结英才，规模智能，顶峰相见" />
+  <meta name="twitter:description" content="次世代智能体、泛在系统与规模化工程研究组。来自 13 所顶尖高校的 AI 爱好者联合团队。" />
+  <meta name="twitter:image" content="https://ryannnice.github.io/nexus/assets/og-cover.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body>
 
@@ -136,6 +153,29 @@
         团队全称 <strong>Next-generation Engineering for X-Agents, Ubiquitous Systems, and Scale</strong>，
         中文为「次世代智能体、泛在系统与规模化工程研究组」。
       </p>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-number">13</div>
+          <div class="stat-label">成员院校</div>
+          <div class="stat-sub">Member Institutions</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5</div>
+          <div class="stat-label">黄金赛道</div>
+          <div class="stat-sub">N · E · X · U · S</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">20<span class="suffix">+</span></div>
+          <div class="stat-label">精选学习资料</div>
+          <div class="stat-sub">持续补充中</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3</div>
+          <div class="stat-label">跨越地域</div>
+          <div class="stat-sub">粤港澳 · 内地 · 海外</div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -305,8 +345,18 @@
       <h2 class="section-title">基础必修，再到五大赛道。</h2>
       <p class="section-intro">从地基到前沿的一份精选清单 —— 先打牢基础，再沿着 NEXUS 的五个方向深入。持续补充中。</p>
 
+      <div class="res-filter" id="resFilter">
+        <button class="pill-tab active" data-filter="all">全部</button>
+        <button class="pill-tab" data-filter="foundations">基础必修</button>
+        <button class="pill-tab" data-filter="infra">Infra</button>
+        <button class="pill-tab" data-filter="agent">Agent</button>
+        <button class="pill-tab" data-filter="humanoid">具身智能</button>
+        <button class="pill-tab" data-filter="posttraining">后训练</button>
+        <button class="pill-tab" data-filter="recsys">推荐算法</button>
+      </div>
+
       <!-- Foundations -->
-      <div class="res-group">
+      <div class="res-group" data-cat="foundations">
         <div class="res-group-head">
           <span class="res-group-title">基础必修</span>
           <span class="res-group-en">Foundations</span>
@@ -353,7 +403,7 @@
       </div>
 
       <!-- Infra -->
-      <div class="res-group">
+      <div class="res-group" data-cat="infra">
         <div class="res-group-head">
           <span class="res-group-title">基础设施</span>
           <span class="res-group-en">Infra</span>
@@ -370,7 +420,7 @@
       </div>
 
       <!-- Agent -->
-      <div class="res-group">
+      <div class="res-group" data-cat="agent">
         <div class="res-group-head">
           <span class="res-group-title">智能体</span>
           <span class="res-group-en">Agent</span>
@@ -399,7 +449,7 @@
       </div>
 
       <!-- Humanoid Robotics -->
-      <div class="res-group">
+      <div class="res-group" data-cat="humanoid">
         <div class="res-group-head">
           <span class="res-group-title">具身智能</span>
           <span class="res-group-en">Humanoid Robotics</span>
@@ -422,7 +472,7 @@
       </div>
 
       <!-- LLM Post-Training -->
-      <div class="res-group">
+      <div class="res-group" data-cat="posttraining">
         <div class="res-group-head">
           <span class="res-group-title">大模型后训练</span>
           <span class="res-group-en">LLM Post-Training</span>
@@ -463,7 +513,7 @@
       </div>
 
       <!-- Recommendation -->
-      <div class="res-group">
+      <div class="res-group" data-cat="recsys">
         <div class="res-group-head">
           <span class="res-group-title">推荐算法</span>
           <span class="res-group-en">Recommendation</span>
@@ -547,6 +597,8 @@
     </div>
   </footer>
 
-  <script src="script.js?v=2"></script>
+  <button class="to-top" id="toTop" aria-label="回到顶部">↑</button>
+
+  <script src="script.js?v=3"></script>
 </body>
 </html>
