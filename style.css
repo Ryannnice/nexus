@@ -389,8 +389,7 @@ h1, h2, h3, h4, p { margin: 0; }
   /* leave room on the right for the logo */
   padding-right: 92px;
 }
-/* school logo — pinned to the right of the landscape card,
-   grayscale at rest, true colors on hover */
+/* school logo — pinned to the right of the landscape card, full color */
 .member-logo {
   position: absolute;
   top: 50%;
@@ -399,13 +398,6 @@ h1, h2, h3, h4, p { margin: 0; }
   width: 56px;
   height: 56px;
   object-fit: contain;
-  filter: grayscale(1);
-  opacity: 0.78;
-  transition: filter .2s ease, opacity .2s ease;
-}
-.member-card:hover .member-logo {
-  filter: grayscale(0);
-  opacity: 1;
 }
 .member-abbr {
   font-size: 22px;
