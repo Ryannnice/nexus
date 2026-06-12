@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TEAM NEXUS — 次世代智能体、泛在系统与规模化工程研究组</title>
+  <meta name="description" content="NEXUS — Next-generation Engineering for X-Agents, Ubiquitous Systems, and Scale. 来自粤港澳、内地及海外顶尖高校的 AI 精英联合研究团队。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================== NAV ============================== -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">
+        <span class="corner-square"></span>
+        <span><span class="mark">NEXUS</span></span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#mission">愿景</a>
+        <a href="#stack">技术栈</a>
+        <a href="#members">成员</a>
+        <a href="#objectives">目标</a>
+        <a href="#resources">学习资料</a>
+        <a class="btn btn-primary nav-cta" href="https://github.com/Ryannnice/nexus" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================== HERO ============================== -->
+  <section class="hero" id="top">
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <div class="hero-eyebrow">
+          <span class="corner-square"></span>
+          连接 · 核心 · 最前沿
+        </div>
+        <h1>NEXUS<span class="dot">.</span></h1>
+        <p class="hero-sub">次世代智能体、泛在系统与规模化工程研究组</p>
+        <p class="hero-sub-en">Next-generation Engineering for X-Agents, Ubiquitous Systems &amp; Scale</p>
+
+        <p class="hero-motto">
+          <span class="cn">联结英才，规模智能，顶峰相见。</span><br />
+          Connecting Minds, Scaling Intelligence, Reaching the Apex.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#resources">探索学习资料 →</a>
+          <a class="btn btn-outline-on-dark" href="#stack">了解技术栈</a>
+        </div>
+      </div>
+
+      <!-- Green node-network: 节点连成网络，呼应「纽带 / 核心」 -->
+      <div class="hero-visual" aria-hidden="true">
+        <svg viewBox="0 0 520 460" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
+          <g stroke="#76b900" stroke-width="1.4" stroke-opacity="0.45">
+            <!-- hub spokes -->
+            <line x1="260" y1="230" x2="210" y2="60"  />
+            <line x1="260" y1="230" x2="120" y2="200" />
+            <line x1="260" y1="230" x2="360" y2="200" />
+            <line x1="260" y1="230" x2="300" y2="320" />
+            <line x1="260" y1="230" x2="160" y2="360" />
+            <line x1="260" y1="230" x2="400" y2="330" />
+            <line x1="260" y1="230" x2="260" y2="130" />
+            <!-- perimeter mesh -->
+            <line x1="70"  y1="90"  x2="210" y2="60"  />
+            <line x1="210" y1="60"  x2="380" y2="80"  />
+            <line x1="380" y1="80"  x2="460" y2="190" />
+            <line x1="460" y1="190" x2="400" y2="330" />
+            <line x1="400" y1="330" x2="300" y2="410" />
+            <line x1="300" y1="410" x2="160" y2="360" />
+            <line x1="160" y1="360" x2="70"  y2="280" />
+            <line x1="70"  y1="280" x2="70"  y2="90"  />
+            <!-- cross links -->
+            <line x1="70"  y1="90"  x2="120" y2="200" />
+            <line x1="380" y1="80"  x2="360" y2="200" />
+            <line x1="120" y1="200" x2="160" y2="360" />
+            <line x1="360" y1="200" x2="300" y2="320" />
+            <line x1="260" y1="130" x2="210" y2="60"  />
+            <line x1="260" y1="130" x2="380" y2="80"  />
+          </g>
+
+          <!-- nodes -->
+          <g fill="#76b900">
+            <circle cx="210" cy="60"  r="5" />
+            <circle cx="380" cy="80"  r="5" />
+            <circle cx="120" cy="200" r="6" />
+            <circle cx="360" cy="200" r="6" />
+            <circle cx="300" cy="320" r="5" />
+            <circle cx="160" cy="360" r="6" />
+            <circle cx="400" cy="330" r="5" />
+            <circle cx="260" cy="130" r="5" />
+            <circle cx="70"  cy="90"  r="4" />
+            <circle cx="460" cy="190" r="4" />
+            <circle cx="300" cy="410" r="4" />
+            <circle cx="70"  cy="280" r="4" />
+          </g>
+
+          <!-- accent square nodes (corner-square motif) -->
+          <g fill="#bff230">
+            <rect x="206" y="56"  width="8" height="8" />
+            <rect x="356" y="196" width="8" height="8" />
+            <rect x="156" y="356" width="8" height="8" />
+          </g>
+
+          <!-- central hub -->
+          <circle cx="260" cy="230" r="20" fill="#76b900" fill-opacity="0.12" />
+          <circle cx="260" cy="230" r="11" fill="#76b900" />
+          <circle cx="260" cy="230" r="11" fill="none" stroke="#bff230" stroke-width="1.5" />
+
+          <!-- subtle life -->
+          <circle cx="260" cy="230" r="20" fill="none" stroke="#76b900" stroke-width="1">
+            <animate attributeName="r" values="20;30;20" dur="4s" repeatCount="indefinite" />
+            <animate attributeName="stroke-opacity" values="0.5;0;0.5" dur="4s" repeatCount="indefinite" />
+          </circle>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== MISSION ============================== -->
+  <section class="section" id="mission">
+    <div class="wrap">
+      <p class="eyebrow">Mission · 愿景</p>
+      <h2 class="section-title">联结各大名校的硬核战友，<br />在 AI 核心技术的最前沿交汇。</h2>
+      <p class="section-intro">
+        <strong>NEXUS</strong>（纽带 / 核心）意为连接与中心。我们的成员跨越粤港澳、内地及海外，
+        这个名字代表各大名校的硬核战友在这里交汇，也代表我们处于 AI 核心技术的最前沿。
+        团队全称 <strong>Next-generation Engineering for X-Agents, Ubiquitous Systems, and Scale</strong>，
+        中文为「次世代智能体、泛在系统与规模化工程研究组」。
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================== TECH STACK ============================== -->
+  <section class="section" id="stack" style="background:var(--surface-soft);">
+    <div class="wrap">
+      <p class="eyebrow">Technical Stack · 技术栈映射</p>
+      <h2 class="section-title">N-E-X-U-S 五个字母，<br />锁定五条黄金 AI 赛道。</h2>
+      <p class="section-intro">团队名称的每一个字母，都精准对应我们攻坚的核心方向。</p>
+
+      <div class="grid grid-3">
+        <article class="card has-corner stack-card">
+          <div class="stack-letter">N</div>
+          <div class="stack-word">Next-generation</div>
+          <div class="stack-track">前沿技术信仰</div>
+          <p class="stack-desc">紧跟 AI 领域每日迭代的最新 Paper，只做最前沿的研究，不做过时的工作。</p>
+        </article>
+
+        <article class="card has-corner stack-card">
+          <div class="stack-letter">E</div>
+          <div class="stack-word">Engineering</div>
+          <div class="stack-track">AI Infra · 基础设施</div>
+          <p class="stack-desc">聚焦分布式训练、算力优化、显存节省等硬核工程，把算法真正高效地跑起来。</p>
+        </article>
+
+        <article class="card has-corner stack-card">
+          <div class="stack-letter">X</div>
+          <div class="stack-word">X-Agents</div>
+          <div class="stack-track">Agent &amp; Humanoid Robotics</div>
+          <p class="stack-desc">探索大模型驱动的具身智能（Embodied AI）与复杂决策体系，连接虚拟与物理世界。</p>
+        </article>
+
+        <article class="card has-corner stack-card">
+          <div class="stack-letter">U</div>
+          <div class="stack-word">Ubiquitous Systems</div>
+          <div class="stack-track">推荐算法 · Recommendation</div>
+          <p class="stack-desc">研究无处不在、影响亿万级用户的泛在智能分发系统，让智能渗透到每一次交互。</p>
+        </article>
+
+        <article class="card has-corner stack-card">
+          <div class="stack-letter">S</div>
+          <div class="stack-word">Scale</div>
+          <div class="stack-track">LLM Post-Training · 后训练</div>
+          <p class="stack-desc">笃信 Scaling Law，深耕 SFT、RLHF / PPO 等模型对齐与微调工程，在规模中逼近能力上限。</p>
+        </article>
+
+        <article class="card stack-card" style="background:var(--surface-dark);color:var(--on-dark);display:flex;flex-direction:column;justify-content:center;">
+          <div class="stack-word" style="color:var(--on-dark);font-size:20px;">每日迭代<br />持续进化</div>
+          <p class="stack-desc" style="color:var(--on-dark-mute);margin-top:var(--s-md);">五条赛道，一个核心 —— 用硬核的算法产出，驱动每一位成员抵达顶峰。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== MEMBERS ============================== -->
+  <section class="section" id="members">
+    <div class="wrap">
+      <p class="eyebrow">Member Institutions · 成员院校</p>
+      <h2 class="section-title">来自全球及内地顶尖高校的 AI 精英。</h2>
+      <p class="section-intro">我们是一支联合大团队，成员来自以下院校（按加入顺序排列）。</p>
+
+      <div class="grid grid-4">
+        <article class="card has-corner member-card">
+          <div class="member-abbr">CUHK-Shenzhen</div>
+          <div class="member-cn">香港中文大学（深圳）</div>
+        </article>
+        <article class="card has-corner member-card">
+          <span class="member-count">×3</span>
+          <div class="member-abbr">HKUST-GZ</div>
+          <div class="member-cn">香港科技大学（广州）</div>
+        </article>
+        <article class="card has-corner member-card">
+          <div class="member-abbr">FUDAN</div>
+          <div class="member-cn">复旦大学</div>
+        </article>
+        <article class="card has-corner member-card">
+          <div class="member-abbr">UM</div>
+          <div class="member-cn">澳门大学</div>
+        </article>
+        <article class="card has-corner member-card">
+          <div class="member-abbr">UESTC</div>
+          <div class="member-cn">电子科技大学</div>
+        </article>
+        <article class="card has-corner member-card">
+          <div class="member-abbr">BUPT</div>
+          <div class="member-cn">北京邮电大学</div>
+        </article>
+        <article class="card has-corner member-card">
+          <div class="member-abbr">SJTU</div>
+          <div class="member-cn">上海交通大学</div>
+        </article>
+        <article class="card has-corner member-card">
+          <div class="member-abbr">NTU</div>
+          <div class="member-cn">南洋理工大学</div>
+        </article>
+        <article class="card has-corner member-card">
+          <div class="member-abbr">TYUT</div>
+          <div class="member-cn">太原理工大学</div>
+        </article>
+        <article class="card has-corner member-card">
+          <div class="member-abbr">SUSTech</div>
+          <div class="member-cn">南方科技大学</div>
+        </article>
+        <article class="card has-corner member-card">
+          <div class="member-abbr">HAUT</div>
+          <div class="member-cn">河南工业大学</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== OBJECTIVES ============================== -->
+  <section class="section" id="objectives" style="background:var(--surface-soft);">
+    <div class="wrap">
+      <p class="eyebrow">Ultimate Objectives · 终极目标</p>
+      <p class="obj-lead">我们不画大饼，只玩真的。<span class="accent">NEXUS</span> 成立的唯一目的，<br />就是通过硬核的算法产出，驱动成员直达人生双道顶峰。</p>
+
+      <div class="grid grid-2">
+        <article class="card has-corner obj-card">
+          <div class="obj-icon">🏢</div>
+          <div class="obj-en">Industry</div>
+          <h3 class="obj-title">工业界</h3>
+          <p class="obj-body">
+            斩获一线互联网大厂 / AI 独角兽企业的<strong>顶级 Offer（SSP）</strong>，
+            在最能打的团队里做最有价值的工程，把研究直接转化为亿万级用户的产品力。
+          </p>
+        </article>
+
+        <article class="card has-corner obj-card">
+          <div class="obj-icon">🎓</div>
+          <div class="obj-en">Academia</div>
+          <h3 class="obj-title">学术界</h3>
+          <p class="obj-body">
+            斩获世界顶级名校 <strong>Ph.D. Offer</strong>，产出 <strong>Top-tier 顶会论文</strong>，
+            剑指 <strong>Tenure-Track</strong>（终身教职），在学术地图上刻下自己的名字。
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== RESOURCES ============================== -->
+  <section class="section" id="resources">
+    <div class="wrap">
+      <p class="eyebrow">Learning Resources · 学习资料</p>
+      <h2 class="section-title">基础必修，再到五大赛道。</h2>
+      <p class="section-intro">从地基到前沿的一份精选清单 —— 先打牢基础，再沿着 NEXUS 的五个方向深入。持续补充中。</p>
+
+      <!-- Foundations -->
+      <div class="res-group">
+        <div class="res-group-head">
+          <span class="res-group-title">基础必修</span>
+          <span class="res-group-en">Foundations</span>
+          <span class="res-group-count">6 项</span>
+        </div>
+        <div class="grid grid-3" style="margin-top:0;">
+          <article class="card res-card">
+            <span class="badge">Course</span>
+            <div class="res-title">CS336：从零构建大语言模型</div>
+            <div class="res-source">斯坦福 · 哔哩哔哩</div>
+            <a class="ghost-link" href="https://www.bilibili.com/video/BV1APuUz7Erx/" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+          <article class="card res-card">
+            <span class="badge">Notes</span>
+            <div class="res-title">CS336 学习笔记</div>
+            <div class="res-source">知乎专栏</div>
+            <a class="ghost-link" href="https://www.zhihu.com/column/c_1944054467675817567" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+          <article class="card res-card">
+            <span class="badge">Book</span>
+            <div class="res-title">动手学深度学习 Dive into Deep Learning</div>
+            <div class="res-source">李沐 · 在线书 + 代码</div>
+            <a class="ghost-link" href="https://zh.d2l.ai/" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+          <article class="card res-card">
+            <span class="badge">Article</span>
+            <div class="res-title">图解 Transformer</div>
+            <div class="res-source">Jay Alammar</div>
+            <a class="ghost-link" href="https://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+          <article class="card res-card">
+            <span class="badge">Article</span>
+            <div class="res-title">图解注意力机制与 Seq2Seq</div>
+            <div class="res-source">Jay Alammar</div>
+            <a class="ghost-link" href="https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+          <article class="card res-card">
+            <span class="badge">Code</span>
+            <div class="res-title">The Annotated Transformer</div>
+            <div class="res-source">Harvard NLP · 逐行代码注解</div>
+            <a class="ghost-link" href="https://nlp.seas.harvard.edu/2018/04/03/attention.html" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+        </div>
+      </div>
+
+      <!-- Infra -->
+      <div class="res-group">
+        <div class="res-group-head">
+          <span class="res-group-title">基础设施</span>
+          <span class="res-group-en">Infra</span>
+          <span class="res-group-count">1 项</span>
+        </div>
+        <div class="grid grid-3" style="margin-top:0;">
+          <article class="card res-card">
+            <span class="badge">Tool</span>
+            <div class="res-title">LeetGPU：GPU 编程挑战</div>
+            <div class="res-source">在线 CUDA / 算力练习平台</div>
+            <a class="ghost-link" href="https://leetgpu.com/challenges" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+        </div>
+      </div>
+
+      <!-- Agent -->
+      <div class="res-group">
+        <div class="res-group-head">
+          <span class="res-group-title">智能体</span>
+          <span class="res-group-en">Agent</span>
+          <span class="res-group-count">3 项</span>
+        </div>
+        <div class="grid grid-3" style="margin-top:0;">
+          <article class="card res-card">
+            <span class="badge">Course</span>
+            <div class="res-title">Learn Harness Engineering</div>
+            <div class="res-source">walkinglabs · AI 编程智能体工程化</div>
+            <a class="ghost-link" href="https://walkinglabs.github.io/learn-harness-engineering/zh/" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+          <article class="card res-card">
+            <span class="badge">Article</span>
+            <div class="res-title">18 种 RAG 技术实测对比</div>
+            <div class="res-source">Level Up Coding · Fareed Khan</div>
+            <a class="ghost-link" href="https://levelup.gitconnected.com/testing-18-rag-techniques-to-find-the-best-094d166af27f" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+          <article class="card res-card">
+            <span class="badge">Tutorial</span>
+            <div class="res-title">TypeScript 基础语法</div>
+            <div class="res-source">菜鸟教程 · Agent 工程语言基础</div>
+            <a class="ghost-link" href="https://www.runoob.com/typescript/ts-basic-syntax.html" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+        </div>
+      </div>
+
+      <!-- Humanoid Robotics -->
+      <div class="res-group">
+        <div class="res-group-head">
+          <span class="res-group-title">具身智能</span>
+          <span class="res-group-en">Humanoid Robotics</span>
+          <span class="res-group-count">2 项</span>
+        </div>
+        <div class="grid grid-3" style="margin-top:0;">
+          <article class="card res-card">
+            <span class="badge">Podcast</span>
+            <div class="res-title">Danfei Xu 访谈：人类数据、行为克隆、机器人 GPT-3</div>
+            <div class="res-source">WhynotTV Podcast · 哔哩哔哩</div>
+            <a class="ghost-link" href="https://www.bilibili.com/video/BV1usRgBEESe" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+          <article class="card res-card">
+            <span class="badge">Talk</span>
+            <div class="res-title">UC Berkeley Ember Seminar：SONIC + BFM zero</div>
+            <div class="res-source">小红书 · B 站同步</div>
+            <a class="ghost-link" href="https://www.xiaohongshu.com/user/profile/587bc19882ec39097318c045" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+        </div>
+      </div>
+
+      <!-- LLM Post-Training -->
+      <div class="res-group">
+        <div class="res-group-head">
+          <span class="res-group-title">大模型后训练</span>
+          <span class="res-group-en">LLM Post-Training</span>
+          <span class="res-group-count">5 项</span>
+        </div>
+        <div class="grid grid-3" style="margin-top:0;">
+          <article class="card res-card">
+            <span class="badge">Course</span>
+            <div class="res-title">强化学习 · 大模型后训练版</div>
+            <div class="res-source">walkinglabs · 含具身 RL 路线规划</div>
+            <a class="ghost-link" href="https://walkinglabs.github.io/hands-on-modern-rl/preface/intro" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+          <article class="card res-card">
+            <span class="badge">Article</span>
+            <div class="res-title">强化学习入门：从马尔可夫到 PPO / DPPO</div>
+            <div class="res-source">知乎</div>
+            <a class="ghost-link" href="https://zhuanlan.zhihu.com/p/111869532" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+          <article class="card res-card">
+            <span class="badge">Article</span>
+            <div class="res-title">用 LLaMA 训练你自己的大语言模型</div>
+            <div class="res-source">知乎</div>
+            <a class="ghost-link" href="https://zhuanlan.zhihu.com/p/630335027" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+          <article class="card res-card">
+            <span class="badge">Article</span>
+            <div class="res-title">从零「手搓」一个大模型</div>
+            <div class="res-source">微信公众号</div>
+            <a class="ghost-link" href="https://mp.weixin.qq.com/s/wcjYPzPq-lADvz-TeKZ7VQ" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+          <article class="card res-card">
+            <span class="badge">Interview</span>
+            <div class="res-title">大模型 LLM 面经（实时更新）</div>
+            <div class="res-source">飞书云文档</div>
+            <a class="ghost-link" href="https://ocnk15rrs0pu.feishu.cn/wiki/XSb5w9SQoiUBWzkOqcSced7pnZe" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+        </div>
+      </div>
+
+      <!-- Recommendation -->
+      <div class="res-group">
+        <div class="res-group-head">
+          <span class="res-group-title">推荐算法</span>
+          <span class="res-group-en">Recommendation</span>
+          <span class="res-group-count">3 项</span>
+        </div>
+        <div class="grid grid-3" style="margin-top:0;">
+          <article class="card res-card">
+            <span class="badge">Article</span>
+            <div class="res-title">推荐系统简介</div>
+            <div class="res-source">峰子的乐园</div>
+            <a class="ghost-link" href="https://dingfen.github.io/2023/02/06/2023-2-6-recommender_systems/" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+          <article class="card res-card">
+            <span class="badge">Guide</span>
+            <div class="res-title">推荐系统：机器学习模型完整指南</div>
+            <div class="res-source">Towards Data Science</div>
+            <a class="ghost-link" href="https://towardsdatascience.com/recommender-systems-a-complete-guide-to-machine-learning-models-96d3f94ea748/" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+          <article class="card res-card">
+            <span class="badge">Repo</span>
+            <div class="res-title">工业界算法实践 Algorithm-Practice-in-Industry</div>
+            <div class="res-source">GitHub · Doragd</div>
+            <a class="ghost-link" href="https://github.com/Doragd/Algorithm-Practice-in-Industry" target="_blank" rel="noopener">前往 <span class="arrow">→</span></a>
+          </article>
+        </div>
+      </div>
+
+      <p class="res-note">
+        <strong>持续补充中 · 欢迎贡献。</strong>
+        这份清单会随团队一起成长 —— 大语言模型算法、AI Agent、机器人运动控制 / 具身，以及其他极具前景的科研 / 就业方向资料，欢迎各位成员补充。
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================== CTA STRIP ============================== -->
+  <section class="cta-strip">
+    <div class="wrap cta-strip-inner">
+      <div>
+        <h2>想加入这场交汇？</h2>
+        <p>代码、Issue、讨论，一切从 GitHub 开始。</p>
+      </div>
+      <a class="btn btn-primary" href="https://github.com/Ryannnice/nexus" target="_blank" rel="noopener">前往 GitHub →</a>
+    </div>
+  </section>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand"><span class="corner-square"></span><span class="mark" style="color:var(--primary);font-weight:700;">NEXUS</span></div>
+          <p class="cn">次世代智能体、泛在系统与规模化工程研究组<br />Next-generation Engineering for X-Agents, Ubiquitous Systems &amp; Scale</p>
+          <p class="motto">Connecting Minds, Scaling Intelligence, Reaching the Apex.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>导航</h4>
+          <ul>
+            <li><a href="#mission">愿景</a></li>
+            <li><a href="#stack">技术栈</a></li>
+            <li><a href="#members">成员院校</a></li>
+            <li><a href="#objectives">终极目标</a></li>
+            <li><a href="#resources">学习资料</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>团队</h4>
+          <ul>
+            <li><a href="https://github.com/Ryannnice/nexus" target="_blank" rel="noopener">GitHub 仓库</a></li>
+            <li><a href="#resources">基础必修</a></li>
+            <li><a href="#stack">五大赛道</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-fine">
+        <span>© 2026 TEAM NEXUS</span>
+        <span>Connecting Minds · Scaling Intelligence · Reaching the Apex</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
