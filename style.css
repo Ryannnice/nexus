@@ -386,6 +386,21 @@ h1, h2, h3, h4, p { margin: 0; }
   gap: var(--s-sm);
   min-height: 132px;
 }
+/* school logo — grayscale at rest, true colors on hover */
+.member-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  object-position: left center;
+  margin-bottom: var(--s-xs);
+  filter: grayscale(1);
+  opacity: 0.78;
+  transition: filter .2s ease, opacity .2s ease;
+}
+.member-card:hover .member-logo {
+  filter: grayscale(0);
+  opacity: 1;
+}
 .member-abbr {
   font-size: 22px;
   font-weight: 700;
