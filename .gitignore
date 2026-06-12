@@ -9,5 +9,10 @@ Thumbs.db
 # Logs
 *.log
 
+# Private browser exports / bookmarks — never commit (may contain personal data)
+favorites*.html
+bookmarks*.html
+assets/favorites*.html
+
 # Local server / build artifacts (none expected for this static site)
 node_modules/
