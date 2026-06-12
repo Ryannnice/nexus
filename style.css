@@ -383,16 +383,22 @@ h1, h2, h3, h4, p { margin: 0; }
 .member-card {
   display: flex;
   flex-direction: column;
-  gap: var(--s-sm);
+  justify-content: center;
+  gap: var(--s-xs);
   min-height: 132px;
+  /* leave room on the right for the logo */
+  padding-right: 92px;
 }
-/* school logo — grayscale at rest, true colors on hover */
+/* school logo — pinned to the right of the landscape card,
+   grayscale at rest, true colors on hover */
 .member-logo {
-  width: 48px;
-  height: 48px;
+  position: absolute;
+  top: 50%;
+  right: var(--s-xl);
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
   object-fit: contain;
-  object-position: left center;
-  margin-bottom: var(--s-xs);
   filter: grayscale(1);
   opacity: 0.78;
   transition: filter .2s ease, opacity .2s ease;
@@ -411,7 +417,6 @@ h1, h2, h3, h4, p { margin: 0; }
   font-size: 15px;
   line-height: 1.5;
   color: var(--body);
-  margin-top: auto;
 }
 /* green ×N member-count tag, top-right */
 .member-count {
