@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>100-Tool Commerce Agent — 完整工具集合检索实验</title>
+  <meta name="description" content="面向多意图电商请求的意图门控与完整工具集合检索实验：100 个工具、严格数据审计、Embedding 与 Reranker 任务内训练。">
+  <meta name="theme-color" content="#000000">
+  <link rel="canonical" href="https://ryannnice.github.io/nexus/ecommerce-agent/">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="100 个工具，不只选中一个。">
+  <meta property="og:description" content="面向多意图电商请求的完整工具集合检索实验。合成闭集 AllHit@10 98.30%。">
+  <meta property="og:url" content="https://ryannnice.github.io/nexus/ecommerce-agent/">
+  <meta property="og:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="100 个工具，不只选中一个。">
+  <meta name="twitter:description" content="100-Tool Commerce Agent · Research Case Study">
+  <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png">
+
+  <link rel="stylesheet" href="project.css?v=1">
+  <script defer src="project-data.js?v=1"></script>
+  <script defer src="project.js?v=1"></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">跳到主要内容</a>
+
+  <header class="site-nav" id="siteNav">
+    <div class="wrap nav-inner">
+      <a class="project-brand" href="#top" aria-label="返回页面顶部">
+        <span class="brand-grid" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span>TOOLSET<span class="brand-slash">/</span>100</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="项目页导航">
+        <a href="#problem">问题</a>
+        <a href="#toolspace">工具空间</a>
+        <a href="#system">系统</a>
+        <a href="#data">数据</a>
+        <a href="#results">实验</a>
+        <a href="#analysis">分析</a>
+        <a href="#evidence">复现</a>
+        <a class="nav-github" href="#evidence">实验证据</a>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="打开导航菜单">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="hero" id="top" aria-labelledby="heroTitle">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="hero-eyebrow"><span class="corner-square" aria-hidden="true"></span>100-TOOL COMMERCE AGENT · RESEARCH CASE STUDY</p>
+          <h1 id="heroTitle">100 个工具，<br><span>不只选中一个。</span></h1>
+          <p class="hero-lead">把复杂电商请求拆成意图门控、候选召回与二阶段排序，完整找回执行任务所需的工具集合。</p>
+
+          <div class="scope-badge">
+            <span class="scope-dot" aria-hidden="true"></span>
+            <div><strong>合成闭集实验</strong><span>100 个已知工具 · 不代表真实线上泛化</span></div>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#system">查看完整链路 <span aria-hidden="true">↓</span></a>
+            <a class="btn btn-outline-on-dark" href="#evidence">代码与复现</a>
+          </div>
+
+          <dl class="hero-stats">
+            <div><dt>100</dt><dd>已知工具</dd></div>
+            <div><dt>24K / 6K</dt><dd>训练 / 冻结测试轨迹</dd></div>
+            <div><dt>9K</dt><dd>Intent 冻结评测</dd></div>
+            <div class="hero-stat-primary"><dt>98.30%</dt><dd>最终 AllHit@10</dd></div>
+          </dl>
+        </div>
+
+        <div class="hero-demo" role="group" aria-label="冻结测试集成功案例">
+          <div class="demo-chrome">
+            <div class="demo-title"><span class="chrome-square"></span>EXAMPLE TRACE</div>
+            <div class="demo-status"><span></span>FROZEN TEST · PASS</div>
+          </div>
+          <div class="demo-query">
+            <span class="demo-label">USER QUERY · MULTI-INTENT · CONDENSED</span>
+            <p>准备送生日礼物，需要确认包裹丢件流程、物流轨迹、单笔订单详情，以及预计送达时间。</p>
+          </div>
+          <ol class="demo-pipeline">
+            <li><span>01</span><div><b>Intent Gate</b><small>电商类 · 进入工具选择</small></div><i>PASS</i></li>
+            <li><span>02</span><div><b>Hybrid Source</b><small>BM25 + Fine-tuned Embedding</small></div><i>TOP 50</i></li>
+            <li><span>03</span><div><b>Residual Rerank</b><small>Source + Task Reranker RRF</small></div><i>TOP 10</i></li>
+          </ol>
+          <div class="demo-results">
+            <span class="demo-label">TOP RESULTS · ALL 4 GOLD TOOLS RECALLED</span>
+            <div class="result-row"><b>01</b><span>get_order_logistics</span><em>GOLD</em></div>
+            <div class="result-row"><b>02</b><span>get_order_detail</span><em>GOLD</em></div>
+            <div class="result-row"><b>03</b><span>estimate_delivery_time</span><em>GOLD</em></div>
+            <div class="result-row"><b>04</b><span>get_lost_package_process</span><em>GOLD</em></div>
+          </div>
+          <div class="hero-matrix-wrap">
+            <div class="hero-matrix-label"><span>100 TOOL CATALOG</span><span>4 SELECTED</span></div>
+            <div class="hero-tool-matrix" id="heroToolMatrix" aria-hidden="true"></div>
+          </div>
+          <p class="demo-footnote">冻结案例 <strong>multi_test_00013</strong> · 页面为结果回放，不是在线 Demo。</p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="scope-strip" aria-label="结果适用范围">
+      <div class="wrap scope-strip-inner">
+        <strong>RESULT SCOPE</strong>
+        <span>同一套 100 工具全集</span>
+        <span>表达簇隔离</span>
+        <span>Context-isolated</span>
+        <span>模块级离线评测</span>
+        <span>Snapshot · 2026-07-15</span>
+      </div>
+    </aside>
+
+    <section class="section" id="problem" aria-labelledby="problemTitle">
+      <div class="wrap">
+        <p class="eyebrow">01 · PROBLEM DEFINITION</p>
+        <div class="section-heading split-heading">
+          <h2 id="problemTitle">多意图任务里，<br>“命中一个”远远不够。</h2>
+          <p>用户可能在一句话里同时请求订单详情、物流、退款和售后。如果只找回其中一部分，Agent 仍无法完整执行任务。因此项目采用严格的工具集合覆盖指标，而不是只看第一个工具是否命中。</p>
+        </div>
+
+        <div class="strict-metric-grid">
+          <article class="metric-example metric-example-fail">
+            <div class="metric-example-head">
+              <span>PARTIAL HIT</span><strong>FAIL</strong>
+            </div>
+            <p class="example-query">“查一下订单详情、物流状态，并帮我确认退款进度。”</p>
+            <div class="set-block">
+              <span>GOLD SET</span>
+              <code>order_detail</code><code>logistics</code><code>refund_status</code>
+            </div>
+            <div class="set-block predicted-set">
+              <span>TOP-K COVERS</span>
+              <code>order_detail</code><code>logistics</code><code class="missing">refund_status · MISSING</code>
+            </div>
+            <p class="example-verdict">命中 2/3，但执行链仍不完整。</p>
+          </article>
+
+          <article class="metric-example metric-example-pass">
+            <div class="metric-example-head">
+              <span>COMPLETE HIT</span><strong>PASS</strong>
+            </div>
+            <p class="example-query">同一个请求，Top-K 覆盖全部三个必要工具。</p>
+            <div class="set-block">
+              <span>GOLD SET</span>
+              <code>order_detail</code><code>logistics</code><code>refund_status</code>
+            </div>
+            <div class="set-block predicted-set">
+              <span>TOP-K COVERS</span>
+              <code>order_detail</code><code>logistics</code><code>refund_status</code>
+            </div>
+            <p class="example-verdict">Gold ⊆ Top-K，才记为一次成功。</p>
+          </article>
+
+          <aside class="formula-card" aria-label="AllHit@K 指标定义">
+            <span class="corner-square" aria-hidden="true"></span>
+            <p class="formula-label">PRIMARY METRIC</p>
+            <div class="formula">AllHit@K</div>
+            <p>若当前 Query 的全部 Gold Tools 都在 Top-K 中，则为 1；否则为 0。</p>
+            <div class="formula-rule"><span>Gold ⊆ Top-K</span><strong>→ 1</strong></div>
+            <div class="formula-rule"><span>Gold ⊄ Top-K</span><strong>→ 0</strong></div>
+            <small>K=10 衡量短名单质量；K=30/50 衡量候选覆盖。</small>
+          </aside>
+        </div>
+
+        <div class="principle-grid">
+          <article><span>01</span><h3>先判断是否需要工具</h3><p>入口 Intent Gate 区分电商类与闲聊类，避免所有请求都进入工具系统。</p></article>
+          <article><span>02</span><h3>再完整选择工具集合</h3><p>单工具与最多六工具请求使用同一套严格集合覆盖口径。</p></article>
+          <article><span>03</span><h3>最后保留证据和边界</h3><p>每个数字对应冻结预测、指标 JSON 或审计产物，不把闭集结果外推到线上。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="toolspace" aria-labelledby="toolspaceTitle">
+      <div class="wrap">
+        <p class="eyebrow">02 · TOOL UNIVERSE</p>
+        <div class="section-heading split-heading">
+          <h2 id="toolspaceTitle">八个业务域，<br>一百个明确边界。</h2>
+          <p>Catalog 是数据生成、SFT 和检索的唯一工具源头。每个工具包含描述、操作类型、输入输出语义与易混淆边界，而不是只有一个名称。</p>
+        </div>
+
+        <div class="domain-summary" id="domainSummary" role="group" aria-label="八个业务域工具数量"></div>
+
+        <div class="atlas-controls">
+          <div class="atlas-filters" id="atlasFilters" role="group" aria-label="按业务域筛选工具"></div>
+          <p><strong id="atlasCount">100</strong> tools visible</p>
+        </div>
+
+        <div class="atlas-layout">
+          <div>
+            <div class="tool-atlas" id="toolAtlas" role="group" aria-label="100 工具目录"></div>
+            <p class="atlas-help">选择任意工具查看能力边界；再次选择当前业务域可恢复全部工具。</p>
+          </div>
+          <aside class="tool-detail" id="toolDetail" aria-label="工具详情" aria-live="polite">
+            <span class="corner-square" aria-hidden="true"></span>
+            <p class="tool-detail-kicker">CATALOG INSPECTOR</p>
+            <h3>选择一个工具</h3>
+            <p>这里会显示工具描述、操作类型、所属业务域和 Catalog 中标注的易混淆工具。</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="system" aria-labelledby="systemTitle">
+      <div class="wrap">
+        <p class="eyebrow">03 · SYSTEM MAP</p>
+        <div class="section-heading split-heading">
+          <h2 id="systemTitle">两条实验链，<br>一个预期部署路径。</h2>
+          <p>Intent 与工具检索分别完成冻结评测。图中实线表示已经实现和评测的模块，虚线表示预期部署时的连接关系，避免把模块结果误写成已经完成的线上端到端系统。</p>
+        </div>
+
+        <div class="system-legend">
+          <span><i class="legend-solid"></i>已实现并独立评测</span>
+          <span><i class="legend-dashed"></i>预期集成连接</span>
+          <span><i class="legend-green"></i>最终采用路径</span>
+        </div>
+
+        <article class="pipeline-lane intent-lane">
+          <header>
+            <div><span>LANE A</span><h3>入口意图识别</h3></div>
+            <p>9000 条冻结 Intent 集</p>
+          </header>
+          <div class="pipeline-row pipeline-row-intent">
+            <div class="pipeline-node node-input"><small>INPUT</small><strong>User Query</strong><span>电商诉求或开放闲聊</span></div>
+            <div class="pipeline-arrow" aria-hidden="true">→</div>
+            <div class="pipeline-node"><small>QWEN3</small><strong>LoRA Intent Gate</strong><span>0.6B / 1.7B 小模型</span></div>
+            <div class="pipeline-arrow" aria-hidden="true">→</div>
+            <div class="pipeline-node node-output"><small>STRUCTURED JSON</small><strong>类型 + 关键词</strong><span>电商类 / 闲聊类</span></div>
+          </div>
+        </article>
+
+        <div class="integration-bridge"><span>预期部署：仅将电商请求送入工具检索</span></div>
+
+        <article class="pipeline-lane retrieval-lane">
+          <header>
+            <div><span>LANE B</span><h3>完整工具集合检索</h3></div>
+            <p>6000 条冻结工具轨迹</p>
+          </header>
+          <div class="retrieval-map">
+            <div class="pipeline-node node-input retrieval-query"><small>INPUT</small><strong>E-commerce Query</strong><span>1–6 个 Gold Tools</span></div>
+            <div class="fork-line" aria-hidden="true"></div>
+            <div class="retriever-stack">
+              <div class="pipeline-node"><small>LEXICAL</small><strong>BM25</strong><span>词面召回</span></div>
+              <div class="pipeline-node node-primary"><small>SEMANTIC</small><strong>Fine-tuned Embedding</strong><span>bge-large · MNRL</span></div>
+            </div>
+            <div class="merge-line" aria-hidden="true"></div>
+            <div class="pipeline-node node-primary"><small>STAGE 1</small><strong>Weighted RRF Source</strong><span>N=50 · vector weight 0.95</span></div>
+            <div class="pipeline-arrow" aria-hidden="true">→</div>
+            <div class="pipeline-node"><small>STAGE 2</small><strong>Task Reranker</strong><span>bge-reranker-base</span></div>
+            <div class="pipeline-arrow" aria-hidden="true">→</div>
+            <div class="pipeline-node node-primary node-final"><small>FINAL</small><strong>Source / Reranker RRF</strong><span>weight 0.6 · rrf_k 10</span></div>
+            <div class="pipeline-arrow" aria-hidden="true">→</div>
+            <div class="pipeline-node node-output"><small>OUTPUT</small><strong>Top-K Tool Set</strong><span>AllHit@10 = 98.30%</span></div>
+          </div>
+        </article>
+
+        <div class="method-grid">
+          <article><span class="method-number">01</span><h3>LoRA SFT</h3><p>只更新 Qwen3 的低秩适配参数，学习入口类型和电商关键词的结构化输出。</p><small>CAUSAL LM · RANK 16</small></article>
+          <article><span class="method-number">02</span><h3>Bi-encoder + MNRL</h3><p>将 Query 和工具文档编码到同一向量空间，用批内负样本拉开易混工具。</p><small>70,012 POSITIVE PAIRS</small></article>
+          <article><span class="method-number">03</span><h3>Cross-encoder</h3><p>联合编码 Query–Tool Pair，以每组 1 正 + 7 负训练任务内 Reranker。</p><small>GROUPWISE CE · 1 EPOCH</small></article>
+          <article><span class="method-number">04</span><h3>Weighted RRF</h3><p>不覆盖强 Source，而是把任务内 Reranker 作为残差信号进行名次融合。</p><small>TRAIN-SIDE SELECTION</small></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="data" aria-labelledby="dataTitle">
+      <div class="wrap">
+        <p class="eyebrow">04 · DATA &amp; GOVERNANCE</p>
+        <div class="section-heading split-heading">
+          <h2 id="dataTitle">先证明没有走捷径，<br>再谈模型分数。</h2>
+          <p>数据采用 train/test 表达簇隔离和 context-isolated 口径；冻结测试集不参与 SFT、Embedding、Reranker 训练或融合选参。页面同时呈现通过项与仍需解释的上下文重合。</p>
+        </div>
+
+        <div class="dataset-layout">
+          <article class="split-visual">
+            <div class="split-head"><span>TOOL-CALL TRACE</span><strong>30,000 QUERIES</strong></div>
+            <div class="split-bar" role="img" aria-label="训练集 24000，测试集 6000">
+              <div class="split-train"><b>24,000</b><span>TRAIN · 80%</span></div>
+              <div class="split-test"><b>6,000</b><span>FROZEN TEST · 20%</span></div>
+            </div>
+            <div class="split-details">
+              <div><strong>12K</strong><span>单工具轨迹</span></div>
+              <div><strong>18K</strong><span>多工具轨迹</span></div>
+              <div><strong>1–6</strong><span>Gold 工具数</span></div>
+              <div><strong>2.53</strong><span>Test 平均工具数</span></div>
+            </div>
+          </article>
+
+          <article class="dataset-card">
+            <span class="corner-square" aria-hidden="true"></span>
+            <p class="dataset-kicker">INTENT FREEZE</p>
+            <strong class="dataset-total">9,000</strong>
+            <div class="dataset-ratio"><span>电商 6,000</span><span>闲聊 3,000</span></div>
+            <p>闲聊测试集与 SFT 闲聊负例独立；电商部分来自冻结工具轨迹。</p>
+          </article>
+
+          <article class="dataset-card">
+            <span class="corner-square" aria-hidden="true"></span>
+            <p class="dataset-kicker">MULTI-TOOL TEST</p>
+            <strong class="dataset-total">3,000</strong>
+            <div class="dataset-ratio equal"><span>Seen Combo 1,500</span><span>Unseen Combo 1,500</span></div>
+            <p>组合 Seen/Unseen 各半，但仍共享相同的 100 工具全集。</p>
+          </article>
+        </div>
+
+        <h3 class="subsection-title">严格审计结果</h3>
+        <div class="audit-grid" id="auditGrid"></div>
+
+        <div class="context-audit">
+          <div class="context-copy">
+            <p class="eyebrow">CONTEXT-ISOLATED · IMPORTANT NUANCE</p>
+            <h3>上下文形式会重复，<br>但预测信号很弱。</h3>
+            <p>商品、城市、预算等抽象 Context 骨架在两侧经常出现；关键问题是同一骨架是否泄露工具集合。审计显示精确工具序列重合低，简单 Context matcher 几乎无法解决任务。</p>
+          </div>
+          <div class="context-metrics" id="contextMetrics"></div>
+        </div>
+
+        <div class="governance-note">
+          <strong>冻结边界</strong>
+          <p><code>tool_call_trace/test.jsonl</code> 只用于固定评测与审计；<code>intent_all.jsonl</code> 只用于 Intent 最终评测。Test bad case 不回流训练或临时改写工具文档。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="results" aria-labelledby="resultsTitle">
+      <div class="wrap">
+        <p class="eyebrow">05 · EXPERIMENTS</p>
+        <div class="section-heading split-heading">
+          <h2 id="resultsTitle">不是一张混合榜单，<br>而是两条清晰路线。</h2>
+          <p>所有检索图采用同一组 6000 条冻结电商 Query。未微调路线回答“公开模型能做到什么”，任务内训练路线回答“在当前闭集里学到工具边界后能提升多少”。</p>
+        </div>
+
+        <div class="metric-switch" id="metricSwitch" role="group" aria-label="切换检索指标">
+          <button class="active" type="button" data-metric="a10">AllHit@10</button>
+          <button type="button" data-metric="a30">AllHit@30</button>
+          <button type="button" data-metric="mrr">MRR</button>
+        </div>
+
+        <div class="result-tracks">
+          <article class="result-track">
+            <header><div><span>TRACK A</span><h3>无需任务内训练</h3></div><p>公开模型与规则检索</p></header>
+            <div class="bar-chart" id="genericChart"></div>
+          </article>
+          <article class="result-track result-track-primary">
+            <header><div><span>TRACK B</span><h3>任务内训练与融合</h3></div><p>当前合成闭集</p></header>
+            <div class="bar-chart" id="trainedChart"></div>
+          </article>
+        </div>
+
+        <div class="result-footnotes">
+          <p><span>01</span>AllHit@10 是主要短名单指标；比例越高，表示完整工具集合更常落入前十。</p>
+          <p><span>02</span>MRR 主要关注第一个相关工具的位置，不能替代多工具集合覆盖指标。</p>
+          <p><span>03</span>这些提升只说明已知工具闭集中的匹配学习，不代表未知工具或真实流量泛化。</p>
+        </div>
+
+        <div class="intent-result-block">
+          <div class="intent-copy">
+            <p class="eyebrow">INTENT GATE</p>
+            <h3>小模型已经能学会<br>闭集入口判断。</h3>
+            <p>Keyword baseline 只有 50.22% Accuracy；Qwen3 基座已经具备一定能力，LoRA 后接近饱和。下一步价值不在继续刷闭集 Accuracy，而在补真实表达和边界负例。</p>
+            <div class="intent-callout"><strong>1.0000</strong><span>Qwen3-0.6B full LoRA<br>Accuracy / Macro-F1</span></div>
+          </div>
+          <div class="intent-chart" id="intentChart"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section insight-section" id="insight" aria-labelledby="insightTitle">
+      <div class="wrap">
+        <p class="eyebrow">06 · KEY FINDING</p>
+        <div class="insight-heading">
+          <h2 id="insightTitle">强 Retriever 之后，<br>不要让 Reranker 直接接管。</h2>
+          <p>任务内训练让一阶段 Source 已经非常强。通用 Reranker 直接覆盖排序时，AllHit@10 从 95.95% 跌到 70.28%；即使任务内微调，纯重排仍略低于 Source。最终方案把 Reranker 当作 residual 信号。</p>
+        </div>
+        <div class="insight-chart" id="insightChart"></div>
+        <div class="insight-conclusion">
+          <div><span>SOURCE</span><strong>稳定的已学边界</strong></div>
+          <div class="conclusion-plus">+</div>
+          <div><span>RERANKER</span><strong>补充 Pairwise 交互</strong></div>
+          <div class="conclusion-equals">=</div>
+          <div class="conclusion-final"><span>WEIGHTED RRF</span><strong>98.30% AllHit@10</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="analysis" aria-labelledby="analysisTitle">
+      <div class="wrap">
+        <p class="eyebrow">07 · FAILURE ANALYSIS</p>
+        <div class="section-heading split-heading">
+          <h2 id="analysisTitle">把窗口收紧到 Top-6，<br>错误在哪里？</h2>
+          <p>这一节使用比主指标更严格的 AllHit@6 诊断口径：最终链路恢复了 352 条单路 Embedding 失败，但也引入 60 条回归。剩余错误主要集中在五到六工具请求，以及正确工具已进入候选却卡在 rank 7–10 的前缀排序问题。</p>
+        </div>
+
+        <div class="transition-panel">
+          <div class="transition-head"><h3>从单路 Embedding 到最终链路</h3><span>ALLHIT@6 DIAGNOSTIC · 6,000 QUERIES</span></div>
+          <div class="transition-bar" id="transitionBar" role="img" aria-label="结果状态转移"></div>
+          <div class="transition-legend" id="transitionLegend"></div>
+        </div>
+
+        <div class="analysis-grid">
+          <article class="failure-chart-card">
+            <header><div><span>ALLHIT@6 FAILURE RATE</span><h3>工具数越多，完整覆盖越难</h3></div><p>单路 vs 最终链路</p></header>
+            <div class="failure-chart" id="failureChart"></div>
+          </article>
+          <article class="rank-band-card">
+            <header><div><span>MISSING GOLD RANK</span><h3>多数失败只差一个前缀位置</h3></div></header>
+            <div class="rank-band-list" id="rankBandList"></div>
+            <p class="rank-band-note">以 AllHit@6 下的 560 条最终失败 Query 为分析单位；458 条的全部漏召工具都在 rank 7–10。该诊断不可与 98.30% AllHit@10 直接混读。</p>
+          </article>
+        </div>
+
+        <div class="case-section">
+          <div class="case-section-head">
+            <div><p class="eyebrow">CASE INSPECTOR</p><h3>直接检查冻结案例，而不只看百分比。</h3></div>
+            <div class="case-tabs" id="caseTabs" role="tablist" aria-label="选择冻结案例"></div>
+          </div>
+          <article class="case-viewer" id="caseViewer" aria-live="polite"></article>
+        </div>
+
+        <div class="competition-section">
+          <div class="competition-copy">
+            <p class="eyebrow">COMPETING BOUNDARIES</p>
+            <h3>模型还在混淆哪些工具？</h3>
+            <p>左侧是漏召的 Gold Tool，右侧是在 Top-6 中与其竞争的工具。它们是下一轮 Hard Negative 和边界表达补强的直接来源。</p>
+          </div>
+          <div class="competition-table-wrap">
+            <table class="competition-table">
+              <thead><tr><th scope="col">漏召工具</th><th scope="col">Top-6 竞争工具</th><th scope="col">共现</th></tr></thead>
+              <tbody id="competitionBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="limits" aria-labelledby="limitsTitle">
+      <div class="wrap">
+        <p class="eyebrow">08 · LIMITS &amp; NEXT</p>
+        <div class="section-heading split-heading">
+          <h2 id="limitsTitle">结果有效，<br>但边界必须写在同一页。</h2>
+          <p>页面将项目定位为可复现的工具选择实验，不把闭集指标包装成生产级 Agent 能力。下面四条限制决定了哪些结论可以说、哪些还不能说。</p>
+        </div>
+
+        <div class="limit-grid">
+          <article><span>01</span><h3>已知工具闭集</h3><p>Train/Test 使用相同的 100 个工具全集，没有验证新增工具、长尾工具或开放目录检索。</p></article>
+          <article><span>02</span><h3>合成表达分布</h3><p>数据完成表达簇隔离和审计，但语言仍主要来自合成模板，不等同于真实用户请求。</p></article>
+          <article><span>03</span><h3>模块级评测</h3><p>Intent 与工具检索分别评测；尚未测量工具真实调用、参数正确性、任务完成率和业务结果。</p></article>
+          <article><span>04</span><h3>模型选择治理</h3><p>多个 Embedding Run 曾在同一 Test 上横向比较，后续需要全新且从未触碰的 Final Holdout。</p></article>
+        </div>
+
+        <div class="roadmap">
+          <div class="roadmap-title"><span>NEXT VALIDATION</span><h3>从闭集高分走向真实可用</h3></div>
+          <ol>
+            <li><span>01</span><strong>真实表达集</strong><small>匿名真实 Query 与边界负例</small></li>
+            <li><span>02</span><strong>Held-out Tools</strong><small>验证未知工具冷启动</small></li>
+            <li><span>03</span><strong>Final Holdout</strong><small>隔离模型选择与最终报告</small></li>
+            <li><span>04</span><strong>Execution Eval</strong><small>参数、顺序与任务成功率</small></li>
+            <li><span>05</span><strong>Online Cost</strong><small>真实硬件延迟和吞吐</small></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="evidence" aria-labelledby="evidenceTitle">
+      <div class="wrap">
+        <p class="eyebrow">09 · EVIDENCE &amp; REPRODUCTION</p>
+        <div class="section-heading split-heading">
+          <h2 id="evidenceTitle">每个结论，<br>都应找到证据文件。</h2>
+          <p>项目报告、预测文件、指标 JSON 和训练入口共同构成证据链。网页只负责讲清楚实验，不替代仓库中的原始产物。</p>
+        </div>
+
+        <div class="evidence-grid">
+          <article class="evidence-card"><span>OVERVIEW</span><h3>项目串讲与主结论</h3><p>任务链路、核心指标、关键文件与复现入口。</p><b>PROJECT/README.md</b></article>
+          <article class="evidence-card"><span>REPORT 01</span><h3>意图识别</h3><p>数据口径、LoRA Run、Accuracy 与 Macro-F1。</p><b>reports/01_意图识别.md</b></article>
+          <article class="evidence-card"><span>REPORT 02</span><h3>检索增强</h3><p>BM25、zero-shot 向量、融合和通用 Reranker。</p><b>reports/02_检索增强.md</b></article>
+          <article class="evidence-card"><span>REPORT 03</span><h3>任务内训练</h3><p>Embedding、Task Reranker、融合与 Bad Case。</p><b>reports/03_向量训练.md</b></article>
+          <article class="evidence-card"><span>REPORT 04</span><h3>数据与实验总表</h3><p>每项实验的训练输入、冻结边界与证据位置。</p><b>reports/04_数据集与训练用数说明.md</b></article>
+          <article class="evidence-card"><span>REPORT 05</span><h3>训练算法总览</h3><p>LoRA、MNRL、Cross-encoder 与 Weighted RRF。</p><b>reports/05_训练算法总览.md</b></article>
+        </div>
+
+        <div class="reproduce-block">
+          <div class="reproduce-copy">
+            <p class="eyebrow">MINIMUM REPRODUCTION</p>
+            <h3>从 Catalog 校验到数据审计</h3>
+            <p>以下命令只覆盖 CPU 可运行的数据与审计入口。Embedding 建库、模型训练和完整评测需要相应模型环境与 GPU。</p>
+            <a class="btn btn-outline" href="https://github.com/Ryannnice/Agent" target="_blank" rel="noopener noreferrer" title="该仓库当前需要 GitHub 访问权限">访问受限源码 ↗</a>
+          </div>
+          <div class="command-panel">
+            <div class="command-head"><span>TERMINAL · /renyuanliu/Agent</span><button id="copyCommands" type="button">复制命令</button></div>
+            <pre id="reproCommands"><code>python3 PROJECT/scripts/catalog/validate_tool_catalog.py
+python3 PROJECT/scripts/dataset/generate_diverse_tool_trace.py \
+  --train-context-salt 0 --test-context-salt 100003
+python3 PROJECT/scripts/dataset/audit_generation_leakage.py \
+  --tokenizer fallback
+python3 PROJECT/scripts/dataset/audit_datasets.py \
+  --strict-min-test-per-tool 30</code></pre>
+            <p class="copy-status" id="copyStatus" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div class="provenance">
+          <div><span>SNAPSHOT</span><strong>2026-07-15</strong></div>
+          <div><span>CATALOG</span><strong>100 tools · errors=0</strong></div>
+          <div><span>PRIMARY TEST</span><strong>6,000 frozen queries</strong></div>
+          <div><span>CLAIM BOUNDARY</span><strong>Synthetic closed set</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-strip">
+      <div class="wrap cta-strip-inner">
+        <div><p>100-TOOL COMMERCE AGENT</p><h2>完整工具集合，比单次命中更接近真实 Agent 需求。</h2></div>
+        <a class="btn btn-primary" href="#evidence">查看证据与复现 ↑</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div class="footer-brand-block">
+        <a class="project-brand" href="#top"><span class="brand-grid" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>TOOLSET<span class="brand-slash">/</span>100</span></a>
+        <p>面向多意图电商请求的意图门控与完整工具集合检索实验。</p>
+      </div>
+      <div class="footer-links"><strong>PROJECT</strong><a href="#problem">问题定义</a><a href="#system">系统架构</a><a href="#results">实验结果</a></div>
+      <div class="footer-links"><strong>INSPECT</strong><a href="#toolspace">工具空间</a><a href="#data">数据审计</a><a href="#analysis">失败分析</a></div>
+      <div class="footer-links"><strong>SOURCE</strong><a href="#evidence">证据与复现</a><a href="https://github.com/Ryannnice/Agent" target="_blank" rel="noopener noreferrer" title="需要 GitHub 仓库访问权限">受限仓库（需权限）↗</a></div>
+    </div>
+    <div class="wrap footer-fine"><span>RESEARCH SNAPSHOT · 2026-07-15</span><span>100 KNOWN TOOLS · SYNTHETIC CLOSED SET</span></div>
+  </footer>
+
+  <button class="to-top" id="toTop" type="button" aria-label="返回顶部">↑</button>
+  <noscript><div class="noscript">该页面需要 JavaScript 来呈现交互式工具目录和数据图表；所有核心结论仍可在正文中阅读。</div></noscript>
+</body>
+</html>
