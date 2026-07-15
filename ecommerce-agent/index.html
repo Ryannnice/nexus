@@ -21,9 +21,9 @@
   <meta name="twitter:description" content="100-Tool Commerce Agent · Project Overview">
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png">
 
-  <link rel="stylesheet" href="project.css?v=2">
-  <script defer src="project-data.js?v=2"></script>
-  <script defer src="project.js?v=2"></script>
+  <link rel="stylesheet" href="project.css?v=3">
+  <script defer src="project-data.js?v=3"></script>
+  <script defer src="project.js?v=3"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">跳到主要内容</a>
@@ -78,32 +78,64 @@
           </dl>
         </div>
 
-        <div class="hero-demo" role="group" aria-label="固定测试集成功案例">
+        <div class="hero-demo" id="heroDemo" role="group" aria-label="动态测试案例与 Prompt 交互演示">
           <div class="demo-chrome">
-            <div class="demo-title"><span class="chrome-square"></span>PROJECT TRACE</div>
-            <div class="demo-status"><span></span>MULTI-INTENT · 4 / 4</div>
+            <div class="demo-title"><span class="chrome-square"></span>EXAMPLE TRACE</div>
+            <div class="demo-chrome-actions">
+              <div class="demo-status"><span></span><b id="heroDemoStatus">MULTI-INTENT · 4 / 4</b></div>
+              <button class="demo-pause" id="heroDemoPause" type="button" aria-pressed="false" aria-label="暂停案例轮播"><span aria-hidden="true">Ⅱ</span></button>
+            </div>
           </div>
-          <div class="demo-query">
-            <span class="demo-label">USER QUERY · MULTI-INTENT · CONDENSED</span>
-            <p>准备送生日礼物，需要确认包裹丢件流程、物流轨迹、单笔订单详情，以及预计送达时间。</p>
+          <div class="demo-trace-body" id="heroTraceBody">
+            <div class="demo-query">
+              <span class="demo-label" id="heroQueryLabel">USER QUERY · FIXED TEST · CONDENSED</span>
+              <p id="heroDemoQuery">准备送生日礼物，需要确认包裹丢件流程、物流轨迹、单笔订单详情，以及预计送达时间。</p>
+            </div>
+            <ol class="demo-pipeline">
+              <li><span>01</span><div><b>Intent Gate</b><small id="heroIntentDetail">电商类 · 进入工具选择</small></div><i id="heroIntentState">PASS</i></li>
+              <li><span>02</span><div><b>Hybrid Source</b><small id="heroSourceDetail">BM25 + Fine-tuned Embedding</small></div><i id="heroSourceState">TOP 50</i></li>
+              <li><span>03</span><div><b>Ranking Fusion</b><small id="heroFusionDetail">Source + Task Reranker RRF</small></div><i id="heroFusionState">TOP 10</i></li>
+            </ol>
+            <div class="demo-results">
+              <span class="demo-label" id="heroResultsLabel">RECALLED TOOLS · ALL 4 GOLD TOOLS</span>
+              <div id="heroDemoResults">
+                <div class="result-row"><b>01</b><span>get_order_logistics</span><em>GOLD</em></div>
+                <div class="result-row"><b>02</b><span>get_order_detail</span><em>GOLD</em></div>
+                <div class="result-row"><b>03</b><span>estimate_delivery_time</span><em>GOLD</em></div>
+                <div class="result-row"><b>04</b><span>get_lost_package_process</span><em>GOLD</em></div>
+              </div>
+            </div>
+            <div class="hero-matrix-wrap">
+              <div class="hero-matrix-label"><span>100 TOOL CATALOG</span><span id="heroMatrixCount">4 SELECTED</span></div>
+              <div class="hero-tool-matrix" id="heroToolMatrix" aria-hidden="true"></div>
+            </div>
           </div>
-          <ol class="demo-pipeline">
-            <li><span>01</span><div><b>Intent Gate</b><small>电商类 · 进入工具选择</small></div><i>PASS</i></li>
-            <li><span>02</span><div><b>Hybrid Source</b><small>BM25 + Fine-tuned Embedding</small></div><i>TOP 50</i></li>
-            <li><span>03</span><div><b>Ranking Fusion</b><small>Source + Task Reranker RRF</small></div><i>TOP 10</i></li>
-          </ol>
-          <div class="demo-results">
-            <span class="demo-label">TOP RESULTS · ALL 4 GOLD TOOLS RECALLED</span>
-            <div class="result-row"><b>01</b><span>get_order_logistics</span><em>GOLD</em></div>
-            <div class="result-row"><b>02</b><span>get_order_detail</span><em>GOLD</em></div>
-            <div class="result-row"><b>03</b><span>estimate_delivery_time</span><em>GOLD</em></div>
-            <div class="result-row"><b>04</b><span>get_lost_package_process</span><em>GOLD</em></div>
+          <div class="demo-footer">
+            <p class="demo-footnote" id="heroDemoFootnote">固定测试集回放 · <strong>multi_test_00013</strong></p>
+            <div class="demo-trace-controls">
+              <button type="button" id="heroTracePrev" aria-label="上一个案例">←</button>
+              <div class="demo-trace-dots" id="heroTraceDots" aria-label="选择案例"></div>
+              <span id="heroTraceCounter">01 / 04</span>
+              <button type="button" id="heroTraceNext" aria-label="下一个案例">→</button>
+            </div>
           </div>
-          <div class="hero-matrix-wrap">
-            <div class="hero-matrix-label"><span>100 TOOL CATALOG</span><span>4 SELECTED</span></div>
-            <div class="hero-tool-matrix" id="heroToolMatrix" aria-hidden="true"></div>
-          </div>
-          <p class="demo-footnote">代表案例 <strong>multi_test_00013</strong> · 结果来自固定测试集回放。</p>
+          <form class="demo-prompt" id="heroPromptForm">
+            <div class="demo-prompt-head">
+              <label for="heroPromptInput">TRY YOUR PROMPT</label>
+              <span>LOCAL INTERACTIVE DEMO</span>
+            </div>
+            <div class="demo-prompt-row">
+              <input id="heroPromptInput" name="prompt" type="text" maxlength="180" autocomplete="off" placeholder="例如：查物流、预计送达时间和可用优惠券">
+              <button id="heroPromptSubmit" type="submit">RUN <span aria-hidden="true">↗</span></button>
+            </div>
+            <div class="demo-prompt-help">
+              <div>
+                <button id="heroPromptExample" type="button">填入示例</button>
+                <button id="heroTraceResume" type="button" hidden>继续案例轮播</button>
+              </div>
+              <p id="heroPromptMessage" aria-live="polite">前端即时匹配 100 项工具能力，不执行真实工具调用。</p>
+            </div>
+          </form>
         </div>
       </div>
     </section>
