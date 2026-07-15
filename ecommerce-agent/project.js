@@ -60,12 +60,6 @@
     var pauseButton = $('#heroDemoPause');
     var previousButton = $('#heroTracePrev');
     var nextButton = $('#heroTraceNext');
-    var form = $('#heroPromptForm');
-    var input = $('#heroPromptInput');
-    var submitButton = $('#heroPromptSubmit');
-    var exampleButton = $('#heroPromptExample');
-    var resumeButton = $('#heroTraceResume');
-    var message = $('#heroPromptMessage');
     var intentDetail = $('#heroIntentDetail');
     var intentState = $('#heroIntentState');
     var sourceDetail = $('#heroSourceDetail');
@@ -74,51 +68,9 @@
     var fusionState = $('#heroFusionState');
     var currentIndex = 0;
     var timer = null;
-    var runToken = 0;
-    var manualMode = false;
     var hoverPaused = false;
-    var inputPaused = false;
     var userPaused = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var cycleDelay = 6500;
-    var defaultMessage = '前端即时匹配 100 项工具能力，不执行真实工具调用。';
-    var samplePrompt = '查一下订单物流和预计送达时间，顺便看看有哪些可用优惠券。';
-
-    var promptRules = [
-      { pattern: /订单(详情|信息)|单笔订单|订单内容/i, tools: ['get_order_detail'] },
-      { pattern: /订单列表|购买记录|交易记录|历史订单/i, tools: ['get_order_list'] },
-      { pattern: /物流|快递|包裹轨迹|运输进度|logistics/i, tools: ['get_order_logistics'] },
-      { pattern: /预计.*(送达|到货)|送达.*时间|多久能到|delivery time/i, tools: ['estimate_delivery_time'] },
-      { pattern: /丢件|包裹.*丢|快递.*丢/i, tools: ['get_lost_package_process'] },
-      { pattern: /运费|配送费/i, tools: ['query_delivery_fee'] },
-      { pattern: /退款.*(进度|状态|到账|失败)|到账.*退款|refund status/i, tools: ['get_refund_status'] },
-      { pattern: /能退多少|退款.*(金额|估算)/i, tools: ['get_refund_amount_estimate'] },
-      { pattern: /申请退款|发起退款/i, tools: ['create_refund_request'] },
-      { pattern: /退货|退换规则/i, tools: ['get_return_policy'] },
-      { pattern: /售后.*(进度|状态)|工单.*(进度|状态)/i, tools: ['get_aftersale_ticket_status'] },
-      { pattern: /创建.*售后|售后.*建单|破损.*处理|发起.*售后/i, tools: ['create_aftersale_ticket'] },
-      { pattern: /质量争议|质量问题.*(规则|处理)|质量.*政策/i, tools: ['get_quality_issue_policy'] },
-      { pattern: /评价.*(总结|摘要)|评论.*(总结|风险)|优缺点/i, tools: ['summarize_item_reviews'] },
-      { pattern: /评价|评论|买家反馈|reviews?/i, tools: ['get_item_reviews'] },
-      { pattern: /比价|哪.*便宜|更省钱|购买渠道/i, tools: ['compare_item_price'] },
-      { pattern: /价格走势|历史价格|降价/i, tools: ['get_price_history'] },
-      { pattern: /优惠券|可用券|领券|coupons?/i, tools: ['get_available_coupons'] },
-      { pattern: /使用.*(优惠)?券|用(这张|掉|一下).*(优惠)?券|核销.*券/i, tools: ['apply_coupon'] },
-      { pattern: /折扣|少付多少|优惠.*计算/i, tools: ['calc_discount'] },
-      { pattern: /仓库|地区仓|本地仓/i, tools: ['get_warehouse_stock_region'] },
-      { pattern: /库存|有货|余量|stock/i, tools: ['get_sku_stock'] },
-      { pattern: /商品.*(详情|信息)|品牌|卖点/i, tools: ['get_item_info'] },
-      { pattern: /规格|参数|尺寸|容量|功率/i, tools: ['get_item_specs'] },
-      { pattern: /保修|质保/i, tools: ['get_item_warranty'] },
-      { pattern: /维修|修理/i, tools: ['get_repair_service_policy'] },
-      { pattern: /发票/i, tools: ['get_order_invoice'] },
-      { pattern: /加入购物车/i, tools: ['create_cart_item'] },
-      { pattern: /购物车.*(查看|汇总)|购物车里/i, tools: ['get_cart_summary'] },
-      { pattern: /修改.*地址|更改.*地址/i, tools: ['modify_order_address'] },
-      { pattern: /地址.*(查询|有哪些|可用)/i, tools: ['get_user_addresses'] },
-      { pattern: /积分.*余额|有多少积分/i, tools: ['get_points_balance'] },
-      { pattern: /会员等级|会员级别/i, tools: ['get_member_level'] },
-      { pattern: /推荐|猜你喜欢/i, tools: ['get_recommendation_feed'] }
-    ];
 
     function setPipeline(intent, source, fusion) {
       intentDetail.textContent = intent.detail;
@@ -152,13 +104,13 @@
 
     function renderDots() {
       dots.innerHTML = traces.map(function (trace, index) {
-        var active = !manualMode && index === currentIndex;
-        return '<button type="button" class="' + (active ? 'active' : '') + '" data-trace="' + index + '" aria-label="查看案例 ' + (index + 1) + '" aria-pressed="' + (active ? 'true' : 'false') + '"><i></i></button>';
+        var active = index === currentIndex;
+        return '<button type="button" class="' + (active ? 'active' : '') + '" data-trace="' + index + '" aria-label="查看案例 ' + (index + 1) + '：' + escapeHtml(trace.label) + '" aria-pressed="' + (active ? 'true' : 'false') + '"><i></i></button>';
       }).join('');
     }
 
     function updatePauseState() {
-      var paused = manualMode || hoverPaused || inputPaused || userPaused;
+      var paused = hoverPaused || userPaused;
       window.clearTimeout(timer);
       timer = null;
       root.classList.toggle('is-paused', paused);
@@ -174,156 +126,45 @@
 
     function renderTrace(index) {
       var trace = traces[(index + traces.length) % traces.length];
-      var gold = new Set(trace.gold);
-      var recalled = trace.prediction.reduce(function (items, toolId, rank) {
-        if (gold.has(toolId)) items.push({ id: toolId, rank: rank + 1 });
-        return items;
-      }, []);
+      var caseNumber = String((index + traces.length) % traces.length + 1).padStart(2, '0');
+      var isChat = trace.type === 'chat';
       currentIndex = (index + traces.length) % traces.length;
-      manualMode = false;
-      runToken += 1;
-      root.classList.remove('is-manual', 'is-running', 'is-chat');
-      status.textContent = (trace.gold.length > 1 ? 'MULTI' : 'SINGLE') + '-INTENT · ' + recalled.length + ' / ' + trace.gold.length;
-      queryLabel.textContent = 'USER QUERY · FIXED TEST · CONDENSED';
+      queryLabel.textContent = 'CASE ' + caseNumber + ' · ' + trace.label + ' · ' + (isChat ? 'INTENT FIXED SET' : 'RETRIEVAL FIXED TEST · CONDENSED');
       query.textContent = trace.query;
-      resultsLabel.textContent = 'RECALLED TOOLS · ALL ' + trace.gold.length + ' GOLD TOOLS';
-      renderRows(recalled, 'GOLD');
-      renderMatrix(trace.gold);
-      setPipeline(
-        { detail: '电商类 · 进入工具选择', state: 'PASS' },
-        { detail: 'BM25 + Fine-tuned Embedding', state: 'TOP 50' },
-        { detail: 'Source + Task Reranker RRF', state: 'TOP 10' }
-      );
-      footnote.innerHTML = '固定测试集回放 · <strong>' + escapeHtml(trace.id) + '</strong>';
-      counter.textContent = String(currentIndex + 1).padStart(2, '0') + ' / ' + String(traces.length).padStart(2, '0');
-      message.textContent = defaultMessage;
-      resumeButton.hidden = true;
-      submitButton.disabled = false;
-      renderDots();
-      animateBody();
-      updatePauseState();
-    }
+      counter.textContent = caseNumber + ' / ' + String(traces.length).padStart(2, '0');
 
-    function normalize(value) {
-      return String(value).toLowerCase().replace(/[^\u3400-\u9fffa-z0-9]+/g, '');
-    }
-
-    function ngrams(value, size) {
-      var output = [];
-      for (var index = 0; index <= value.length - size; index += 1) output.push(value.slice(index, index + size));
-      return Array.from(new Set(output));
-    }
-
-    function matchPrompt(value) {
-      var scores = {};
-      var ruleMatches = new Set();
-      var normalizedQuery = normalize(value);
-      var pairs = ngrams(normalizedQuery, 2);
-      var triples = ngrams(normalizedQuery, 3);
-
-      promptRules.forEach(function (rule) {
-        if (!rule.pattern.test(value)) return;
-        rule.tools.forEach(function (toolId) {
-          ruleMatches.add(toolId);
-          scores[toolId] = (scores[toolId] || 0) + 30;
-        });
-      });
-
-      tools.forEach(function (tool) {
-        var haystack = normalize(tool.name + tool.description + tool.domainName + tool.id);
-        var lexical = 0;
-        pairs.forEach(function (part) { if (haystack.indexOf(part) !== -1) lexical += .45; });
-        triples.forEach(function (part) { if (haystack.indexOf(part) !== -1) lexical += .9; });
-        if (lexical) scores[tool.id] = (scores[tool.id] || 0) + lexical;
-      });
-
-      return Object.keys(scores).map(function (toolId) {
-        return { id: toolId, score: scores[toolId] };
-      }).filter(function (item) {
-        return ruleMatches.size ? ruleMatches.has(item.id) : item.score >= 2;
-      }).sort(function (left, right) {
-        return right.score - left.score || left.id.localeCompare(right.id);
-      }).slice(0, 5).map(function (item, index) {
-        return { id: item.id, rank: index + 1 };
-      });
-    }
-
-    function renderManualResult(matched) {
-      var hasTools = matched.length > 0;
-      root.classList.remove('is-running');
-      root.classList.toggle('is-chat', !hasTools);
-      status.textContent = hasTools ? 'CUSTOM PROMPT · ' + matched.length + ' MATCHES' : 'OPEN CHAT · NO TOOL';
-      resultsLabel.textContent = hasTools ? 'TOP MATCHES · CLIENT-SIDE CATALOG DEMO' : 'ROUTE RESULT · NO TOOL CALL';
-      if (hasTools) {
-        renderRows(matched, 'MATCH');
-        renderMatrix(matched.map(function (item) { return item.id; }));
-        setPipeline(
-          { detail: '电商类 · 进入目录匹配', state: 'PASS' },
-          { detail: '100 项 Catalog 字段即时匹配', state: '100 TOOLS' },
-          { detail: '规则 + 文本相关度排序', state: 'TOP ' + matched.length }
-        );
-        message.textContent = '目录匹配已完成；该结果用于页面交互演示。';
-      } else {
+      if (isChat) {
+        status.textContent = 'CHAT · BYPASS';
+        resultsLabel.textContent = 'ROUTE RESULT · NO TOOL CALL';
         results.innerHTML = '<div class="result-row result-row-empty"><b>—</b><span>直接响应 · 工具检索旁路</span><em>CHAT</em></div>';
         renderMatrix([]);
         setPipeline(
-          { detail: '开放闲聊 · 工具检索旁路', state: 'CHAT' },
-          { detail: '未触发电商能力', state: 'BYPASS' },
+          { detail: '闲聊类 · 直接响应', state: 'CHAT' },
+          { detail: '无需进入工具检索', state: 'BYPASS' },
           { detail: '无需生成工具短名单', state: 'BYPASS' }
         );
-        message.textContent = '未匹配到明确的电商工具能力，示例按开放问题旁路展示。';
+        footnote.innerHTML = 'Intent 固定集回放 · <strong>' + escapeHtml(trace.id) + '</strong>';
+      } else {
+        var gold = new Set(trace.gold);
+        var recalled = trace.prediction.reduce(function (items, toolId, rank) {
+          if (gold.has(toolId)) items.push({ id: toolId, rank: rank + 1 });
+          return items;
+        }, []);
+        status.textContent = (trace.gold.length > 1 ? 'MULTI-TOOL' : 'SINGLE-TOOL') + ' · ' + recalled.length + ' / ' + trace.gold.length;
+        resultsLabel.textContent = 'RECALLED TOOLS · ALL ' + trace.gold.length + (trace.gold.length === 1 ? ' GOLD TOOL' : ' GOLD TOOLS');
+        renderRows(recalled, 'GOLD');
+        renderMatrix(trace.gold);
+        setPipeline(
+          { detail: '电商类 · 进入工具选择', state: 'PASS' },
+          { detail: 'BM25 + Fine-tuned Embedding', state: 'TOP 50' },
+          { detail: 'Source + Task Reranker RRF', state: 'TOP 10' }
+        );
+        footnote.innerHTML = '固定检索集回放 · <strong>' + escapeHtml(trace.id) + '</strong>';
       }
-      footnote.innerHTML = '浏览器端目录匹配 · <strong>不调用模型或真实工具</strong>';
-      submitButton.disabled = false;
-      submitButton.innerHTML = 'RUN <span aria-hidden="true">↗</span>';
-      animateBody();
-    }
 
-    function runPrompt(value) {
-      var token = runToken + 1;
-      var matched = matchPrompt(value);
-      runToken = token;
-      manualMode = true;
-      window.clearTimeout(timer);
-      root.classList.add('is-manual', 'is-running');
-      root.classList.remove('is-chat');
-      queryLabel.textContent = 'YOUR PROMPT · LOCAL INTERACTIVE DEMO';
-      query.textContent = value;
-      status.textContent = 'ANALYZING PROMPT';
-      resultsLabel.textContent = 'MATCHING AGAINST 100 TOOL CATALOG';
-      results.innerHTML = '<div class="result-row result-row-loading"><b>··</b><span>正在解析请求并匹配能力目录</span><em>RUN</em></div>';
-      renderMatrix([]);
-      setPipeline(
-        { detail: '正在识别请求类型', state: 'RUN' },
-        { detail: '等待 Intent 结果', state: 'WAIT' },
-        { detail: '等待候选工具', state: 'WAIT' }
-      );
-      footnote.innerHTML = '浏览器端交互演示 · <strong>LOCAL ONLY</strong>';
-      counter.textContent = 'CUSTOM';
-      message.textContent = '正在运行目录匹配…';
-      resumeButton.hidden = false;
-      submitButton.disabled = true;
-      submitButton.textContent = 'RUNNING';
       renderDots();
       animateBody();
-
-      window.setTimeout(function () {
-        if (token !== runToken) return;
-        intentDetail.textContent = matched.length ? '电商类 · 进入目录匹配' : '开放闲聊 · 工具检索旁路';
-        intentState.textContent = matched.length ? 'PASS' : 'CHAT';
-        sourceDetail.textContent = matched.length ? '正在扫描 100 项工具能力' : '未触发电商能力';
-        sourceState.textContent = matched.length ? 'RUN' : 'BYPASS';
-      }, 260);
-      window.setTimeout(function () {
-        if (token !== runToken) return;
-        sourceState.textContent = matched.length ? '100 TOOLS' : 'BYPASS';
-        fusionDetail.textContent = matched.length ? '正在合并规则与文本相关度' : '无需生成工具短名单';
-        fusionState.textContent = matched.length ? 'RUN' : 'BYPASS';
-      }, 620);
-      window.setTimeout(function () {
-        if (token !== runToken) return;
-        renderManualResult(matched);
-      }, 980);
+      updatePauseState();
     }
 
     previousButton.addEventListener('click', function () { renderTrace(currentIndex - 1); });
@@ -341,27 +182,6 @@
     });
     root.addEventListener('pointerleave', function (event) {
       if (event.pointerType === 'mouse') { hoverPaused = false; updatePauseState(); }
-    });
-    input.addEventListener('focus', function () { inputPaused = true; updatePauseState(); });
-    input.addEventListener('blur', function () { inputPaused = false; updatePauseState(); });
-    exampleButton.addEventListener('click', function () {
-      input.value = samplePrompt;
-      input.focus();
-      message.textContent = '示例已填入，点击 RUN 查看匹配结果。';
-    });
-    resumeButton.addEventListener('click', function () {
-      input.value = '';
-      renderTrace(currentIndex);
-    });
-    form.addEventListener('submit', function (event) {
-      var value = input.value.trim();
-      event.preventDefault();
-      if (!value) {
-        message.textContent = '请先输入一条电商请求。';
-        input.focus();
-        return;
-      }
-      runPrompt(value);
     });
 
     renderTrace(0);

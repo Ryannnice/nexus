@@ -9,51 +9,28 @@ window.PROJECT_DATA = {
   },
   "heroTraces": [
     {
-      "id": "multi_test_00013",
-      "query": "准备送生日礼物，需要确认包裹丢件流程、物流轨迹、单笔订单详情，以及预计送达时间。",
+      "id": "single_test_048_000",
+      "label": "口语物流",
+      "query": "帮我看看这款台灯的包裹送到哪了。",
       "gold": [
-        "get_lost_package_process",
-        "get_order_logistics",
-        "get_order_detail",
-        "estimate_delivery_time"
+        "get_order_logistics"
       ],
       "prediction": [
         "get_order_logistics",
-        "get_order_detail",
-        "estimate_delivery_time",
         "get_lost_package_process",
         "query_delivery_fee",
-        "get_order_list",
+        "estimate_delivery_time",
         "confirm_order_receipt",
+        "get_user_addresses",
+        "split_shipment_plan",
+        "get_warehouse_stock_region",
         "get_pickup_points",
-        "select_delivery_slot",
-        "get_aftersale_ticket_status"
-      ]
-    },
-    {
-      "id": "multi_test_01024",
-      "query": "查看床垫质量争议处理规则、买家评价和评价风险摘要，再比较更省钱的购买渠道。",
-      "gold": [
-        "get_quality_issue_policy",
-        "get_item_reviews",
-        "compare_item_price",
-        "summarize_item_reviews"
-      ],
-      "prediction": [
-        "get_quality_issue_policy",
-        "summarize_item_reviews",
-        "get_item_reviews",
-        "get_item_qa",
-        "compare_item_price",
-        "create_aftersale_ticket",
-        "check_item_authenticity",
-        "get_complaint_channels",
-        "get_price_history",
-        "get_item_info"
+        "get_notification_preferences"
       ]
     },
     {
       "id": "multi_test_01175",
+      "label": "库存联查",
       "query": "查看南京地区净水器的仓库余量、商品核心信息和本地 SKU 库存。",
       "gold": [
         "get_warehouse_stock_region",
@@ -75,6 +52,7 @@ window.PROJECT_DATA = {
     },
     {
       "id": "multi_test_02965",
+      "label": "售后联办",
       "query": "查看防晒霜售后处理进度和退款到账状态，并为破损商品创建售后单。",
       "gold": [
         "get_aftersale_ticket_status",
@@ -93,6 +71,60 @@ window.PROJECT_DATA = {
         "get_service_queue_status",
         "get_quality_issue_policy"
       ]
+    },
+    {
+      "id": "multi_test_01024",
+      "label": "商品决策",
+      "query": "查看床垫质量争议处理规则、买家评价和评价风险摘要，再比较更省钱的购买渠道。",
+      "gold": [
+        "get_quality_issue_policy",
+        "get_item_reviews",
+        "compare_item_price",
+        "summarize_item_reviews"
+      ],
+      "prediction": [
+        "get_quality_issue_policy",
+        "summarize_item_reviews",
+        "get_item_reviews",
+        "get_item_qa",
+        "compare_item_price",
+        "create_aftersale_ticket",
+        "check_item_authenticity",
+        "get_complaint_channels",
+        "get_price_history",
+        "get_item_info"
+      ]
+    },
+    {
+      "id": "multi_test_01817",
+      "label": "优惠组合",
+      "query": "查看可用优惠券和当前促销，计算预计到手价，并比较不同促销方案。",
+      "gold": [
+        "get_available_coupons",
+        "get_current_promotions",
+        "calc_discount",
+        "compare_promotion_options"
+      ],
+      "prediction": [
+        "compare_promotion_options",
+        "get_current_promotions",
+        "calc_discount",
+        "get_available_coupons",
+        "get_flash_sale_status",
+        "compare_item_price",
+        "get_item_info",
+        "get_user_profile",
+        "get_member_level",
+        "estimate_delivery_time"
+      ]
+    },
+    {
+      "id": "chitchat_000007",
+      "label": "闲聊旁路",
+      "type": "chat",
+      "query": "番茄炒蛋做法能简单解释一下吗？",
+      "gold": [],
+      "prediction": []
     }
   ],
   "domains": [
