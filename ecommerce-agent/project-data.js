@@ -4,7 +4,7 @@ window.PROJECT_DATA = {
     "date": "2026-07-15",
     "label": "CURRENT EXPERIMENT SNAPSHOT",
     "catalogVersion": "2026-07-06",
-    "scope": "100 个已知工具的合成闭集；不是线上泛化结果",
+    "scope": "100 个已知工具的合成闭集离线评测",
     "repository": "https://github.com/Ryannnice/Agent"
   },
   "domains": [
@@ -1106,7 +1106,7 @@ window.PROJECT_DATA = {
           "a10": 0.4763,
           "a30": 0.7347,
           "mrr": 0.569,
-          "note": "最强 zero-shot 向量"
+          "note": "通用语义起点"
         },
         {
           "label": "BM25",
@@ -1114,7 +1114,7 @@ window.PROJECT_DATA = {
           "a10": 0.5575,
           "a30": 0.7595,
           "mrr": 0.7684,
-          "note": "无需模型训练"
+          "note": "词面信号基线"
         },
         {
           "label": "BM25 + bge-large RRF",
@@ -1122,15 +1122,15 @@ window.PROJECT_DATA = {
           "a10": 0.6367,
           "a30": 0.8573,
           "mrr": 0.7119,
-          "note": "N=20"
+          "note": "互补召回 · N=20"
         },
         {
           "label": "Qwen3-Reranker-0.6B",
           "short": "通用重排",
           "a10": 0.7837,
           "a30": 0.9283,
-          "mrr": null,
-          "note": "候选 N=50"
+          "mrr": 0.886228,
+          "note": "公开模型上限 · N=50"
         }
       ],
       "trained": [
@@ -1140,7 +1140,7 @@ window.PROJECT_DATA = {
           "a10": 0.4763,
           "a30": 0.7347,
           "mrr": 0.569,
-          "note": "同一测试口径"
+          "note": "通用能力起点"
         },
         {
           "label": "Fine-tuned bge-large",
@@ -1148,7 +1148,7 @@ window.PROJECT_DATA = {
           "a10": 0.9575,
           "a30": 0.9972,
           "mrr": 0.9668,
-          "note": "MNRL"
+          "note": "任务内表示学习"
         },
         {
           "label": "Tuned Hybrid Source",
@@ -1156,7 +1156,7 @@ window.PROJECT_DATA = {
           "a10": 0.9595,
           "a30": 0.9975,
           "mrr": 0.966826,
-          "note": "Weighted RRF"
+          "note": "稳定一阶段候选源"
         },
         {
           "label": "Source + Task Reranker",
@@ -1164,7 +1164,7 @@ window.PROJECT_DATA = {
           "a10": 0.983,
           "a30": 0.998667,
           "mrr": 0.967954,
-          "note": "Source / Reranker RRF"
+          "note": "双路排序互补"
         }
       ]
     },
@@ -1173,25 +1173,25 @@ window.PROJECT_DATA = {
         "label": "Tuned Hybrid Source",
         "value": 0.9595,
         "tone": "source",
-        "note": "强一阶段检索器"
+        "note": "稳定提供已学能力边界"
       },
       {
         "label": "通用 Reranker 纯重排",
         "value": 0.7028,
         "tone": "danger",
-        "note": "覆盖 source，显著退化"
+        "note": "通用交互信号与任务边界未对齐"
       },
       {
         "label": "任务内 Reranker 纯重排",
         "value": 0.945,
         "tone": "trained",
-        "note": "接近但仍低于 source"
+        "note": "任务内训练后形成有效补充"
       },
       {
         "label": "Source + Task Reranker RRF",
         "value": 0.983,
         "tone": "final",
-        "note": "把重排作为 residual 信号"
+        "note": "两路排序形成最佳互补"
       }
     ],
     "failures": [
@@ -1256,7 +1256,7 @@ window.PROJECT_DATA = {
     },
     {
       "value": "TRUE",
-      "label": "严格审计",
+      "label": "划分检查通过",
       "detail": "generation audit strict_ok"
     }
   ],
@@ -1264,17 +1264,17 @@ window.PROJECT_DATA = {
     {
       "value": 0.936,
       "label": "Context 骨架曾出现",
-      "interpretation": "抽象商品、地区和预算框架常见"
+      "interpretation": "通用商品、地区和预算框架自然复用"
     },
     {
       "value": 0.019667,
       "label": "同骨架精确工具序列重合",
-      "interpretation": "上下文很少直接泄露工具集合"
+      "interpretation": "同一场景骨架对应多种能力组合"
     },
     {
       "value": 0.0292,
       "label": "Context matcher AllHit@10",
-      "interpretation": "单靠骨架无法解决任务"
+      "interpretation": "能力语义是主要预测信号"
     }
   ],
   "transitions": [
@@ -1423,4 +1423,3 @@ window.PROJECT_DATA = {
     }
   ]
 };
-
