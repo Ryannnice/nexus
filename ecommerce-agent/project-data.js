@@ -119,6 +119,75 @@ window.PROJECT_DATA = {
       ]
     },
     {
+      "id": "multi_test_00023",
+      "label": "支付处理",
+      "query": "查询订单支付状态和可用支付方式，核验扣款异常，并在支付失败时重新发起支付。",
+      "gold": [
+        "get_order_payment_status",
+        "get_payment_methods",
+        "verify_payment_risk",
+        "create_payment_retry"
+      ],
+      "prediction": [
+        "get_order_payment_status",
+        "create_payment_retry",
+        "verify_payment_risk",
+        "get_payment_methods",
+        "detect_abnormal_order",
+        "check_account_risk",
+        "get_order_detail",
+        "generate_risk_notice",
+        "get_installment_plan",
+        "get_order_afterpay_status"
+      ]
+    },
+    {
+      "id": "multi_test_00003",
+      "label": "购物车管理",
+      "query": "汇总购物车，清理失效商品，把暂不购买的商品移入以后再买，并调整购买数量。",
+      "gold": [
+        "get_cart_summary",
+        "remove_cart_item",
+        "save_item_for_later",
+        "update_cart_quantity"
+      ],
+      "prediction": [
+        "remove_cart_item",
+        "update_cart_quantity",
+        "get_cart_summary",
+        "save_item_for_later",
+        "create_cart_item",
+        "validate_checkout_items",
+        "submit_order",
+        "get_checkout_preview",
+        "get_favorite_items",
+        "get_sku_stock"
+      ]
+    },
+    {
+      "id": "multi_test_01234",
+      "label": "个性化服务",
+      "query": "查看我的尺码档案和购物偏好，为目标商品推荐尺码，并保存试穿反馈。",
+      "gold": [
+        "get_size_profile",
+        "get_user_profile",
+        "get_size_recommendation",
+        "update_size_profile"
+      ],
+      "prediction": [
+        "get_size_profile",
+        "get_user_profile",
+        "get_size_recommendation",
+        "update_size_profile",
+        "get_item_specs",
+        "get_notification_preferences",
+        "get_favorite_items",
+        "get_browsing_history",
+        "get_sku_stock",
+        "get_order_list"
+      ]
+    },
+    {
       "id": "chitchat_000007",
       "label": "闲聊旁路",
       "type": "chat",

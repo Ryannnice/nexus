@@ -68,7 +68,6 @@
     var fusionState = $('#heroFusionState');
     var currentIndex = 0;
     var timer = null;
-    var hoverPaused = false;
     var userPaused = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var cycleDelay = 6500;
 
@@ -110,7 +109,7 @@
     }
 
     function updatePauseState() {
-      var paused = hoverPaused || userPaused;
+      var paused = userPaused;
       window.clearTimeout(timer);
       timer = null;
       root.classList.toggle('is-paused', paused);
@@ -176,12 +175,6 @@
     pauseButton.addEventListener('click', function () {
       userPaused = !userPaused;
       updatePauseState();
-    });
-    root.addEventListener('pointerenter', function (event) {
-      if (event.pointerType === 'mouse') { hoverPaused = true; updatePauseState(); }
-    });
-    root.addEventListener('pointerleave', function (event) {
-      if (event.pointerType === 'mouse') { hoverPaused = false; updatePauseState(); }
     });
 
     renderTrace(0);

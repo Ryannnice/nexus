@@ -1166,6 +1166,11 @@ code, pre { font-family: var(--font); }
   .demo-chrome { align-items: flex-start; flex-direction: column; gap: 5px; }
   .demo-chrome-actions { width: 100%; justify-content: space-between; }
   .demo-footer { align-items: flex-start; flex-direction: column; }
+  .demo-trace-controls { width: 100%; gap: 4px; }
+  .demo-trace-dots { flex: 1; gap: 2px; }
+  .demo-trace-dots button { flex: 1; width: auto; min-width: 0; }
+  .demo-trace-dots button i,
+  .demo-trace-dots button::after { right: 1px; width: auto; }
   .scope-strip-inner { padding-inline: 0; }
   .scope-strip strong { padding-left: 16px; }
   .strict-metric-grid { grid-template-columns: 1fr; }
