@@ -21,7 +21,7 @@
   <meta name="twitter:description" content="100-Tool Commerce Agent · Project Overview">
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png">
 
-  <link rel="stylesheet" href="project.css?v=7">
+  <link rel="stylesheet" href="project.css?v=8">
   <script defer src="project-data.js?v=6"></script>
   <script defer src="project.js?v=6"></script>
 </head>
@@ -431,15 +431,183 @@
         <section class="selection-arena" aria-labelledby="selectionArenaTitle">
           <header class="selection-arena-head">
             <div>
-              <p class="eyebrow">MODEL SELECTION PLAYOFF</p>
-              <h3 id="selectionArenaTitle">不只展示冠军，也保留每条路线如何止步</h3>
+              <p class="eyebrow">EXPERIMENT DECISION ATLAS</p>
+              <h3 id="selectionArenaTitle">从数据与索引，到最终融合：完整决策路线</h3>
             </div>
             <div class="arena-rule">
-              <span>统一赛场</span>
-              <strong>6,000 FIXED QUERIES</strong>
-              <small>主判据 · AllHit@10</small>
+              <span>两条任务线 · 六道选型门</span>
+              <strong>TRACE EVERY DECISION</strong>
+              <small>有对照看指标 · 无对照讲约束</small>
             </div>
           </header>
+
+          <div class="decision-atlas">
+            <div class="decision-legend">
+              <p><strong>HOW TO READ</strong>横向沿箭头读取；每个节点同时记录候选、判据、胜出项和未采用路线。</p>
+              <div>
+                <span class="legend-selected">SELECTED</span>
+                <span class="legend-evaluated">EVALUATED</span>
+                <span class="legend-engineering">ENGINEERING CHOICE</span>
+                <span class="legend-stopped">NOT ADOPTED</span>
+              </div>
+            </div>
+
+            <section class="decision-foundation" aria-labelledby="foundationGateTitle">
+              <div class="foundation-title">
+                <span>GATE 00 · EVALUATION CONTRACT</span>
+                <h4 id="foundationGateTitle">先固定赛场，再比较路线</h4>
+                <p>所有后续选择都建立在同一份 Catalog 与隔离数据上，避免因为测试口径变化产生“伪晋级”。</p>
+              </div>
+              <div class="foundation-grid">
+                <div><small>CAPABILITY SOURCE</small><strong>100 Tool Catalog</strong><span>8 个业务域 · audit errors=0</span></div>
+                <div><small>LEARNING / EVALUATION</small><strong>24K Train / 6K Fixed Test</strong><span>表达簇与 context salt 隔离</span></div>
+                <div><small>PRIMARY RETRIEVAL METRIC</small><strong>AllHit@10</strong><span>全部 Gold Tools 进入 Top-10 才算成功</span></div>
+                <div><small>REPORTING BOUNDARY</small><strong>Synthetic Closed Set</strong><span>闭集能力匹配，不等同于线上泛化</span></div>
+              </div>
+            </section>
+
+            <article class="decision-lane decision-lane-intent">
+              <header class="decision-lane-head">
+                <div><span>LANE A · INTENT GATE</span><h4>入口模型如何选定</h4></div>
+                <p>评测集 9,000 条 · 主判据 Accuracy / Macro-F1</p>
+              </header>
+              <div class="decision-track decision-track-intent">
+                <section class="decision-node">
+                  <div class="decision-pin"><span>01</span><small>BASELINES</small></div>
+                  <div class="decision-node-card">
+                    <h5>规则与基座摸底</h5>
+                    <div class="decision-choice"><span>Keyword baseline</span><b>50.22%</b></div>
+                    <div class="decision-choice"><span>Qwen3-0.6B base</span><b>84.76%</b></div>
+                    <div class="decision-choice"><span>Qwen3-1.7B base</span><b>90.47%</b></div>
+                    <p>规则不足；两种小模型都具备可学习的入口能力。</p>
+                  </div>
+                </section>
+                <section class="decision-node">
+                  <div class="decision-pin"><span>02</span><small>LORA TRIALS</small></div>
+                  <div class="decision-node-card">
+                    <h5>数据配置与参数高效微调</h5>
+                    <div class="decision-choice choice-evaluated"><span>0.6B · full_lora best</span><b>100.00%</b></div>
+                    <div class="decision-choice"><span>1.7B · balanced_lora final</span><b>99.96%</b></div>
+                    <p>均使用 Rank 16 LoRA；更大模型没有带来有效收益。</p>
+                  </div>
+                </section>
+                <section class="decision-node decision-node-selected">
+                  <div class="decision-pin"><span>03</span><small>SELECTED</small></div>
+                  <div class="decision-node-card">
+                    <span class="decision-status status-selected">CURRENT INTENT MODEL</span>
+                    <h5>Qwen3-0.6B full LoRA</h5>
+                    <strong class="decision-result">1.0000</strong>
+                    <p><code>checkpoint-2000</code> · 以更小模型达到 Accuracy / Macro-F1 双满分。</p>
+                  </div>
+                </section>
+              </div>
+            </article>
+
+            <article class="decision-lane decision-lane-retrieval">
+              <header class="decision-lane-head">
+                <div><span>LANE B · TOOL RETRIEVAL</span><h4>从 100 篇工具文档到最终 Top-K</h4></div>
+                <p>评测集 6,000 条 · 主判据 AllHit@10</p>
+              </header>
+              <div class="decision-track decision-track-retrieval">
+                <section class="decision-node">
+                  <div class="decision-pin"><span>01</span><small>INFRASTRUCTURE</small></div>
+                  <div class="decision-node-card">
+                    <span class="decision-status status-engineering">ENGINEERING CHOICE</span>
+                    <h5>BM25 + FAISS 双索引</h5>
+                    <div class="infra-stack">
+                      <div><b>Lexical</b><span>BM25 · fallback tokenizer</span></div>
+                      <div><b>Vector</b><span>FAISS · IndexFlatIP</span></div>
+                    </div>
+                    <p>向量归一化后以内积实现 cosine；100 篇文档采用精确 Flat 搜索，无需引入 ANN 近似损失。</p>
+                    <small class="node-evidence">FAISS 搜索亚毫秒 · 主要延迟来自 Query 编码</small>
+                  </div>
+                </section>
+
+                <section class="decision-node">
+                  <div class="decision-pin"><span>02</span><small>MODEL SEED</small></div>
+                  <div class="decision-node-card">
+                    <span class="decision-status status-evaluated">3 ZERO-SHOT MODELS</span>
+                    <h5>公开 Embedding 选型</h5>
+                    <div class="decision-choice"><span>bge-base · 768d</span><b>44.30%</b></div>
+                    <div class="decision-choice choice-evaluated"><span>bge-large · 1024d</span><b>47.63%</b></div>
+                    <div class="decision-choice"><span>Qwen3-Embedding-0.6B · 1024d</span><b>40.60%</b></div>
+                    <p>bge-large 赢得 zero-shot 向量组，成为后续主训练种子；BM25 55.75% 作为独立词面支路保留。</p>
+                  </div>
+                </section>
+
+                <section class="decision-node">
+                  <div class="decision-pin"><span>03</span><small>RECALL DESIGN</small></div>
+                  <div class="decision-node-card">
+                    <span class="decision-status status-evaluated">FUSION × DEPTH ABLATION</span>
+                    <h5>融合方式与候选深度</h5>
+                    <div class="route-mini-grid">
+                      <span>Union</span><span>Score Weighted</span><span>RRF</span>
+                      <span>N=10</span><span>N=20</span><span>N=30</span><span>N=50</span>
+                    </div>
+                    <div class="decision-choice choice-evaluated"><span>bge-large + BM25 RRF · N=20</span><b>63.67%</b></div>
+                    <p>N=30 固定比较中 Union 达 62.32%；深度消融后 RRF N=20 赢得未重排 Top-10。</p>
+                  </div>
+                </section>
+
+                <section class="decision-node">
+                  <div class="decision-pin"><span>04</span><small>PUBLIC RERANK</small></div>
+                  <div class="decision-node-card">
+                    <span class="decision-status status-evaluated">5 MODELS · ≤2B</span>
+                    <h5>通用 Cross-encoder 比赛</h5>
+                    <p class="candidate-list">BGE Base / Large / v2-m3<br>Jina v2 Multilingual<br>Qwen3-Reranker-0.6B</p>
+                    <div class="decision-choice choice-evaluated"><span>Qwen3 · ST backend · N=50</span><b>78.37%</b></div>
+                    <p>公开模型组冠军；低成本路线保留 bge-reranker-base N=20，AllHit@10 68.83%。</p>
+                  </div>
+                </section>
+
+                <section class="decision-node decision-node-major">
+                  <div class="decision-pin"><span>05</span><small>TASK LEARNING</small></div>
+                  <div class="decision-node-card">
+                    <span class="decision-status status-selected">9 EMBEDDING RUNS</span>
+                    <h5>任务内表示学习</h5>
+                    <div class="training-candidates">
+                      <span>bge-base · 6 组 LR / Epoch</span>
+                      <span>bge-large · 0.5 / 1 Epoch</span>
+                      <span>Qwen3-Embedding · 架构对照</span>
+                    </div>
+                    <div class="decision-choice choice-selected"><span>bge-large · MNRL · e1 · lr2e-5</span><b>95.75%</b></div>
+                    <p>70,012 个正对、batch 64；任务内能力边界学习贡献最大单步增益。</p>
+                  </div>
+                </section>
+
+                <section class="decision-node decision-node-handoff">
+                  <div class="decision-pin"><span>06</span><small>FINALISTS</small></div>
+                  <div class="decision-node-card">
+                    <span class="decision-status status-selected">HANDOFF TO PLAYOFF</span>
+                    <h5>训练后排序信号决赛</h5>
+                    <div class="handoff-list">
+                      <span>Weighted Source RRF</span>
+                      <span>Task Reranker</span>
+                      <span>Residual Calibration</span>
+                      <span>Source / Reranker RRF</span>
+                    </div>
+                    <strong class="decision-result">95.95% → 98.30%</strong>
+                    <p>下方展开每条末端路线如何晋级或止步。</p>
+                  </div>
+                </section>
+              </div>
+            </article>
+
+            <aside class="decision-parking">
+              <div><span>IMPLEMENTED · NOT IN MAIN TRAINING</span><strong>已实现但没有冒充主结果的路线</strong></div>
+              <p><b>Cached MNRL</b> 支持大负例集合，但正式 Run 均使用 MNRL。</p>
+              <p><b>DashScope Teacher Labels</b> 可生成标注，但当前 LoRA 与 Reranker checkpoint 均未使用蒸馏标签。</p>
+            </aside>
+
+            <div class="decision-handoff" aria-hidden="true">
+              <span></span><strong>GATE 06 · LATE-STAGE MODEL SELECTION</strong><span></span>
+            </div>
+          </div>
+
+          <div class="late-playoff-heading">
+            <div><span>FINAL PLAYOFF</span><h4>谁能在强 Source 之上继续提升？</h4></div>
+            <p>此处只比较训练后的末端排序方案；完整上游选择见决策图。</p>
+          </div>
 
           <div class="arena-board" role="img" aria-label="方案选拔路线：Source 95.95%，通用融合 96.02%，Residual 96.30%，Task Reranker Only 94.50%，最终 Source 加 Task Reranker RRF 98.30% 获胜">
             <article class="arena-stage arena-seed">
@@ -493,7 +661,7 @@
             </article>
           </div>
 
-          <p class="arena-caption"><span>读图说明</span>这是一张选型决策图，而非把不同候选源误写成严格单败淘汰赛；位置表示各方案在同一固定测试口径下的比较结论与最终去向。</p>
+          <p class="arena-caption"><span>读图说明</span>上方决策图覆盖完整上游路线；这张末端赛线只比较同一强 Source 之后的排序选择，并非把不同候选源误写成严格单败淘汰赛。</p>
 
           <div class="residual-lab">
             <article class="residual-overview">
@@ -519,7 +687,7 @@
                 <article><span>01 · RANK TRANSFORM</span><strong>Reciprocal / Log Rank</strong><p>分别变换 Source 与 Reranker 名次，压缩长尾排名距离。</p></article>
                 <article><span>02 · SCORE GEOMETRY</span><strong>Z-score / Min-max / Gap</strong><p>刻画 Reranker 分数的组内位置与距最佳候选的差距。</p></article>
                 <article><span>03 · TOP-K FLAGS</span><strong>Source 1/3/5/10 · Reranker 3/10</strong><p>显式标注候选是否已经进入关键执行前缀。</p></article>
-                <article><span>04 · CROSS-SIGNAL</span><strong>Rank Delta × 2</strong><p>描述两路排序对同一候选的分歧方向与幅度。</p></article>
+                <article><span>04 · CROSS-SIGNAL</span><strong>rank_delta_scaled</strong><p><code>(reranker_rank - source_rank) / 50.0</code>，表示两路名次差，仅 1 个特征。</p></article>
               </div>
 
               <div class="residual-algorithms">
