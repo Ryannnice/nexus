@@ -21,7 +21,7 @@
   <meta name="twitter:description" content="100-Tool Commerce Agent · Project Overview">
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png">
 
-  <link rel="stylesheet" href="project.css?v=6">
+  <link rel="stylesheet" href="project.css?v=7">
   <script defer src="project-data.js?v=6"></script>
   <script defer src="project.js?v=6"></script>
 </head>
@@ -407,7 +407,7 @@
         <div class="experiment-journey" aria-label="实验决策路径">
           <article><span>01 · 公开基线</span><h3>公开模型能力</h3><p>比较 BM25、Zero-shot Embedding、混合召回与公开 Reranker。</p><strong>Best A@10 · 78.37%</strong></article>
           <article><span>02 · 任务内训练</span><h3>Embedding 表示学习</h3><p>用 70,012 个正样本对微调 Embedding，增强 Query–Tool 表示。</p><strong>A@10 · 95.75%</strong></article>
-          <article><span>03 · 二阶段比较</span><h3>重排与融合策略</h3><p>训练 Task Reranker，并对纯重排、轻量校准和名次融合逐项比较。</p><strong>Source · 95.95%</strong></article>
+          <article><span>03 · 二阶段比较</span><h3>重排与融合策略</h3><p>训练 Task Reranker，并对纯重排、轻量校准和名次融合逐项比较。</p><strong>Best exploration · 96.30%</strong></article>
           <article class="journey-final"><span>04 · 最终方案</span><h3>双路排序融合</h3><p>保留 Source 排名并融合 Task Reranker，获得更完整的 Top-K 工具集合。</p><strong>Final A@10 · 98.30%</strong></article>
         </div>
 
@@ -427,6 +427,128 @@
             <div class="bar-chart" id="trainedChart"></div>
           </article>
         </div>
+
+        <section class="selection-arena" aria-labelledby="selectionArenaTitle">
+          <header class="selection-arena-head">
+            <div>
+              <p class="eyebrow">MODEL SELECTION PLAYOFF</p>
+              <h3 id="selectionArenaTitle">不只展示冠军，也保留每条路线如何止步</h3>
+            </div>
+            <div class="arena-rule">
+              <span>统一赛场</span>
+              <strong>6,000 FIXED QUERIES</strong>
+              <small>主判据 · AllHit@10</small>
+            </div>
+          </header>
+
+          <div class="arena-board" role="img" aria-label="方案选拔路线：Source 95.95%，通用融合 96.02%，Residual 96.30%，Task Reranker Only 94.50%，最终 Source 加 Task Reranker RRF 98.30% 获胜">
+            <article class="arena-stage arena-seed">
+              <div class="arena-stage-label"><span>ROUND 01</span><strong>种子基线</strong></div>
+              <div class="arena-candidate candidate-seed">
+                <small>STAGE 1 SOURCE</small>
+                <h4>Weighted RRF</h4>
+                <p>Fine-tuned Embedding + BM25</p>
+                <div><strong>95.95%</strong><span>守擂基准</span></div>
+              </div>
+            </article>
+
+            <div class="arena-flow" aria-hidden="true"><span>→</span><small>并行挑战</small></div>
+
+            <article class="arena-stage arena-trials">
+              <div class="arena-stage-label"><span>ROUND 02</span><strong>探索赛道</strong></div>
+              <div class="arena-candidate">
+                <small>GENERAL RERANKER + SOURCE</small>
+                <h4>通用模型名次融合</h4>
+                <div><strong>96.02%</strong><span>+0.07 pp · 保留对照</span></div>
+              </div>
+              <div class="arena-candidate candidate-residual">
+                <div class="candidate-badge">EXPLORATION WINNER</div>
+                <small>SUPERVISED CALIBRATION</small>
+                <h4>Balanced Logistic Residual</h4>
+                <div><strong>96.30%</strong><span>+0.35 pp · 晋级终局</span></div>
+              </div>
+              <div class="arena-candidate candidate-stopped">
+                <small>TASK RERANKER ONLY</small>
+                <h4>直接覆盖 Source 排名</h4>
+                <div><strong>94.50%</strong><span>−1.45 pp · 止步</span></div>
+              </div>
+            </article>
+
+            <div class="arena-flow arena-flow-final" aria-hidden="true"><span>→</span><small>终局对决</small></div>
+
+            <article class="arena-stage arena-final">
+              <div class="arena-stage-label"><span>FINAL</span><strong>最终选型</strong></div>
+              <div class="arena-finalist">
+                <span>探索支线</span>
+                <strong>Residual</strong>
+                <b>96.30%</b>
+              </div>
+              <div class="arena-versus">VS</div>
+              <div class="arena-candidate candidate-champion">
+                <div class="candidate-badge">SELECTED · CHAMPION</div>
+                <small>SOURCE + TASK RERANKER</small>
+                <h4>Complementary RRF</h4>
+                <div><strong>98.30%</strong><span>+2.00 pp vs Residual</span></div>
+              </div>
+            </article>
+          </div>
+
+          <p class="arena-caption"><span>读图说明</span>这是一张选型决策图，而非把不同候选源误写成严格单败淘汰赛；位置表示各方案在同一固定测试口径下的比较结论与最终去向。</p>
+
+          <div class="residual-lab">
+            <article class="residual-overview">
+              <div class="residual-id"><span>EXPLORATORY BRANCH</span><b>5.3</b></div>
+              <h4>Residual 分类器：<br>用轻量监督学习校准两路排名</h4>
+              <p>对 Top-50 中的每个候选工具提取 Source / Reranker 排名与分数信号，再预测该候选是否应被提升。它证明简单的表格特征已经能修正部分排序误差，但上限仍低于直接保留两路互补性的最终 RRF。</p>
+              <code>train_reranker_residual.py</code>
+              <div class="residual-scoreline" aria-label="Source、Residual 与最终 RRF 的 AllHit@10 对比">
+                <div><span>TUNED SOURCE</span><strong>95.95%</strong></div>
+                <i aria-hidden="true">→</i>
+                <div class="scoreline-residual"><span>LOGREG_BALANCED</span><strong>96.30%</strong></div>
+                <i aria-hidden="true">→</i>
+                <div class="scoreline-final"><span>FINAL RRF</span><strong>98.30%</strong></div>
+              </div>
+            </article>
+
+            <div class="residual-spec">
+              <div class="residual-spec-head">
+                <div><span>INPUT</span><strong>14 维候选特征</strong></div>
+                <p>只使用已生成的两路预测，不额外编码 Query 或 Tool 文本。</p>
+              </div>
+              <div class="feature-family-grid">
+                <article><span>01 · RANK TRANSFORM</span><strong>Reciprocal / Log Rank</strong><p>分别变换 Source 与 Reranker 名次，压缩长尾排名距离。</p></article>
+                <article><span>02 · SCORE GEOMETRY</span><strong>Z-score / Min-max / Gap</strong><p>刻画 Reranker 分数的组内位置与距最佳候选的差距。</p></article>
+                <article><span>03 · TOP-K FLAGS</span><strong>Source 1/3/5/10 · Reranker 3/10</strong><p>显式标注候选是否已经进入关键执行前缀。</p></article>
+                <article><span>04 · CROSS-SIGNAL</span><strong>Rank Delta × 2</strong><p>描述两路排序对同一候选的分歧方向与幅度。</p></article>
+              </div>
+
+              <div class="residual-algorithms">
+                <div class="residual-algorithms-head"><span>ALGORITHM TRIALS</span><strong>三种轻量分类器同场比较</strong></div>
+                <div class="algorithm-row">
+                  <div><span>01</span><strong>Logistic Regression</strong></div>
+                  <code>C=1.0 · max_iter=300</code>
+                  <small>基础线性校准</small>
+                </div>
+                <div class="algorithm-row algorithm-selected">
+                  <div><span>02</span><strong>Balanced Logistic Regression</strong></div>
+                  <code>C=1.0 · max_iter=300 · class_weight=balanced</code>
+                  <small>已报告最优</small>
+                </div>
+                <div class="algorithm-row">
+                  <div><span>03</span><strong>HistGradientBoosting</strong></div>
+                  <code>150 iter · LR 0.05 · L2 0.1 · max leaves 15</code>
+                  <small>非线性对照</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <footer class="residual-verdict">
+            <div><span>为什么保留</span><p>仅依赖 14 个表格特征、训练与推理成本低，并以 <strong>+0.35 pp</strong> 验证了监督校准的有效性。</p></div>
+            <div><span>为什么不采用</span><p>其 AllHit@10 比最终 RRF 低 <strong>2.00 pp</strong>，没有充分保留 Source 与 Task Reranker 的互补优势。</p></div>
+            <strong class="verdict-stamp">VALUABLE ABLATION<br>NOT THE MAIN RESULT</strong>
+          </footer>
+        </section>
 
         <div class="result-footnotes">
           <p><span>01</span>AllHit@6 观察更紧凑的执行前缀，AllHit@10 是项目主要短名单指标。</p>
@@ -451,7 +573,7 @@
                 <tr><td><span class="table-stage table-stage-trained">一阶段融合</span></td><td><strong>Embedding + BM25 Weighted RRF</strong><small>N=50 · w=0.95 · rrf_k=5</small></td><td>85.78%</td><td>95.95%</td><td>99.75%</td><td>96.68%</td><td>采用为 Stage 1 Source</td></tr>
                 <tr><td><span class="table-stage">通用重排</span></td><td><strong>General Reranker Only</strong><small>直接覆盖 Source 排名</small></td><td>59.32%</td><td>70.28%</td><td>94.98%</td><td>83.37%</td><td>明显退化，不采用</td></tr>
                 <tr><td><span class="table-stage">通用融合</span></td><td><strong>General Reranker + Source RRF</strong><small>source weight 0.95 · rrf_k=20</small></td><td>85.88%</td><td>96.02%</td><td>99.75%</td><td>96.68%</td><td>仅有小幅增益，保留为对照</td></tr>
-                <tr><td><span class="table-stage">轻量校准</span></td><td><strong>Logistic Residual</strong><small>14 rank / score features</small></td><td>86.35%</td><td>96.30%</td><td>99.75%</td><td>96.59%</td><td>探索分支，不采用</td></tr>
+                <tr><td><span class="table-stage">轻量校准</span></td><td><strong>Balanced Logistic Residual</strong><small>logreg_balanced · 14 rank / score features</small></td><td>86.35%</td><td>96.30%</td><td>99.75%</td><td>96.59%</td><td>击败 Source、负于最终 RRF；保留探索分支</td></tr>
                 <tr><td><span class="table-stage table-stage-trained">任务重排</span></td><td><strong>Task Reranker Only</strong><small>pure rerank</small></td><td>86.35%</td><td>94.50%</td><td>99.60%</td><td>96.39%</td><td>保留交互信号，不直接输出</td></tr>
                 <tr class="result-table-final"><td><span class="table-stage table-stage-final">最终融合</span></td><td><strong>Source + Task Reranker RRF</strong><small>source weight 0.6 · rrf_k=10</small></td><td>90.67%</td><td>98.30%</td><td>99.87%</td><td>96.80%</td><td>最终采用</td></tr>
               </tbody>
@@ -553,7 +675,7 @@
                     <tr class="row-emphasis"><td>Source</td><td>Embedding + BM25 · train-selected Weighted RRF</td><td>85.78%</td><td>95.95%</td><td>99.75%</td><td>96.68%</td></tr>
                     <tr class="table-divider"><td>Reranker</td><td>General Reranker Only</td><td>59.32%</td><td>70.28%</td><td>94.98%</td><td>83.37%</td></tr>
                     <tr><td>Fusion</td><td>General Reranker + Source RRF</td><td>85.88%</td><td>96.02%</td><td>99.75%</td><td>96.68%</td></tr>
-                    <tr><td>Calibration</td><td>Logistic Residual</td><td>86.35%</td><td>96.30%</td><td>99.75%</td><td>96.59%</td></tr>
+                    <tr><td>Calibration</td><td>Balanced Logistic Residual · 14 features</td><td>86.35%</td><td>96.30%</td><td>99.75%</td><td>96.59%</td></tr>
                     <tr><td>Reranker</td><td>Task Reranker Only</td><td>86.35%</td><td>94.50%</td><td>99.60%</td><td>96.39%</td></tr>
                     <tr class="result-table-final"><td>Final</td><td>Task Reranker + Source RRF</td><td>90.67%</td><td>98.30%</td><td>99.87%</td><td>96.80%</td></tr>
                   </tbody>
@@ -582,7 +704,7 @@
         <p class="eyebrow">SECTION 06</p>
         <div class="insight-heading">
           <h2 id="insightTitle">核心发现</h2>
-          <p>任务内表示学习贡献主要增益；Reranker 提供有价值的细粒度交互信号，但单独覆盖 Source 并非最佳方案。保留两路排序并进行 RRF 融合，AllHit@10 从 95.95% 提升到 98.30%。</p>
+          <p>任务内表示学习贡献主要增益；轻量 Residual 校准把 Source 从 95.95% 推至 96.30%，证明两路信号可被监督利用，但仍未达到最终 RRF 的 98.30%。最佳方案不是覆盖任一路，而是保留 Source 与 Task Reranker 的互补排名。</p>
         </div>
         <div class="insight-chart" id="insightChart"></div>
         <div class="finding-grid">
@@ -694,7 +816,7 @@
           <article class="evidence-card"><span>BASELINE REPORT</span><h3>检索增强</h3><p>BM25、Zero-shot Embedding、混合召回与公开 Reranker。</p><b>reports/02_检索增强.md</b></article>
           <article class="evidence-card"><span>TRAINING REPORT</span><h3>任务内训练</h3><p>Embedding、Task Reranker、排序融合与案例分析。</p><b>reports/03_向量训练.md</b></article>
           <article class="evidence-card"><span>DATA MAP</span><h3>数据与实验总表</h3><p>汇总每项实验的数据来源、训练输入、评测口径与运行产物。</p><b>reports/04_数据集与训练用数说明.md</b></article>
-          <article class="evidence-card"><span>METHOD GUIDE</span><h3>训练算法总览</h3><p>LoRA、MNRL、Cross-encoder 与 Weighted RRF 的实现说明。</p><b>reports/05_训练算法总览.md</b></article>
+          <article class="evidence-card"><span>METHOD GUIDE</span><h3>训练算法总览</h3><p>LoRA、MNRL、Cross-encoder、Residual 校准与 Weighted RRF 的实现说明。</p><b>reports/05_训练算法总览.md</b></article>
         </div>
 
         <div class="reproduce-block">
