@@ -159,10 +159,6 @@
           <div class="abstract-kpi-primary"><span>FINAL ALLHIT@10</span><strong>98.30%</strong><small>Source + Task Reranker RRF</small></div>
         </div>
 
-        <div class="abstract-boundary">
-          <span>EVALUATION BOUNDARY</span>
-          <p>多个模型与 Run 曾在同一 6K 固定测试集上横向比较，因此该集合是项目基准，不是只运行一次的 final holdout。不同候选源与候选深度只在输入对齐时直接比较；当前结论同时受 100 个已知工具和合成闭集条件限制。</p>
-        </div>
 
 
       </div>
@@ -660,10 +656,6 @@
           <div class="context-metrics" id="contextMetrics"></div>
         </div>
 
-        <div class="governance-note">
-          <strong>数据角色</strong>
-          <p><code>tool_call_trace/train.jsonl</code> 承担模型学习与融合选参；6K Retrieval test 和 9K Intent set 承担统一离线比较。多组模型曾在同一 6K 集合上横向比较，因此它是固定项目基准，不等同于只运行一次的 final holdout。</p>
-        </div>
       </div>
     </section>
 
@@ -672,7 +664,12 @@
         <p class="eyebrow">SECTION 05</p>
         <div class="section-heading split-heading">
           <h2 id="resultsTitle">实验设计与结果</h2>
-          <p>本节先给出最终选型与核心增益，再展开指标对照、完整决策路线和全部运行记录。检索结果统一使用 6,000 条固定 Query；Intent 结果使用独立的 9,000 条固定评测。</p>
+          <p>两条任务线分开呈现：先看检索排序与 Intent Gate 的主结果，再查看改变路线选择的关键对比；完整 39 条 Run 默认折叠，供进一步追溯。</p>
+        </div>
+
+        <div class="abstract-boundary">
+          <span>EVALUATION BOUNDARY</span>
+          <p>6K Retrieval test 是多组模型共用的固定离线基准，并非一次性 final holdout；仅直接比较候选输入一致的实验。结论限于 100 个已知工具与合成闭集。</p>
         </div>
 
         <div class="result-command-center">
@@ -731,9 +728,19 @@
           <p><span>03</span>四项指标共同呈现召回完整性与前排质量，避免只看单一 Top-K 结果。</p>
         </div>
 
+        <div class="intent-result-block">
+          <div class="intent-copy">
+            <p class="eyebrow">02 · PARALLEL RESULT · INTENT GATE</p>
+            <h3>Intent Gate</h3>
+            <p>Keyword baseline Accuracy 为 50.22%；Qwen3 基座已经具备初始识别能力，LoRA 后 0.6B 与 1.7B 模型分别达到 100.00% 和 99.96%。后续数据建设将重点扩展真实口语、错别字与跨领域边界表达。</p>
+            <div class="intent-callout"><strong>1.0000</strong><span>Qwen3-0.6B full LoRA<br>Accuracy / Macro-F1</span></div>
+          </div>
+          <div class="intent-chart" id="intentChart"></div>
+        </div>
+
         <details class="evidence-disclosure">
           <summary>
-            <div class="disclosure-index">02</div>
+            <div class="disclosure-index">03</div>
             <div class="disclosure-copy">
               <span>ROUTE-CHANGING EVIDENCE</span>
               <h3>关键方案对比表</h3>
@@ -770,7 +777,7 @@
         </details>
 
         <details class="full-results">
-          <summary><span>03 · COMPLETE RUN LOG</span><strong>查看 39 条公开基线、训练 Run 与二阶段结果</strong></summary>
+          <summary><span>04 · COMPLETE RUN LOG</span><strong>查看 39 条公开基线、训练 Run 与二阶段结果</strong></summary>
           <div class="full-results-body">
             <div class="full-results-copy">
               <h3>按实验问题分组，而不是混成一张总榜</h3>
@@ -875,15 +882,6 @@
           </div>
         </details>
 
-        <div class="intent-result-block">
-          <div class="intent-copy">
-            <p class="eyebrow">04 · PARALLEL RESULT · INTENT GATE</p>
-            <h3>Intent Gate</h3>
-            <p>Keyword baseline Accuracy 为 50.22%；Qwen3 基座已经具备初始识别能力，LoRA 后 0.6B 与 1.7B 模型分别达到 100.00% 和 99.96%。后续数据建设将重点扩展真实口语、错别字与跨领域边界表达。</p>
-            <div class="intent-callout"><strong>1.0000</strong><span>Qwen3-0.6B full LoRA<br>Accuracy / Macro-F1</span></div>
-          </div>
-          <div class="intent-chart" id="intentChart"></div>
-        </div>
       </div>
     </section>
 
