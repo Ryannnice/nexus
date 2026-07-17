@@ -2421,3 +2421,115 @@ code, pre { font-family: var(--font); }
   .tree-branch-end { align-items: flex-start; flex-direction: column; gap: 5px; }
   .tree-split-marker { grid-template-columns: 1fr; gap: 7px; text-align: center; }
 }
+
+
+/* Collapsible decision trace */
+.decision-trace-section {
+  padding-top: 0;
+}
+
+.decision-trace-disclosure > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.decision-trace-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.decision-trace-disclosure > .decision-map-heading {
+  grid-template-columns: minmax(0, 0.8fr) minmax(18rem, 1.25fr) auto;
+  align-items: center;
+  margin-bottom: 0;
+  padding: 1.25rem 0;
+  border-block: 1px solid rgba(20, 28, 25, 0.18);
+}
+
+.decision-trace-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  justify-self: end;
+  white-space: nowrap;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.decision-trace-toggle i {
+  position: relative;
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.decision-trace-toggle i::before,
+.decision-trace-toggle i::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.7rem;
+  height: 1px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+
+.decision-trace-toggle i::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  transition: transform 180ms ease;
+}
+
+.decision-trace-close-label {
+  display: none;
+}
+
+.decision-trace-disclosure[open] .decision-trace-open-label {
+  display: none;
+}
+
+.decision-trace-disclosure[open] .decision-trace-close-label {
+  display: inline;
+}
+
+.decision-trace-disclosure[open] .decision-trace-toggle i::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.decision-trace-disclosure[open] > .decision-map-heading {
+  margin-bottom: clamp(1.5rem, 3vw, 2.75rem);
+}
+
+@media (max-width: 820px) {
+  .decision-trace-disclosure > .decision-map-heading {
+    grid-template-columns: 1fr auto;
+  }
+
+  .decision-trace-disclosure > .decision-map-heading > p {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .decision-trace-toggle {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .decision-trace-disclosure > .decision-map-heading {
+    grid-template-columns: 1fr;
+  }
+
+  .decision-trace-toggle,
+  .decision-trace-disclosure > .decision-map-heading > p {
+    grid-column: 1;
+  }
+
+  .decision-trace-toggle {
+    grid-row: 3;
+    justify-self: start;
+  }
+}

@@ -164,227 +164,7 @@
           <p>多个模型与 Run 曾在同一 6K 固定测试集上横向比较，因此该集合是项目基准，不是只运行一次的 final holdout。不同候选源与候选深度只在输入对齐时直接比较；当前结论同时受 100 个已知工具和合成闭集条件限制。</p>
         </div>
 
-        <div class="decision-map-heading">
-          <div><span>COMPLETE DECISION TRACE</span><h3>方案选择路径</h3></div>
-          <p>箭头只表示同一分支内的实验依赖。Public Reranker 分支用于建立未微调基线；任务内训练分支从共同的 bge-large 选择重新开始。</p>
-        </div>
 
-        <section class="selection-arena vertical-selection-arena" aria-labelledby="selectionArenaTitle">
-          <header class="tree-intro">
-            <div>
-              <span>BRANCHED DECISION MAP</span>
-              <h3 id="selectionArenaTitle">公共基础之后，Intent 与 Retrieval 分别选型</h3>
-              <p>黄色表示当前阶段采用项；分支终点会明确标注“参考基线”或“当前系统”。</p>
-            </div>
-            <div class="tree-legend" aria-label="决策图图例">
-              <span><i class="legend-dot"></i>未采用</span>
-              <span><i class="legend-dot legend-dot-retained"></i>并行保留</span>
-              <span><i class="legend-dot legend-dot-selected"></i>阶段采用</span>
-            </div>
-          </header>
-
-          <div class="vertical-decision-tree branched-decision-tree">
-            <article class="tree-stage tree-stage-common">
-              <div class="tree-stage-index"><span>00</span><small>DATA</small></div>
-              <div class="tree-stage-main">
-                <header><span>Common foundation</span><h4>正式数据版本</h4></header>
-                <div class="tree-options">
-                  <div class="tree-option tree-option-muted"><span>HARD_PHRASES / fixed phrase</span><b>旧版本</b><small>DEPRECATED</small></div>
-                  <div class="tree-option"><span>表达簇隔离</span><b>中间版本</b></div>
-                  <div class="tree-option tree-option-selected"><span>表达簇 + context salt 隔离</span><b>当前版本</b><small>SELECTED</small></div>
-                </div>
-              </div>
-              <div class="tree-stage-output"><span>COMMON OUTPUT</span><strong>Context-isolated Split</strong><small>24K Train · 6K Retrieval Benchmark · overlap 0</small></div>
-            </article>
-
-            <div class="tree-split-marker"><span></span><strong>两条独立选型分支</strong><span></span></div>
-
-            <section class="tree-branch-block tree-branch-intent" aria-labelledby="intentBranchTitle">
-              <header class="tree-branch-head">
-                <div><span>BRANCH A · RUNTIME ROUTING</span><h4 id="intentBranchTitle">Intent Gate</h4></div>
-                <p>独立使用 9K Intent 固定集评测；运行时仅类型判断决定是否进入 Retrieval，关键词不参与当前检索排序。</p>
-              </header>
-              <article class="tree-stage">
-                <div class="tree-stage-index"><span>A1</span><small>INTENT</small></div>
-                <div class="tree-stage-main">
-                  <header><span>Accuracy</span><h4>Intent 模型配置</h4></header>
-                  <div class="tree-options">
-                    <div class="tree-option"><span>Keyword baseline</span><b>50.22%</b></div>
-                    <div class="tree-option"><span>Qwen3-0.6B base</span><b>84.76%</b></div>
-                    <div class="tree-option"><span>Qwen3-1.7B base</span><b>90.47%</b></div>
-                    <div class="tree-option tree-option-selected"><span>Qwen3-0.6B full LoRA</span><b>100.00%</b><small>SELECTED · CHECKPOINT-2000</small></div>
-                    <div class="tree-option"><span>Qwen3-1.7B balanced LoRA</span><b>99.96%</b></div>
-                  </div>
-                </div>
-                <div class="tree-stage-output"><span>BRANCH OUTPUT</span><strong>Qwen3-0.6B full LoRA</strong><small>电商类：转交原始 Query · 闲聊类：直接响应</small></div>
-              </article>
-              <div class="tree-branch-end tree-branch-end-runtime"><span>RUNTIME HANDOFF</span><strong>E-commerce Query → Current Retrieval System</strong></div>
-            </section>
-
-            <section class="tree-branch-block tree-branch-retrieval" aria-labelledby="retrievalBranchTitle">
-              <header class="tree-branch-head">
-                <div><span>BRANCH B · OFFLINE RETRIEVAL SELECTION</span><h4 id="retrievalBranchTitle">完整工具集合检索</h4></div>
-                <p>独立使用 6K Retrieval 项目基准；以下指标不读取 Intent 预测关键词。</p>
-              </header>
-
-              <article class="tree-stage">
-                <div class="tree-stage-index"><span>B1</span><small>CORPUS</small></div>
-                <div class="tree-stage-main">
-                  <header><span>AllHit@10</span><h4>BM25 工具文档字段</h4></header>
-                  <div class="tree-options tree-options-two">
-                    <div class="tree-option"><span>Description only</span><b>55.23%</b></div>
-                    <div class="tree-option tree-option-selected"><span>Full tool document</span><b>55.75%</b><small>SELECTED LEXICAL</small></div>
-                  </div>
-                </div>
-                <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>Full-document BM25</strong><small>保留为词面召回分支</small></div>
-              </article>
-
-              <div class="tree-connector"><i></i><span>↓</span></div>
-
-              <article class="tree-stage">
-                <div class="tree-stage-index"><span>B2</span><small>EMBEDDING</small></div>
-                <div class="tree-stage-main">
-                  <header><span>Zero-shot · AllHit@10</span><h4>公开 Embedding 模型</h4></header>
-                  <div class="tree-options">
-                    <div class="tree-option"><span>bge-base · 768d</span><b>44.30%</b></div>
-                    <div class="tree-option tree-option-selected"><span>bge-large · 1024d</span><b>47.63%</b><small>SELECTED MODEL</small></div>
-                    <div class="tree-option"><span>Qwen3-Embedding-0.6B · 1024d</span><b>40.60%</b></div>
-                  </div>
-                </div>
-                <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>bge-large + FAISS</strong><small>归一化向量 · IndexFlatIP 精确检索</small></div>
-              </article>
-
-              <div class="tree-connector"><i></i><span>↓</span></div>
-
-              <article class="tree-stage">
-                <div class="tree-stage-index"><span>B3</span><small>FUSION</small></div>
-                <div class="tree-stage-main">
-                  <header><span>Method × depth sweep · AllHit@10</span><h4>未微调一阶段融合</h4></header>
-                  <div class="tree-options">
-                    <div class="tree-option"><span>Union · N=30</span><b>62.32%</b></div>
-                    <div class="tree-option"><span>Score Weighted · N=30</span><b>58.20%</b></div>
-                    <div class="tree-option"><span>RRF · N=30</span><b>59.63%</b></div>
-                    <div class="tree-option tree-option-selected"><span>bge-large + BM25 RRF · N=20</span><b>63.67%</b><small>SELECTED</small></div>
-                  </div>
-                </div>
-                <div class="tree-stage-output"><span>COMMON RETRIEVAL SEED</span><strong>RRF · N=20</strong><small>公共模型基线的候选源</small></div>
-              </article>
-
-              <div class="tree-split-marker tree-split-marker-inner"><span></span><strong>从此处形成两条实验分支</strong><span></span></div>
-
-              <section class="tree-subbranch tree-subbranch-public" aria-labelledby="publicBranchTitle">
-                <header class="tree-subbranch-head">
-                  <div><span>BRANCH B-P · PUBLIC BASELINE</span><h5 id="publicBranchTitle">未微调 Reranker 上限</h5></div>
-                  <p>该分支到 78.37% 后结束，不作为任务内 Embedding 训练的输入。</p>
-                </header>
-
-                <article class="tree-stage">
-                  <div class="tree-stage-index"><span>P1</span><small>MODEL</small></div>
-                  <div class="tree-stage-main">
-                    <header><span>Fixed N=20 · AllHit@10</span><h4>通用 Reranker 模型</h4></header>
-                    <div class="tree-options">
-                      <div class="tree-option"><span>bge-reranker-base</span><b>68.83%</b></div>
-                      <div class="tree-option"><span>bge-reranker-large</span><b>69.67%</b></div>
-                      <div class="tree-option"><span>bge-reranker-v2-m3</span><b>65.88%</b></div>
-                      <div class="tree-option"><span>Jina v2 Multilingual</span><b>57.18%</b></div>
-                      <div class="tree-option tree-option-selected"><span>Qwen3-Reranker-0.6B · SentenceTransformers</span><b>77.32%</b><small>SELECTED MODEL</small></div>
-                    </div>
-                  </div>
-                  <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>Qwen3-Reranker-0.6B</strong><small>进入本分支候选深度消融</small></div>
-                </article>
-
-                <div class="tree-connector"><i></i><span>↓</span></div>
-
-                <article class="tree-stage">
-                  <div class="tree-stage-index"><span>P2</span><small>DEPTH</small></div>
-                  <div class="tree-stage-main">
-                    <header><span>每路候选深度 N · AllHit@10</span><h4>Qwen3 Reranker 候选深度</h4></header>
-                    <div class="tree-options">
-                      <div class="tree-option"><span>N=10</span><b>70.58%</b></div>
-                      <div class="tree-option"><span>N=20</span><b>77.32%</b></div>
-                      <div class="tree-option"><span>N=30</span><b>78.05%</b></div>
-                      <div class="tree-option tree-option-selected"><span>N=50</span><b>78.37%</b><small>SELECTED</small></div>
-                    </div>
-                  </div>
-                  <div class="tree-stage-output"><span>BRANCH OUTPUT</span><strong>Qwen3 Reranker · N=50</strong><small>未微调公开方案最高结果</small></div>
-                </article>
-                <div class="tree-branch-end tree-branch-end-reference"><span>REFERENCE BRANCH END</span><strong>Public baseline · 78.37%</strong></div>
-              </section>
-
-              <section class="tree-subbranch tree-subbranch-trained" aria-labelledby="trainedBranchTitle">
-                <header class="tree-subbranch-head">
-                  <div><span>BRANCH B-T · TASK-TRAINED SYSTEM</span><h5 id="trainedBranchTitle">任务内训练与最终配置</h5></div>
-                  <p>从 B2 选定的 bge-large 与 24K Train 重新开始，不继承 Public Reranker 分支输出。</p>
-                </header>
-
-                <article class="tree-stage">
-                  <div class="tree-stage-index"><span>T1</span><small>MNRL</small></div>
-                  <div class="tree-stage-main">
-                    <header><span>9 runs · AllHit@10</span><h4>任务内 Embedding 训练</h4></header>
-                    <div class="tree-options">
-                      <div class="tree-option"><span>bge-base · 6-run sweep best</span><b>94.45%</b></div>
-                      <div class="tree-option"><span>bge-large · e0.5 · lr2e-5</span><b>95.15%</b></div>
-                      <div class="tree-option tree-option-selected"><span>bge-large · e1 · lr2e-5</span><b>95.75%</b><small>SELECTED</small></div>
-                      <div class="tree-option"><span>Qwen3-Embedding · e0.5</span><b>93.58%</b></div>
-                    </div>
-                  </div>
-                  <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>bge-large MNRL · e1</strong><small>当前向量 Retriever</small></div>
-                </article>
-
-                <div class="tree-connector"><i></i><span>↓</span></div>
-
-                <article class="tree-stage">
-                  <div class="tree-stage-index"><span>T2</span><small>SOURCE</small></div>
-                  <div class="tree-stage-main">
-                    <header><span>Train-selected parameters · AllHit@10</span><h4>任务内一阶段配置</h4></header>
-                    <div class="tree-options">
-                      <div class="tree-option"><span>Fine-tuned bge-large Single</span><b>95.75%</b></div>
-                      <div class="tree-option"><span>Embedding + BM25 score weight 0.7</span><b>95.40%</b></div>
-                      <div class="tree-option tree-option-selected"><span>Embedding + BM25 Weighted RRF</span><b>95.95%</b><small>SELECTED</small></div>
-                    </div>
-                  </div>
-                  <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>Tuned Source</strong><small>N=50 · vector 0.95 · rrf_k 5</small></div>
-                </article>
-
-                <div class="tree-connector"><i></i><span>↓</span></div>
-
-                <article class="tree-stage">
-                  <div class="tree-stage-index"><span>T3</span><small>RERANK</small></div>
-                  <div class="tree-stage-main">
-                    <header><span>Pure rerank · AllHit@10</span><h4>任务内 Reranker 训练</h4></header>
-                    <div class="tree-options tree-options-two">
-                      <div class="tree-option"><span>General bge-reranker-base</span><b>70.28%</b></div>
-                      <div class="tree-option tree-option-selected"><span>Task-specific bge-reranker-base</span><b>94.50%</b><small>TRAINED COMPONENT · NOT FINAL OUTPUT</small></div>
-                    </div>
-                  </div>
-                  <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>Task Reranker Rank</strong><small>纯重排低于 Source，仅作为融合候选信号</small></div>
-                </article>
-
-                <div class="tree-connector"><i></i><span>↓</span></div>
-
-                <article class="tree-stage tree-stage-final">
-                  <div class="tree-stage-index"><span>T4</span><small>FINAL</small></div>
-                  <div class="tree-stage-main">
-                    <header><span>Aligned candidate source · AllHit@10</span><h4>最终排序策略</h4></header>
-                    <div class="tree-options">
-                      <div class="tree-option tree-option-retained"><span>Tuned Source reference</span><b>95.95%</b><small>REFERENCE</small></div>
-                      <div class="tree-option"><span>General Reranker + Source RRF</span><b>96.02%</b></div>
-                      <div class="tree-option"><span>Balanced Logistic Residual</span><b>96.30%</b></div>
-                      <div class="tree-option"><span>Task Reranker Only</span><b>94.50%</b></div>
-                      <div class="tree-option tree-option-selected"><span>Source + Task Reranker RRF</span><b>98.30%</b><small>SELECTED</small></div>
-                    </div>
-                    <div class="tree-subdecision">
-                      <span>RESIDUAL IMPLEMENTATIONS</span>
-                      <i>Logistic Regression</i><i class="subdecision-reported">Balanced Logistic · reported</i><i>HistGradientBoosting</i>
-                    </div>
-                  </div>
-                  <div class="tree-stage-output tree-final-output"><span>CURRENT SYSTEM</span><strong>Source + Task Reranker RRF</strong><small>source_weight 0.6 · rrf_k 10</small></div>
-                </article>
-                <div class="tree-branch-end tree-branch-end-final"><span>CURRENT SYSTEM BRANCH END</span><strong>AllHit@10 · 98.30%</strong></div>
-              </section>
-            </section>
-          </div>
-        </section>
       </div>
     </section>
 
@@ -564,6 +344,238 @@
           <article><span class="method-number">03</span><h3>Task Cross-encoder</h3><p>联合编码 Query–Tool Pair，以组内正负样本学习更细粒度的候选交互关系。</p><small>24K GROUPS · 1 + 7</small></article>
           <article><span class="method-number">04</span><h3>Complementary RRF</h3><p>同时利用 Source 的稳定召回与 Reranker 的交互判断，形成最终 Top-K 排序。</p><small>SOURCE 0.6 · RRF_K 10</small></article>
         </div>
+      </div>
+    </section>
+
+    <section class="section decision-trace-section" aria-labelledby="decisionTraceTitle">
+      <div class="wrap">
+        <details class="decision-trace-disclosure">
+          <summary class="decision-map-heading">
+            <div><span>COMPLETE DECISION TRACE</span><h3 id="decisionTraceTitle">方案选择路径</h3></div>
+            <p>从基础设施、召回模型到任务内训练与最终融合，展开查看每个阶段的候选方案、胜出路线及止步原因。</p>
+            <span class="decision-trace-toggle" aria-hidden="true">
+              <span class="decision-trace-open-label">展开完整路径</span>
+              <span class="decision-trace-close-label">收起完整路径</span>
+              <i></i>
+            </span>
+          </summary>
+          <section class="selection-arena vertical-selection-arena" aria-labelledby="selectionArenaTitle">
+            <header class="tree-intro">
+              <div>
+                <span>BRANCHED DECISION MAP</span>
+                <h3 id="selectionArenaTitle">公共基础之后，Intent 与 Retrieval 分别选型</h3>
+                <p>黄色表示当前阶段采用项；分支终点会明确标注“参考基线”或“当前系统”。</p>
+              </div>
+              <div class="tree-legend" aria-label="决策图图例">
+                <span><i class="legend-dot"></i>未采用</span>
+                <span><i class="legend-dot legend-dot-retained"></i>并行保留</span>
+                <span><i class="legend-dot legend-dot-selected"></i>阶段采用</span>
+              </div>
+            </header>
+  
+            <div class="vertical-decision-tree branched-decision-tree">
+              <article class="tree-stage tree-stage-common">
+                <div class="tree-stage-index"><span>00</span><small>DATA</small></div>
+                <div class="tree-stage-main">
+                  <header><span>Common foundation</span><h4>正式数据版本</h4></header>
+                  <div class="tree-options">
+                    <div class="tree-option tree-option-muted"><span>HARD_PHRASES / fixed phrase</span><b>旧版本</b><small>DEPRECATED</small></div>
+                    <div class="tree-option"><span>表达簇隔离</span><b>中间版本</b></div>
+                    <div class="tree-option tree-option-selected"><span>表达簇 + context salt 隔离</span><b>当前版本</b><small>SELECTED</small></div>
+                  </div>
+                </div>
+                <div class="tree-stage-output"><span>COMMON OUTPUT</span><strong>Context-isolated Split</strong><small>24K Train · 6K Retrieval Benchmark · overlap 0</small></div>
+              </article>
+  
+              <div class="tree-split-marker"><span></span><strong>两条独立选型分支</strong><span></span></div>
+  
+              <section class="tree-branch-block tree-branch-intent" aria-labelledby="intentBranchTitle">
+                <header class="tree-branch-head">
+                  <div><span>BRANCH A · RUNTIME ROUTING</span><h4 id="intentBranchTitle">Intent Gate</h4></div>
+                  <p>独立使用 9K Intent 固定集评测；运行时仅类型判断决定是否进入 Retrieval，关键词不参与当前检索排序。</p>
+                </header>
+                <article class="tree-stage">
+                  <div class="tree-stage-index"><span>A1</span><small>INTENT</small></div>
+                  <div class="tree-stage-main">
+                    <header><span>Accuracy</span><h4>Intent 模型配置</h4></header>
+                    <div class="tree-options">
+                      <div class="tree-option"><span>Keyword baseline</span><b>50.22%</b></div>
+                      <div class="tree-option"><span>Qwen3-0.6B base</span><b>84.76%</b></div>
+                      <div class="tree-option"><span>Qwen3-1.7B base</span><b>90.47%</b></div>
+                      <div class="tree-option tree-option-selected"><span>Qwen3-0.6B full LoRA</span><b>100.00%</b><small>SELECTED · CHECKPOINT-2000</small></div>
+                      <div class="tree-option"><span>Qwen3-1.7B balanced LoRA</span><b>99.96%</b></div>
+                    </div>
+                  </div>
+                  <div class="tree-stage-output"><span>BRANCH OUTPUT</span><strong>Qwen3-0.6B full LoRA</strong><small>电商类：转交原始 Query · 闲聊类：直接响应</small></div>
+                </article>
+                <div class="tree-branch-end tree-branch-end-runtime"><span>RUNTIME HANDOFF</span><strong>E-commerce Query → Current Retrieval System</strong></div>
+              </section>
+  
+              <section class="tree-branch-block tree-branch-retrieval" aria-labelledby="retrievalBranchTitle">
+                <header class="tree-branch-head">
+                  <div><span>BRANCH B · OFFLINE RETRIEVAL SELECTION</span><h4 id="retrievalBranchTitle">完整工具集合检索</h4></div>
+                  <p>独立使用 6K Retrieval 项目基准；以下指标不读取 Intent 预测关键词。</p>
+                </header>
+  
+                <article class="tree-stage">
+                  <div class="tree-stage-index"><span>B1</span><small>CORPUS</small></div>
+                  <div class="tree-stage-main">
+                    <header><span>AllHit@10</span><h4>BM25 工具文档字段</h4></header>
+                    <div class="tree-options tree-options-two">
+                      <div class="tree-option"><span>Description only</span><b>55.23%</b></div>
+                      <div class="tree-option tree-option-selected"><span>Full tool document</span><b>55.75%</b><small>SELECTED LEXICAL</small></div>
+                    </div>
+                  </div>
+                  <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>Full-document BM25</strong><small>保留为词面召回分支</small></div>
+                </article>
+  
+                <div class="tree-connector"><i></i><span>↓</span></div>
+  
+                <article class="tree-stage">
+                  <div class="tree-stage-index"><span>B2</span><small>EMBEDDING</small></div>
+                  <div class="tree-stage-main">
+                    <header><span>Zero-shot · AllHit@10</span><h4>公开 Embedding 模型</h4></header>
+                    <div class="tree-options">
+                      <div class="tree-option"><span>bge-base · 768d</span><b>44.30%</b></div>
+                      <div class="tree-option tree-option-selected"><span>bge-large · 1024d</span><b>47.63%</b><small>SELECTED MODEL</small></div>
+                      <div class="tree-option"><span>Qwen3-Embedding-0.6B · 1024d</span><b>40.60%</b></div>
+                    </div>
+                  </div>
+                  <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>bge-large + FAISS</strong><small>归一化向量 · IndexFlatIP 精确检索</small></div>
+                </article>
+  
+                <div class="tree-connector"><i></i><span>↓</span></div>
+  
+                <article class="tree-stage">
+                  <div class="tree-stage-index"><span>B3</span><small>FUSION</small></div>
+                  <div class="tree-stage-main">
+                    <header><span>Method × depth sweep · AllHit@10</span><h4>未微调一阶段融合</h4></header>
+                    <div class="tree-options">
+                      <div class="tree-option"><span>Union · N=30</span><b>62.32%</b></div>
+                      <div class="tree-option"><span>Score Weighted · N=30</span><b>58.20%</b></div>
+                      <div class="tree-option"><span>RRF · N=30</span><b>59.63%</b></div>
+                      <div class="tree-option tree-option-selected"><span>bge-large + BM25 RRF · N=20</span><b>63.67%</b><small>SELECTED</small></div>
+                    </div>
+                  </div>
+                  <div class="tree-stage-output"><span>COMMON RETRIEVAL SEED</span><strong>RRF · N=20</strong><small>公共模型基线的候选源</small></div>
+                </article>
+  
+                <div class="tree-split-marker tree-split-marker-inner"><span></span><strong>从此处形成两条实验分支</strong><span></span></div>
+  
+                <section class="tree-subbranch tree-subbranch-public" aria-labelledby="publicBranchTitle">
+                  <header class="tree-subbranch-head">
+                    <div><span>BRANCH B-P · PUBLIC BASELINE</span><h5 id="publicBranchTitle">未微调 Reranker 上限</h5></div>
+                    <p>该分支到 78.37% 后结束，不作为任务内 Embedding 训练的输入。</p>
+                  </header>
+  
+                  <article class="tree-stage">
+                    <div class="tree-stage-index"><span>P1</span><small>MODEL</small></div>
+                    <div class="tree-stage-main">
+                      <header><span>Fixed N=20 · AllHit@10</span><h4>通用 Reranker 模型</h4></header>
+                      <div class="tree-options">
+                        <div class="tree-option"><span>bge-reranker-base</span><b>68.83%</b></div>
+                        <div class="tree-option"><span>bge-reranker-large</span><b>69.67%</b></div>
+                        <div class="tree-option"><span>bge-reranker-v2-m3</span><b>65.88%</b></div>
+                        <div class="tree-option"><span>Jina v2 Multilingual</span><b>57.18%</b></div>
+                        <div class="tree-option tree-option-selected"><span>Qwen3-Reranker-0.6B · SentenceTransformers</span><b>77.32%</b><small>SELECTED MODEL</small></div>
+                      </div>
+                    </div>
+                    <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>Qwen3-Reranker-0.6B</strong><small>进入本分支候选深度消融</small></div>
+                  </article>
+  
+                  <div class="tree-connector"><i></i><span>↓</span></div>
+  
+                  <article class="tree-stage">
+                    <div class="tree-stage-index"><span>P2</span><small>DEPTH</small></div>
+                    <div class="tree-stage-main">
+                      <header><span>每路候选深度 N · AllHit@10</span><h4>Qwen3 Reranker 候选深度</h4></header>
+                      <div class="tree-options">
+                        <div class="tree-option"><span>N=10</span><b>70.58%</b></div>
+                        <div class="tree-option"><span>N=20</span><b>77.32%</b></div>
+                        <div class="tree-option"><span>N=30</span><b>78.05%</b></div>
+                        <div class="tree-option tree-option-selected"><span>N=50</span><b>78.37%</b><small>SELECTED</small></div>
+                      </div>
+                    </div>
+                    <div class="tree-stage-output"><span>BRANCH OUTPUT</span><strong>Qwen3 Reranker · N=50</strong><small>未微调公开方案最高结果</small></div>
+                  </article>
+                  <div class="tree-branch-end tree-branch-end-reference"><span>REFERENCE BRANCH END</span><strong>Public baseline · 78.37%</strong></div>
+                </section>
+  
+                <section class="tree-subbranch tree-subbranch-trained" aria-labelledby="trainedBranchTitle">
+                  <header class="tree-subbranch-head">
+                    <div><span>BRANCH B-T · TASK-TRAINED SYSTEM</span><h5 id="trainedBranchTitle">任务内训练与最终配置</h5></div>
+                    <p>从 B2 选定的 bge-large 与 24K Train 重新开始，不继承 Public Reranker 分支输出。</p>
+                  </header>
+  
+                  <article class="tree-stage">
+                    <div class="tree-stage-index"><span>T1</span><small>MNRL</small></div>
+                    <div class="tree-stage-main">
+                      <header><span>9 runs · AllHit@10</span><h4>任务内 Embedding 训练</h4></header>
+                      <div class="tree-options">
+                        <div class="tree-option"><span>bge-base · 6-run sweep best</span><b>94.45%</b></div>
+                        <div class="tree-option"><span>bge-large · e0.5 · lr2e-5</span><b>95.15%</b></div>
+                        <div class="tree-option tree-option-selected"><span>bge-large · e1 · lr2e-5</span><b>95.75%</b><small>SELECTED</small></div>
+                        <div class="tree-option"><span>Qwen3-Embedding · e0.5</span><b>93.58%</b></div>
+                      </div>
+                    </div>
+                    <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>bge-large MNRL · e1</strong><small>当前向量 Retriever</small></div>
+                  </article>
+  
+                  <div class="tree-connector"><i></i><span>↓</span></div>
+  
+                  <article class="tree-stage">
+                    <div class="tree-stage-index"><span>T2</span><small>SOURCE</small></div>
+                    <div class="tree-stage-main">
+                      <header><span>Train-selected parameters · AllHit@10</span><h4>任务内一阶段配置</h4></header>
+                      <div class="tree-options">
+                        <div class="tree-option"><span>Fine-tuned bge-large Single</span><b>95.75%</b></div>
+                        <div class="tree-option"><span>Embedding + BM25 score weight 0.7</span><b>95.40%</b></div>
+                        <div class="tree-option tree-option-selected"><span>Embedding + BM25 Weighted RRF</span><b>95.95%</b><small>SELECTED</small></div>
+                      </div>
+                    </div>
+                    <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>Tuned Source</strong><small>N=50 · vector 0.95 · rrf_k 5</small></div>
+                  </article>
+  
+                  <div class="tree-connector"><i></i><span>↓</span></div>
+  
+                  <article class="tree-stage">
+                    <div class="tree-stage-index"><span>T3</span><small>RERANK</small></div>
+                    <div class="tree-stage-main">
+                      <header><span>Pure rerank · AllHit@10</span><h4>任务内 Reranker 训练</h4></header>
+                      <div class="tree-options tree-options-two">
+                        <div class="tree-option"><span>General bge-reranker-base</span><b>70.28%</b></div>
+                        <div class="tree-option tree-option-selected"><span>Task-specific bge-reranker-base</span><b>94.50%</b><small>TRAINED COMPONENT · NOT FINAL OUTPUT</small></div>
+                      </div>
+                    </div>
+                    <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>Task Reranker Rank</strong><small>纯重排低于 Source，仅作为融合候选信号</small></div>
+                  </article>
+  
+                  <div class="tree-connector"><i></i><span>↓</span></div>
+  
+                  <article class="tree-stage tree-stage-final">
+                    <div class="tree-stage-index"><span>T4</span><small>FINAL</small></div>
+                    <div class="tree-stage-main">
+                      <header><span>Aligned candidate source · AllHit@10</span><h4>最终排序策略</h4></header>
+                      <div class="tree-options">
+                        <div class="tree-option tree-option-retained"><span>Tuned Source reference</span><b>95.95%</b><small>REFERENCE</small></div>
+                        <div class="tree-option"><span>General Reranker + Source RRF</span><b>96.02%</b></div>
+                        <div class="tree-option"><span>Balanced Logistic Residual</span><b>96.30%</b></div>
+                        <div class="tree-option"><span>Task Reranker Only</span><b>94.50%</b></div>
+                        <div class="tree-option tree-option-selected"><span>Source + Task Reranker RRF</span><b>98.30%</b><small>SELECTED</small></div>
+                      </div>
+                      <div class="tree-subdecision">
+                        <span>RESIDUAL IMPLEMENTATIONS</span>
+                        <i>Logistic Regression</i><i class="subdecision-reported">Balanced Logistic · reported</i><i>HistGradientBoosting</i>
+                      </div>
+                    </div>
+                    <div class="tree-stage-output tree-final-output"><span>CURRENT SYSTEM</span><strong>Source + Task Reranker RRF</strong><small>source_weight 0.6 · rrf_k 10</small></div>
+                  </article>
+                  <div class="tree-branch-end tree-branch-end-final"><span>CURRENT SYSTEM BRANCH END</span><strong>AllHit@10 · 98.30%</strong></div>
+                </section>
+              </section>
+            </div>
+          </section>
+        </details>
       </div>
     </section>
 
