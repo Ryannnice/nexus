@@ -21,7 +21,7 @@
   <meta name="twitter:description" content="100-Tool Commerce Agent · Project Overview">
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png">
 
-  <link rel="stylesheet" href="project.css?v=8">
+  <link rel="stylesheet" href="project.css?v=9">
   <script defer src="project-data.js?v=6"></script>
   <script defer src="project.js?v=6"></script>
 </head>
@@ -401,14 +401,39 @@
         <p class="eyebrow">SECTION 05</p>
         <div class="section-heading split-heading">
           <h2 id="resultsTitle">实验设计与结果</h2>
-          <p>实验回答四个问题：公开模型能做到什么、任务内表示学习带来多少增益、二阶段方案如何比较，以及哪条链路最终被采用。检索结果统一使用 6,000 条固定 Query 评测。</p>
+          <p>本节先给出最终选型与核心增益，再展开指标对照、完整决策路线和全部运行记录。检索结果统一使用 6,000 条固定 Query；Intent 结果使用独立的 9,000 条固定评测。</p>
         </div>
 
-        <div class="experiment-journey" aria-label="实验决策路径">
-          <article><span>01 · 公开基线</span><h3>公开模型能力</h3><p>比较 BM25、Zero-shot Embedding、混合召回与公开 Reranker。</p><strong>Best A@10 · 78.37%</strong></article>
-          <article><span>02 · 任务内训练</span><h3>Embedding 表示学习</h3><p>用 70,012 个正样本对微调 Embedding，增强 Query–Tool 表示。</p><strong>A@10 · 95.75%</strong></article>
-          <article><span>03 · 二阶段比较</span><h3>重排与融合策略</h3><p>训练 Task Reranker，并对纯重排、轻量校准和名次融合逐项比较。</p><strong>Best exploration · 96.30%</strong></article>
-          <article class="journey-final"><span>04 · 最终方案</span><h3>双路排序融合</h3><p>保留 Source 排名并融合 Task Reranker，获得更完整的 Top-K 工具集合。</p><strong>Final A@10 · 98.30%</strong></article>
+        <div class="result-command-center">
+          <article class="result-verdict">
+            <p class="eyebrow">FINAL DECISION</p>
+            <h3>不让 Reranker 覆盖强 Source，<br>而是保留两路排名再融合。</h3>
+            <p>任务内 Embedding 已建立稳定候选边界；Task Reranker 提供细粒度交互信号。最终使用 Weighted RRF 吸收增益，同时避免纯重排破坏原有正确前缀。</p>
+            <div class="result-verdict-tags">
+              <span>SOURCE WEIGHT 0.6</span>
+              <span>RRF_K 10</span>
+              <span>6K FIXED QUERIES</span>
+            </div>
+          </article>
+
+          <div class="result-main-score">
+            <span>FINAL ALLHIT@10</span>
+            <strong>98.30<small>%</small></strong>
+            <p>Source + Task Reranker RRF</p>
+            <div><b>SELECTED</b><span>当前最终链路</span></div>
+          </div>
+
+          <dl class="result-scoreboard">
+            <div><dt>95.95%</dt><dd>Tuned Source</dd><span>进入决赛的强基线</span></div>
+            <div><dt>96.30%</dt><dd>Residual</dd><span>最强探索校准</span></div>
+            <div class="scoreboard-gain"><dt>+2.35 pp</dt><dd>Final vs Source</dd><span>主要选型增益</span></div>
+            <div><dt>99.87%</dt><dd>Final AllHit@30</dd><span>候选覆盖上限</span></div>
+          </dl>
+        </div>
+
+        <div class="result-explorer-head">
+          <div><span>01 · CORE COMPARISON</span><h3>核心结果，不混入所有运行明细</h3></div>
+          <p>切换指标观察公开模型与任务内方案；完整参数和逐 Run 结果放在下方实验档案。</p>
         </div>
 
         <div class="metric-switch" id="metricSwitch" role="group" aria-label="切换检索指标">
@@ -428,7 +453,26 @@
           </article>
         </div>
 
-        <section class="selection-arena" aria-labelledby="selectionArenaTitle">
+        <details class="decision-atlas-disclosure">
+          <summary>
+            <div class="disclosure-index">02</div>
+            <div class="disclosure-copy">
+              <span>COMPLETE DECISION TRACE</span>
+              <h3>完整实验决策谱系</h3>
+              <p>从数据契约、Intent、FAISS 和 Embedding，一直追踪到 Residual 与最终 RRF。</p>
+            </div>
+            <div class="compact-decision-route" aria-label="六阶段决策路线">
+              <span><i>00</i>评测契约</span><b>→</b>
+              <span><i>01</i>Intent</span><b>→</b>
+              <span><i>02</i>双索引</span><b>→</b>
+              <span><i>03</i>Embedding</span><b>→</b>
+              <span><i>04</i>Reranker</span><b>→</b>
+              <span class="route-selected"><i>05</i>Final RRF</span>
+            </div>
+            <div class="disclosure-action"><span>展开完整路线</span><i>+</i></div>
+          </summary>
+
+          <section class="selection-arena" aria-labelledby="selectionArenaTitle">
           <header class="selection-arena-head">
             <div>
               <p class="eyebrow">EXPERIMENT DECISION ATLAS</p>
@@ -716,7 +760,8 @@
             <div><span>为什么不采用</span><p>其 AllHit@10 比最终 RRF 低 <strong>2.00 pp</strong>，没有充分保留 Source 与 Task Reranker 的互补优势。</p></div>
             <strong class="verdict-stamp">VALUABLE ABLATION<br>NOT THE MAIN RESULT</strong>
           </footer>
-        </section>
+          </section>
+        </details>
 
         <div class="result-footnotes">
           <p><span>01</span>AllHit@6 观察更紧凑的执行前缀，AllHit@10 是项目主要短名单指标。</p>
@@ -724,7 +769,19 @@
           <p><span>03</span>四项指标共同呈现召回完整性与前排质量，避免只看单一 Top-K 结果。</p>
         </div>
 
-        <div class="result-table-section">
+        <details class="evidence-disclosure">
+          <summary>
+            <div class="disclosure-index">03</div>
+            <div class="disclosure-copy">
+              <span>ROUTE-CHANGING EVIDENCE</span>
+              <h3>关键决策证据表</h3>
+              <p>只查看真正改变技术路线的 11 个节点与采用结论。</p>
+            </div>
+            <div class="evidence-summary-metrics"><span>11 DECISIONS</span><span>4 METRICS</span></div>
+            <div class="disclosure-action"><span>展开决策表</span><i>+</i></div>
+          </summary>
+
+          <div class="result-table-section">
           <div class="result-table-head">
             <div><p class="eyebrow">方案选择</p><h3>关键决策表</h3></div>
             <p>只保留改变路线选择的节点 · 完整分组结果见下方</p>
@@ -747,10 +804,11 @@
               </tbody>
             </table>
           </div>
-        </div>
+          </div>
+        </details>
 
         <details class="full-results">
-          <summary><span>补充实验表</span><strong>查看 39 条公开基线、训练 Run 与二阶段结果</strong></summary>
+          <summary><span>04 · COMPLETE RUN LOG</span><strong>查看 39 条公开基线、训练 Run 与二阶段结果</strong></summary>
           <div class="full-results-body">
             <div class="full-results-copy">
               <h3>按实验问题分组，而不是混成一张总榜</h3>
@@ -857,7 +915,7 @@
 
         <div class="intent-result-block">
           <div class="intent-copy">
-            <p class="eyebrow">意图识别结果</p>
+            <p class="eyebrow">05 · PARALLEL RESULT · INTENT GATE</p>
             <h3>Intent Gate</h3>
             <p>Keyword baseline Accuracy 为 50.22%；Qwen3 基座已经具备初始识别能力，LoRA 后 0.6B 与 1.7B 模型分别达到 100.00% 和 99.96%。后续数据建设将重点扩展真实口语、错别字与跨领域边界表达。</p>
             <div class="intent-callout"><strong>1.0000</strong><span>Qwen3-0.6B full LoRA<br>Accuracy / Macro-F1</span></div>
