@@ -1,7 +1,7 @@
-/* Generated from /renyuanliu/Agent/PROJECT artifacts on 2026-07-15. */
+/* Generated from /renyuanliu/Agent/PROJECT artifacts on 2026-07-17. */
 window.PROJECT_DATA = {
   "snapshot": {
-    "date": "2026-07-15",
+    "date": "2026-07-17",
     "label": "CURRENT EXPERIMENT SNAPSHOT",
     "catalogVersion": "2026-07-06",
     "scope": "100 个已知工具的合成闭集离线评测",
@@ -1295,7 +1295,8 @@ window.PROJECT_DATA = {
           "a10": 0.4763,
           "a30": 0.7347,
           "mrr": 0.569,
-          "note": "通用语义起点"
+          "note": "通用语义起点",
+          "a6": 0.3823
         },
         {
           "label": "BM25",
@@ -1303,7 +1304,8 @@ window.PROJECT_DATA = {
           "a10": 0.5575,
           "a30": 0.7595,
           "mrr": 0.7684,
-          "note": "词面信号基线"
+          "note": "词面信号基线",
+          "a6": 0.494
         },
         {
           "label": "BM25 + bge-large RRF",
@@ -1311,7 +1313,8 @@ window.PROJECT_DATA = {
           "a10": 0.6367,
           "a30": 0.8573,
           "mrr": 0.7119,
-          "note": "互补召回 · N=20"
+          "note": "互补召回 · N=20",
+          "a6": 0.5083
         },
         {
           "label": "Qwen3-Reranker-0.6B",
@@ -1319,7 +1322,8 @@ window.PROJECT_DATA = {
           "a10": 0.7837,
           "a30": 0.9283,
           "mrr": 0.886228,
-          "note": "公开模型上限 · N=50"
+          "note": "已测公开模型最佳 · N=50",
+          "a6": 0.6748
         }
       ],
       "trained": [
@@ -1329,7 +1333,8 @@ window.PROJECT_DATA = {
           "a10": 0.4763,
           "a30": 0.7347,
           "mrr": 0.569,
-          "note": "通用能力起点"
+          "note": "通用能力起点",
+          "a6": 0.3823
         },
         {
           "label": "Fine-tuned bge-large",
@@ -1337,7 +1342,8 @@ window.PROJECT_DATA = {
           "a10": 0.9575,
           "a30": 0.9972,
           "mrr": 0.9668,
-          "note": "任务内表示学习"
+          "note": "任务内表示学习",
+          "a6": 0.858
         },
         {
           "label": "Tuned Hybrid Source",
@@ -1345,7 +1351,8 @@ window.PROJECT_DATA = {
           "a10": 0.9595,
           "a30": 0.9975,
           "mrr": 0.966826,
-          "note": "稳定一阶段候选源"
+          "note": "稳定一阶段候选源",
+          "a6": 0.8578
         },
         {
           "label": "Source + Task Reranker",
@@ -1353,7 +1360,8 @@ window.PROJECT_DATA = {
           "a10": 0.983,
           "a30": 0.998667,
           "mrr": 0.967954,
-          "note": "双路排序互补"
+          "note": "双路排序互补",
+          "a6": 0.9067
         }
       ]
     },
@@ -1547,7 +1555,7 @@ window.PROJECT_DATA = {
       "id": "multi_test_00013",
       "kind": "success",
       "label": "完整召回 · 4 工具",
-      "query": "准备送生日礼物，现在围绕车载充电器升级版有几件事：先我需要查包裹可能丢了该走什么流程，再不用看别的，确认购买记录包裹轨迹的下一步这一块帮我核实，另外主要想确认确认单笔购买记录的这件东西的用户侧结果，顺带说明确认单笔购买记录的这件东西的时间节点，然后根据这件东西的时间节点有没有问题，给我明确答复。",
+      "query": "请帮我确认这个车载充电器订单的详情、物流轨迹和预计送达时间；如果包裹疑似丢失，也告诉我该怎么处理。",
       "gold": [
         "get_lost_package_process",
         "get_order_logistics",
@@ -1565,7 +1573,9 @@ window.PROJECT_DATA = {
         "get_pickup_points",
         "select_delivery_slot",
         "get_aftersale_ticket_status"
-      ]
+      ],
+      "sourceQuery": "准备送生日礼物，现在围绕车载充电器升级版有几件事：先我需要查包裹可能丢了该走什么流程，再不用看别的，确认购买记录包裹轨迹的下一步这一块帮我核实，另外主要想确认确认单笔购买记录的这件东西的用户侧结果，顺带说明确认单笔购买记录的这件东西的时间节点，然后根据这件东西的时间节点有没有问题，给我明确答复。",
+      "displayMode": "condensed"
     },
     {
       "id": "single_test_035_011",
@@ -1584,13 +1594,15 @@ window.PROJECT_DATA = {
         "calc_discount",
         "apply_coupon"
       ],
-      "note": "候选池已包含正确工具，但没有进入 Top-6。"
+      "note": "候选池已包含正确工具，但没有进入 Top-6。",
+      "sourceQuery": "我准备给保温杯大容量付款前，我需要用这张权益看看能少付多少，别绕太多。",
+      "displayMode": "original"
     },
     {
       "id": "multi_test_00006",
       "kind": "capacity",
       "label": "六工具容量边界",
-      "query": "关于冲锋衣轻便款，第一步请帮我找回刚看过的东西；接着查我关注降价的商品；同时核实基于画像的推荐、用户身高、偏好类目，并更新尺码偏好和试穿反馈。",
+      "query": "请找回我刚浏览和收藏的商品，根据用户画像推荐相关商品，并查询与更新我的尺码档案。",
       "gold": [
         "get_browsing_history",
         "get_favorite_items",
@@ -1608,7 +1620,9 @@ window.PROJECT_DATA = {
         "get_recommendation_feed",
         "get_user_profile"
       ],
-      "note": "get_user_profile 位于 rank 7；Top-6 容量与排序边界同时出现。"
+      "note": "get_user_profile 位于 rank 7；Top-6 容量与排序边界同时出现。",
+      "sourceQuery": "关于冲锋衣轻便款，第一步请帮我找回刚看过的东西；接着查我关注降价的商品；同时核实基于画像的推荐、用户身高、偏好类目，并更新尺码偏好和试穿反馈。",
+      "displayMode": "condensed"
     }
   ]
 };

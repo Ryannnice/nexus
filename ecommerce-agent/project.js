@@ -289,7 +289,11 @@
     root.addEventListener('click', function (event) {
       var button = event.target.closest('button[data-metric]');
       if (!button) return;
-      $$('button', root).forEach(function (item) { item.classList.toggle('active', item === button); });
+      $('button', root).forEach(function (item) {
+        var active = item === button;
+        item.classList.toggle('active', active);
+        item.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
       renderRetrievalCharts(button.getAttribute('data-metric'));
     });
   }
@@ -359,7 +363,7 @@
     var tabs = $('#caseTabs');
     if (!tabs) return;
     tabs.innerHTML = data.cases.map(function (item, index) {
-      return '<button type="button" role="tab" aria-selected="' + (index === 0 ? 'true' : 'false') + '" class="' + (index === 0 ? 'active' : '') + '" data-case="' + index + '">' + escapeHtml(item.label) + '</button>';
+      return '<button type="button" role="tab" id="case-tab-' + index + '" aria-controls="caseViewer" aria-selected="' + (index === 0 ? 'true' : 'false') + '" tabindex="' + (index === 0 ? '0' : '-1') + '" class="' + (index === 0 ? 'active' : '') + '" data-case="' + index + '">' + escapeHtml(item.label) + '</button>';
     }).join('');
     tabs.addEventListener('click', function (event) {
       var button = event.target.closest('button[data-case]');
@@ -368,8 +372,19 @@
         var active = item === button;
         item.classList.toggle('active', active);
         item.setAttribute('aria-selected', active ? 'true' : 'false');
+        item.tabIndex = active ? 0 : -1;
       });
       renderCase(Number(button.getAttribute('data-case')));
+    });
+    tabs.addEventListener('keydown', function (event) {
+      var current = event.target.closest('button[data-case]');
+      if (!current || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      var buttons = $('button[data-case]', tabs);
+      var currentIndex = buttons.indexOf(current);
+      var nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : event.key === 'ArrowLeft' ? (currentIndex - 1 + buttons.length) % buttons.length : (currentIndex + 1) % buttons.length;
+      buttons[nextIndex].focus();
+      buttons[nextIndex].click();
     });
     renderCase(0);
   }
@@ -380,6 +395,9 @@
     if (!root || !item) return;
     var gold = new Set(item.gold);
     var note = item.note || '全部 Gold Tools 位于前四名，严格集合覆盖成功。';
+    var displayLabel = item.displayMode === 'condensed' ? 'CONDENSED DISPLAY' : 'ORIGINAL QUERY';
+    root.setAttribute('role', 'tabpanel');
+    root.setAttribute('aria-labelledby', 'case-tab-' + index);
     var rows = item.prediction.map(function (toolId, rank) {
       var isGold = gold.has(toolId);
       var outside = rank >= 6;
@@ -387,7 +405,7 @@
         '<b>' + String(rank + 1).padStart(2, '0') + '</b><span>' + escapeHtml(toolId) + '</span><em>' + (isGold ? (outside ? 'GOLD · OUTSIDE K=6' : 'GOLD') : (outside ? 'OUTSIDE K=6' : 'CANDIDATE')) + '</em></div>';
     }).join('');
     root.innerHTML = '<div class="case-query-panel">' +
-      '<div class="case-meta"><span>FROZEN TEST · ' + escapeHtml(item.id) + '</span><strong>' + escapeHtml(item.label) + '</strong></div>' +
+      '<div class="case-meta"><span>FROZEN PROJECT BENCHMARK · ' + escapeHtml(item.id) + ' · ' + displayLabel + '</span><strong>' + escapeHtml(item.label) + '</strong></div>' +
       '<blockquote>“' + escapeHtml(item.query) + '”</blockquote>' +
       '<p class="case-note">' + escapeHtml(note) + '</p>' +
       '</div>' +
