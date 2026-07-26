@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>100-Tool Commerce Agent — 多意图工具集合检索项目</title>
-  <meta name="description" content="100 个已知工具合成闭集上的离线选择研究：记录 Intent、检索、重排与融合的完整决策路径、结果和适用边界。">
+  <title>100-Tool Commerce Agent — 从意图识别、工具检索到静态有序选链</title>
+  <meta name="description" content="100 个已知工具合成闭集上的累计实验项目：从 Intent Gate、检索与重排，推进到 Qwen3-4B/8B 的静态有序工具链选择。">
   <meta name="theme-color" content="#000000">
   <link rel="canonical" href="https://ryannnice.github.io/nexus/ecommerce-agent/">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="让复杂电商请求，一次找齐所需工具。">
-  <meta property="og:description" content="100 个已知工具合成闭集上的离线研究；固定项目基准 AllHit@10 98.30%。">
+  <meta property="og:title" content="让复杂电商请求，先找齐工具，再排对工具链。">
+  <meta property="og:description" content="100 工具累计实验：Intent 100.00%，检索 AllHit@10 98.30%，静态选链 SetEM / TraceEM 99.00%。">
   <meta property="og:url" content="https://ryannnice.github.io/nexus/ecommerce-agent/">
   <meta property="og:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="让复杂电商请求，一次找齐所需工具。">
-  <meta name="twitter:description" content="100-Tool Commerce Agent · Project Overview">
+  <meta name="twitter:title" content="让复杂电商请求，先找齐工具，再排对工具链。">
+  <meta name="twitter:description" content="100-Tool Commerce Agent · Assignments 1–3">
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png">
 
-  <link rel="stylesheet" href="project.css?v=13">
-  <script defer src="project-data.js?v=7"></script>
-  <script defer src="project.js?v=7"></script>
+  <link rel="stylesheet" href="project.css?v=14">
+  <script defer src="project-data.js?v=8"></script>
+  <script defer src="project.js?v=8"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">跳到主要内容</a>
@@ -40,8 +40,9 @@
         <a href="#toolspace">工具体系</a>
         <a href="#system">技术路线</a>
         <a href="#data">数据基础</a>
-        <a href="#results">实验结果</a>
+        <a href="#results">阶段结果</a>
         <a href="#analysis">误差分析</a>
+        <a href="#assignment3">有序选链</a>
         <a href="#limits">成果规划</a>
         <a class="nav-github" href="#evidence">工程资产</a>
       </nav>
@@ -56,31 +57,31 @@
     <section class="hero" id="top" aria-labelledby="heroTitle">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="hero-eyebrow"><span class="corner-square" aria-hidden="true"></span>100-TOOL COMMERCE AGENT · PROJECT OVERVIEW</p>
-          <h1 id="heroTitle">让复杂电商请求，<br><span>一次找齐所需工具。</span></h1>
-          <p class="hero-lead">面向 100 个已知工具的离线选择问题：先判定请求是否需要工具，再在完整目录中召回、重排与融合，为单工具和多工具请求返回候选集合。</p>
+          <p class="hero-eyebrow"><span class="corner-square" aria-hidden="true"></span>100-TOOL COMMERCE AGENT · ASSIGNMENTS 1–3</p>
+          <h1 id="heroTitle">让复杂电商请求，<br><span>先找齐工具，再排对工具链。</span></h1>
+          <p class="hero-lead">面向 100 个已知工具的累计离线研究：先用 Intent Gate 分流请求，再以检索与重排建立高覆盖候选集，最新阶段进一步输出所需工具的有序 ID 轨迹。</p>
 
           <div class="scope-badge">
             <span class="scope-dot" aria-hidden="true"></span>
-            <div><strong>项目成果快照</strong><span>100 工具能力底座 · 30K 轨迹 · 二阶段检索</span></div>
+            <div><strong>三阶段项目进度</strong><span>数据与 Intent · 检索与重排 · 静态有序选链</span></div>
           </div>
 
           <div class="hero-actions">
             <a class="btn btn-primary" href="#abstract">查看项目摘要 <span aria-hidden="true">↓</span></a>
-            <a class="btn btn-outline-on-dark" href="#results">查看实验结果</a>
+            <a class="btn btn-outline-on-dark" href="#assignment3">查看最新进展</a>
           </div>
 
           <dl class="hero-stats">
-            <div><dt>100</dt><dd>结构化工具能力</dd></div>
-            <div><dt>30K</dt><dd>单 / 多工具轨迹</dd></div>
-            <div><dt>70K+</dt><dd>Embedding 正样本对</dd></div>
-            <div class="hero-stat-primary"><dt>98.30%</dt><dd>最终 AllHit@10</dd></div>
+            <div><dt>100</dt><dd>固定工具空间</dd></div>
+            <div><dt>1.0000</dt><dd>作业 1 · Intent Accuracy · 9K</dd></div>
+            <div><dt>98.30%</dt><dd>作业 2 · AllHit@10 · 6K</dd></div>
+            <div class="hero-stat-primary"><dt>99.00%</dt><dd>作业 3 · SetEM / TraceEM · 1K</dd></div>
           </dl>
         </div>
 
         <div class="hero-demo" id="heroDemo" role="group" aria-label="动态测试案例轮播">
           <div class="demo-chrome">
-            <div class="demo-title"><span class="chrome-square"></span>EXAMPLE TRACE</div>
+            <div class="demo-title"><span class="chrome-square"></span>ASSIGNMENT 2 · RETRIEVAL TRACE</div>
             <div class="demo-chrome-actions">
               <div class="demo-status"><span></span><b id="heroDemoStatus">SINGLE-TOOL · 1 / 1</b></div>
               <button class="demo-pause" id="heroDemoPause" type="button" aria-pressed="false" aria-label="暂停案例轮播"><span aria-hidden="true">Ⅱ</span></button>
@@ -111,7 +112,7 @@
             <p class="demo-footnote" id="heroDemoFootnote">固定检索集回放 · <strong>single_test_048_000</strong></p>
             <div class="demo-trace-controls">
               <button type="button" id="heroTracePrev" aria-label="上一个案例">←</button>
-              <div class="demo-trace-dots" id="heroTraceDots" aria-label="选择案例"></div>
+              <div class="demo-trace-dots" id="heroTraceDots" role="group" aria-label="选择案例"></div>
               <span id="heroTraceCounter">01 / 09</span>
               <button type="button" id="heroTraceNext" aria-label="下一个案例">→</button>
             </div>
@@ -123,11 +124,11 @@
     <aside class="scope-strip" aria-label="项目概览">
       <div class="wrap scope-strip-inner">
         <strong>PROJECT SNAPSHOT</strong>
-        <span>8 个业务域</span>
-        <span>100 项工具能力</span>
-        <span>Intent + Retrieval</span>
-        <span>Embedding + Reranker</span>
-        <span>Snapshot · 2026-07-17</span>
+        <span>Assignment 1 · Intent</span>
+        <span>Assignment 2 · Retrieval</span>
+        <span>Assignment 3 · Ordered Trace</span>
+        <span>100 Tools · 8 Domains</span>
+        <span>Snapshot · 2026-07-26</span>
       </div>
     </aside>
 
@@ -137,25 +138,25 @@
         <div class="abstract-brief">
           <div>
             <h2 id="abstractTitle">项目摘要</h2>
-            <p>本项目面向 100 个已知电商工具，目标是为单意图与多意图 Query 返回完整的 Top-K 候选工具集合。系统先用 Intent Gate 判断请求是否进入工具检索，再以 BM25、任务内微调 Embedding、Task Reranker 和加权 RRF 完成候选排序。</p>
+            <p>本项目围绕同一份 100 工具 Catalog 连续完成三阶段实验：作业 1 构建数据并训练 Intent Gate；作业 2 以 BM25、任务内微调 Embedding、Task Reranker 和 RRF 返回高覆盖 Top-K；作业 3 在完整目录或 RAG@10 候选上生成有序工具 ID 轨迹。</p>
           </div>
           <div class="abstract-brief-result">
-            <span>MAIN RESULT</span>
-            <strong>AllHit@10 · 98.30%</strong>
-            <p>结果来自被多条路线共同使用的 6K 合成闭集项目基准；它不是一次性 final holdout。系统当前只输出工具 ID，不评测参数、调用顺序或执行成功率。</p>
+            <span>LATEST PROGRESS · ASSIGNMENT 3</span>
+            <strong>SetEM / TraceEM · 99.00%</strong>
+            <p>Qwen3-4B SFT + RAG@10 在独立冻结 API 原生 1K 上取得该结果。项目已评测静态工具 ID 顺序，但仍不执行真实工具，也不报告参数、返回值或执行成功率。</p>
           </div>
         </div>
 
         <div class="abstract-definition">
-          <div><span>PRIMARY METRIC</span><strong>AllHit@10</strong></div>
-          <p>一条 Query 的全部 Gold Tools 都进入 Top-10 才记为成功；只命中部分工具仍记为失败。</p>
+          <div><span>STAGE METRICS</span><strong>Accuracy → AllHit@K → SetEM / TraceEM</strong></div>
+          <p>三个阶段分别评测请求分流、候选完整覆盖和精确有序轨迹；它们使用不同测试集，不能合并成一个“端到端成功率”。</p>
         </div>
 
-        <div class="abstract-kpis" aria-label="项目摘要指标">
-          <div><span>TOOL SPACE</span><strong>100</strong><small>固定工具文档</small></div>
-          <div><span>TRAIN / FROZEN BENCHMARK</span><strong>24K / 6K</strong><small>表达簇与上下文隔离</small></div>
-          <div><span>TUNED SOURCE</span><strong>95.95%</strong><small>AllHit@10</small></div>
-          <div class="abstract-kpi-primary"><span>FINAL ALLHIT@10</span><strong>98.30%</strong><small>Source + Task Reranker RRF</small></div>
+        <div class="abstract-kpis" role="group" aria-label="项目摘要指标">
+          <div><span>TOOL SPACE</span><strong>100</strong><small>固定工具文档 · 8 个业务域</small></div>
+          <div><span>ASSIGNMENT 1</span><strong>1.0000</strong><small>Intent Accuracy / Macro-F1 · 9K</small></div>
+          <div><span>ASSIGNMENT 2</span><strong>98.30%</strong><small>Retrieval AllHit@10 · 6K</small></div>
+          <div class="abstract-kpi-primary"><span>ASSIGNMENT 3</span><strong>99.00%</strong><small>4B SFT RAG · SetEM / TraceEM · 1K</small></div>
         </div>
 
 
@@ -169,10 +170,11 @@
       <div class="wrap">
         <p class="eyebrow">SECTION 01</p>
         <div class="section-heading split-heading">
-          <h2 id="problemTitle">项目背景与目标</h2>
-          <p>真实电商请求常把订单、物流、优惠与售后组合在同一句话中。本项目面向 100 个已知工具，先判断请求是否需要工具，再为电商类请求输出完整的 Top-K 工具集合，支撑后续 Agent 执行。</p>
+          <h2 id="problemTitle">项目背景与三阶段目标</h2>
+          <p>真实电商请求常把订单、物流、优惠与售后组合在同一句话中。本项目沿“先分流、再找齐、后排序”的路径推进：从识别电商请求，到覆盖全部必要工具，再生成符合业务依赖的静态有序工具链。</p>
         </div>
 
+        <p class="phase-context-label">ASSIGNMENT 2 · RETRIEVAL METRIC</p>
         <div class="strict-metric-grid">
           <article class="metric-example metric-example-fail">
             <div class="metric-example-head">
@@ -221,6 +223,7 @@
           <article><span>01</span><h3>按请求类型智能分流</h3><p>入口 Intent Gate 区分电商诉求与开放闲聊，把计算集中在真正需要工具的请求上。</p></article>
           <article><span>02</span><h3>以完整集合覆盖为目标</h3><p>单工具与最多六工具请求采用统一口径，确保任务链所需能力全部进入候选。</p></article>
           <article><span>03</span><h3>分阶段提升候选质量</h3><p>先用混合检索建立高覆盖候选，再以任务内 Reranker 补充 Query–Tool 交互判断。</p></article>
+          <article><span>04</span><h3>从候选集合生成有序轨迹</h3><p>Qwen3-4B/8B 在 RAG@10 或完整 100 工具视图下选择精确工具集合，并按照用户要求与依赖关系排序。</p></article>
         </div>
       </div>
     </section>
@@ -260,19 +263,20 @@
         <p class="eyebrow">SECTION 03</p>
         <div class="section-heading split-heading">
           <h2 id="systemTitle">技术路线</h2>
-          <p>系统由两条串联链路组成：Intent Gate 负责请求分流；电商类 Query 进入混合召回、任务内重排和双路排序融合，最终输出 Top-K 工具集合。</p>
+          <p>系统由三层能力串联：Intent Gate 负责请求分流；检索层完成召回、任务内重排和双路融合；静态规划层在 RAG@10 或完整 100 工具视图下输出有序工具 ID 轨迹。</p>
         </div>
 
-        <div class="route-phases" aria-label="技术路线阶段">
+        <div class="route-phases" role="group" aria-label="技术路线阶段">
           <div><span>01</span><strong>理解请求</strong><small>Intent Gate</small></div>
           <div><span>02</span><strong>召回候选</strong><small>BM25 + Embedding</small></div>
-          <div><span>03</span><strong>交互评分</strong><small>Task Reranker</small></div>
-          <div><span>04</span><strong>融合输出</strong><small>Source / Reranker RRF</small></div>
+          <div><span>03</span><strong>融合排序</strong><small>Task Reranker + RRF</small></div>
+          <div><span>04</span><strong>静态规划</strong><small>Qwen3 4B / 8B</small></div>
+          <div><span>05</span><strong>有序输出</strong><small>Tool ID Trace</small></div>
         </div>
 
         <article class="pipeline-lane intent-lane">
           <header>
-            <div><span>LANE A · INTENT</span><h3>入口意图分流</h3></div>
+            <div><span>LANE A · ASSIGNMENT 1</span><h3>入口意图分流</h3></div>
             <p>9,000 条合成冻结集 · Accuracy 100.00%</p>
           </header>
           <div class="pipeline-row pipeline-row-intent">
@@ -288,8 +292,8 @@
 
         <article class="pipeline-lane retrieval-lane">
           <header>
-            <div><span>LANE B · RETRIEVAL</span><h3>完整工具集合检索</h3></div>
-            <p>6,000 条冻结项目基准 · 最终 AllHit@10 98.30%</p>
+            <div><span>LANE B · ASSIGNMENT 2</span><h3>完整工具集合检索</h3></div>
+            <p>6,000 条冻结项目基准 · 检索层 AllHit@10 98.30%</p>
           </header>
           <div class="retrieval-map-v2">
             <div class="pipeline-node node-input retrieval-query"><small>INPUT</small><strong>E-commerce Query</strong><span>单工具 / 多工具请求</span></div>
@@ -325,12 +329,40 @@
             </div>
 
             <div class="pipeline-arrow" aria-hidden="true">→</div>
-            <div class="pipeline-node node-output retrieval-output"><small>OUTPUT</small><strong>Top-K Tool Set</strong><span>AllHit@10 · 98.30%</span></div>
+            <div class="pipeline-node node-output retrieval-output"><small>RETRIEVAL OUTPUT</small><strong>Top-K Tool Set</strong><span>A2 调优检索器 · 6K 98.30% · A3 正式 1K 100.00%</span></div>
 
-            <div class="source-bypass" aria-label="Source 排名同时进入最终融合">
+            <div class="source-bypass" role="group" aria-label="Source 排名同时进入最终融合">
               <span>Source Rank 保留</span><i></i><strong>同步进入最终 RRF</strong>
             </div>
           </div>
+        </article>
+
+        <div class="integration-bridge integration-bridge-planner"><span>Top-10 候选进入静态规划；Wo-RAG 对照分支直接读取完整 100 工具目录</span></div>
+
+        <article class="pipeline-lane planner-lane">
+          <header>
+            <div><span>LANE C · ASSIGNMENT 3</span><h3>静态有序工具链规划</h3></div>
+            <p>独立冻结 API 原生 1,000 条 · 4B SFT RAG SetEM / TraceEM 99.00%</p>
+          </header>
+          <div class="planner-map">
+            <div class="planner-inputs">
+              <div><small>RAG@10</small><strong>调优检索候选</strong><span>10 个工具 · 正式 1K AllHit@10 100%</span></div>
+              <div><small>WO-RAG</small><strong>完整 Catalog</strong><span>100 个工具 · 不等于 query-only</span></div>
+            </div>
+            <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
+            <div class="planner-model">
+              <small>STATIC PLANNER</small>
+              <strong>Qwen3-4B / Qwen3-8B</strong>
+              <span>Base → SFT → SFT + DPO</span>
+            </div>
+            <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
+            <div class="planner-output">
+              <small>ORDERED OUTPUT</small>
+              <strong>Tool ID Trace</strong>
+              <span>SetEM · TraceEM · micro-F1 · 严格输出有效率</span>
+            </div>
+          </div>
+          <p class="planner-boundary">该层评测的是静态工具 ID 选择与顺序，不执行真实工具，也不评测参数、返回值、失败恢复或多轮状态。</p>
         </article>
 
         <div class="method-grid">
@@ -338,6 +370,8 @@
           <article><span class="method-number">02</span><h3>Bi-encoder + MNRL</h3><p>用 70,012 个正对学习 Query–Tool 表示；当前训练入口不直接读取显式负例文件。</p><small>70,012 POSITIVE PAIRS</small></article>
           <article><span class="method-number">03</span><h3>Task Cross-encoder</h3><p>联合编码 Query–Tool Pair，以组内正负样本学习更细粒度的候选交互关系。</p><small>24K GROUPS · 1 + 7</small></article>
           <article><span class="method-number">04</span><h3>Weighted RRF</h3><p>保留 Source 与 Task Reranker 两份名次，以训练集选定的权重和 rrf_k 生成最终排序。</p><small>SOURCE 0.6 · RRF_K 10</small></article>
+          <article><span class="method-number">05</span><h3>Toolchain SFT</h3><p>只用 54K 候选视图训练 4B/8B 模型；正式评测再检验候选输入与从未参与 SFT 的完整目录输入。</p><small>54K · FULL-CATALOG TRAIN 0</small></article>
+          <article><span class="method-number">06</span><h3>Preference DPO</h3><p>使用 5K 对真实模型错误构建偏好监督，检验其对静态主指标与顺序鲁棒性的影响。</p><small>5K REAL ERRORS · BETA 0.05</small></article>
         </div>
       </div>
     </section>
@@ -346,8 +380,8 @@
       <div class="wrap">
         <details class="decision-trace-disclosure">
           <summary class="decision-map-heading">
-            <div><span>COMPLETE DECISION TRACE</span><h3 id="decisionTraceTitle">方案选择路径</h3></div>
-            <p>从基础设施、召回模型到任务内训练与最终融合，展开查看每个阶段的候选方案、胜出路线及止步原因。</p>
+            <span class="decision-map-title"><span>COMPLETE DECISION TRACE</span><strong id="decisionTraceTitle">方案选择路径</strong></span>
+            <span class="decision-map-description">从基础设施、召回模型到任务内训练与最终融合，展开查看每个阶段的候选方案、胜出路线及止步原因。</span>
             <span class="decision-trace-toggle" aria-hidden="true">
               <span class="decision-trace-open-label">展开完整路径</span>
               <span class="decision-trace-close-label">收起完整路径</span>
@@ -361,13 +395,13 @@
                 <h3 id="selectionArenaTitle">公共基础之后，Intent 与 Retrieval 分别选型</h3>
                 <p>黄色表示当前阶段采用项；分支终点会明确标注“参考基线”或“当前系统”。</p>
               </div>
-              <div class="tree-legend" aria-label="决策图图例">
+              <div class="tree-legend" role="group" aria-label="决策图图例">
                 <span><i class="legend-dot"></i>未采用</span>
                 <span><i class="legend-dot legend-dot-retained"></i>并行保留</span>
                 <span><i class="legend-dot legend-dot-selected"></i>阶段采用</span>
               </div>
             </header>
-  
+
             <div class="vertical-decision-tree branched-decision-tree">
               <article class="tree-stage tree-stage-common tree-stage-indexing">
                 <div class="tree-stage-index"><span>00</span><small>INDEX</small></div>
@@ -395,9 +429,9 @@
                 </div>
                 <div class="tree-stage-output"><span>COMMON OUTPUT</span><strong>Context-isolated Split</strong><small>24K Train · 6K Retrieval Benchmark · overlap 0</small></div>
               </article>
-  
+
               <div class="tree-split-marker"><span></span><strong>两条独立选型分支</strong><span></span></div>
-  
+
               <section class="tree-branch-block tree-branch-intent" aria-labelledby="intentBranchTitle">
                 <header class="tree-branch-head">
                   <div><span>BRANCH A · RUNTIME ROUTING</span><h4 id="intentBranchTitle">Intent Gate</h4></div>
@@ -419,13 +453,13 @@
                 </article>
                 <div class="tree-branch-end tree-branch-end-runtime"><span>RUNTIME HANDOFF</span><strong>E-commerce Query → Current Retrieval System</strong></div>
               </section>
-  
+
               <section class="tree-branch-block tree-branch-retrieval" aria-labelledby="retrievalBranchTitle">
                 <header class="tree-branch-head">
                   <div><span>BRANCH B · OFFLINE RETRIEVAL SELECTION</span><h4 id="retrievalBranchTitle">完整工具集合检索</h4></div>
                   <p>独立使用 6K Retrieval 项目基准；以下指标不读取 Intent 预测关键词。</p>
                 </header>
-  
+
                 <article class="tree-stage">
                   <div class="tree-stage-index"><span>B1</span><small>CORPUS</small></div>
                   <div class="tree-stage-main">
@@ -437,9 +471,9 @@
                   </div>
                   <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>Full-document BM25</strong><small>保留为词面召回分支</small></div>
                 </article>
-  
+
                 <div class="tree-connector"><i></i><span>↓</span></div>
-  
+
                 <article class="tree-stage">
                   <div class="tree-stage-index"><span>B2</span><small>EMBEDDING</small></div>
                   <div class="tree-stage-main">
@@ -452,9 +486,9 @@
                   </div>
                   <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>bge-large</strong><small>模型由 6K 基准比较选出 · 索引沿用 Stage 00</small></div>
                 </article>
-  
+
                 <div class="tree-connector"><i></i><span>↓</span></div>
-  
+
                 <article class="tree-stage">
                   <div class="tree-stage-index"><span>B3</span><small>FUSION</small></div>
                   <div class="tree-stage-main">
@@ -468,15 +502,15 @@
                   </div>
                   <div class="tree-stage-output"><span>COMMON RETRIEVAL SEED</span><strong>RRF · N=20</strong><small>公共模型基线的候选源</small></div>
                 </article>
-  
+
                 <div class="tree-split-marker tree-split-marker-inner"><span></span><strong>从此处形成两条实验分支</strong><span></span></div>
-  
+
                 <section class="tree-subbranch tree-subbranch-public" aria-labelledby="publicBranchTitle">
                   <header class="tree-subbranch-head">
                     <div><span>BRANCH B-P · PUBLIC BASELINE</span><h5 id="publicBranchTitle">已测公开 Reranker 最佳路线</h5></div>
                     <p>该分支到 78.37% 后结束，不作为任务内 Embedding 训练的输入。</p>
                   </header>
-  
+
                   <article class="tree-stage">
                     <div class="tree-stage-index"><span>P1</span><small>MODEL</small></div>
                     <div class="tree-stage-main">
@@ -491,9 +525,9 @@
                     </div>
                     <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>Qwen3-Reranker-0.6B</strong><small>进入本分支候选深度消融</small></div>
                   </article>
-  
+
                   <div class="tree-connector"><i></i><span>↓</span></div>
-  
+
                   <article class="tree-stage">
                     <div class="tree-stage-index"><span>P2</span><small>DEPTH</small></div>
                     <div class="tree-stage-main">
@@ -509,13 +543,13 @@
                   </article>
                   <div class="tree-branch-end tree-branch-end-reference"><span>REFERENCE BRANCH END</span><strong>Best tested public route · 78.37%</strong></div>
                 </section>
-  
+
                 <section class="tree-subbranch tree-subbranch-trained" aria-labelledby="trainedBranchTitle">
                   <header class="tree-subbranch-head">
                     <div><span>BRANCH B-T · TASK-TRAINED SYSTEM</span><h5 id="trainedBranchTitle">任务内训练与最终配置</h5></div>
                     <p>从 B2 选定的 bge-large 与 24K Train 重新开始，不继承 Public Reranker 分支输出。</p>
                   </header>
-  
+
                   <article class="tree-stage">
                     <div class="tree-stage-index"><span>T1</span><small>MNRL</small></div>
                     <div class="tree-stage-main">
@@ -529,9 +563,9 @@
                     </div>
                     <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>bge-large MNRL · e1</strong><small>当前向量 Retriever</small></div>
                   </article>
-  
+
                   <div class="tree-connector"><i></i><span>↓</span></div>
-  
+
                   <article class="tree-stage">
                     <div class="tree-stage-index"><span>T2</span><small>SOURCE</small></div>
                     <div class="tree-stage-main">
@@ -544,9 +578,9 @@
                     </div>
                     <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>Tuned Source</strong><small>N=50 · vector 0.95 · rrf_k 5</small></div>
                   </article>
-  
+
                   <div class="tree-connector"><i></i><span>↓</span></div>
-  
+
                   <article class="tree-stage">
                     <div class="tree-stage-index"><span>T3</span><small>RERANK</small></div>
                     <div class="tree-stage-main">
@@ -558,9 +592,9 @@
                     </div>
                     <div class="tree-stage-output"><span>STAGE OUTPUT</span><strong>Task Reranker Rank</strong><small>纯重排低于 Source，仅作为融合候选信号</small></div>
                   </article>
-  
+
                   <div class="tree-connector"><i></i><span>↓</span></div>
-  
+
                   <article class="tree-stage tree-stage-final">
                     <div class="tree-stage-index"><span>T4</span><small>FINAL</small></div>
                     <div class="tree-stage-main">
@@ -577,9 +611,9 @@
                         <i>Logistic Regression</i><i class="subdecision-reported">Balanced Logistic · reported</i><i>HistGradientBoosting</i>
                       </div>
                     </div>
-                    <div class="tree-stage-output tree-final-output"><span>CURRENT SYSTEM</span><strong>Source + Task Reranker RRF</strong><small>source_weight 0.6 · rrf_k 10</small></div>
+                    <div class="tree-stage-output tree-final-output"><span>CURRENT RETRIEVAL</span><strong>Source + Task Reranker RRF</strong><small>source_weight 0.6 · rrf_k 10</small></div>
                   </article>
-                  <div class="tree-branch-end tree-branch-end-final"><span>CURRENT SYSTEM BRANCH END</span><strong>AllHit@10 · 98.30%</strong></div>
+                  <div class="tree-branch-end tree-branch-end-final"><span>ASSIGNMENT 2 BRANCH END</span><strong>Retrieval AllHit@10 · 98.30%</strong></div>
                 </section>
               </section>
             </div>
@@ -592,13 +626,13 @@
       <div class="wrap">
         <p class="eyebrow">SECTION 04</p>
         <div class="section-heading split-heading">
-          <h2 id="dataTitle">数据基础</h2>
-          <p>项目围绕同一份 100 工具 Catalog 构建工具轨迹、Intent、Embedding、Reranker 与候选排序数据。训练、选参与固定评测使用不同输入，下面按数据来源和实际用途分别列出。</p>
+          <h2 id="dataTitle">累计数据基础</h2>
+          <p>三个阶段共用 100 工具 Catalog，但使用各自隔离的训练、选参与评测输入。作业 1–2 的 30K 基础轨迹继续服务 Intent 与检索；作业 3 另建 API 原生 SFT、正式测试和偏好数据。</p>
         </div>
 
         <div class="dataset-layout">
           <article class="split-visual">
-            <div class="split-head"><span>TOOL-CALL TRACE CORPUS</span><strong>30,000 QUERIES</strong></div>
+            <div class="split-head"><span>ASSIGNMENTS 1–2 · FOUNDATION TRACE CORPUS</span><strong>30,000 QUERIES</strong></div>
             <div class="split-bar" role="img" aria-label="训练集 24000，冻结项目基准 6000">
               <div class="split-train"><b>24,000</b><span>TRAIN · MODEL LEARNING</span></div>
               <div class="split-test"><b>6,000</b><span>FIXED TEST</span></div>
@@ -640,7 +674,7 @@
             </thead>
             <tbody>
               <tr><td><strong>Tool Catalog / Corpus</strong><span>能力事实源</span></td><td>8 个业务域的结构化工具定义</td><td>100 tools<br>100 documents</td><td>轨迹生成、BM25、向量建库及 Reranker 文档侧</td><td>所有检索方案共用同一 100 文档空间</td></tr>
-              <tr><td><strong>Tool-call Traces</strong><span>主数据集</span></td><td>Catalog 能力片段、独立表达簇与场景上下文</td><td>30,000 queries<br>24K train / 6K fixed test</td><td>仅 24K train 用于 SFT、Embedding、Task Reranker 和 train-side 融合选参</td><td>仅 6K test 用于检索、重排与融合结果比较</td></tr>
+              <tr><td><strong>Tool-call Traces</strong><span>作业 1–2 基础数据</span></td><td>Catalog 能力片段、独立表达簇与场景上下文</td><td>30,000 queries<br>24K train / 6K fixed test</td><td>仅 24K train 用于 Intent SFT、Embedding、Task Reranker 和 train-side 融合选参</td><td>仅 6K test 用于检索、重排与融合结果比较</td></tr>
               <tr><td><strong>Intent SFT</strong><span>LoRA 训练数据</span></td><td>Train 轨迹电商样本 + 独立闲聊模板 + 6 条边界样本</td><td>base 36,000<br>full / balanced 48,006<br>hard 12,006；均切 5% val</td><td>0.6B 使用 full；1.7B 使用 balanced；val 用于 checkpoint 选择</td><td>不进入 9K Intent 固定评测集</td></tr>
               <tr><td><strong>Intent Fixed Set</strong><span>入口分流评测</span></td><td>6K 工具测试 Query + 3K 独立闲聊</td><td>9,000 queries<br>电商 : 闲聊 = 2 : 1</td><td>不训练、不选参</td><td>Accuracy 与 Macro-F1</td></tr>
               <tr><td><strong>Embedding / Reranker Train</strong><span>派生训练数据</span></td><td>24K train 轨迹 + 100 篇工具文档</td><td>24K groups<br>70,012 positive<br>96,000 explicit negative</td><td>MNRL 展开正对；Task Reranker 动态采样 1 正 + 7 负</td><td>不读取 test 派生文件</td></tr>
@@ -669,6 +703,27 @@
           <div class="context-metrics" id="contextMetrics"></div>
         </div>
 
+        <div class="a3-data-block">
+          <div class="data-asset-heading">
+            <div><p class="eyebrow">ASSIGNMENT 3 · 增量数据</p><h3>为静态有序选链建立独立训练与正式评测</h3></div>
+            <p>这些数据与作业 1–2 的 24K/6K 基础轨迹并存；开发集只用于选参，冻结 1K 只用于最终横向比较。</p>
+          </div>
+          <div class="a3-data-grid" role="group" aria-label="Assignment3 数据规模">
+            <article><span>SFT TRAIN</span><strong>54K</strong><p>18K 单意图 + 24K 多意图顺序 + 12K 多意图干扰。</p></article>
+            <article><span>SELECTION DEV</span><strong>2.4K</strong><p>选择 4B SFT epoch 与 DPO beta；不进入正式结果。</p></article>
+            <article class="is-primary"><span>OFFICIAL TEST</span><strong>1K</strong><p>工具数 1–5 各 200 条；冻结后不用于 checkpoint 选择。</p></article>
+            <article><span>DPO PREFERENCES</span><strong>5K</strong><p>全部来自真实模型错误；synthetic pairs = 0。</p></article>
+            <article><span>ORDER STRESS</span><strong>176 对</strong><p>352 条 API 顺序反事实，覆盖 2–6 工具。</p></article>
+          </div>
+          <div class="a3-audit-strip" role="group" aria-label="Assignment3 数据审计摘要">
+            <div><strong>0</strong><span>规范化 Query / Trace ID overlap</span></div>
+            <div><strong>0</strong><span>Full-catalog SFT rows</span></div>
+            <div><strong>82.1%</strong><span>正式目标有序序列在 SFT 中 seen</span></div>
+            <div><strong>88.2%</strong><span>正式目标工具集合在 SFT 中 seen</span></div>
+          </div>
+          <p class="a3-data-boundary">零文本泄漏不等于目标组合从未出现。表达簇同序列仅命中 1 / 1,000，context-skeleton 命中为 0；但目标组合复用依然存在，任务仍属于固定 100 工具的合成闭集。</p>
+        </div>
+
       </div>
     </section>
 
@@ -676,11 +731,11 @@
       <div class="wrap">
         <p class="eyebrow">SECTION 05</p>
         <div class="section-heading split-heading">
-          <h2 id="resultsTitle">离线评测与结果</h2>
-          <p>先固定数据与选参边界，再分别呈现 Retrieval、Intent 和最终分支消融；完整 39 条运行记录保留在末尾供追溯。</p>
+          <h2 id="resultsTitle">阶段结果：Intent 与检索</h2>
+          <p>本节保留作业 1 的 Intent 与作业 2 的 Retrieval 全部结果；最新的静态有序选链实验在后续 Assignment3 专章中单独呈现，避免混用数据集和指标。</p>
         </div>
 
-        <div class="evaluation-protocol" aria-label="离线评测协议">
+        <div class="evaluation-protocol" role="group" aria-label="离线评测协议">
           <article><strong>Retrieval</strong><span>24K train 用于模型学习与融合选参；6K 冻结集合用于离线路线比较，测试内容不进入梯度训练。</span></article>
           <article><strong>Intent</strong><span>9K 合成冻结集合用于路由模型比较；结果不等同于真实流量表现。</span></article>
           <article><strong>Interpretation</strong><span>6K 被多条路线共同使用，因此报告为固定项目基准，而不是一次性 final holdout。</span></article>
@@ -688,8 +743,8 @@
 
         <div class="result-command-center">
           <article class="result-verdict">
-            <p class="eyebrow">FINAL DECISION</p>
-            <h3>最终方案采用 Source 与<br>Task Reranker 的加权 RRF 融合。</h3>
+            <p class="eyebrow">ASSIGNMENT 2 · RETRIEVAL DECISION</p>
+            <h3>检索层采用 Source 与<br>Task Reranker 的加权 RRF 融合。</h3>
             <p>Tuned Source 提供一阶段候选排序，Task Reranker 补充 Query–Tool 交互评分。训练侧网格搜索确定 <code>source_weight=0.6</code>、<code>rrf_k=10</code>，参数固定后在 6K 冻结项目基准上达到 AllHit@10 98.30%。</p>
             <div class="result-verdict-tags">
               <span>SOURCE WEIGHT 0.6</span>
@@ -699,10 +754,10 @@
           </article>
 
           <div class="result-main-score">
-            <span>FINAL ALLHIT@10</span>
+            <span>RETRIEVAL ALLHIT@10</span>
             <strong>98.30<small>%</small></strong>
             <p>Source + Task Reranker RRF</p>
-            <div><b>SELECTED</b><span>当前采用方案</span></div>
+            <div><b>SELECTED</b><span>作业 2 检索方案</span></div>
           </div>
 
           <dl class="result-scoreboard">
@@ -755,13 +810,13 @@
 
         <details class="evidence-disclosure">
           <summary>
-            <div class="disclosure-copy">
+            <span class="disclosure-copy">
               <span class="result-subsection-label">03 · FINAL-BRANCH ABLATION</span>
-              <h3>最终路线的七个关键检查点</h3>
-              <p>保留能够解释任务训练、替代分支与最终选择的 7 个检查点。</p>
-            </div>
-            <div class="evidence-summary-metrics"><span>7 CHECKPOINTS</span><span>4 METRICS</span></div>
-            <div class="disclosure-action"><span>展开决策表</span><i>+</i></div>
+              <strong class="disclosure-heading">最终路线的七个关键检查点</strong>
+              <span class="disclosure-description">保留能够解释任务训练、替代分支与最终选择的 7 个检查点。</span>
+            </span>
+            <span class="evidence-summary-metrics"><span>7 CHECKPOINTS</span><span>4 METRICS</span></span>
+            <span class="disclosure-action"><span>展开决策表</span><i>+</i></span>
           </summary>
 
           <div class="result-table-section">
@@ -899,7 +954,7 @@
       <div class="wrap">
         <p class="eyebrow">SECTION 06</p>
         <div class="insight-heading">
-          <h2 id="insightTitle">核心发现</h2>
+          <h2 id="insightTitle">作业 2 · 检索层核心发现</h2>
           <p>任务内表示学习贡献主要增益；轻量 Residual 校准把 Source 从 95.95% 推至 96.30%，证明两路信号可被监督利用，但仍未达到最终 RRF 的 98.30%。最佳方案不是覆盖任一路，而是保留 Source 与 Task Reranker 的互补排名。</p>
         </div>
         <div class="insight-chart" id="insightChart"></div>
@@ -922,7 +977,7 @@
       <div class="wrap">
         <p class="eyebrow">SECTION 07</p>
         <div class="section-heading split-heading">
-          <h2 id="analysisTitle">误差与边界分析</h2>
+          <h2 id="analysisTitle">作业 2 · 检索层误差与边界</h2>
           <p>本节统一使用 AllHit@6 诊断前缀排序：相对单路 Embedding，最终融合恢复 352 条失败；仍有 560 条未完整命中，其中 554 条的全部目标已进入 Source Top-50。该统计定位排序问题，不替代 AllHit@10 主结果。</p>
         </div>
 
@@ -968,29 +1023,228 @@
       </div>
     </section>
 
-    <section class="section section-soft" id="limits" aria-labelledby="limitsTitle">
+    <section class="section assignment3-section" id="assignment3" aria-labelledby="assignment3Title">
       <div class="wrap">
-        <p class="eyebrow">SECTION 08</p>
+        <p class="eyebrow">SECTION 08 · LATEST PROGRESS</p>
         <div class="section-heading split-heading">
-          <h2 id="limitsTitle">适用边界、成果与下一步</h2>
-          <p>当前证据支持“100 个已知工具合成闭集上的离线选择系统”。真实请求、开放工具集合、端到端执行与独立最终评测仍是下一阶段工作。</p>
+          <h2 id="assignment3Title">Assignment3：从高覆盖候选集到有序工具 ID 轨迹</h2>
+          <p>作业 3 复用前两阶段的 100 工具 Catalog 与调优检索器，新增 Qwen3-4B/8B Base、SFT、DPO 对比；正式任务是 <code>query → 有序工具 ID 轨迹</code>，不是工具执行。</p>
         </div>
 
-        <div class="verified-limitations" aria-label="已核实的适用边界">
+        <div class="a3-scope-banner">
+          <div><span>FORMAL SCOPE</span><strong>Base / SFT / DPO × 4B / 8B × Wo-RAG / RAG@10</strong></div>
+          <p>全部正式横向结果来自同一冻结 API 原生 1,000 条测试集。2,400 条开发集和早期 checkpoint 只用于选参与机制诊断，不与正式结果混算。</p>
+        </div>
+
+        <div class="a3-kpi-grid" role="group" aria-label="Assignment3 关键数字">
+          <article><span>API-NATIVE SFT</span><strong>54,000</strong><small>完整 100 工具视图训练条数为 0</small></article>
+          <article><span>OFFICIAL TEST</span><strong>1,000</strong><small>tool_count 1–5 各 200 条</small></article>
+          <article><span>DPO PAIRS</span><strong>5,000</strong><small>真实模型错误 · beta 0.05</small></article>
+          <article class="is-primary"><span>BEST STATIC RESULT</span><strong>99.00%</strong><small>4B SFT RAG · SetEM / TraceEM</small></article>
+        </div>
+
+        <div class="a3-view-grid">
+          <article>
+            <div><span>VIEW A · RAG@10</span><strong>作业 2 检索器提供 10 个候选</strong></div>
+            <p>调优检索器在新正式 1K 上 AllHit@10 为 100.00%，因此生成模型面对的是强闭集候选筛选；99% 不能归功于生成模型单独完成。</p>
+            <small>10-TOOL CANDIDATE VIEW</small>
+          </article>
+          <article>
+            <div><span>VIEW B · WO-RAG</span><strong>一次展示完整 100 工具目录</strong></div>
+            <p>SFT 从未见过 full-catalog 训练 prompt。该视图检验模型能否把候选视图中学到的工具语义迁移到约 2.8K token 的完整目录。</p>
+            <small>WO-RAG ≠ QUERY-ONLY</small>
+          </article>
+        </div>
+
+        <div class="a3-metric-panel">
+          <div class="a3-metric-copy">
+            <p class="eyebrow">PRIMARY METRICS</p>
+            <h3>找齐集合与排对顺序是两个不同问题</h3>
+            <p>SetEM 要求预测工具集合与金标集合完全一致；TraceEM 进一步要求工具及其顺序完全一致。关键词 micro-F1 是软覆盖指标，严格输出有效率只衡量能否结构化解析。</p>
+          </div>
+          <div class="a3-metric-example" role="group" aria-label="SetEM 与 TraceEM 示例">
+            <div><span>GOLD TRACE</span><code>A → B → C</code></div>
+            <div><span>PREDICTED TRACE</span><code>A → C → B</code></div>
+            <div class="a3-metric-verdict"><strong>SetEM · PASS</strong><strong>TraceEM · FAIL</strong></div>
+          </div>
+        </div>
+
+        <div class="a3-result-heading">
+          <div><p class="eyebrow">FORMAL 1K MATRIX</p><h3>同一冻结测试上的 12 个正式评测单元</h3></div>
+          <p>切换指标查看 Base、SFT 与 DPO 在两种输入视图下的变化；完整数值表保留全部四项指标。</p>
+        </div>
+
+        <div class="metric-switch a3-metric-switch" id="a3MetricSwitch" role="group" aria-label="切换 Assignment3 指标">
+          <button class="active" type="button" data-a3-metric="setEm" aria-pressed="true">SetEM</button>
+          <button type="button" data-a3-metric="traceEm" aria-pressed="false">TraceEM</button>
+          <button type="button" data-a3-metric="microF1" aria-pressed="false">micro-F1</button>
+          <button type="button" data-a3-metric="validRate" aria-pressed="false">严格输出有效率</button>
+        </div>
+        <div class="a3-result-chart" id="a3ResultChart" aria-live="polite"></div>
+
+        <details class="a3-details a3-formal-details">
+          <summary><span>完整正式矩阵</span><strong>12 CELLS · 4 METRICS</strong><i>+</i></summary>
+          <div class="result-table-wrap">
+            <table class="result-table a3-formal-table">
+              <thead><tr><th scope="col">模型</th><th scope="col">阶段</th><th scope="col">视图</th><th scope="col">SetEM</th><th scope="col">TraceEM</th><th scope="col">micro-F1</th><th scope="col">严格输出有效率</th></tr></thead>
+              <tbody>
+                <tr><td>Qwen3-4B</td><td>Base</td><td>Wo-RAG · 100</td><td>52.30%</td><td>50.40%</td><td>84.25%</td><td>93.60%</td></tr>
+                <tr><td>Qwen3-4B</td><td>Base</td><td>RAG@10</td><td>54.00%</td><td>53.10%</td><td>87.38%</td><td>86.20%</td></tr>
+                <tr><td>Qwen3-8B</td><td>Base</td><td>Wo-RAG · 100</td><td>57.40%</td><td>54.60%</td><td>87.31%</td><td>96.70%</td></tr>
+                <tr><td>Qwen3-8B</td><td>Base</td><td>RAG@10</td><td>60.00%</td><td>59.10%</td><td>88.45%</td><td>89.80%</td></tr>
+                <tr class="row-emphasis"><td>Qwen3-4B</td><td>SFT</td><td>Wo-RAG · 100</td><td>94.70%</td><td>94.60%</td><td>98.58%</td><td>99.90%</td></tr>
+                <tr class="result-table-final"><td>Qwen3-4B</td><td>SFT</td><td>RAG@10</td><td>99.00%</td><td>99.00%</td><td>99.73%</td><td>100.00%</td></tr>
+                <tr class="row-emphasis"><td>Qwen3-8B</td><td>SFT</td><td>Wo-RAG · 100</td><td>94.80%</td><td>94.20%</td><td>98.73%</td><td>100.00%</td></tr>
+                <tr><td>Qwen3-8B</td><td>SFT</td><td>RAG@10</td><td>98.30%</td><td>98.30%</td><td>99.63%</td><td>100.00%</td></tr>
+                <tr><td>Qwen3-4B</td><td>SFT+DPO</td><td>Wo-RAG · 100</td><td>93.30%</td><td>93.20%</td><td>98.20%</td><td>100.00%</td></tr>
+                <tr><td>Qwen3-4B</td><td>SFT+DPO</td><td>RAG@10</td><td>98.90%</td><td>98.90%</td><td>99.73%</td><td>99.90%</td></tr>
+                <tr><td>Qwen3-8B</td><td>SFT+DPO</td><td>Wo-RAG · 100</td><td>93.70%</td><td>93.20%</td><td>98.52%</td><td>99.60%</td></tr>
+                <tr><td>Qwen3-8B</td><td>SFT+DPO</td><td>RAG@10</td><td>98.40%</td><td>98.40%</td><td>99.65%</td><td>100.00%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <div class="a3-findings">
+          <article><span>01 · MAIN GAIN</span><h3>SFT 是主要增益来源</h3><p>相对同模型 Base，SFT 的 SetEM 提升 37.40–45.00 pp；它把候选识别和结构化输出同时推到高正确率。</p></article>
+          <article class="is-primary"><span>02 · CHECKPOINT</span><h3>静态主结果推荐 SFT</h3><p>4B SFT RAG@10 为 99.00%；8B SFT Wo-RAG SetEM 为 94.80%。DPO 没有稳定改善正式主指标。</p></article>
+          <article><span>03 · RETRIEVAL EFFECT</span><h3>RAG 收益依赖候选覆盖</h3><p>正式 1K 的 tuned AllHit@10=100.00%，untuned 仅 84.20%。必须先区分检索上限与条件规划能力。</p></article>
+          <article><span>04 · DPO SOURCE SHIFT</span><h3>偏好数据与最终 SFT 有错位</h3><p>5K 真实错误中仅 43 对来自选中 SFT endpoint，另 4,957 对来自 early-SFT；这会限制 DPO 对正式主指标的收益。</p></article>
+        </div>
+
+        <details class="a3-details a3-selection-details">
+          <summary><span>选参与 DPO 数据来源</span><strong>DEV 2.4K · OFFICIAL TEST UNTOUCHED</strong><i>+</i></summary>
+          <div class="a3-selection-grid">
+            <article>
+              <header><span>4B SFT EPOCH</span><h3>epoch 1 被开发集选中</h3></header>
+              <div><span>epoch 1</span><strong>93.38% / 93.38%</strong><small>SetEM / TraceEM · SELECTED</small></div>
+              <div><span>epoch 2</span><strong>91.96% / 91.96%</strong><small>SetEM / TraceEM</small></div>
+            </article>
+            <article>
+              <header><span>4B DPO BETA</span><h3>beta 0.05 被开发集选中</h3></header>
+              <div><span>beta 0.05</span><strong>93.88% / 93.88%</strong><small>SetEM / TraceEM · SELECTED</small></div>
+              <div><span>beta 0.10</span><strong>93.54% / 93.54%</strong><small>SetEM / TraceEM</small></div>
+            </article>
+            <article class="a3-selection-source">
+              <header><span>PREFERENCE PROVENANCE</span><h3>5,000 对均为真实模型错误</h3></header>
+              <div><span>SELECTED SFT</span><strong>43</strong><small>当前 endpoint 错误</small></div>
+              <div><span>EARLY-SFT</span><strong>4,957</strong><small>step-20 真实错误</small></div>
+            </article>
+          </div>
+          <p class="a3-details-note">synthetic_pairs=0，核心偏好对占 98.22%，覆盖 100 / 100 工具。8B SFT 预先固定 1 epoch，并沿用开发集选出的 beta=0.05；正式 1K 未参与这些选择。</p>
+        </details>
+
+        <div class="a3-robustness-heading">
+          <div><p class="eyebrow">ORDER ROBUSTNESS</p><h3>顺序不是集合的附属</h3></div>
+          <p>一项检验改变候选展示顺序，另一项只改变用户明确要求的业务步骤顺序。</p>
+        </div>
+        <div class="a3-robustness-grid">
+          <article class="a3-robustness-card">
+            <header><span>4B SFT · FORMAL 1K</span><h3>候选展示顺序扰动</h3><p>候选集合不变，仅 reverse 或 hash shuffle。</p></header>
+            <div id="a3CandidateOrderChart"></div>
+          </article>
+          <article class="a3-robustness-card">
+            <header><span>176 PAIRED QUERIES</span><h3>API 顺序反事实</h3><p>主指标：一对中的两条都得到正确 TraceEM。</p></header>
+            <div id="a3CounterfactualChart"></div>
+          </article>
+        </div>
+        <p class="a3-robustness-note">DPO 的可见收益只出现在顺序专项：4B 的 pair-both TraceEM 从 90.34% 升至 92.05%，8B 从 92.05% 升至 92.61%；它不足以抵消正式静态主指标的回退，不能表述为全面提升。</p>
+
+        <details class="a3-details">
+          <summary><span>四、五工具 seen / unseen 组合拆分</span><strong>400 ROWS · SFT</strong><i>+</i></summary>
+          <div class="result-table-wrap">
+            <table class="result-table a3-seen-table">
+              <thead><tr><th scope="col">模型</th><th scope="col">视图</th><th scope="col">seen N</th><th scope="col">seen SetEM / TraceEM</th><th scope="col">unseen N</th><th scope="col">unseen SetEM / TraceEM</th></tr></thead>
+              <tbody>
+                <tr><td>Qwen3-4B SFT</td><td>Wo-RAG · 100</td><td>221</td><td>92.31% / 92.31%</td><td>179</td><td>89.94% / 89.39%</td></tr>
+                <tr><td>Qwen3-4B SFT</td><td>RAG@10</td><td>221</td><td>98.64% / 98.64%</td><td>179</td><td>99.44% / 99.44%</td></tr>
+                <tr><td>Qwen3-8B SFT</td><td>Wo-RAG · 100</td><td>221</td><td>92.31% / 91.86%</td><td>179</td><td>92.74% / 90.50%</td></tr>
+                <tr><td>Qwen3-8B SFT</td><td>RAG@10</td><td>221</td><td>97.74% / 97.74%</td><td>179</td><td>99.44% / 99.44%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="a3-details-note">高分不只来自相同 Query 或候选位置复制，但该拆分仍位于固定工具库内，不能表述成开放世界泛化。</p>
+        </details>
+
+        <div class="a3-case-section">
+          <div class="a3-case-heading">
+            <div><p class="eyebrow">FORMAL PREDICTION CASES</p><h3>同时查看“集合正确”和“顺序正确”</h3></div>
+            <div class="case-tabs a3-case-tabs" id="a3CaseTabs" role="tablist" aria-label="选择 Assignment3 正式案例"></div>
+          </div>
+          <article class="a3-case-viewer" id="a3CaseViewer" aria-live="polite"></article>
+        </div>
+
+        <details class="a3-details a3-diagnostics">
+          <summary><span>辅助机制诊断：query-only 与 tuned / untuned</span><strong>DEV 2.4K · OLD CHECKPOINT</strong><i>+</i></summary>
+          <div class="a3-diagnostic-grid">
+            <article>
+              <header><span>QUERY-ONLY ABLATION</span><h3>没有 ontology grounding 时无法稳定恢复工具 ID</h3></header>
+              <div class="result-table-wrap">
+                <table class="result-table result-table-compact">
+                  <thead><tr><th scope="col">模型</th><th scope="col">视图</th><th scope="col">SetEM</th><th scope="col">TraceEM</th><th scope="col">严格输出有效率</th><th scope="col">平均输入 token</th></tr></thead>
+                  <tbody>
+                    <tr><td>4B Base</td><td>query-only</td><td>1.25%</td><td>1.25%</td><td>1.42%</td><td>206.9</td></tr>
+                    <tr><td>4B Base</td><td>full-catalog</td><td>49.00%</td><td>48.62%</td><td>94.12%</td><td>2,825.9</td></tr>
+                    <tr><td>旧 4B SFT</td><td>query-only</td><td>3.21%</td><td>3.21%</td><td>4.04%</td><td>206.9</td></tr>
+                    <tr><td>旧 4B SFT</td><td>full-catalog</td><td>95.88%</td><td>95.88%</td><td>99.79%</td><td>2,825.9</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="a3-diagnostic-note">query-only 的 JSON schema 合法率仍有 99.92% / 98.75%，但 Base / 旧 SFT 分别有 2,364 / 2,268 条输出包含不存在的工具 ID；失败来自 ontology grounding 缺失，而非只是不懂 JSON。</p>
+            </article>
+            <article>
+              <header><span>RETRIEVAL CAUSAL CONTROL</span><h3>端到端集合准确率受 AllHit 上限约束</h3></header>
+              <div class="result-table-wrap">
+                <table class="result-table result-table-compact">
+                  <thead><tr><th scope="col">视图</th><th scope="col">检索</th><th scope="col">AllHit</th><th scope="col">条件规划</th><th scope="col">SetEM</th><th scope="col">TraceEM</th></tr></thead>
+                  <tbody>
+                    <tr><td>RAG@10</td><td>tuned</td><td>95.00%</td><td>96.93%</td><td>92.08%</td><td>92.08%</td></tr>
+                    <tr><td>RAG@10</td><td>untuned</td><td>76.33%</td><td>97.54%</td><td>74.46%</td><td>74.42%</td></tr>
+                    <tr><td>RAG@20</td><td>tuned</td><td>99.00%</td><td>97.35%</td><td>96.38%</td><td>96.38%</td></tr>
+                    <tr><td>RAG@20</td><td>untuned</td><td>91.75%</td><td>97.91%</td><td>89.83%</td><td>89.83%</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="a3-equation">SetEM = AllHit@K × P(SetEM | AllHit@K)</p>
+              <p class="a3-diagnostic-note">开发集含 240 条六工具样本，RAG@5 在容量上不可能覆盖；这些样本占该设置 433 个检索失败的 55.43%。比较 K 前必须先检查 K ≥ gold tool_count。</p>
+            </article>
+          </div>
+          <p class="a3-details-note">本折叠区使用独立 2.4K 开发集和旧 4B SFT checkpoint，只解释机制，不参与正式 1K 的模型横向排名。</p>
+        </details>
+
+        <div class="a3-boundary-grid">
+          <article><strong>静态而非执行</strong><span>输出有序工具 ID，不调用 API，也不消费返回值。</span></article>
+          <article><strong>固定闭集</strong><span>100 个工具均已知，不能证明新增工具或开放领域泛化。</span></article>
+          <article><strong>组合复用</strong><span>正式 1K 中 82.1% 的有序目标序列在 SFT 目标中出现过。</span></article>
+          <article><strong>强检索前提</strong><span>RAG@10 的 99% 建立在正式 1K 检索覆盖 100% 之上。</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="limits" aria-labelledby="limitsTitle">
+      <div class="wrap">
+        <p class="eyebrow">SECTION 09</p>
+        <div class="section-heading split-heading">
+          <h2 id="limitsTitle">适用边界、成果与下一步</h2>
+          <p>当前证据支持“固定 100 工具合成闭集中的入口分流、候选检索与静态有序选链”。作业 3 已补充独立冻结 1K 正式测试，但真实请求、开放工具集合和执行级闭环仍未覆盖。</p>
+        </div>
+
+        <div class="verified-limitations" role="group" aria-label="已核实的适用边界">
           <article><strong>合成闭集</strong><span>目录固定为 100 项，Query 来自合成流程；不能直接外推到开放世界或真实流量。</span></article>
-          <article><strong>重复比较</strong><span>6K 通过泄漏检查，但被多条路线共同使用，不是一次性无偏 final holdout。</span></article>
+          <article><strong>阶段化评测</strong><span>作业 2 的 6K 是复用项目基准；作业 3 的独立 1K 才是该阶段正式冻结结果，两者不可混算。</span></article>
+          <article><strong>组合复用</strong><span>作业 3 正式 1K 有 82.1% 有序目标序列在 SFT 中 seen，高分仍受固定组合空间影响。</span></article>
+          <article><strong>执行边界</strong><span>静态顺序已经评测，但参数、真实调用、返回值、失败恢复与多轮状态均未实现。</span></article>
           <article><strong>索引未对比</strong><span>FAISS IndexFlatIP 适配 100 项目录，但项目没有向量数据库横向基准。</span></article>
-          <article><strong>监督边界</strong><span>测试坏例不可回流训练；新增硬负例需要独立验证集控制选参。</span></article>
         </div>
 
         <div class="status-block-heading">
-          <span>01</span><div><h3>当前成果</h3><p>已经完成并形成项目资产的四类交付。</p></div>
+          <span>01</span><div><h3>当前成果</h3><p>三个作业阶段已经形成可串联、可追溯的项目资产。</p></div>
         </div>
         <div class="limit-grid">
-          <article><span>已完成 · 01</span><h3>能力与数据底座</h3><p>100 工具结构化 Catalog、30K 工具轨迹，以及 Intent、Embedding、Reranker 派生数据已完整沉淀。</p></article>
-          <article><span>已完成 · 02</span><h3>模型与排序链路</h3><p>LoRA Intent Gate、微调 Retriever、Task Reranker 和双路 RRF 已形成可串联的模块方案。</p></article>
-          <article><span>已验证 · 03</span><h3>固定口径离线评测</h3><p>Intent 与 Retrieval 均在固定数据口径上完成对比，最终达到 AllHit@10 98.30%、AllHit@30 99.87%。</p></article>
-          <article><span>已沉淀 · 04</span><h3>可复用项目资产</h3><p>数据脚本、训练入口、预测文件、指标 JSON 与分析报告共同支撑后续迭代和复现。</p></article>
+          <article><span>已完成 · 01</span><h3>能力与数据底座</h3><p>100 工具 Catalog、30K 作业 1–2 基础轨迹，以及 54K 作业 3 API 原生 SFT 数据均已沉淀。</p></article>
+          <article><span>已完成 · 02</span><h3>Intent 与检索底座</h3><p>LoRA Intent Gate、微调 Retriever、Task Reranker 和双路 RRF 已形成可串联的前两阶段方案。</p></article>
+          <article><span>已完成 · 03</span><h3>静态有序选链</h3><p>4B/8B Base、SFT、DPO 在 Wo-RAG 与 RAG@10 上完成正式矩阵，最佳 SetEM / TraceEM 为 99.00%。</p></article>
+          <article><span>已沉淀 · 04</span><h3>分阶段证据链</h3><p>6K 检索基准与独立 1K 选链测试严格分开，预测、指标、审计和文件哈希均可追溯。</p></article>
         </div>
 
         <div class="roadmap">
@@ -998,8 +1252,8 @@
           <ol>
             <li><span>01</span><strong>真实表达覆盖</strong><small>引入匿名真实 Query、口语噪声与跨领域边界</small></li>
             <li><span>02</span><strong>新工具泛化</strong><small>以 Held-out Tools 验证 Catalog 扩展与冷启动</small></li>
-            <li><span>03</span><strong>独立最终评测</strong><small>新增 Final Holdout，隔离模型选择与最终报告</small></li>
-            <li><span>04</span><strong>执行任务闭环</strong><small>评测参数、调用顺序、成功率、延迟与吞吐</small></li>
+            <li><span>03</span><strong>执行级冻结测试</strong><small>构建工具模拟器、返回值、失败分支与状态依赖</small></li>
+            <li><span>04</span><strong>参数与系统指标</strong><small>评测参数正确率、真实成功率、重试、延迟与吞吐</small></li>
           </ol>
         </div>
       </div>
@@ -1007,13 +1261,15 @@
 
     <section class="section" id="evidence" aria-labelledby="evidenceTitle">
       <div class="wrap">
-        <p class="eyebrow">SECTION 09</p>
+        <p class="eyebrow">SECTION 10</p>
         <div class="section-heading split-heading">
           <h2 id="evidenceTitle">工程资产与复现</h2>
           <p>Catalog、数据脚本、训练入口、预测文件和专题报告共同构成项目资产。关键结果可以回到对应运行产物，数据构建与主要实验也保留了可重复执行的入口。</p>
         </div>
 
         <div class="evidence-grid">
+          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/06_Assignment3_100%E5%B7%A5%E5%85%B7%E5%AE%9E%E9%AA%8C%E6%80%BB%E6%8A%A5%E5%91%8A.md" target="_blank" rel="noopener noreferrer"><span>LATEST FINAL REPORT</span><h3>Assignment3 总报告</h3><p>4B/8B Base、SFT、DPO、RAG/Wo-RAG 与顺序鲁棒性最终口径。</p><b>reports/06_Assignment3_100工具实验总报告.md</b></a>
+          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_100tool_api/final_summary.json" target="_blank" rel="noopener noreferrer"><span>STRUCTURED EVIDENCE</span><h3>Assignment3 最终汇总</h3><p>正式矩阵、配对比较、数据审计、预测路径与文件哈希。</p><b>final_summary.json</b></a>
           <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/README.md" target="_blank" rel="noopener noreferrer"><span>PROJECT MAP</span><h3>项目概览</h3><p>任务边界、主要指标与运行入口。</p><b>PROJECT/README.md</b></a>
           <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/01_%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB.md" target="_blank" rel="noopener noreferrer"><span>MODEL REPORT</span><h3>意图识别</h3><p>Intent 数据构成、LoRA Run 与指标。</p><b>reports/01_意图识别.md</b></a>
           <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/02_%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA.md" target="_blank" rel="noopener noreferrer"><span>BASELINE REPORT</span><h3>检索增强</h3><p>BM25、公开 Embedding、混合召回与 Reranker。</p><b>reports/02_检索增强.md</b></a>
@@ -1038,23 +1294,24 @@ python3 PROJECT/scripts/dataset/generate_diverse_tool_trace.py \
 python3 PROJECT/scripts/dataset/audit_generation_leakage.py \
   --tokenizer fallback
 python3 PROJECT/scripts/dataset/audit_datasets.py \
-  --strict-min-test-per-tool 30</code></pre>
+  --strict-min-test-per-tool 30
+python3 PROJECT/scripts/report/make_assignment3_100tool_complete_report.py</code></pre>
             <p class="copy-status" id="copyStatus" aria-live="polite"></p>
           </div>
         </div>
 
         <div class="provenance">
-          <div><span>PROJECT SNAPSHOT</span><strong>2026-07-17</strong></div>
+          <div><span>PROJECT SNAPSHOT</span><strong>2026-07-26</strong></div>
           <div><span>CATALOG VERSION</span><strong>100 tools · 2026-07-06</strong></div>
-          <div><span>RESULT INPUT</span><strong>6,000 fixed queries</strong></div>
-          <div><span>EVALUATION SETTING</span><strong>Synthetic closed set</strong></div>
+          <div><span>RESULT INPUT</span><strong>6K Retrieval + 1K Planning</strong></div>
+          <div><span>EVALUATION SETTING</span><strong>Stage-specific synthetic closed set</strong></div>
         </div>
       </div>
     </section>
 
     <section class="cta-strip">
       <div class="wrap cta-strip-inner">
-        <div><p>100-TOOL COMMERCE AGENT</p><h2>从意图理解到工具集合，项目已形成完整的离线验证与工程资产。</h2></div>
+        <div><p>100-TOOL COMMERCE AGENT</p><h2>从意图分流、候选检索到静态有序选链，三个阶段已形成完整证据链。</h2></div>
         <a class="btn btn-primary" href="#top">回到项目概览 ↑</a>
       </div>
     </section>
@@ -1064,13 +1321,13 @@ python3 PROJECT/scripts/dataset/audit_datasets.py \
     <div class="wrap footer-grid">
       <div class="footer-brand-block">
         <a class="project-brand" href="#top"><span class="brand-grid" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>TOOLSET<span class="brand-slash">/</span>100</span></a>
-        <p>面向多意图电商请求的入口分流、完整工具集合检索与二阶段排序项目。</p>
+        <p>面向多意图电商请求的入口分流、完整工具集合检索与静态有序工具链选择项目。</p>
       </div>
-      <div class="footer-links"><strong>项目</strong><a href="#problem">项目背景与目标</a><a href="#system">技术路线</a><a href="#results">实验设计与结果</a></div>
-      <div class="footer-links"><strong>分析</strong><a href="#toolspace">工具能力体系</a><a href="#data">数据基础</a><a href="#analysis">工程分析</a></div>
+      <div class="footer-links"><strong>项目</strong><a href="#problem">项目背景与目标</a><a href="#system">三阶段技术路线</a><a href="#results">Intent 与检索结果</a></div>
+      <div class="footer-links"><strong>分析</strong><a href="#toolspace">工具能力体系</a><a href="#data">累计数据基础</a><a href="#assignment3">Assignment3 进展</a></div>
       <div class="footer-links"><strong>成果</strong><a href="#limits">成果与规划</a><a href="#evidence">工程资产与复现</a><a href="https://github.com/Ryannnice/Agent" target="_blank" rel="noopener noreferrer" title="需要 GitHub 仓库访问权限">项目仓库（需权限）↗</a></div>
     </div>
-    <div class="wrap footer-fine"><span>PROJECT SNAPSHOT · 2026-07-17</span><span>100 TOOLS · 30K TRACES · TWO-STAGE RETRIEVAL</span></div>
+    <div class="wrap footer-fine"><span>PROJECT SNAPSHOT · 2026-07-26</span><span>100 TOOLS · INTENT → RETRIEVAL → ORDERED TRACE</span></div>
   </footer>
 
   <button class="to-top" id="toTop" type="button" aria-label="返回顶部">↑</button>

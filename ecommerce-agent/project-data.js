@@ -1,10 +1,10 @@
-/* Generated from /renyuanliu/Agent/PROJECT artifacts on 2026-07-17. */
+/* Generated from /renyuanliu/Agent/PROJECT artifacts on 2026-07-26. */
 window.PROJECT_DATA = {
   "snapshot": {
-    "date": "2026-07-17",
-    "label": "CURRENT EXPERIMENT SNAPSHOT",
+    "date": "2026-07-26",
+    "label": "ASSIGNMENTS 1–3 SNAPSHOT",
     "catalogVersion": "2026-07-06",
-    "scope": "100 个已知工具的合成闭集离线评测",
+    "scope": "100 个已知工具的 Intent、检索与静态有序选链累计离线评测",
     "repository": "https://github.com/Ryannnice/Agent"
   },
   "heroTraces": [
@@ -1624,5 +1624,315 @@ window.PROJECT_DATA = {
       "sourceQuery": "关于冲锋衣轻便款，第一步请帮我找回刚看过的东西；接着查我关注降价的商品；同时核实基于画像的推荐、用户身高、偏好类目，并更新尺码偏好和试穿反馈。",
       "displayMode": "condensed"
     }
-  ]
+  ],
+  "assignment3": {
+    "formalResults": [
+      {
+        "model": "Qwen3-4B",
+        "modelShort": "4B",
+        "stage": "Base",
+        "stageKey": "base",
+        "view": "Wo-RAG · 100",
+        "viewKey": "global",
+        "setEm": 0.523,
+        "traceEm": 0.504,
+        "microF1": 0.8425,
+        "validRate": 0.936
+      },
+      {
+        "model": "Qwen3-4B",
+        "modelShort": "4B",
+        "stage": "Base",
+        "stageKey": "base",
+        "view": "RAG@10",
+        "viewKey": "rag",
+        "setEm": 0.54,
+        "traceEm": 0.531,
+        "microF1": 0.8738,
+        "validRate": 0.862
+      },
+      {
+        "model": "Qwen3-8B",
+        "modelShort": "8B",
+        "stage": "Base",
+        "stageKey": "base",
+        "view": "Wo-RAG · 100",
+        "viewKey": "global",
+        "setEm": 0.574,
+        "traceEm": 0.546,
+        "microF1": 0.8731,
+        "validRate": 0.967
+      },
+      {
+        "model": "Qwen3-8B",
+        "modelShort": "8B",
+        "stage": "Base",
+        "stageKey": "base",
+        "view": "RAG@10",
+        "viewKey": "rag",
+        "setEm": 0.6,
+        "traceEm": 0.591,
+        "microF1": 0.8845,
+        "validRate": 0.898
+      },
+      {
+        "model": "Qwen3-4B",
+        "modelShort": "4B",
+        "stage": "SFT",
+        "stageKey": "sft",
+        "view": "Wo-RAG · 100",
+        "viewKey": "global",
+        "setEm": 0.947,
+        "traceEm": 0.946,
+        "microF1": 0.9858,
+        "validRate": 0.999
+      },
+      {
+        "model": "Qwen3-4B",
+        "modelShort": "4B",
+        "stage": "SFT",
+        "stageKey": "sft",
+        "view": "RAG@10",
+        "viewKey": "rag",
+        "setEm": 0.99,
+        "traceEm": 0.99,
+        "microF1": 0.9973,
+        "validRate": 1
+      },
+      {
+        "model": "Qwen3-8B",
+        "modelShort": "8B",
+        "stage": "SFT",
+        "stageKey": "sft",
+        "view": "Wo-RAG · 100",
+        "viewKey": "global",
+        "setEm": 0.948,
+        "traceEm": 0.942,
+        "microF1": 0.9873,
+        "validRate": 1
+      },
+      {
+        "model": "Qwen3-8B",
+        "modelShort": "8B",
+        "stage": "SFT",
+        "stageKey": "sft",
+        "view": "RAG@10",
+        "viewKey": "rag",
+        "setEm": 0.983,
+        "traceEm": 0.983,
+        "microF1": 0.9963,
+        "validRate": 1
+      },
+      {
+        "model": "Qwen3-4B",
+        "modelShort": "4B",
+        "stage": "SFT+DPO",
+        "stageKey": "dpo",
+        "view": "Wo-RAG · 100",
+        "viewKey": "global",
+        "setEm": 0.933,
+        "traceEm": 0.932,
+        "microF1": 0.982,
+        "validRate": 1
+      },
+      {
+        "model": "Qwen3-4B",
+        "modelShort": "4B",
+        "stage": "SFT+DPO",
+        "stageKey": "dpo",
+        "view": "RAG@10",
+        "viewKey": "rag",
+        "setEm": 0.989,
+        "traceEm": 0.989,
+        "microF1": 0.9973,
+        "validRate": 0.999
+      },
+      {
+        "model": "Qwen3-8B",
+        "modelShort": "8B",
+        "stage": "SFT+DPO",
+        "stageKey": "dpo",
+        "view": "Wo-RAG · 100",
+        "viewKey": "global",
+        "setEm": 0.937,
+        "traceEm": 0.932,
+        "microF1": 0.9852,
+        "validRate": 0.996
+      },
+      {
+        "model": "Qwen3-8B",
+        "modelShort": "8B",
+        "stage": "SFT+DPO",
+        "stageKey": "dpo",
+        "view": "RAG@10",
+        "viewKey": "rag",
+        "setEm": 0.984,
+        "traceEm": 0.984,
+        "microF1": 0.9965,
+        "validRate": 1
+      }
+    ],
+    "candidateOrder": [
+      {
+        "view": "Wo-RAG · 100",
+        "viewKey": "global",
+        "variant": "Original",
+        "setEm": 0.947,
+        "traceEm": 0.946,
+        "traceStability": 1
+      },
+      {
+        "view": "Wo-RAG · 100",
+        "viewKey": "global",
+        "variant": "Reverse",
+        "setEm": 0.941,
+        "traceEm": 0.94,
+        "traceStability": 0.915
+      },
+      {
+        "view": "Wo-RAG · 100",
+        "viewKey": "global",
+        "variant": "Hash shuffle",
+        "setEm": 0.942,
+        "traceEm": 0.941,
+        "traceStability": 0.907
+      },
+      {
+        "view": "RAG@10",
+        "viewKey": "rag",
+        "variant": "Original",
+        "setEm": 0.99,
+        "traceEm": 0.99,
+        "traceStability": 1
+      },
+      {
+        "view": "RAG@10",
+        "viewKey": "rag",
+        "variant": "Reverse",
+        "setEm": 0.981,
+        "traceEm": 0.981,
+        "traceStability": 0.977
+      },
+      {
+        "view": "RAG@10",
+        "viewKey": "rag",
+        "variant": "Hash shuffle",
+        "setEm": 0.982,
+        "traceEm": 0.982,
+        "traceStability": 0.981
+      }
+    ],
+    "counterfactual": [
+      {
+        "model": "4B",
+        "stage": "Base",
+        "stageKey": "base",
+        "rowTraceEm": 0.6193,
+        "pairBothTraceEm": 0.4602,
+        "orderFollowing": 1
+      },
+      {
+        "model": "8B",
+        "stage": "Base",
+        "stageKey": "base",
+        "rowTraceEm": 0.7301,
+        "pairBothTraceEm": 0.5966,
+        "orderFollowing": 0.9813
+      },
+      {
+        "model": "4B",
+        "stage": "SFT",
+        "stageKey": "sft",
+        "rowTraceEm": 0.9347,
+        "pairBothTraceEm": 0.9034,
+        "orderFollowing": 1
+      },
+      {
+        "model": "8B",
+        "stage": "SFT",
+        "stageKey": "sft",
+        "rowTraceEm": 0.9545,
+        "pairBothTraceEm": 0.9205,
+        "orderFollowing": 0.9939
+      },
+      {
+        "model": "4B",
+        "stage": "SFT+DPO",
+        "stageKey": "dpo",
+        "rowTraceEm": 0.9489,
+        "pairBothTraceEm": 0.9205,
+        "orderFollowing": 1
+      },
+      {
+        "model": "8B",
+        "stage": "SFT+DPO",
+        "stageKey": "dpo",
+        "rowTraceEm": 0.9574,
+        "pairBothTraceEm": 0.9261,
+        "orderFollowing": 1
+      }
+    ],
+    "cases": [
+      {
+        "id": "a3_100_test_3_0001",
+        "label": "集合与顺序均正确",
+        "kind": "correct",
+        "view": "4B SFT · RAG@10",
+        "query": "我购物车里有一箱猫砂和一个猫爬架，之前下单时提示可能分开发。帮我先查下我杭州地址对应哪个仓有货、能不能从别的仓调；然后给我看一版结算预览，包括商品、地址、运费、优惠后实付和有没有风险提示；再确认这两样会不会因为仓库、库存、预售或重量原因拆单发货。",
+        "gold": [
+          "get_warehouse_stock_region",
+          "get_checkout_preview",
+          "split_shipment_plan"
+        ],
+        "prediction": [
+          "get_warehouse_stock_region",
+          "get_checkout_preview",
+          "split_shipment_plan"
+        ],
+        "setEm": true,
+        "traceEm": true,
+        "note": "三个工具及其先后顺序完全一致；RAG 候选展示顺序本身并不等于输出顺序。"
+      },
+      {
+        "id": "a3_100_test_4_0003",
+        "label": "纯顺序错误",
+        "kind": "order",
+        "view": "4B SFT · Wo-RAG",
+        "query": "查一下这双跑鞋的评价、评分、晒图和追评，帮我总结优缺点、尺码反馈、质量问题和适合谁穿；再看质量问题、假货争议、破损或故障怎么判定赔付，顺便把买家问答和商家回复也找出来。",
+        "gold": [
+          "get_item_reviews",
+          "summarize_item_reviews",
+          "get_quality_issue_policy",
+          "get_item_qa"
+        ],
+        "prediction": [
+          "get_item_reviews",
+          "summarize_item_reviews",
+          "get_item_qa",
+          "get_quality_issue_policy"
+        ],
+        "setEm": true,
+        "traceEm": false,
+        "note": "四个工具集合全部正确，但后两项顺序互换，因此 SetEM 通过而 TraceEM 失败。"
+      },
+      {
+        "id": "a3_100_test_2_0051",
+        "label": "工具集合错误",
+        "kind": "set",
+        "view": "4B SFT · RAG@10",
+        "query": "我这单洗衣机送来外壳磕凹了，自动售后一直让我等，麻烦帮我转人工处理并把订单号和我拍的照片一起提交；提交后我还想看看前面大概要排多久、预计什么时候有人回复，以及现在有没有客服已经接手。",
+        "gold": [
+          "create_manual_service_ticket",
+          "get_service_queue_status"
+        ],
+        "prediction": [
+          "escalate_to_human_service",
+          "get_service_queue_status"
+        ],
+        "setEm": false,
+        "traceEm": false,
+        "note": "模型把“创建人工客服单”替换为“升级人工客服”，属于相邻能力边界上的集合错误。"
+      }
+    ]
+  }
 };

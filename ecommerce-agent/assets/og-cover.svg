@@ -1,23 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="#000000"/>
   <rect x="64" y="64" width="16" height="16" fill="#76b900"/>
-  <text x="96" y="78" fill="#a7a7a7" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="1">100-TOOL COMMERCE AGENT · RESEARCH CASE STUDY</text>
+  <text x="96" y="78" fill="#a7a7a7" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="1">ASSIGNMENT 1 → 2 → 3 · CUMULATIVE RESEARCH CASE STUDY</text>
   <text x="64" y="224" fill="#ffffff" font-family="Inter,Arial,sans-serif" font-size="72" font-weight="700">100 个工具，</text>
-  <text x="64" y="310" fill="#76b900" font-family="Inter,Arial,sans-serif" font-size="72" font-weight="700">不只选中一个。</text>
-  <text x="64" y="374" fill="#bdbdbd" font-family="Inter,Arial,sans-serif" font-size="24">面向多意图电商请求的完整工具集合检索实验</text>
+  <text x="64" y="310" fill="#76b900" font-family="Inter,Arial,sans-serif" font-size="72" font-weight="700">从找齐到排对。</text>
+  <text x="64" y="374" fill="#bdbdbd" font-family="Inter,Arial,sans-serif" font-size="24">Intent 分流 → 候选检索 → 静态有序工具链</text>
   <line x1="64" y1="438" x2="704" y2="438" stroke="#5e5e5e"/>
   <text x="64" y="484" fill="#ffffff" font-family="Inter,Arial,sans-serif" font-size="32" font-weight="700">100</text>
   <text x="64" y="514" fill="#898989" font-family="Inter,Arial,sans-serif" font-size="14">KNOWN TOOLS</text>
-  <text x="224" y="484" fill="#ffffff" font-family="Inter,Arial,sans-serif" font-size="32" font-weight="700">6,000</text>
-  <text x="224" y="514" fill="#898989" font-family="Inter,Arial,sans-serif" font-size="14">FROZEN TEST</text>
-  <text x="430" y="484" fill="#76b900" font-family="Inter,Arial,sans-serif" font-size="32" font-weight="700">98.30%</text>
-  <text x="430" y="514" fill="#898989" font-family="Inter,Arial,sans-serif" font-size="14">ALLHIT@10</text>
-  <rect x="64" y="554" width="220" height="32" fill="#1a1a1a" stroke="#5e5e5e"/>
+  <text x="224" y="484" fill="#ffffff" font-family="Inter,Arial,sans-serif" font-size="32" font-weight="700">98.30%</text>
+  <text x="224" y="514" fill="#898989" font-family="Inter,Arial,sans-serif" font-size="14">A2 · ALLHIT@10</text>
+  <text x="454" y="484" fill="#76b900" font-family="Inter,Arial,sans-serif" font-size="32" font-weight="700">99.00%</text>
+  <text x="454" y="514" fill="#898989" font-family="Inter,Arial,sans-serif" font-size="14">A3 · SETEM / TRACEEM</text>
+  <rect x="64" y="554" width="270" height="32" fill="#1a1a1a" stroke="#5e5e5e"/>
   <rect x="64" y="554" width="8" height="32" fill="#76b900"/>
-  <text x="86" y="575" fill="#d0d0d0" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700">SYNTHETIC CLOSED SET</text>
+  <text x="86" y="575" fill="#d0d0d0" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700">STATIC SYNTHETIC CLOSED SET</text>
   <g transform="translate(790 92)">
     <rect x="-28" y="-28" width="362" height="466" fill="#1a1a1a" stroke="#5e5e5e"/>
-    <text x="0" y="6" fill="#a7a7a7" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700">100 TOOL CATALOG</text>
+    <text x="0" y="6" fill="#a7a7a7" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700">100 TOOL CATALOG · ORDERED TRACE</text>
     <g fill="#414141">
       <rect x="0" y="34" width="22" height="22"/><rect x="30" y="34" width="22" height="22"/><rect x="60" y="34" width="22" height="22"/><rect x="90" y="34" width="22" height="22"/><rect x="120" y="34" width="22" height="22"/><rect x="150" y="34" width="22" height="22"/><rect x="180" y="34" width="22" height="22"/><rect x="210" y="34" width="22" height="22"/><rect x="240" y="34" width="22" height="22"/><rect x="270" y="34" width="22" height="22"/>
       <rect x="0" y="64" width="22" height="22"/><rect x="30" y="64" width="22" height="22"/><rect x="60" y="64" width="22" height="22"/><rect x="90" y="64" width="22" height="22"/><rect x="120" y="64" width="22" height="22"/><rect x="150" y="64" width="22" height="22"/><rect x="180" y="64" width="22" height="22"/><rect x="210" y="64" width="22" height="22"/><rect x="240" y="64" width="22" height="22"/><rect x="270" y="64" width="22" height="22"/>
@@ -37,6 +37,6 @@
       <rect x="240" y="274" width="22" height="22"/>
     </g>
     <line x1="0" y1="362" x2="300" y2="362" stroke="#5e5e5e"/>
-    <text x="0" y="398" fill="#76b900" font-family="Inter,Arial,sans-serif" font-size="20" font-weight="700">4 / 4 GOLD TOOLS RECALLED</text>
+    <text x="0" y="398" fill="#76b900" font-family="Inter,Arial,sans-serif" font-size="20" font-weight="700">A → B → C · TRACE EXACT</text>
   </g>
 </svg>
