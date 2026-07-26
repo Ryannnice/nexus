@@ -2,9 +2,9 @@
 window.PROJECT_DATA = {
   "snapshot": {
     "date": "2026-07-26",
-    "label": "ASSIGNMENTS 1–3 SNAPSHOT",
+    "label": "INTEGRATED SYSTEM SNAPSHOT",
     "catalogVersion": "2026-07-06",
-    "scope": "100 个已知工具的 Intent、检索与静态有序选链累计离线评测",
+    "scope": "100 个已知工具的 Intent、检索与静态有序选链一体化离线评测",
     "repository": "https://github.com/Ryannnice/Agent"
   },
   "heroTraces": [
@@ -1351,7 +1351,7 @@ window.PROJECT_DATA = {
           "a10": 0.9595,
           "a30": 0.9975,
           "mrr": 0.966826,
-          "note": "稳定一阶段候选源",
+          "note": "稳定候选源",
           "a6": 0.8578
         },
         {
@@ -1625,7 +1625,7 @@ window.PROJECT_DATA = {
       "displayMode": "condensed"
     }
   ],
-  "assignment3": {
+  "planning": {
     "formalResults": [
       {
         "model": "Qwen3-4B",

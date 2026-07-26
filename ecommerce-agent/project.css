@@ -1552,15 +1552,16 @@ code, pre { font-family: var(--font); }
 
 #results > .wrap > .eyebrow { order: 1; }
 #results > .wrap > .section-heading { order: 2; margin-bottom: 30px; }
-#results > .wrap > .result-command-center { order: 3; }
-#results > .wrap > .result-explorer-head { order: 4; }
-#results > .wrap > .metric-switch { order: 5; }
-#results > .wrap > .result-tracks { order: 6; }
-#results > .wrap > .result-footnotes { order: 7; }
-#results > .wrap > .intent-result-block { order: 8; }
-#results > .wrap > .evidence-disclosure { order: 9; }
-#results > .wrap > .full-results { order: 10; }
-#results > .wrap > .decision-atlas-disclosure { order: 11; }
+#results > .wrap > .evaluation-protocol { order: 3; }
+#results > .wrap > .intent-result-block { order: 4; }
+#results > .wrap > .result-command-center { order: 5; }
+#results > .wrap > .result-explorer-head { order: 6; }
+#results > .wrap > .metric-switch { order: 7; }
+#results > .wrap > .result-tracks { order: 8; }
+#results > .wrap > .result-footnotes { order: 9; }
+#results > .wrap > .evidence-disclosure { order: 10; }
+#results > .wrap > .full-results { order: 11; }
+#results > .wrap > .decision-atlas-disclosure { order: 12; }
 
 #results .result-subsection-label {
   color: var(--primary-text);
@@ -1574,6 +1575,7 @@ code, pre { font-family: var(--font); }
   display: grid;
   grid-template-columns: 1.25fr .72fr .9fr;
   min-height: 350px;
+  margin-top: 36px;
   border: 1px solid var(--hairline-strong);
   background: var(--ink);
   color: var(--on-dark);
@@ -1737,7 +1739,7 @@ code, pre { font-family: var(--font); }
 #results .full-results { margin-top: 14px; }
 #results .full-results summary { min-height: 76px; padding: 20px 24px; background: var(--canvas); }
 #results .full-results summary span { color: var(--primary-text); font-size: 8px; letter-spacing: .6px; }
-#results .intent-result-block { margin-top: 36px; }
+#results .intent-result-block { margin-top: 28px; }
 
 /* Limits */
 .status-block-heading { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
@@ -2622,7 +2624,7 @@ code, pre { font-family: var(--font); }
   .verified-limitations { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* Assignment 3 · cumulative project update */
+/* Integrated system planning and evidence */
 .phase-context-label {
   display: inline-flex;
   margin-bottom: 12px;
@@ -2835,7 +2837,7 @@ code, pre { font-family: var(--font); }
   line-height: 1.6;
 }
 
-.assignment3-section {
+.planning-section {
   position: relative;
   overflow: hidden;
   border-top: 8px solid var(--ink);
@@ -2845,7 +2847,7 @@ code, pre { font-family: var(--font); }
     var(--canvas);
 }
 
-.assignment3-section::before {
+.planning-section::before {
   position: absolute;
   top: 0;
   right: 0;
@@ -2855,7 +2857,7 @@ code, pre { font-family: var(--font); }
   content: '';
 }
 
-.assignment3-section > .wrap {
+.planning-section > .wrap {
   position: relative;
 }
 

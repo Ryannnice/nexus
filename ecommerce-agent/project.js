@@ -344,11 +344,11 @@
         '<span>' + row.tools + ' 工具</span>' +
         '<div class="failure-bars">' +
           '<div class="failure-track" title="Embedding 单路 ' + percent(row.embedding, 2) + '"><div class="failure-fill" style="--bar-width:' + (row.embedding * 100).toFixed(3) + '%"></div></div>' +
-          '<div class="failure-track final" title="A2 最终检索链路 ' + percent(row.final, 2) + '"><div class="failure-fill" style="--bar-width:' + (row.final * 100).toFixed(3) + '%"></div></div>' +
+          '<div class="failure-track final" title="最终检索链路 ' + percent(row.final, 2) + '"><div class="failure-fill" style="--bar-width:' + (row.final * 100).toFixed(3) + '%"></div></div>' +
         '</div>' +
         '<strong>' + percent(row.final, 2) + '</strong>' +
       '</div>';
-    }).join('') + '<div class="failure-legend"><span><i></i>Embedding 单路</span><span><i></i>A2 最终检索链路</span></div>';
+    }).join('') + '<div class="failure-legend"><span><i></i>Embedding 单路</span><span><i></i>最终检索链路</span></div>';
 
     var ranks = $('#rankBandList');
     if (ranks) {
@@ -412,22 +412,22 @@
       '<div class="case-ranking"><div class="case-ranking-head"><span>FINAL RANKING · TOP-6 DIAGNOSTIC</span><span>' + item.gold.length + ' GOLD TOOLS</span></div>' + rows + '</div>';
   }
 
-  var activeA3Metric = 'setEm';
-  var a3MetricLabels = {
+  var activePlanningMetric = 'setEm';
+  var planningMetricLabels = {
     setEm: 'SET EXACT MATCH',
     traceEm: 'TRACE EXACT MATCH',
     microF1: 'MICRO-F1',
     validRate: 'STRICT OUTPUT VALID RATE'
   };
 
-  function renderA3Results(metric) {
+  function renderPlanningResults(metric) {
     var root = $('#a3ResultChart');
-    var assignment3 = data.assignment3;
-    if (!root || !assignment3) return;
-    activeA3Metric = metric;
+    var planning = data.planning;
+    if (!root || !planning) return;
+    activePlanningMetric = metric;
 
     var groups = [];
-    assignment3.formalResults.forEach(function (row) {
+    planning.formalResults.forEach(function (row) {
       var key = row.stageKey + '-' + row.modelShort;
       var group = groups.find(function (item) { return item.key === key; });
       if (!group) {
@@ -443,7 +443,7 @@
       group.rows.push(row);
     });
 
-    root.innerHTML = '<div class="a3-chart-legend"><span><i></i>Wo-RAG · 100</span><span><i></i>RAG@10</span><strong>' + escapeHtml(a3MetricLabels[metric]) + '</strong></div>' +
+    root.innerHTML = '<div class="a3-chart-legend"><span><i></i>Wo-RAG · 100</span><span><i></i>RAG@10</span><strong>' + escapeHtml(planningMetricLabels[metric]) + '</strong></div>' +
       '<div class="a3-result-groups">' + groups.map(function (group) {
         return '<article class="a3-result-group is-' + escapeHtml(group.stageKey) + '">' +
           '<div class="a3-result-group-head"><span>' + escapeHtml(group.stage) + '</span><strong>' + escapeHtml(group.model) + '</strong></div>' +
@@ -459,7 +459,7 @@
       }).join('') + '</div>';
   }
 
-  function setupA3MetricSwitch() {
+  function setupPlanningMetricSwitch() {
     var root = $('#a3MetricSwitch');
     if (!root) return;
     root.addEventListener('click', function (event) {
@@ -470,17 +470,17 @@
         item.classList.toggle('active', active);
         item.setAttribute('aria-pressed', active ? 'true' : 'false');
       });
-      renderA3Results(button.getAttribute('data-a3-metric'));
+      renderPlanningResults(button.getAttribute('data-a3-metric'));
     });
   }
 
-  function renderA3CandidateOrder() {
+  function renderPlanningCandidateOrder() {
     var root = $('#a3CandidateOrderChart');
-    var assignment3 = data.assignment3;
-    if (!root || !assignment3) return;
+    var planning = data.planning;
+    if (!root || !planning) return;
     var viewOrder = ['global', 'rag'];
     root.innerHTML = viewOrder.map(function (viewKey) {
-      var rows = assignment3.candidateOrder.filter(function (row) { return row.viewKey === viewKey; });
+      var rows = planning.candidateOrder.filter(function (row) { return row.viewKey === viewKey; });
       if (!rows.length) return '';
       return '<div class="a3-order-group">' +
         '<div class="a3-order-group-head"><strong>' + escapeHtml(rows[0].view) + '</strong><span>TRACEEM / STABILITY</span></div>' +
@@ -496,12 +496,12 @@
     }).join('');
   }
 
-  function renderA3Counterfactual() {
+  function renderPlanningCounterfactual() {
     var root = $('#a3CounterfactualChart');
-    var assignment3 = data.assignment3;
-    if (!root || !assignment3) return;
+    var planning = data.planning;
+    if (!root || !planning) return;
     root.innerHTML = '<div class="a3-counterfactual-head"><span>MODEL</span><span>PAIR-BOTH TRACEEM</span><span>ORDER FOLLOWING</span></div>' +
-      assignment3.counterfactual.map(function (row) {
+      planning.counterfactual.map(function (row) {
         return '<div class="a3-counterfactual-row is-' + escapeHtml(row.stageKey) + '">' +
           '<span><b>' + escapeHtml(row.model) + '</b> ' + escapeHtml(row.stage) + '</span>' +
           '<div class="a3-counterfactual-track"><i style="--bar-width:' + (row.pairBothTraceEm * 100).toFixed(3) + '%"></i></div>' +
@@ -511,11 +511,11 @@
       }).join('');
   }
 
-  function renderA3Cases() {
+  function renderPlanningCases() {
     var tabs = $('#a3CaseTabs');
-    var assignment3 = data.assignment3;
-    if (!tabs || !assignment3 || !assignment3.cases.length) return;
-    tabs.innerHTML = assignment3.cases.map(function (item, index) {
+    var planning = data.planning;
+    if (!tabs || !planning || !planning.cases.length) return;
+    tabs.innerHTML = planning.cases.map(function (item, index) {
       return '<button type="button" role="tab" id="a3-case-tab-' + index + '" aria-controls="a3CaseViewer" aria-selected="' + (index === 0 ? 'true' : 'false') + '" tabindex="' + (index === 0 ? '0' : '-1') + '" class="' + (index === 0 ? 'active' : '') + '" data-a3-case="' + index + '">' + escapeHtml(item.label) + '</button>';
     }).join('');
 
@@ -526,7 +526,7 @@
         item.setAttribute('aria-selected', active ? 'true' : 'false');
         item.tabIndex = active ? 0 : -1;
       });
-      renderA3Case(Number(button.getAttribute('data-a3-case')));
+      renderPlanningCase(Number(button.getAttribute('data-a3-case')));
     }
 
     tabs.addEventListener('click', function (event) {
@@ -543,10 +543,10 @@
       buttons[nextIndex].focus();
       activate(buttons[nextIndex]);
     });
-    renderA3Case(0);
+    renderPlanningCase(0);
   }
 
-  function renderA3Sequence(ids, gold, predicted) {
+  function renderPlanningSequence(ids, gold, predicted) {
     return ids.map(function (toolId, index) {
       var tone = '';
       if (predicted) {
@@ -556,10 +556,10 @@
     }).join('');
   }
 
-  function renderA3Case(index) {
+  function renderPlanningCase(index) {
     var root = $('#a3CaseViewer');
-    var assignment3 = data.assignment3;
-    var item = assignment3 && assignment3.cases[index];
+    var planning = data.planning;
+    var item = planning && planning.cases[index];
     if (!root || !item) return;
     root.setAttribute('role', 'tabpanel');
     root.setAttribute('aria-labelledby', 'a3-case-tab-' + index);
@@ -570,8 +570,8 @@
       '</div>' +
       '<div class="a3-case-trace">' +
         '<div class="a3-case-verdict"><span class="' + (item.setEm ? 'is-pass' : 'is-fail') + '">SetEM · ' + (item.setEm ? 'PASS' : 'FAIL') + '</span><span class="' + (item.traceEm ? 'is-pass' : 'is-fail') + '">TraceEM · ' + (item.traceEm ? 'PASS' : 'FAIL') + '</span></div>' +
-        '<div class="a3-sequence"><strong>GOLD TRACE</strong><div>' + renderA3Sequence(item.gold, item.gold, false) + '</div></div>' +
-        '<div class="a3-sequence"><strong>PREDICTED TRACE</strong><div>' + renderA3Sequence(item.prediction, item.gold, true) + '</div></div>' +
+        '<div class="a3-sequence"><strong>GOLD TRACE</strong><div>' + renderPlanningSequence(item.gold, item.gold, false) + '</div></div>' +
+        '<div class="a3-sequence"><strong>PREDICTED TRACE</strong><div>' + renderPlanningSequence(item.prediction, item.gold, true) + '</div></div>' +
         '<div class="a3-sequence-legend"><span><i></i>位置正确</span><span><i></i>集合内但位置错误</span><span><i></i>错误工具</span></div>' +
       '</div>';
   }
@@ -690,11 +690,11 @@
   renderTransitions();
   renderFailures();
   renderCases();
-  renderA3Results(activeA3Metric);
-  setupA3MetricSwitch();
-  renderA3CandidateOrder();
-  renderA3Counterfactual();
-  renderA3Cases();
+  renderPlanningResults(activePlanningMetric);
+  setupPlanningMetricSwitch();
+  renderPlanningCandidateOrder();
+  renderPlanningCounterfactual();
+  renderPlanningCases();
   renderCompetition();
   setupNavigation();
   setupCopy();
