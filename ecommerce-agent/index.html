@@ -11,19 +11,19 @@
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="让复杂电商请求，先找齐工具，再排对工具链。">
-  <meta property="og:description" content="一条完整的 100 工具系统链路：Intent 100.00%，检索 AllHit@10 98.30%，静态选链 SetEM / TraceEM 99.00%。">
+  <meta property="og:description" content="一条完整的 100 工具系统链路：Intent 100.00%，检索 AllHit@10 98.30%，最终静态选链端点 SetEM / TraceEM 99.10%。">
   <meta property="og:url" content="https://ryannnice.github.io/nexus/ecommerce-agent/">
-  <meta property="og:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png">
+  <meta property="og:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=20260727">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="让复杂电商请求，先找齐工具，再排对工具链。">
   <meta name="twitter:description" content="100-Tool Commerce Agent · One integrated pipeline">
-  <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png">
+  <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=20260727">
 
-  <link rel="stylesheet" href="project.css?v=15">
-  <script defer src="project-data.js?v=9"></script>
-  <script defer src="project.js?v=9"></script>
+  <link rel="stylesheet" href="project.css?v=16">
+  <script defer src="project-data.js?v=10"></script>
+  <script defer src="project.js?v=10"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">跳到主要内容</a>
@@ -75,7 +75,7 @@
             <div><dt>100</dt><dd>固定工具空间</dd></div>
             <div><dt>1.0000</dt><dd>Intent Gate · Accuracy · 9K</dd></div>
             <div><dt>98.30%</dt><dd>Retrieval · AllHit@10 · 6K</dd></div>
-            <div class="hero-stat-primary"><dt>99.00%</dt><dd>Planner · SetEM / TraceEM · 1K</dd></div>
+            <div class="hero-stat-primary"><dt>99.10%</dt><dd>Planner · final endpoint · SetEM / TraceEM</dd></div>
           </dl>
         </div>
 
@@ -128,7 +128,7 @@
         <span>Hybrid Retrieval</span>
         <span>Static Planner</span>
         <span>100 Tools · 8 Domains</span>
-        <span>Snapshot · 2026-07-26</span>
+        <span>Snapshot · 2026-07-27</span>
       </div>
     </aside>
 
@@ -141,9 +141,9 @@
             <p>本项目围绕同一份 100 工具 Catalog 构建一条连续系统链路：Intent Gate 先判断请求是否进入工具系统；BM25、任务内微调 Embedding、Task Reranker 与 RRF 生成高覆盖候选集；Qwen3-4B/8B Planner 再从候选视图或完整目录中输出有序工具 ID 轨迹。</p>
           </div>
           <div class="abstract-brief-result">
-            <span>BEST PLANNER RESULT</span>
-            <strong>SetEM / TraceEM · 99.00%</strong>
-            <p>在上游调优检索器提供 RAG@10 候选时，Qwen3-4B SFT Planner 在独立冻结 API 原生 1K 上取得该结果。它衡量静态工具选择与顺序，不代表真实工具执行成功率。</p>
+            <span>FINAL PLANNER ENDPOINT</span>
+            <strong>SetEM / TraceEM · 99.10%</strong>
+            <p>开发集冻结超参数后，Qwen3-8B 以 54K SFT 数据训练，在上游 RAG@10 候选与独立冻结 API 原生 1K 上取得该端点结果。四档规模曲线中的单点最高值为 99.20%，但不用于反向选择最终端点。</p>
           </div>
         </div>
 
@@ -156,7 +156,7 @@
           <div><span>TOOL SPACE</span><strong>100</strong><small>固定工具文档 · 8 个业务域</small></div>
           <div><span>INTENT GATE</span><strong>1.0000</strong><small>Accuracy / Macro-F1 · 9K</small></div>
           <div><span>RETRIEVAL</span><strong>98.30%</strong><small>AllHit@10 · 6K</small></div>
-          <div class="abstract-kpi-primary"><span>STATIC PLANNER</span><strong>99.00%</strong><small>4B SFT RAG · SetEM / TraceEM · 1K</small></div>
+          <div class="abstract-kpi-primary"><span>STATIC PLANNER</span><strong>99.10%</strong><small>8B · 54K tuned SFT · RAG@10 · 1K</small></div>
         </div>
 
 
@@ -342,7 +342,7 @@
         <article class="pipeline-lane planner-lane">
           <header>
             <div><span>PIPELINE 03 · STATIC PLANNER</span><h3>静态有序工具链规划</h3></div>
-            <p>独立冻结 API 原生 1,000 条 · 4B SFT RAG SetEM / TraceEM 99.00%</p>
+            <p>独立冻结 API 原生 1,000 条 · 8B 54K 调参 SFT RAG SetEM / TraceEM 99.10%</p>
           </header>
           <div class="planner-map">
             <div class="planner-inputs">
@@ -353,7 +353,7 @@
             <div class="planner-model">
               <small>STATIC PLANNER</small>
               <strong>Qwen3-4B / Qwen3-8B</strong>
-              <span>Base → SFT → SFT + DPO</span>
+              <span>训练方案对照 + 调参 SFT 系统端点</span>
             </div>
             <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
             <div class="planner-output">
@@ -370,7 +370,7 @@
           <article><span class="method-number">02</span><h3>Bi-encoder + MNRL</h3><p>用 70,012 个正对学习 Query–Tool 表示；当前训练入口不直接读取显式负例文件。</p><small>70,012 POSITIVE PAIRS</small></article>
           <article><span class="method-number">03</span><h3>Task Cross-encoder</h3><p>联合编码 Query–Tool Pair，以组内正负样本学习更细粒度的候选交互关系。</p><small>24K GROUPS · 1 + 7</small></article>
           <article><span class="method-number">04</span><h3>Weighted RRF</h3><p>保留 Source 与 Task Reranker 两份名次，以训练集选定的权重和 rrf_k 生成最终排序。</p><small>SOURCE 0.6 · RRF_K 10</small></article>
-          <article><span class="method-number">05</span><h3>Toolchain SFT</h3><p>只用 54K 候选视图训练 4B/8B 模型；正式评测再检验候选输入与从未参与 SFT 的完整目录输入。</p><small>54K · FULL-CATALOG TRAIN 0</small></article>
+          <article><span class="method-number">05</span><h3>Toolchain SFT</h3><p>在 2.4K 开发集上搜索并冻结参数，再以 9K–54K 嵌套候选视图训练 4B/8B，检验监督规模与完整目录迁移。</p><small>21 + 3 RUNS · 4 NESTED SCALES</small></article>
           <article><span class="method-number">06</span><h3>Preference DPO</h3><p>使用 5K 对真实模型错误构建偏好监督，检验其对静态主指标与顺序鲁棒性的影响。</p><small>5K REAL ERRORS · BETA 0.05</small></article>
         </div>
       </div>
@@ -627,7 +627,7 @@
         <p class="eyebrow">SECTION 04</p>
         <div class="section-heading split-heading">
           <h2 id="dataTitle">系统数据基础与评测隔离</h2>
-          <p>所有模块共享同一份 100 工具能力事实源，但按任务用途隔离数据：30K 基础轨迹支撑入口分流与候选检索，54K API 原生候选视图支撑有序规划训练；9K Intent 集与 6K Retrieval 集是固定的模块比较基准，Planner 另设 2.4K 开发集和未参与选参的正式 1K。</p>
+          <p>所有模块共享同一份 100 工具能力事实源，但按任务用途隔离数据：30K 基础轨迹支撑入口分流与候选检索，9K–54K 嵌套 API 原生候选视图支撑有序规划的调参与规模分析；9K Intent 集与 6K Retrieval 集是固定的模块比较基准，Planner 另设 2.4K 开发集和未参与选参的正式 1K。</p>
         </div>
 
         <div class="dataset-layout">
@@ -706,22 +706,22 @@
         <div class="a3-data-block">
           <div class="data-asset-heading">
             <div><p class="eyebrow">ORDERED-TRACE DATA</p><h3>为静态 Planner 建立独立训练、选参与正式评测</h3></div>
-            <p>规划数据与上游 24K/6K 轨迹各司其职：54K 用于 Planner SFT，2.4K 仅用于 checkpoint 与 DPO beta 选择，冻结 1K 仅用于最终模型比较。</p>
+            <p>规划数据与上游 24K/6K 轨迹各司其职：SFT 使用 9K/18K/36K/54K 稳定哈希前缀，2.4K 只负责超参数与 DPO beta 选择；选择证据先冻结，1K 再用于训练方案对照和规模曲线评测。</p>
           </div>
           <div class="a3-data-grid" role="group" aria-label="静态规划数据规模">
-            <article><span>SFT TRAIN</span><strong>54K</strong><p>18K 单意图 + 24K 多意图顺序 + 12K 多意图干扰。</p></article>
-            <article><span>SELECTION DEV</span><strong>2.4K</strong><p>选择 4B SFT epoch 与 DPO beta；不进入正式结果。</p></article>
+            <article><span>NESTED SFT TRAIN</span><strong>9–54K</strong><p>9K / 18K / 36K / 54K；每档均保持单意图 : 顺序 : 干扰 = 3 : 4 : 2。</p></article>
+            <article><span>SELECTION DEV</span><strong>2.4K</strong><p>完成 4B 21 个组合与 8B 3 个复训确认，并选择 DPO beta；不与正式测试指标混算。</p></article>
             <article class="is-primary"><span>OFFICIAL TEST</span><strong>1K</strong><p>工具数 1–5 各 200 条；冻结后不用于 checkpoint 选择。</p></article>
             <article><span>DPO PREFERENCES</span><strong>5K</strong><p>全部来自真实模型错误；synthetic pairs = 0。</p></article>
             <article><span>ORDER STRESS</span><strong>176 对</strong><p>352 条 API 顺序反事实，覆盖 2–6 工具。</p></article>
           </div>
           <div class="a3-audit-strip" role="group" aria-label="静态规划数据审计摘要">
-            <div><strong>0</strong><span>规范化 Query / Trace ID overlap</span></div>
+            <div><strong>0</strong><span>各训练档与 Dev / Test 的规范化 Query / Trace ID overlap</span></div>
             <div><strong>0</strong><span>Full-catalog SFT rows</span></div>
-            <div><strong>82.1%</strong><span>正式目标有序序列在 SFT 中 seen</span></div>
-            <div><strong>88.2%</strong><span>正式目标工具集合在 SFT 中 seen</span></div>
+            <div><strong>100 / 100</strong><span>每个训练规模覆盖的工具数</span></div>
+            <div><strong>82.1%</strong><span>正式目标有序序列在 54K SFT 中 seen</span></div>
           </div>
-          <p class="a3-data-boundary">零文本泄漏不等于目标组合从未出现。表达簇同序列仅命中 1 / 1,000，context-skeleton 命中为 0；但目标组合复用依然存在，任务仍属于固定 100 工具的合成闭集。</p>
+          <p class="a3-data-boundary">四档训练集按稳定哈希前缀严格嵌套，数据审计 strict_ok=true。零文本泄漏不等于目标组合从未出现：表达簇同序列仅命中 1 / 1,000，context-skeleton 命中为 0；但目标组合复用依然存在，任务仍属于固定 100 工具的合成闭集。</p>
         </div>
 
       </div>
@@ -1028,19 +1028,19 @@
         <p class="eyebrow">SECTION 08 · ORDERED-TRACE PLANNING</p>
         <div class="section-heading split-heading">
           <h2 id="planningTitle">有序轨迹规划：从高覆盖候选集到精确工具链</h2>
-          <p>上游检索层固定后，Qwen3-4B/8B Planner 接收 RAG@10 候选或完整 100 工具目录，并输出 <code>query → 有序工具 ID 轨迹</code>。Base、SFT 与 DPO 在同一冻结 1K 上比较；任务仍是静态规划，不是工具执行。</p>
+          <p>上游检索层固定后，Qwen3-4B/8B Planner 接收 RAG@10 候选或完整 100 工具目录，并输出 <code>query → 有序工具 ID 轨迹</code>。实验同时回答训练方案、SFT 参数与数据规模三个问题；任务仍是静态规划，不是工具执行。</p>
         </div>
 
         <div class="a3-scope-banner">
-          <div><span>PLANNER EVALUATION SCOPE</span><strong>Base / SFT / DPO × 4B / 8B × Wo-RAG / RAG@10</strong></div>
-          <p>全部正式横向结果来自同一冻结 API 原生 1,000 条测试集。2,400 条开发集和早期 checkpoint 只用于选参与机制诊断，不与正式结果混算。</p>
+          <div><span>PLANNER EVALUATION SCOPE</span><strong>SFT tuning + nested scale / training control / order robustness</strong></div>
+          <p>2,400 条开发集负责选参，冻结证据早于正式推理；同一 1,000 条正式测试用于报告固定配置的规模曲线与训练方案对照。不同配置的 checkpoint 各自回答不同问题，不拼接成伪造的阶段增量。</p>
         </div>
 
         <div class="a3-kpi-grid" role="group" aria-label="静态规划实验关键数字">
-          <article><span>API-NATIVE SFT</span><strong>54,000</strong><small>完整 100 工具视图训练条数为 0</small></article>
+          <article><span>NESTED SFT SCALES</span><strong>4</strong><small>9K / 18K / 36K / 54K · 100/100 tools</small></article>
+          <article><span>DEV SEARCH RUNS</span><strong>21 + 3</strong><small>4B 全量搜索 + 8B 候选复训确认</small></article>
           <article><span>OFFICIAL TEST</span><strong>1,000</strong><small>tool_count 1–5 各 200 条</small></article>
-          <article><span>DPO PAIRS</span><strong>5,000</strong><small>真实模型错误 · beta 0.05</small></article>
-          <article class="is-primary"><span>BEST STATIC RESULT</span><strong>99.00%</strong><small>4B SFT RAG · SetEM / TraceEM</small></article>
+          <article class="is-primary"><span>FINAL SYSTEM ENDPOINT</span><strong>99.10%</strong><small>8B · 54K SFT · RAG · SetEM / TraceEM</small></article>
         </div>
 
         <div class="a3-view-grid">
@@ -1070,8 +1070,72 @@
         </div>
 
         <div class="a3-result-heading">
-          <div><p class="eyebrow">FORMAL 1K MATRIX</p><h3>同一冻结测试上的 12 个正式评测单元</h3></div>
-          <p>切换指标查看 Base、SFT 与 DPO 在两种输入视图下的变化；完整数值表保留全部四项指标。</p>
+          <div><p class="eyebrow">SFT TUNING + DATA SCALE</p><h3>先用开发集冻结参数，再只改变监督规模</h3></div>
+          <p>4B 完成 21 个唯一组合，8B 对前三名实际复训确认；两种模型选中同一配置。四档训练集按稳定哈希前缀严格嵌套，每档覆盖 100 / 100 工具。</p>
+        </div>
+
+        <div class="a3-tuning-grid" role="group" aria-label="SFT 调参与冻结结果">
+          <article><span>SEARCH SPACE</span><strong>21 + 3 runs</strong><p>4B 三轮搜索 learning rate、epoch、LoRA rank 与 dropout；8B 独立复训三个候选。</p></article>
+          <article class="is-selected"><span>SELECTED CONFIG</span><strong>5e-5 · e3 · r32</strong><p>LoRA alpha 64 · dropout 0.05；4B 与 8B 均由 Dev TraceEM 选中。</p></article>
+          <article><span>4B · DEV TRACEEM</span><strong>93.04%</strong><p>同轮 rank 16 配置为 92.17%，参数选择带来 +0.87 pp。</p></article>
+          <article><span>8B · DEV TRACEEM</span><strong>93.54%</strong><p>三个候选均在 9K 上实际训练，不直接照搬 4B 排名。</p></article>
+        </div>
+        <p class="a3-freeze-note"><strong>选择边界：</strong>超参数选择文件在正式测试推理前冻结，<code>official_test_used_for_selection=false</code>。规模曲线固定模型内配置、随机种子和有效 batch，只改变嵌套训练量及其对应更新步数。</p>
+
+        <div class="metric-switch a3-metric-switch" id="a3ScaleMetricSwitch" role="group" aria-label="切换 SFT 数据规模指标">
+          <button class="active" type="button" data-a3-scale-metric="setEm" aria-pressed="true">SetEM</button>
+          <button type="button" data-a3-scale-metric="traceEm" aria-pressed="false">TraceEM</button>
+        </div>
+        <div class="a3-scale-chart" id="a3ScaleChart" aria-live="polite"></div>
+
+        <div class="a3-scale-findings">
+          <article><span>DATA EFFICIENCY</span><strong>9K 已获得主要增益</strong><p>Wo-RAG SetEM 相对 Base 已提升 4B +40.80 pp、8B +38.30 pp；54K 并不是 SFT 巨幅提升的主要解释。</p></article>
+          <article><span>INCREMENTAL GAIN</span><strong>9K → 54K 增益有限</strong><p>Wo-RAG 仅再提升 4B +3.10 pp、8B +1.70 pp；RAG 分别变化 0.00 pp 与 +0.50 pp。</p></article>
+          <article><span>NON-MONOTONIC CURVE</span><strong>更多数据不保证单调更好</strong><p>18K / 36K 存在局部回退；每档仅一个固定种子，差异可能同时包含优化随机性。</p></article>
+        </div>
+
+        <details class="a3-details">
+          <summary><span>完整 SFT 数据规模矩阵</span><strong>16 CELLS · FROZEN CONFIG</strong><i>+</i></summary>
+          <div class="result-table-wrap">
+            <table class="result-table a3-scale-table">
+              <thead><tr><th scope="col">模型</th><th scope="col">训练量</th><th scope="col">视图</th><th scope="col">SetEM</th><th scope="col">TraceEM</th><th scope="col">相对 Base SetEM</th></tr></thead>
+              <tbody>
+                <tr><td>Qwen3-4B</td><td>9K</td><td>Wo-RAG · 100</td><td>93.10%</td><td>93.00%</td><td>+40.80 pp</td></tr>
+                <tr><td>Qwen3-4B</td><td>9K</td><td>RAG@10</td><td>98.60%</td><td>98.60%</td><td>+44.60 pp</td></tr>
+                <tr><td>Qwen3-4B</td><td>18K</td><td>Wo-RAG · 100</td><td>91.80%</td><td>91.60%</td><td>+39.50 pp</td></tr>
+                <tr><td>Qwen3-4B</td><td>18K</td><td>RAG@10</td><td>97.70%</td><td>97.70%</td><td>+43.70 pp</td></tr>
+                <tr><td>Qwen3-4B</td><td>36K</td><td>Wo-RAG · 100</td><td>91.60%</td><td>91.20%</td><td>+39.30 pp</td></tr>
+                <tr><td>Qwen3-4B</td><td>36K</td><td>RAG@10</td><td>99.20%</td><td>99.20%</td><td>+45.20 pp</td></tr>
+                <tr class="row-emphasis"><td>Qwen3-4B</td><td>54K</td><td>Wo-RAG · 100</td><td>96.20%</td><td>96.20%</td><td>+43.90 pp</td></tr>
+                <tr class="row-emphasis"><td>Qwen3-4B</td><td>54K</td><td>RAG@10</td><td>98.60%</td><td>98.60%</td><td>+44.60 pp</td></tr>
+                <tr><td>Qwen3-8B</td><td>9K</td><td>Wo-RAG · 100</td><td>95.70%</td><td>95.60%</td><td>+38.30 pp</td></tr>
+                <tr><td>Qwen3-8B</td><td>9K</td><td>RAG@10</td><td>98.60%</td><td>98.60%</td><td>+38.60 pp</td></tr>
+                <tr><td>Qwen3-8B</td><td>18K</td><td>Wo-RAG · 100</td><td>95.30%</td><td>95.10%</td><td>+37.90 pp</td></tr>
+                <tr><td>Qwen3-8B</td><td>18K</td><td>RAG@10</td><td>99.00%</td><td>99.00%</td><td>+39.00 pp</td></tr>
+                <tr><td>Qwen3-8B</td><td>36K</td><td>Wo-RAG · 100</td><td>95.80%</td><td>95.70%</td><td>+38.40 pp</td></tr>
+                <tr><td>Qwen3-8B</td><td>36K</td><td>RAG@10</td><td>98.20%</td><td>98.20%</td><td>+38.20 pp</td></tr>
+                <tr class="row-emphasis"><td>Qwen3-8B</td><td>54K</td><td>Wo-RAG · 100</td><td>97.40%</td><td>97.40%</td><td>+40.00 pp</td></tr>
+                <tr class="result-table-final"><td>Qwen3-8B</td><td>54K</td><td>RAG@10</td><td>99.10%</td><td>99.10%</td><td>+39.10 pp</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="a3-details-note">99.20% 是固定规模曲线中的观测单点，不作为经正式测试反向选择的系统端点；54K 行对应完整训练集上的交付 checkpoint。</p>
+        </details>
+
+        <div class="a3-endpoint-bridge">
+          <div><p class="eyebrow">SYSTEM ENDPOINT</p><h3>54K 调参 SFT 与训练方案对照中的 SFT checkpoint</h3></div>
+          <p>两组结果使用同一正式 1K，但训练参数和 checkpoint 不同；下列差值只描述系统优化结果，不能与对照矩阵中的 DPO 行重新拼成因果阶段增量。</p>
+        </div>
+        <div class="a3-endpoint-grid" role="group" aria-label="调参 SFT 端点对比">
+          <article><span>4B · WO-RAG</span><strong>94.70 → 96.20%</strong><small>+1.50 pp</small></article>
+          <article><span>4B · RAG@10</span><strong>99.00 → 98.60%</strong><small>−0.40 pp</small></article>
+          <article><span>8B · WO-RAG</span><strong>94.80 → 97.40%</strong><small>+2.60 pp</small></article>
+          <article class="is-primary"><span>8B · RAG@10</span><strong>98.30 → 99.10%</strong><small>+0.80 pp · final endpoint</small></article>
+        </div>
+
+        <div class="a3-result-heading">
+          <div><p class="eyebrow">TRAINING-REGIME CONTROL</p><h3>同阶段 checkpoint 的 12 个公平对照单元</h3></div>
+          <p>这组矩阵专门比较 Base、SFT 与 SFT+DPO；切换指标查看两种输入视图，完整数值表保留全部四项指标。它不替代上方调参 SFT 的系统端点。</p>
         </div>
 
         <div class="metric-switch a3-metric-switch" id="a3MetricSwitch" role="group" aria-label="切换静态规划指标">
@@ -1083,7 +1147,7 @@
         <div class="a3-result-chart" id="a3ResultChart" aria-live="polite"></div>
 
         <details class="a3-details a3-formal-details">
-          <summary><span>完整正式矩阵</span><strong>12 CELLS · 4 METRICS</strong><i>+</i></summary>
+          <summary><span>完整训练方案对照矩阵</span><strong>12 CELLS · 4 METRICS</strong><i>+</i></summary>
           <div class="result-table-wrap">
             <table class="result-table a3-formal-table">
               <thead><tr><th scope="col">模型</th><th scope="col">训练方案</th><th scope="col">视图</th><th scope="col">SetEM</th><th scope="col">TraceEM</th><th scope="col">micro-F1</th><th scope="col">严格输出有效率</th></tr></thead>
@@ -1093,7 +1157,7 @@
                 <tr><td>Qwen3-8B</td><td>Base</td><td>Wo-RAG · 100</td><td>57.40%</td><td>54.60%</td><td>87.31%</td><td>96.70%</td></tr>
                 <tr><td>Qwen3-8B</td><td>Base</td><td>RAG@10</td><td>60.00%</td><td>59.10%</td><td>88.45%</td><td>89.80%</td></tr>
                 <tr class="row-emphasis"><td>Qwen3-4B</td><td>SFT</td><td>Wo-RAG · 100</td><td>94.70%</td><td>94.60%</td><td>98.58%</td><td>99.90%</td></tr>
-                <tr class="result-table-final"><td>Qwen3-4B</td><td>SFT</td><td>RAG@10</td><td>99.00%</td><td>99.00%</td><td>99.73%</td><td>100.00%</td></tr>
+                <tr class="row-emphasis"><td>Qwen3-4B</td><td>SFT</td><td>RAG@10</td><td>99.00%</td><td>99.00%</td><td>99.73%</td><td>100.00%</td></tr>
                 <tr class="row-emphasis"><td>Qwen3-8B</td><td>SFT</td><td>Wo-RAG · 100</td><td>94.80%</td><td>94.20%</td><td>98.73%</td><td>100.00%</td></tr>
                 <tr><td>Qwen3-8B</td><td>SFT</td><td>RAG@10</td><td>98.30%</td><td>98.30%</td><td>99.63%</td><td>100.00%</td></tr>
                 <tr><td>Qwen3-4B</td><td>SFT+DPO</td><td>Wo-RAG · 100</td><td>93.30%</td><td>93.20%</td><td>98.20%</td><td>100.00%</td></tr>
@@ -1106,17 +1170,17 @@
         </details>
 
         <div class="a3-findings">
-          <article><span>01 · MAIN GAIN</span><h3>SFT 是主要增益来源</h3><p>相对同模型 Base，SFT 的 SetEM 提升 37.40–45.00 pp；它把候选识别和结构化输出同时推到高正确率。</p></article>
-          <article class="is-primary"><span>02 · CHECKPOINT</span><h3>静态主结果推荐 SFT</h3><p>4B SFT RAG@10 为 99.00%；8B SFT Wo-RAG SetEM 为 94.80%。DPO 没有稳定改善正式主指标。</p></article>
-          <article><span>03 · RETRIEVAL EFFECT</span><h3>RAG 收益依赖候选覆盖</h3><p>正式 1K 的 tuned AllHit@10=100.00%，untuned 仅 84.20%。必须先区分检索上限与条件规划能力。</p></article>
-          <article><span>04 · DPO SOURCE SHIFT</span><h3>偏好数据与最终 SFT 有错位</h3><p>5K 真实错误中仅 43 对来自选中 SFT endpoint，另 4,957 对来自 early-SFT；这会限制 DPO 对正式主指标的收益。</p></article>
+          <article><span>01 · MAIN GAIN</span><h3>SFT 是主要增益来源</h3><p>对照矩阵中，相对同模型 Base，SFT 的 SetEM 提升 37.40–45.00 pp；9K 规模实验也复现了 38.30–44.60 pp 的大幅增益。</p></article>
+          <article class="is-primary"><span>02 · SYSTEM ENDPOINT</span><h3>交付 8B 54K 调参 SFT</h3><p>Wo-RAG SetEM / TraceEM 为 97.40%，RAG@10 为 99.10%；两种视图均高于对照矩阵中的 8B SFT checkpoint。</p></article>
+          <article><span>03 · DPO VERDICT</span><h3>DPO 不替代 SFT 主端点</h3><p>DPO 没有一致改善对照矩阵的静态主指标，只在顺序专项呈现有限收益；因此最终系统端点保持纯 SFT。</p></article>
+          <article><span>04 · RETRIEVAL EFFECT</span><h3>RAG 高分依赖候选覆盖</h3><p>正式 1K 的 tuned AllHit@10=100.00%，untuned 仅 84.20%。必须区分检索上限、条件规划能力与完整目录迁移。</p></article>
         </div>
 
         <details class="a3-details a3-selection-details">
-          <summary><span>选参与 DPO 数据来源</span><strong>DEV 2.4K · OFFICIAL TEST UNTOUCHED</strong><i>+</i></summary>
+          <summary><span>训练方案对照的 checkpoint 选择与 DPO 数据来源</span><strong>DEV 2.4K · OFFICIAL TEST UNTOUCHED</strong><i>+</i></summary>
           <div class="a3-selection-grid">
             <article>
-              <header><span>4B SFT EPOCH</span><h3>epoch 1 被开发集选中</h3></header>
+              <header><span>CONTROL-MATRIX 4B SFT</span><h3>epoch 1 被开发集选中</h3></header>
               <div><span>epoch 1</span><strong>93.38% / 93.38%</strong><small>SetEM / TraceEM · SELECTED</small></div>
               <div><span>epoch 2</span><strong>91.96% / 91.96%</strong><small>SetEM / TraceEM</small></div>
             </article>
@@ -1127,11 +1191,11 @@
             </article>
             <article class="a3-selection-source">
               <header><span>PREFERENCE PROVENANCE</span><h3>5,000 对均为真实模型错误</h3></header>
-              <div><span>SELECTED SFT</span><strong>43</strong><small>当前 endpoint 错误</small></div>
-              <div><span>EARLY-SFT</span><strong>4,957</strong><small>step-20 真实错误</small></div>
+              <div><span>CONTROL SFT</span><strong>43</strong><small>对照 checkpoint 错误</small></div>
+              <div><span>STEP-20 SFT</span><strong>4,957</strong><small>训练早期真实错误</small></div>
             </article>
           </div>
-          <p class="a3-details-note">synthetic_pairs=0，核心偏好对占 98.22%，覆盖 100 / 100 工具。8B SFT 预先固定 1 epoch，并沿用开发集选出的 beta=0.05；正式 1K 未参与这些选择。</p>
+          <p class="a3-details-note">本区记录训练方案对照矩阵的选择过程，与上方 lr=5e-5、epoch=3、rank=32 的调参 SFT endpoint 分开解释。synthetic_pairs=0，核心偏好对占 98.22%，覆盖 100 / 100 工具；正式 1K 未参与这些选择。</p>
         </details>
 
         <div class="a3-robustness-heading">
@@ -1140,7 +1204,7 @@
         </div>
         <div class="a3-robustness-grid">
           <article class="a3-robustness-card">
-            <header><span>4B SFT · FORMAL 1K</span><h3>候选展示顺序扰动</h3><p>候选集合不变，仅 reverse 或 hash shuffle。</p></header>
+            <header><span>4B CONTROL SFT · FORMAL 1K</span><h3>候选展示顺序扰动</h3><p>候选集合不变，仅 reverse 或 hash shuffle。</p></header>
             <div id="a3CandidateOrderChart"></div>
           </article>
           <article class="a3-robustness-card">
@@ -1151,15 +1215,15 @@
         <p class="a3-robustness-note">DPO 的可见收益只出现在顺序专项：4B 的 pair-both TraceEM 从 90.34% 升至 92.05%，8B 从 92.05% 升至 92.61%；它不足以抵消正式静态主指标的回退，不能表述为全面提升。</p>
 
         <details class="a3-details">
-          <summary><span>四、五工具 seen / unseen 组合拆分</span><strong>400 ROWS · SFT</strong><i>+</i></summary>
+          <summary><span>四、五工具 seen / unseen 组合拆分</span><strong>400 ROWS · CONTROL SFT</strong><i>+</i></summary>
           <div class="result-table-wrap">
             <table class="result-table a3-seen-table">
               <thead><tr><th scope="col">模型</th><th scope="col">视图</th><th scope="col">seen N</th><th scope="col">seen SetEM / TraceEM</th><th scope="col">unseen N</th><th scope="col">unseen SetEM / TraceEM</th></tr></thead>
               <tbody>
-                <tr><td>Qwen3-4B SFT</td><td>Wo-RAG · 100</td><td>221</td><td>92.31% / 92.31%</td><td>179</td><td>89.94% / 89.39%</td></tr>
-                <tr><td>Qwen3-4B SFT</td><td>RAG@10</td><td>221</td><td>98.64% / 98.64%</td><td>179</td><td>99.44% / 99.44%</td></tr>
-                <tr><td>Qwen3-8B SFT</td><td>Wo-RAG · 100</td><td>221</td><td>92.31% / 91.86%</td><td>179</td><td>92.74% / 90.50%</td></tr>
-                <tr><td>Qwen3-8B SFT</td><td>RAG@10</td><td>221</td><td>97.74% / 97.74%</td><td>179</td><td>99.44% / 99.44%</td></tr>
+                <tr><td>Qwen3-4B SFT · 对照</td><td>Wo-RAG · 100</td><td>221</td><td>92.31% / 92.31%</td><td>179</td><td>89.94% / 89.39%</td></tr>
+                <tr><td>Qwen3-4B SFT · 对照</td><td>RAG@10</td><td>221</td><td>98.64% / 98.64%</td><td>179</td><td>99.44% / 99.44%</td></tr>
+                <tr><td>Qwen3-8B SFT · 对照</td><td>Wo-RAG · 100</td><td>221</td><td>92.31% / 91.86%</td><td>179</td><td>92.74% / 90.50%</td></tr>
+                <tr><td>Qwen3-8B SFT · 对照</td><td>RAG@10</td><td>221</td><td>97.74% / 97.74%</td><td>179</td><td>99.44% / 99.44%</td></tr>
               </tbody>
             </table>
           </div>
@@ -1168,14 +1232,14 @@
 
         <div class="a3-case-section">
           <div class="a3-case-heading">
-            <div><p class="eyebrow">FORMAL PREDICTION CASES</p><h3>同时查看“集合正确”和“顺序正确”</h3></div>
+            <div><p class="eyebrow">CONTROL-MATRIX PREDICTION CASES</p><h3>同时查看“集合正确”和“顺序正确”</h3></div>
             <div class="case-tabs a3-case-tabs" id="a3CaseTabs" role="tablist" aria-label="选择静态规划正式案例"></div>
           </div>
           <article class="a3-case-viewer" id="a3CaseViewer" aria-live="polite"></article>
         </div>
 
         <details class="a3-details a3-diagnostics">
-          <summary><span>辅助机制诊断：query-only 与 tuned / untuned</span><strong>DEV 2.4K · OLD CHECKPOINT</strong><i>+</i></summary>
+          <summary><span>辅助机制诊断：query-only 与 tuned / untuned</span><strong>DEV 2.4K · DIAGNOSTIC CHECKPOINT</strong><i>+</i></summary>
           <div class="a3-diagnostic-grid">
             <article>
               <header><span>QUERY-ONLY ABLATION</span><h3>没有 ontology grounding 时无法稳定恢复工具 ID</h3></header>
@@ -1185,12 +1249,12 @@
                   <tbody>
                     <tr><td>4B Base</td><td>query-only</td><td>1.25%</td><td>1.25%</td><td>1.42%</td><td>206.9</td></tr>
                     <tr><td>4B Base</td><td>full-catalog</td><td>49.00%</td><td>48.62%</td><td>94.12%</td><td>2,825.9</td></tr>
-                    <tr><td>旧 4B SFT</td><td>query-only</td><td>3.21%</td><td>3.21%</td><td>4.04%</td><td>206.9</td></tr>
-                    <tr><td>旧 4B SFT</td><td>full-catalog</td><td>95.88%</td><td>95.88%</td><td>99.79%</td><td>2,825.9</td></tr>
+                    <tr><td>机制诊断 4B SFT</td><td>query-only</td><td>3.21%</td><td>3.21%</td><td>4.04%</td><td>206.9</td></tr>
+                    <tr><td>机制诊断 4B SFT</td><td>full-catalog</td><td>95.88%</td><td>95.88%</td><td>99.79%</td><td>2,825.9</td></tr>
                   </tbody>
                 </table>
               </div>
-              <p class="a3-diagnostic-note">query-only 的 JSON schema 合法率仍有 99.92% / 98.75%，但 Base / 旧 SFT 分别有 2,364 / 2,268 条输出包含不存在的工具 ID；失败来自 ontology grounding 缺失，而非只是不懂 JSON。</p>
+              <p class="a3-diagnostic-note">query-only 的 JSON schema 合法率仍有 99.92% / 98.75%，但 Base / 机制诊断 SFT 分别有 2,364 / 2,268 条输出包含不存在的工具 ID；失败来自 ontology grounding 缺失，而非只是不懂 JSON。</p>
             </article>
             <article>
               <header><span>RETRIEVAL CAUSAL CONTROL</span><h3>端到端集合准确率受 AllHit 上限约束</h3></header>
@@ -1209,14 +1273,14 @@
               <p class="a3-diagnostic-note">开发集含 240 条六工具样本，RAG@5 在容量上不可能覆盖；这些样本占该设置 433 个检索失败的 55.43%。比较 K 前必须先检查 K ≥ gold tool_count。</p>
             </article>
           </div>
-          <p class="a3-details-note">本折叠区使用独立 2.4K 开发集和旧 4B SFT checkpoint，只解释机制，不参与正式 1K 的模型横向排名。</p>
+          <p class="a3-details-note">本折叠区使用独立 2.4K 开发集和机制诊断 checkpoint，只解释 ontology grounding 与检索上限，不参与正式 1K 的模型横向排名。</p>
         </details>
 
         <div class="a3-boundary-grid">
           <article><strong>静态而非执行</strong><span>输出有序工具 ID，不调用 API，也不消费返回值。</span></article>
           <article><strong>固定闭集</strong><span>100 个工具均已知，不能证明新增工具或开放领域泛化。</span></article>
           <article><strong>组合复用</strong><span>正式 1K 中 82.1% 的有序目标序列在 SFT 目标中出现过。</span></article>
-          <article><strong>强检索前提</strong><span>RAG@10 的 99% 建立在正式 1K 检索覆盖 100% 之上。</span></article>
+          <article><strong>强检索前提</strong><span>RAG@10 的高分建立在正式 1K 检索覆盖 100% 之上。</span></article>
         </div>
       </div>
     </section>
@@ -1226,7 +1290,7 @@
         <p class="eyebrow">SECTION 09</p>
         <div class="section-heading split-heading">
           <h2 id="limitsTitle">适用边界、成果与下一步</h2>
-          <p>当前证据支持一条完整但静态的系统链路：在固定 100 工具合成闭集中完成入口分流、高覆盖候选检索与有序工具轨迹规划。9K / 6K 是模块比较基准，Planner 正式 1K 是未参与选参的冻结测试；真实请求、开放工具集合和执行级闭环仍未覆盖。</p>
+          <p>当前证据支持一条完整但静态的系统链路：在固定 100 工具合成闭集中完成入口分流、高覆盖候选检索与有序工具轨迹规划，并完成 Planner 训练方案、超参数与数据规模分析。9K / 6K 是模块比较基准，Planner 正式 1K 不参与选参；真实请求、开放工具集合和执行级闭环仍未覆盖。</p>
         </div>
 
         <div class="verified-limitations" role="group" aria-label="已核实的适用边界">
@@ -1234,6 +1298,7 @@
           <article><strong>模块级评测</strong><span>Intent 9K 与 Retrieval 6K 承担方案比较，Planner 1K 不参与选参；三者也不是同一批端到端样本，指标不可直接相乘或混算。</span></article>
           <article><strong>组合复用</strong><span>Planner 正式 1K 有 82.1% 有序目标序列在 SFT 中 seen，高分仍受固定组合空间影响。</span></article>
           <article><strong>执行边界</strong><span>静态顺序已经评测，但参数、真实调用、返回值、失败恢复与多轮状态均未实现。</span></article>
+          <article><strong>规模方差</strong><span>9K–54K 每档只训练一个固定种子，非单调差异可能包含优化随机性，不能推出“数据越多必然越好”。</span></article>
           <article><strong>索引未对比</strong><span>FAISS IndexFlatIP 适配 100 项目录，但项目没有向量数据库横向基准。</span></article>
         </div>
 
@@ -1241,19 +1306,19 @@
           <span>01</span><div><h3>当前成果</h3><p>完整系统的各个组件已经形成可串联、可追溯的项目资产。</p></div>
         </div>
         <div class="limit-grid">
-          <article><span>已完成 · 01</span><h3>能力与数据底座</h3><p>100 工具 Catalog、30K 路由与检索基础轨迹，以及 54K Planner API 原生 SFT 数据均已沉淀。</p></article>
+          <article><span>已完成 · 01</span><h3>能力与数据底座</h3><p>100 工具 Catalog、30K 路由与检索基础轨迹，以及 9K–54K 严格嵌套的 Planner API 原生 SFT 数据均已沉淀。</p></article>
           <article><span>已完成 · 02</span><h3>入口与候选检索</h3><p>LoRA Intent Gate、微调 Retriever、Task Reranker 和双路 RRF 已串成稳定的上游候选生成链路。</p></article>
-          <article><span>已完成 · 03</span><h3>静态有序选链</h3><p>4B/8B Base、SFT、DPO 在 Wo-RAG 与 RAG@10 上完成正式矩阵，最佳 SetEM / TraceEM 为 99.00%。</p></article>
-          <article><span>已沉淀 · 04</span><h3>模块级证据链</h3><p>9K 路由、6K 检索与独立 1K 规划评测口径清晰，预测、指标、审计和文件哈希均可追溯。</p></article>
+          <article><span>已完成 · 03</span><h3>静态有序选链</h3><p>4B/8B 完成训练方案对照、24 个开发集调参运行与 16 个规模评测单元；8B 54K 系统端点达到 97.40% / 99.10%。</p></article>
+          <article><span>已沉淀 · 04</span><h3>模块级证据链</h3><p>9K 路由、6K 检索与独立 1K 规划口径清晰，参数冻结、预测、指标、数据审计和文件哈希均可追溯。</p></article>
         </div>
 
         <div class="roadmap">
           <div class="roadmap-title"><span>02 · 后续规划</span><h3>下一轮需要完成的系统验证</h3></div>
           <ol>
             <li><span>01</span><strong>真实表达覆盖</strong><small>引入匿名真实 Query、口语噪声与跨领域边界</small></li>
-            <li><span>02</span><strong>新工具泛化</strong><small>以 Held-out Tools 验证 Catalog 扩展与冷启动</small></li>
-            <li><span>03</span><strong>执行级冻结测试</strong><small>构建工具模拟器、返回值、失败分支与状态依赖</small></li>
-            <li><span>04</span><strong>参数与系统指标</strong><small>评测参数正确率、真实成功率、重试、延迟与吞吐</small></li>
+            <li><span>02</span><strong>多种子规模复测</strong><small>量化 9K–54K 曲线方差，确认局部回退是否稳定</small></li>
+            <li><span>03</span><strong>新工具泛化</strong><small>以 Held-out Tools 验证 Catalog 扩展与冷启动</small></li>
+            <li><span>04</span><strong>执行级冻结测试</strong><small>加入参数、返回值、失败分支、状态依赖、延迟与吞吐</small></li>
           </ol>
         </div>
       </div>
@@ -1268,8 +1333,10 @@
         </div>
 
         <div class="evidence-grid">
-          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/06_Assignment3_100%E5%B7%A5%E5%85%B7%E5%AE%9E%E9%AA%8C%E6%80%BB%E6%8A%A5%E5%91%8A.md" target="_blank" rel="noopener noreferrer"><span>PLANNING REPORT</span><h3>有序轨迹规划总报告</h3><p>4B/8B Base、SFT、DPO、RAG/Wo-RAG 与顺序鲁棒性的完整口径。</p><b>规划实验源报告</b></a>
+          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/06_Assignment3_100%E5%B7%A5%E5%85%B7%E5%AE%9E%E9%AA%8C%E6%80%BB%E6%8A%A5%E5%91%8A.md" target="_blank" rel="noopener noreferrer"><span>PLANNING REPORT</span><h3>有序轨迹规划总报告</h3><p>训练方案、SFT 调参与规模、RAG/Wo-RAG、顺序鲁棒性与最终边界的统一口径。</p><b>规划实验源报告</b></a>
           <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_100tool_api/final_summary.json" target="_blank" rel="noopener noreferrer"><span>STRUCTURED EVIDENCE</span><h3>规划实验结构化汇总</h3><p>正式矩阵、配对比较、数据审计、预测路径与文件哈希。</p><b>final_summary.json</b></a>
+          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/07_Assignment3_SFT%E6%95%B0%E6%8D%AE%E8%A7%84%E6%A8%A1%E4%B8%8E%E8%B0%83%E5%8F%82%E5%AE%9E%E9%AA%8C.md" target="_blank" rel="noopener noreferrer"><span>SFT STUDY</span><h3>SFT 数据规模与调参实验</h3><p>21 + 3 个参数运行、四档嵌套训练规模、完整结果与审慎结论。</p><b>调参与规模实验报告</b></a>
+          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_100tool_api/sft_ablation/results_summary.json" target="_blank" rel="noopener noreferrer"><span>MACHINE-READABLE RESULTS</span><h3>SFT 消融结构化汇总</h3><p>参数选择证据、16 个规模评测单元、checkpoint、预测与指标哈希。</p><b>results_summary.json</b></a>
           <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/README.md" target="_blank" rel="noopener noreferrer"><span>PROJECT MAP</span><h3>项目概览</h3><p>任务边界、主要指标与运行入口。</p><b>PROJECT/README.md</b></a>
           <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/01_%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB.md" target="_blank" rel="noopener noreferrer"><span>MODEL REPORT</span><h3>意图识别</h3><p>Intent 数据构成、LoRA Run 与指标。</p><b>reports/01_意图识别.md</b></a>
           <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/02_%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA.md" target="_blank" rel="noopener noreferrer"><span>BASELINE REPORT</span><h3>检索增强</h3><p>BM25、公开 Embedding、混合召回与 Reranker。</p><b>reports/02_检索增强.md</b></a>
@@ -1300,9 +1367,9 @@ python3 PROJECT/scripts/dataset/audit_datasets.py \
         </div>
 
         <div class="provenance">
-          <div><span>PROJECT SNAPSHOT</span><strong>2026-07-26</strong></div>
+          <div><span>PROJECT SNAPSHOT</span><strong>2026-07-27</strong></div>
           <div><span>CATALOG VERSION</span><strong>100 tools · 2026-07-06</strong></div>
-          <div><span>RESULT INPUT</span><strong>6K Retrieval + 1K Planning</strong></div>
+          <div><span>RESULT INPUT</span><strong>6K Retrieval + 2.4K Dev + 1K Planning</strong></div>
           <div><span>EVALUATION SETTING</span><strong>Module-specific synthetic closed sets</strong></div>
         </div>
       </div>
@@ -1326,7 +1393,7 @@ python3 PROJECT/scripts/dataset/audit_datasets.py \
       <div class="footer-links"><strong>分析</strong><a href="#toolspace">工具能力体系</a><a href="#data">系统数据基础</a><a href="#planning">有序轨迹规划</a></div>
       <div class="footer-links"><strong>成果</strong><a href="#limits">成果与规划</a><a href="#evidence">工程资产与复现</a><a href="https://github.com/Ryannnice/Agent" target="_blank" rel="noopener noreferrer" title="需要 GitHub 仓库访问权限">项目仓库（需权限）↗</a></div>
     </div>
-    <div class="wrap footer-fine"><span>PROJECT SNAPSHOT · 2026-07-26</span><span>100 TOOLS · INTENT → RETRIEVAL → ORDERED TRACE</span></div>
+    <div class="wrap footer-fine"><span>PROJECT SNAPSHOT · 2026-07-27</span><span>100 TOOLS · INTENT → RETRIEVAL → ORDERED TRACE</span></div>
   </footer>
 
   <button class="to-top" id="toTop" type="button" aria-label="返回顶部">↑</button>

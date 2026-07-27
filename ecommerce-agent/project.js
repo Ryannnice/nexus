@@ -474,6 +474,64 @@
     });
   }
 
+  var activeScaleMetric = 'setEm';
+
+  function renderPlanningScale(metric) {
+    var root = $('#a3ScaleChart');
+    var planning = data.planning;
+    if (!root || !planning || !planning.scaleAblation) return;
+    activeScaleMetric = metric;
+
+    var groupOrder = [
+      { model: '4B', viewKey: 'global' },
+      { model: '4B', viewKey: 'rag' },
+      { model: '8B', viewKey: 'global' },
+      { model: '8B', viewKey: 'rag' }
+    ];
+
+    root.innerHTML = '<div class="a3-scale-legend">' +
+      '<span><i></i>其他规模点</span><span><i></i>54K 系统端点</span>' +
+      '<strong>' + escapeHtml(planningMetricLabels[metric]) + ' · AXIS 90–100%</strong>' +
+      '</div><div class="a3-scale-groups">' +
+      groupOrder.map(function (group) {
+        var rows = planning.scaleAblation.filter(function (row) {
+          return row.modelShort === group.model && row.viewKey === group.viewKey;
+        });
+        if (!rows.length) return '';
+        return '<article class="a3-scale-group">' +
+          '<header><span>QWEN3-' + escapeHtml(group.model) + '</span><strong>' + escapeHtml(rows[0].view) + '</strong></header>' +
+          rows.map(function (row) {
+            var value = row[metric];
+            var axisWidth = Math.max(0, Math.min(100, ((value - 0.9) / 0.1) * 100));
+            var endpoint = row.dataSize === 54000;
+            return '<div class="a3-scale-row' + (endpoint ? ' is-endpoint' : '') + '">' +
+              '<span>' + escapeHtml(row.dataLabel) + '</span>' +
+              '<div class="a3-scale-track" role="img" aria-label="' + escapeHtml(row.model + ' ' + row.view + ' ' + row.dataLabel + ' ' + planningMetricLabels[metric] + ' ' + percent(value, 2)) + '">' +
+                '<i style="--bar-width:' + axisWidth.toFixed(3) + '%"></i>' +
+              '</div>' +
+              '<strong>' + percent(value, 2) + '</strong>' +
+            '</div>';
+          }).join('') +
+        '</article>';
+      }).join('') +
+      '</div>';
+  }
+
+  function setupPlanningScaleMetricSwitch() {
+    var root = $('#a3ScaleMetricSwitch');
+    if (!root) return;
+    root.addEventListener('click', function (event) {
+      var button = event.target.closest('button[data-a3-scale-metric]');
+      if (!button) return;
+      $$('button[data-a3-scale-metric]', root).forEach(function (item) {
+        var active = item === button;
+        item.classList.toggle('active', active);
+        item.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      renderPlanningScale(button.getAttribute('data-a3-scale-metric'));
+    });
+  }
+
   function renderPlanningCandidateOrder() {
     var root = $('#a3CandidateOrderChart');
     var planning = data.planning;
@@ -692,6 +750,8 @@
   renderCases();
   renderPlanningResults(activePlanningMetric);
   setupPlanningMetricSwitch();
+  renderPlanningScale(activeScaleMetric);
+  setupPlanningScaleMetricSwitch();
   renderPlanningCandidateOrder();
   renderPlanningCounterfactual();
   renderPlanningCases();
