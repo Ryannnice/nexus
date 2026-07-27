@@ -686,20 +686,61 @@
     }
 
     var anchorLinks = $$('a[href^="#"]', links);
-    var sections = anchorLinks.map(function (link) {
-      return document.getElementById(link.getAttribute('href').slice(1));
+    var sectionGroups = {
+      abstract: '#abstract',
+      problem: '#problem',
+      toolspace: '#problem',
+      system: '#problem',
+      data: '#problem',
+      intent: '#intent',
+      results: '#results',
+      insight: '#results',
+      analysis: '#results',
+      planning: '#planning',
+      limits: '#limits',
+      evidence: '#evidence'
+    };
+    var sections = Object.keys(sectionGroups).map(function (id) {
+      return document.getElementById(id);
     }).filter(Boolean);
     if ('IntersectionObserver' in window) {
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
+          var activeHref = sectionGroups[entry.target.id];
           anchorLinks.forEach(function (link) {
-            link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+            link.classList.toggle('active', link.getAttribute('href') === activeHref);
           });
         });
       }, { rootMargin: '-42% 0px -52% 0px', threshold: 0 });
       sections.forEach(function (section) { observer.observe(section); });
     }
+  }
+
+  function setupDisclosureAnchors() {
+    function revealHashTarget() {
+      if (!window.location.hash || window.location.hash.length < 2) return;
+      var target;
+      try {
+        target = document.querySelector(window.location.hash);
+      } catch (error) {
+        return;
+      }
+      if (!target) return;
+      var disclosure = target.closest('details');
+      while (disclosure) {
+        disclosure.open = true;
+        disclosure = disclosure.parentElement && disclosure.parentElement.closest('details');
+      }
+    }
+
+    document.addEventListener('click', function (event) {
+      var link = event.target.closest('a[href^="#"]');
+      if (!link) return;
+      window.setTimeout(revealHashTarget, 0);
+    });
+    window.addEventListener('hashchange', revealHashTarget);
+    revealHashTarget();
   }
 
   function setupCopy() {
@@ -757,5 +798,6 @@
   renderPlanningCases();
   renderCompetition();
   setupNavigation();
+  setupDisclosureAnchors();
   setupCopy();
 })();
