@@ -21,7 +21,7 @@
   <meta name="twitter:description" content="100-Tool Commerce Agent · One integrated pipeline">
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=20260727">
 
-  <link rel="stylesheet" href="project.css?v=21">
+  <link rel="stylesheet" href="project.css?v=22">
   <script defer src="project-data.js?v=10"></script>
   <script defer src="project.js?v=14"></script>
 </head>
@@ -354,290 +354,7 @@
       </div>
     </section>
 
-    <section class="section" id="system" aria-labelledby="systemTitle">
-      <div class="wrap">
-        <p class="eyebrow">SYSTEM MAP · THREE MODULES / FIVE STEPS</p>
-        <div class="section-heading split-heading">
-          <h2 id="systemTitle">从请求到有序工具轨迹</h2>
-          <p>系统由三层能力串联：Intent Gate 负责请求分流；检索层完成召回、任务内重排和双路融合；静态规划层在 RAG@10 或完整 100 工具视图下输出有序工具 ID 轨迹。</p>
-        </div>
-
-        <div class="route-phases" role="group" aria-label="技术路线步骤">
-          <div><span>01</span><strong>理解请求</strong><small>Intent Gate</small></div>
-          <div><span>02</span><strong>召回候选</strong><small>BM25 + Embedding</small></div>
-          <div><span>03</span><strong>融合排序</strong><small>Task Reranker + RRF</small></div>
-          <div><span>04</span><strong>静态规划</strong><small>Qwen3 4B / 8B</small></div>
-          <div><span>05</span><strong>有序输出</strong><small>Tool ID Trace</small></div>
-        </div>
-
-        <article class="pipeline-lane intent-lane">
-          <header>
-            <div><span>PIPELINE 01 · INTENT GATE</span><h3>入口意图分流</h3></div>
-            <p>9,000 条合成冻结集 · Accuracy 100.00%</p>
-          </header>
-          <div class="pipeline-row pipeline-row-intent">
-            <div class="pipeline-node node-input"><small>REQUEST</small><strong>User Query</strong><span>复合电商诉求或开放闲聊</span></div>
-            <div class="pipeline-arrow" aria-hidden="true">→</div>
-            <div class="pipeline-node node-primary"><small>UNDERSTAND</small><strong>Qwen3 LoRA Intent Gate</strong><span>输出类型与关键词 · 当前仅类型控制路由</span></div>
-            <div class="pipeline-arrow" aria-hidden="true">→</div>
-            <div class="pipeline-node node-output"><small>ROUTE</small><strong>结构化分流</strong><span>电商类进入检索 · 闲聊类直接响应</span></div>
-          </div>
-        </article>
-
-        <div class="integration-bridge"><span>电商类原始 Query 进入工具集合检索</span></div>
-
-        <article class="pipeline-lane retrieval-lane">
-          <header>
-            <div><span>PIPELINE 02 · RETRIEVAL</span><h3>完整工具集合检索</h3></div>
-            <p>6,000 条冻结项目基准 · 检索层 AllHit@10 98.30%</p>
-          </header>
-          <div class="retrieval-map-v2">
-            <div class="pipeline-node node-input retrieval-query"><small>INPUT</small><strong>E-commerce Query</strong><span>单工具 / 多工具请求</span></div>
-            <div class="pipeline-arrow" aria-hidden="true">→</div>
-
-            <div class="retrieval-stage recall-stage">
-              <div class="stage-label"><span>01 · RECALL</span><strong>并行召回</strong></div>
-              <div class="retriever-stack">
-                <div class="mini-node"><small>LEXICAL</small><strong>BM25</strong><span>补充词面信号</span></div>
-                <div class="mini-node mini-node-primary"><small>SEMANTIC</small><strong>Fine-tuned Embedding</strong><span>bge-large · MNRL</span></div>
-              </div>
-              <div class="stage-merge" aria-hidden="true">↓</div>
-              <div class="source-node"><small>STAGE 1 SOURCE</small><strong>Weighted RRF</strong><span>Top 50 · vector weight 0.95</span></div>
-            </div>
-
-            <div class="pipeline-arrow" aria-hidden="true">→</div>
-
-            <div class="retrieval-stage rerank-stage">
-              <div class="stage-label"><span>02 · SCORE</span><strong>候选交互评分</strong></div>
-              <div class="stage-model"><small>TOP 50 CANDIDATES</small><strong>Task Reranker</strong><span>任务内微调 bge-reranker-base</span></div>
-              <div class="rank-output"><span>输出 Reranker Rank</span></div>
-            </div>
-
-            <div class="pipeline-arrow" aria-hidden="true">→</div>
-
-            <div class="retrieval-stage fusion-stage">
-              <div class="stage-label"><span>03 · FUSE</span><strong>双路排序融合</strong></div>
-              <div class="fusion-inputs">
-                <span><i></i>Source Rank · 0.6</span>
-                <span><i></i>Reranker Rank · 0.4</span>
-              </div>
-              <div class="stage-model stage-model-final"><small>FINAL RRF</small><strong>Complementary Ranking</strong><span>rrf_k 10</span></div>
-            </div>
-
-            <div class="pipeline-arrow" aria-hidden="true">→</div>
-            <div class="pipeline-node node-output retrieval-output"><small>RETRIEVAL OUTPUT</small><strong>Top-K Tool Set</strong><span>6K 检索基准 98.30% · Planner 1K 输入覆盖 100.00%</span></div>
-
-            <div class="source-bypass" role="group" aria-label="Source 排名同时进入最终融合">
-              <span>Source Rank 保留</span><i></i><strong>同步进入最终 RRF</strong>
-            </div>
-          </div>
-        </article>
-
-        <div class="integration-bridge integration-bridge-planner"><span>Top-10 候选进入静态规划；Wo-RAG 对照分支直接读取完整 100 工具目录</span></div>
-
-        <article class="pipeline-lane planner-lane">
-          <header>
-            <div><span>PIPELINE 03 · STATIC PLANNER</span><h3>静态有序工具链规划</h3></div>
-            <p>独立冻结 API 原生 1,000 条 · 8B 54K 调参 SFT RAG SetEM / TraceEM 99.10%</p>
-          </header>
-          <div class="planner-map">
-            <div class="planner-inputs">
-              <div><small>RAG@10</small><strong>调优检索候选</strong><span>10 个工具 · 正式 1K AllHit@10 100%</span></div>
-              <div><small>WO-RAG</small><strong>完整 Catalog</strong><span>100 个工具 · 不等于 query-only</span></div>
-            </div>
-            <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
-            <div class="planner-model">
-              <small>STATIC PLANNER</small>
-              <strong>Qwen3-4B / Qwen3-8B</strong>
-              <span>训练方案对照 + 调参 SFT 系统端点</span>
-            </div>
-            <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
-            <div class="planner-output">
-              <small>ORDERED OUTPUT</small>
-              <strong>Tool ID Trace</strong>
-              <span>SetEM · TraceEM · micro-F1 · 严格输出有效率</span>
-            </div>
-          </div>
-          <p class="planner-boundary">该层评测的是静态工具 ID 选择与顺序，不执行真实工具，也不评测参数、返回值、失败恢复或多轮状态。</p>
-        </article>
-
-        <details class="narrative-disclosure method-disclosure">
-          <summary>
-            <span class="disclosure-summary-copy"><small>METHOD INDEX</small><strong>查看六类训练与融合方法</strong></span>
-            <span class="disclosure-summary-meta">SFT · MNRL · RERANK · RRF · DPO</span>
-            <i aria-hidden="true">+</i>
-          </summary>
-          <div class="disclosure-body">
-            <div class="method-grid">
-              <article><span class="method-number">01</span><h3>LoRA SFT</h3><p>以小模型完成入口类型和电商关键词的结构化理解，形成低成本请求分流能力。</p><small>QWEN3 · RANK 16</small></article>
-              <article><span class="method-number">02</span><h3>Bi-encoder + MNRL</h3><p>用 70,012 个正对学习 Query–Tool 表示；当前训练入口不直接读取显式负例文件。</p><small>70,012 POSITIVE PAIRS</small></article>
-              <article><span class="method-number">03</span><h3>Task Cross-encoder</h3><p>联合编码 Query–Tool Pair，以组内正负样本学习更细粒度的候选交互关系。</p><small>24K GROUPS · 1 + 7</small></article>
-              <article><span class="method-number">04</span><h3>Weighted RRF</h3><p>保留 Source 与 Task Reranker 两份名次，以训练集选定的权重和 rrf_k 生成最终排序。</p><small>SOURCE 0.6 · RRF_K 10</small></article>
-              <article><span class="method-number">05</span><h3>Toolchain SFT</h3><p>在 2.4K 开发集上搜索并冻结参数，再以 9K–54K 嵌套候选视图训练 4B/8B，检验监督规模与完整目录迁移。</p><small>21 + 3 RUNS · 4 NESTED SCALES</small></article>
-              <article><span class="method-number">06</span><h3>Preference DPO</h3><p>使用 5K 对真实模型错误构建偏好监督，检验其对静态主指标与顺序鲁棒性的影响。</p><small>5K REAL ERRORS · BETA 0.05</small></article>
-            </div>
-          </div>
-        </details>
-      </div>
-    </section>
-
-    <section class="section decision-trace-section" aria-labelledby="decisionTraceTitle">
-      <div class="wrap">
-        <details class="decision-trace-disclosure">
-          <summary class="decision-map-heading">
-            <span class="decision-map-title"><span>FULL-PIPELINE DECISION TRACE</span><strong id="decisionTraceTitle">三阶段如何收敛到最终系统</strong></span>
-            <span class="decision-map-description">按同一结构查看 Intent、Retrieval 与 Planner 的核心问题、关键比较、最终选择和模块输出；完整矩阵仍保留在各实验阶段，避免在这里重复堆叠。</span>
-            <span class="decision-trace-toggle" aria-hidden="true">
-              <span class="decision-trace-open-label">展开完整路径</span>
-              <span class="decision-trace-close-label">收起完整路径</span>
-              <i></i>
-            </span>
-          </summary>
-          <section class="decision-flow-panel" aria-labelledby="decisionFlowTitle">
-            <header class="decision-flow-intro">
-              <div>
-                <span>THREE MODULES · ONE HANDOFF CHAIN</span>
-                <h3 id="decisionFlowTitle">只保留改变最终系统的关键决策</h3>
-                <p>每一段都按“问题 → 关键证据 → 采用方案 → 输出”阅读。绿色边线表示采用项；虚线表示只保留作参考的路线。</p>
-              </div>
-              <p><strong>评测隔离：</strong>Intent 9K、Retrieval 6K 与 Planner 正式 1K 不是同一批端到端样本，三个模块指标不能相乘。</p>
-            </header>
-
-            <aside class="decision-foundation" aria-label="共享工程基础">
-              <div><span>SHARED FOUNDATION</span><strong>固定 100 工具 Catalog</strong></div>
-              <div><span>DATA SPLIT</span><strong>表达簇 + context salt 隔离</strong></div>
-              <div><span>INDEX IMPLEMENTATION</span><strong>Normalized FAISS IndexFlatIP</strong><small>工程约束选择；未做向量数据库横向基准</small></div>
-            </aside>
-
-            <div class="decision-module-flow">
-              <article class="decision-module" id="decisionIntent">
-                <header>
-                  <span class="decision-module-index">01</span>
-                  <div><small>INTENT GATE</small><h4>先决定请求是否进入工具系统</h4></div>
-                  <p>9K fixed set · Accuracy / Macro-F1</p>
-                </header>
-                <div class="decision-question">
-                  <span>QUESTION</span>
-                  <strong>能否用更小模型稳定完成入口分流？</strong>
-                  <p>运行时只由类型预测控制路由，关键词不参与后续 Retrieval 排序。</p>
-                </div>
-                <div class="decision-evidence-grid decision-evidence-four" role="group" aria-label="Intent 关键比较">
-                  <div><span>RULE BASELINE</span><strong>Keyword</strong><b>50.22%</b></div>
-                  <div><span>BEST BASE</span><strong>Qwen3-1.7B</strong><b>90.47%</b></div>
-                  <div><span>LARGER LORA</span><strong>1.7B balanced</strong><b>99.96%</b></div>
-                  <div class="decision-evidence-selected"><span>SELECTED</span><strong>0.6B full LoRA</strong><b>100.00%</b></div>
-                </div>
-                <footer class="decision-module-output">
-                  <div><span>ADOPT</span><strong>Qwen3-0.6B Full LoRA</strong></div>
-                  <div><span>OUTPUT</span><strong>E-commerce Query / Chat Bypass</strong></div>
-                </footer>
-              </article>
-
-              <div class="decision-handoff"><span>电商类原始 Query</span><i aria-hidden="true">↓</i></div>
-
-              <article class="decision-module" id="decisionRetrieval">
-                <header>
-                  <span class="decision-module-index">02</span>
-                  <div><small>CANDIDATE RETRIEVAL</small><h4>再让全部必要工具进入 Top-10</h4></div>
-                  <p>6K fixed benchmark · AllHit@10</p>
-                </header>
-                <div class="decision-question">
-                  <span>QUESTION</span>
-                  <strong>公开路线的上限在哪里，任务内训练又带来什么？</strong>
-                  <p>公开 Reranker 分支只作为参考；当前系统从公开 bge-large 基座重新进行任务内训练，不继承该参考分支的输出。</p>
-                </div>
-                <div class="decision-route-grid">
-                  <section class="decision-route decision-route-reference" aria-labelledby="decisionPublicRoute">
-                    <header><span>REFERENCE PATH</span><strong id="decisionPublicRoute">公开模型路线止步于 78.37%</strong></header>
-                    <div class="decision-evidence-grid decision-evidence-three">
-                      <div><span>ZERO-SHOT</span><strong>bge-large</strong><b>47.63%</b></div>
-                      <div><span>HYBRID SEED</span><strong>bge-large + BM25 RRF · N=20</strong><b>63.67%</b></div>
-                      <div><span>PUBLIC BEST</span><strong>Qwen3 Reranker · N=50</strong><b>78.37%</b></div>
-                    </div>
-                  </section>
-                  <section class="decision-route" aria-labelledby="decisionTrainedRoute">
-                    <header><span>SELECTED PATH</span><strong id="decisionTrainedRoute">任务内表示学习与互补名次融合</strong></header>
-                    <div class="decision-evidence-grid decision-evidence-four">
-                      <div><span>EMBEDDING</span><strong>Fine-tuned bge-large</strong><b>95.75%</b></div>
-                      <div><span>SOURCE</span><strong>Embedding + BM25 RRF</strong><b>95.95%</b></div>
-                      <div><span>RERANK SIGNAL</span><strong>Task Reranker only</strong><b>94.50%</b></div>
-                      <div class="decision-evidence-selected"><span>SELECTED FUSION</span><strong>Source + Task Reranker RRF</strong><b>98.30%</b></div>
-                    </div>
-                  </section>
-                </div>
-                <footer class="decision-module-output">
-                  <div><span>ADOPT</span><strong>Source weight 0.6 · RRF_K 10</strong></div>
-                  <div><span>OUTPUT</span><strong>Top-10 Tool Candidates</strong></div>
-                </footer>
-              </article>
-
-              <div class="decision-handoff"><span>RAG@10 候选；Wo-RAG 对照读取完整目录</span><i aria-hidden="true">↓</i></div>
-
-              <article class="decision-module decision-module-final" id="decisionPlanner">
-                <header>
-                  <span class="decision-module-index">03</span>
-                  <div><small>STATIC PLANNER</small><h4>最后选准工具集合并排对顺序</h4></div>
-                  <p>Dev 2.4K + official 1K · SetEM / TraceEM</p>
-                </header>
-                <div class="decision-question">
-                  <span>QUESTION</span>
-                  <strong>哪种训练方案、参数与交付规模能形成稳定有序轨迹？</strong>
-                  <p>开发集只负责选参；正式 1K 在选择证据冻结后用于报告固定配置，不参与 checkpoint 反向选择。</p>
-                </div>
-                <div class="decision-gate-grid" role="group" aria-label="Planner 三个关键决策">
-                  <section>
-                    <span>GATE 01 · TRAINING REGIME</span>
-                    <h5>SFT 保留，DPO 不替代主端点</h5>
-                    <p>Base 的 RAG SetEM 为 4B 54.00% / 8B 60.00%；SFT 提升 37.40–45.00 pp。DPO 未一致改善静态主指标。</p>
-                    <strong>SFT · SELECTED</strong>
-                  </section>
-                  <section>
-                    <span>GATE 02 · DEV TUNING</span>
-                    <h5>两种模型选中同一配置</h5>
-                    <p>4B 21 个唯一组合，8B 复训 3 个候选；均由 Dev TraceEM 选择。</p>
-                    <strong>LR 5E-5 · E3 · R32 · D0.05</strong>
-                  </section>
-                  <section class="decision-gate-selected">
-                    <span>GATE 03 · DELIVERY ENDPOINT</span>
-                    <h5>8B · 54K tuned SFT</h5>
-                    <p>RAG@10 SetEM / TraceEM 99.10%，Wo-RAG 97.40%。4B 36K 的 99.20% 是观测单点，不用于反向选择交付端点。</p>
-                    <strong>99.10% · FINAL</strong>
-                  </section>
-                </div>
-                <footer class="decision-module-output decision-module-output-final">
-                  <div><span>ADOPT</span><strong>Qwen3-8B · 54K tuned SFT</strong></div>
-                  <div><span>OUTPUT</span><strong>Ordered Tool ID Trace</strong></div>
-                </footer>
-              </article>
-            </div>
-
-            <nav class="decision-detail-links" aria-label="跳转到各阶段完整实验">
-              <div class="decision-detail-label">
-                <span>FULL EVIDENCE</span>
-                <strong>查看各阶段完整实验</strong>
-              </div>
-              <a href="#intent">
-                <span>01</span>
-                <strong>Intent 实验</strong>
-                <i aria-hidden="true">↗</i>
-              </a>
-              <a href="#results">
-                <span>02</span>
-                <strong>Retrieval 实验</strong>
-                <i aria-hidden="true">↗</i>
-              </a>
-              <a href="#planning">
-                <span>03</span>
-                <strong>Planner 实验</strong>
-                <i aria-hidden="true">↗</i>
-              </a>
-            </nav>
-          </section>
-        </details>
-      </div>
-    </section>
-
-    <section class="section section-soft" id="data" aria-labelledby="dataTitle">
+    <section class="section" id="data" aria-labelledby="dataTitle">
       <div class="wrap">
         <p class="eyebrow">FOUNDATION 03 · DATA &amp; PROTOCOL</p>
         <div class="section-heading split-heading">
@@ -744,6 +461,24 @@
             <div><strong>82.1%</strong><span>正式目标有序序列在 54K SFT 中 seen</span></div>
           </div>
           <p class="a3-data-boundary">四档训练集按稳定哈希前缀严格嵌套，数据审计 strict_ok=true。零文本泄漏不等于目标组合从未出现：表达簇同序列仅命中 1 / 1,000，context-skeleton 命中为 0；但目标组合复用依然存在，任务仍属于固定 100 工具的合成闭集。</p>
+            </div>
+          </div>
+        </details>
+
+        <details class="narrative-disclosure method-disclosure">
+          <summary>
+            <span class="disclosure-summary-copy"><small>EXPERIMENT METHOD INDEX</small><strong>查看六类训练、排序与融合方法</strong></span>
+            <span class="disclosure-summary-meta">SFT · MNRL · RERANK · RRF · DPO</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="disclosure-body">
+            <div class="method-grid">
+              <article><span class="method-number">01</span><h3>LoRA SFT</h3><p>以小模型完成入口类型和电商关键词的结构化理解，形成低成本请求分流能力。</p><small>QWEN3 · RANK 16</small></article>
+              <article><span class="method-number">02</span><h3>Bi-encoder + MNRL</h3><p>用 70,012 个正对学习 Query–Tool 表示；当前训练入口不直接读取显式负例文件。</p><small>70,012 POSITIVE PAIRS</small></article>
+              <article><span class="method-number">03</span><h3>Task Cross-encoder</h3><p>联合编码 Query–Tool Pair，以组内正负样本学习更细粒度的候选交互关系。</p><small>24K GROUPS · 1 + 7</small></article>
+              <article><span class="method-number">04</span><h3>Weighted RRF</h3><p>保留 Source 与 Task Reranker 两份名次，以训练集选定的权重和 rrf_k 生成最终排序。</p><small>SOURCE 0.6 · RRF_K 10</small></article>
+              <article><span class="method-number">05</span><h3>Toolchain SFT</h3><p>在 2.4K 开发集上搜索并冻结参数，再以 9K–54K 嵌套候选视图训练 4B/8B，检验监督规模与完整目录迁移。</p><small>21 + 3 RUNS · 4 NESTED SCALES</small></article>
+              <article><span class="method-number">06</span><h3>Preference DPO</h3><p>使用 5K 对真实模型错误构建偏好监督，检验其对静态主指标与顺序鲁棒性的影响。</p><small>5K REAL ERRORS · BETA 0.05</small></article>
             </div>
           </div>
         </details>
@@ -1549,12 +1284,122 @@
 
     <section class="section section-soft" id="limits" aria-labelledby="limitsTitle">
       <div class="wrap">
-        <p class="eyebrow">SYSTEM SYNTHESIS · EVIDENCE BOUNDARY</p>
+        <p class="eyebrow">PROJECT OUTCOME · FINAL SYSTEM &amp; BOUNDARY</p>
         <div class="section-heading split-heading">
           <h2 id="limitsTitle">完整系统结论、适用边界与下一步</h2>
           <p>当前证据支持一条完整但静态的系统链路：在固定 100 工具合成闭集中完成入口分流、高覆盖候选检索与有序工具轨迹规划，并完成 Planner 训练方案、超参数与数据规模分析。9K / 6K 是模块比较基准，Planner 正式 1K 不参与选参；真实请求、开放工具集合和执行级闭环仍未覆盖。</p>
         </div>
 
+        <section class="final-system-overview" id="system" aria-labelledby="systemTitle">
+          <header class="final-system-heading">
+            <div>
+              <span>FINAL SYSTEM OVERVIEW · THREE MODULES / FIVE STEPS</span>
+              <h3 id="systemTitle">实验选择汇成的最终静态工具链</h3>
+            </div>
+            <p>这里只保留三轮实验后实际采用的配置，并明确标出模块交接。公开模型、Wo-RAG 与 DPO 等对照留在各自实验正文，不混入最终系统。</p>
+          </header>
+
+          <ol class="route-phases final-route-phases">
+            <li><span>01 · MODULE 01</span><strong>请求分流</strong><small>0.6B Full LoRA</small></li>
+            <li><span>02 · MODULE 02</span><strong>混合召回</strong><small>Embedding + BM25</small></li>
+            <li><span>03 · MODULE 02</span><strong>重排与融合</strong><small>Task Reranker + RRF</small></li>
+            <li><span>04 · MODULE 03</span><strong>精确选择工具</strong><small>8B · 54K tuned SFT</small></li>
+            <li><span>05 · MODULE 03</span><strong>生成有序轨迹</strong><small>Tool ID Trace</small></li>
+          </ol>
+
+          <article class="pipeline-lane intent-lane">
+            <header>
+              <div><span>MODULE 01 · INTENT GATE</span><h3>入口意图分流</h3></div>
+              <p>SELECTED CONFIGURATION · STEP 01</p>
+            </header>
+            <div class="pipeline-row pipeline-row-intent">
+              <div class="pipeline-node node-input"><small>REQUEST</small><strong>User Query</strong><span>复合电商诉求或开放闲聊</span></div>
+              <div class="pipeline-arrow" aria-hidden="true">→</div>
+              <div class="pipeline-node node-primary"><small>ROUTE MODEL</small><strong>Qwen3-0.6B Full LoRA</strong><span>类型预测是唯一运行时路由信号</span></div>
+              <div class="pipeline-arrow" aria-hidden="true">→</div>
+              <div class="pipeline-node node-output"><small>HANDOFF</small><strong>结构化分流</strong><span>电商 Query 进入检索 · 闲聊直接响应</span></div>
+            </div>
+          </article>
+
+          <div class="integration-bridge"><span>电商类原始 Query 进入候选检索</span></div>
+
+          <article class="pipeline-lane retrieval-lane">
+            <header>
+              <div><span>MODULE 02 · RETRIEVAL</span><h3>完整工具集合检索</h3></div>
+              <p>SELECTED CONFIGURATION · STEPS 02–03</p>
+            </header>
+            <div class="retrieval-map-v2">
+              <div class="pipeline-node node-input retrieval-query"><small>INPUT</small><strong>E-commerce Query</strong><span>单工具 / 多工具请求</span></div>
+              <div class="pipeline-arrow" aria-hidden="true">→</div>
+
+              <div class="retrieval-stage recall-stage">
+                <div class="stage-label"><span>STEP 02 · RECALL</span><strong>并行召回</strong></div>
+                <div class="retriever-stack">
+                  <div class="mini-node"><small>LEXICAL</small><strong>BM25</strong><span>补充词面信号</span></div>
+                  <div class="mini-node mini-node-primary"><small>SEMANTIC</small><strong>Fine-tuned Embedding</strong><span>bge-large · MNRL</span></div>
+                </div>
+                <div class="stage-merge" aria-hidden="true">↓</div>
+                <div class="source-node"><small>STAGE 1 SOURCE</small><strong>Weighted RRF</strong><span>Top 50 · vector weight 0.95</span></div>
+              </div>
+
+              <div class="pipeline-arrow" aria-hidden="true">→</div>
+
+              <div class="retrieval-stage rerank-stage">
+                <div class="stage-label"><span>STEP 03A · SCORE</span><strong>候选交互评分</strong></div>
+                <div class="stage-model"><small>TOP 50 CANDIDATES</small><strong>Task Reranker</strong><span>任务内微调 bge-reranker-base</span></div>
+                <div class="rank-output"><span>输出 Reranker Rank</span></div>
+              </div>
+
+              <div class="pipeline-arrow" aria-hidden="true">→</div>
+
+              <div class="retrieval-stage fusion-stage">
+                <div class="stage-label"><span>STEP 03B · FUSE</span><strong>双路排序融合</strong></div>
+                <div class="fusion-inputs">
+                  <span><i></i>Source Rank · 0.6</span>
+                  <span><i></i>Reranker Rank · 0.4</span>
+                </div>
+                <div class="stage-model stage-model-final"><small>FINAL RRF</small><strong>Complementary Ranking</strong><span>rrf_k 10</span></div>
+              </div>
+
+              <div class="pipeline-arrow" aria-hidden="true">→</div>
+              <div class="pipeline-node node-output retrieval-output"><small>HANDOFF</small><strong>Top-10 Tool Set</strong><span>完整必要工具集合交给静态 Planner</span></div>
+
+              <div class="source-bypass" role="group" aria-label="Source 排名同时进入最终融合">
+                <span>Source Rank 保留</span><i></i><strong>同步进入最终 RRF</strong>
+              </div>
+            </div>
+          </article>
+
+          <div class="integration-bridge integration-bridge-planner"><span>原始 Query 与 Top-10 候选共同进入静态规划</span></div>
+
+          <article class="pipeline-lane planner-lane">
+            <header>
+              <div><span>MODULE 03 · STATIC PLANNER</span><h3>精确工具集合与有序轨迹生成</h3></div>
+              <p>SELECTED CONFIGURATION · STEPS 04–05</p>
+            </header>
+            <div class="planner-map">
+              <div class="planner-inputs">
+                <div><small>REQUEST CONTEXT</small><strong>E-commerce Query</strong><span>保留用户要求与顺序约束</span></div>
+                <div class="planner-input-selected"><small>RAG@10</small><strong>Top-10 Tool Set</strong><span>正式 1K 输入 AllHit@10 100%</span></div>
+              </div>
+              <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
+              <div class="planner-model">
+                <small>SELECTED STATIC PLANNER</small>
+                <strong>Qwen3-8B · 54K tuned SFT</strong>
+                <span>先精确选择工具集合，再按用户要求与依赖排序</span>
+              </div>
+              <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
+              <div class="planner-output">
+                <small>ORDERED OUTPUT</small>
+                <strong>Tool ID Trace</strong>
+                <span>SetEM · TraceEM · 严格 JSON 输出</span>
+              </div>
+            </div>
+            <p class="planner-boundary">最终系统在此停止：输出静态有序工具 ID，不执行真实 API，也不评测参数、返回值、失败恢复或多轮状态。</p>
+          </article>
+        </section>
+
+        <p class="phase-context-label final-results-label">MODULE RESULTS · SEPARATE FIXED BENCHMARKS</p>
         <div class="system-outcome-grid" role="group" aria-label="三阶段系统结果">
           <article><span>01 · INTENT</span><h3>0.6B Full LoRA</h3><strong>100.00%</strong><p>Accuracy / Macro-F1 · 9K 合成固定集合</p><small>OUTPUT · E-commerce Query</small></article>
           <article><span>02 · RETRIEVAL</span><h3>Source + Task Reranker RRF</h3><strong>98.30%</strong><p>AllHit@10 · 6K 固定项目基准</p><small>OUTPUT · Top-10 Tool Set</small></article>
