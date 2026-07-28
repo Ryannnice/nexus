@@ -21,7 +21,7 @@
   <meta name="twitter:description" content="100-Tool Commerce Agent · One integrated pipeline">
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=20260727">
 
-  <link rel="stylesheet" href="project.css?v=20">
+  <link rel="stylesheet" href="project.css?v=21">
   <script defer src="project-data.js?v=10"></script>
   <script defer src="project.js?v=14"></script>
 </head>
@@ -192,7 +192,7 @@
             <p>一条请求的全部 Gold Tools 都进入 Top-K，候选集合才算完整覆盖。</p>
             <small>6K FIXED BENCHMARK · @10 98.30%</small>
           </article>
-          <article class="metric-contract-primary">
+          <article>
             <span>STAGE 03 · STATIC PLANNER</span>
             <strong>SetEM / TraceEM</strong>
             <p>SetEM 要求工具集合完全一致；TraceEM 进一步要求工具及其顺序完全一致。</p>
@@ -201,82 +201,116 @@
         </div>
         <p class="metric-contract-note"><strong>阅读规则：</strong>三项结果来自不同职责和不同样本，只能作为模块证据链并列阅读；不能相乘，也不能合成未经同批样本验证的端到端成功率。Planner 的 RAG@10 候选在其正式 1K 上 AllHit@10 为 100.00%，与 Retrieval 6K 的 98.30% 不是同一评测集合。</p>
 
-        <div class="metric-stage-heading">
-          <div><span>STAGE 02 · RETRIEVAL DETAIL</span><h3>AllHit@K 要求候选覆盖完整 Gold 集合</h3></div>
-          <p>Retrieval 只负责把全部必要工具送进候选短名单；它不判断最终工具集合是否精确，也不评测执行顺序。</p>
-        </div>
-        <div class="strict-metric-grid">
-          <article class="metric-example metric-example-fail">
-            <div class="metric-example-head">
-              <span>PARTIAL HIT</span><strong>FAIL</strong>
+        <div class="metric-detail-stack">
+          <article class="metric-detail-module" aria-labelledby="retrievalMetricTitle">
+            <header class="metric-detail-header">
+              <div class="metric-detail-title">
+                <span>STAGE 02 · RETRIEVAL DETAIL</span>
+                <h3 id="retrievalMetricTitle">完整覆盖，才算一次命中</h3>
+              </div>
+              <p>Retrieval 只负责把全部必要工具送进候选短名单；它不判断最终工具集合是否精确，也不评测执行顺序。</p>
+              <div class="metric-detail-token"><span>PRIMARY METRIC</span><strong>AllHit@K</strong></div>
+            </header>
+
+            <div class="metric-detail-grid" role="group" aria-label="AllHit@K 成功与失败示例">
+              <div class="metric-detail-card">
+                <div class="metric-detail-card-head">
+                  <span>CASE A · PARTIAL HIT</span><strong class="metric-state-fail">FAIL</strong>
+                </div>
+                <p class="metric-detail-query">“查一下订单详情、物流状态，并帮我确认退款进度。”</p>
+                <div class="set-block">
+                  <span>GOLD SET</span>
+                  <code>get_order_detail</code><code>get_order_logistics</code><code>get_refund_status</code>
+                </div>
+                <div class="set-block predicted-set">
+                  <span>TOP-K COVERS</span>
+                  <code>get_order_detail</code><code>get_order_logistics</code><code class="missing">get_refund_status · MISSING</code>
+                </div>
+                <p class="metric-detail-verdict">命中 2/3，但必要工具集合仍不完整。</p>
+              </div>
+
+              <div class="metric-detail-card metric-detail-card-pass">
+                <div class="metric-detail-card-head">
+                  <span>CASE B · COMPLETE HIT</span><strong class="metric-state-pass">PASS</strong>
+                </div>
+                <p class="metric-detail-query">同一个请求，Top-K 覆盖全部三个必要工具。</p>
+                <div class="set-block">
+                  <span>GOLD SET</span>
+                  <code>get_order_detail</code><code>get_order_logistics</code><code>get_refund_status</code>
+                </div>
+                <div class="set-block predicted-set">
+                  <span>TOP-K COVERS</span>
+                  <code>get_order_detail</code><code>get_order_logistics</code><code>get_refund_status</code>
+                </div>
+                <p class="metric-detail-verdict">Gold ⊆ Top-K，才记为一次成功。</p>
+              </div>
+
+              <aside class="metric-detail-card metric-detail-rule" aria-label="AllHit@K 指标定义">
+                <div class="metric-detail-card-head">
+                  <span>SUCCESS RULE</span><strong>BINARY</strong>
+                </div>
+                <div class="metric-detail-equation">Gold ⊆ Top-K</div>
+                <p>当前 Query 的全部 Gold Tools 都在 Top-K 中记为 1；只要遗漏一个就记为 0。</p>
+                <div class="metric-detail-rule-row"><span>Gold ⊆ Top-K</span><strong>1</strong></div>
+                <div class="metric-detail-rule-row"><span>Gold ⊄ Top-K</span><strong>0</strong></div>
+                <small>K=10 衡量短名单质量；K=30/50 衡量候选覆盖。</small>
+              </aside>
             </div>
-            <p class="example-query">“查一下订单详情、物流状态，并帮我确认退款进度。”</p>
-            <div class="set-block">
-              <span>GOLD SET</span>
-              <code>get_order_detail</code><code>get_order_logistics</code><code>get_refund_status</code>
-            </div>
-            <div class="set-block predicted-set">
-              <span>TOP-K COVERS</span>
-              <code>get_order_detail</code><code>get_order_logistics</code><code class="missing">get_refund_status · MISSING</code>
-            </div>
-            <p class="example-verdict">命中 2/3，但必要工具集合仍不完整。</p>
           </article>
 
-          <article class="metric-example metric-example-pass">
-            <div class="metric-example-head">
-              <span>COMPLETE HIT</span><strong>PASS</strong>
+          <article class="metric-detail-module" aria-labelledby="plannerMetricTitle">
+            <header class="metric-detail-header">
+              <div class="metric-detail-title">
+                <span>STAGE 03 · PLANNER DETAIL</span>
+                <h3 id="plannerMetricTitle">集合选对，不等于轨迹排对</h3>
+              </div>
+              <p>Planner 既要选出精确工具集合，也要按照用户要求与工具依赖生成正确顺序；因此需要同时报告集合与轨迹指标。</p>
+              <div class="metric-detail-token"><span>PRIMARY METRICS</span><strong>SetEM / TraceEM</strong></div>
+            </header>
+
+            <div class="metric-detail-grid" role="group" aria-label="SetEM 与 TraceEM 的区别示例">
+              <div class="metric-detail-card">
+                <div class="metric-detail-card-head">
+                  <span>CASE A · REFERENCE</span><strong>GOLD</strong>
+                </div>
+                <p class="metric-detail-query">用户要求：先查订单详情，再查物流，最后确认退款进度。</p>
+                <ol class="metric-detail-trace">
+                  <li><code>get_order_detail</code></li>
+                  <li><code>get_order_logistics</code></li>
+                  <li><code>get_refund_status</code></li>
+                </ol>
+                <p class="metric-detail-verdict">工具与顺序共同构成 Gold Trace。</p>
+              </div>
+
+              <div class="metric-detail-card">
+                <div class="metric-detail-card-head">
+                  <span>CASE B · PREDICTION</span><strong class="metric-state-fail">WRONG ORDER</strong>
+                </div>
+                <p class="metric-detail-query">工具集合没有遗漏，但后两步顺序被调换。</p>
+                <ol class="metric-detail-trace metric-detail-trace-wrong">
+                  <li><code>get_order_detail</code></li>
+                  <li><code>get_refund_status</code></li>
+                  <li><code>get_order_logistics</code></li>
+                </ol>
+                <p class="metric-detail-verdict">集合一致；完整有序序列不一致。</p>
+              </div>
+
+              <aside class="metric-detail-card metric-detail-rule" aria-label="SetEM 与 TraceEM 判定结果">
+                <div class="metric-detail-card-head">
+                  <span>SUCCESS RULE</span><strong>TWO LEVELS</strong>
+                </div>
+                <div class="metric-detail-score-grid">
+                  <div>
+                    <span>SetEM</span><strong>1</strong><small>集合完全一致</small>
+                  </div>
+                  <div class="metric-score-fail">
+                    <span>TraceEM</span><strong>0</strong><small>有序序列不一致</small>
+                  </div>
+                </div>
+                <p class="metric-detail-definition"><strong>SetEM</strong> 检查无序工具集合；<strong>TraceEM</strong> 检查完整有序工具序列。</p>
+              </aside>
             </div>
-            <p class="example-query">同一个请求，Top-K 覆盖全部三个必要工具。</p>
-            <div class="set-block">
-              <span>GOLD SET</span>
-              <code>get_order_detail</code><code>get_order_logistics</code><code>get_refund_status</code>
-            </div>
-            <div class="set-block predicted-set">
-              <span>TOP-K COVERS</span>
-              <code>get_order_detail</code><code>get_order_logistics</code><code>get_refund_status</code>
-            </div>
-            <p class="example-verdict">Gold ⊆ Top-K，才记为一次成功。</p>
           </article>
-
-          <aside class="formula-card" aria-label="AllHit@K 指标定义">
-            <span class="corner-square" aria-hidden="true"></span>
-            <p class="formula-label">RETRIEVAL METRIC</p>
-            <div class="formula">AllHit@K</div>
-            <p>若当前 Query 的全部 Gold Tools 都在 Top-K 中，则为 1；否则为 0。</p>
-            <div class="formula-rule"><span>Gold ⊆ Top-K</span><strong>→ 1</strong></div>
-            <div class="formula-rule"><span>Gold ⊄ Top-K</span><strong>→ 0</strong></div>
-            <small>K=10 衡量短名单质量；K=30/50 衡量候选覆盖。</small>
-          </aside>
-        </div>
-
-        <div class="planner-metric-example" role="group" aria-label="SetEM 与 TraceEM 的区别示例">
-          <div class="planner-metric-copy">
-            <span>STAGE 03 · PLANNER DETAIL</span>
-            <h3>集合选对，不等于轨迹排对</h3>
-            <p>示例请求明确要求“先查订单详情，再查物流，最后确认退款进度”。Prediction 包含全部正确工具，因此 SetEM 为 1；但后两步顺序与 Gold Trace 不同，所以更严格的 TraceEM 为 0。</p>
-          </div>
-          <div class="trace-comparison">
-            <div>
-              <span>GOLD TRACE</span>
-              <ol>
-                <li><code>get_order_detail</code></li>
-                <li><code>get_order_logistics</code></li>
-                <li><code>get_refund_status</code></li>
-              </ol>
-            </div>
-            <div class="trace-is-wrong">
-              <span>PREDICTION · WRONG ORDER</span>
-              <ol>
-                <li><code>get_order_detail</code></li>
-                <li><code>get_refund_status</code></li>
-                <li><code>get_order_logistics</code></li>
-              </ol>
-            </div>
-          </div>
-          <div class="planner-metric-verdict">
-            <div><span>SetEM</span><strong>1</strong><small>集合完全一致</small></div>
-            <div class="metric-verdict-fail"><span>TraceEM</span><strong>0</strong><small>有序序列不一致</small></div>
-          </div>
         </div>
       </div>
     </section>
