@@ -21,9 +21,9 @@
   <meta name="twitter:description" content="100-Tool Commerce Agent · One integrated pipeline">
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=20260727">
 
-  <link rel="stylesheet" href="project.css?v=19">
+  <link rel="stylesheet" href="project.css?v=20">
   <script defer src="project-data.js?v=10"></script>
-  <script defer src="project.js?v=13"></script>
+  <script defer src="project.js?v=14"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">跳到主要内容</a>
@@ -578,10 +578,25 @@
             </div>
 
             <nav class="decision-detail-links" aria-label="跳转到各阶段完整实验">
-              <span>完整证据：</span>
-              <a href="#intent">Intent 实验</a>
-              <a href="#results">Retrieval 实验</a>
-              <a href="#planning">Planner 实验</a>
+              <div class="decision-detail-label">
+                <span>FULL EVIDENCE</span>
+                <strong>查看各阶段完整实验</strong>
+              </div>
+              <a href="#intent">
+                <span>01</span>
+                <strong>Intent 实验</strong>
+                <i aria-hidden="true">↗</i>
+              </a>
+              <a href="#results">
+                <span>02</span>
+                <strong>Retrieval 实验</strong>
+                <i aria-hidden="true">↗</i>
+              </a>
+              <a href="#planning">
+                <span>03</span>
+                <strong>Planner 实验</strong>
+                <i aria-hidden="true">↗</i>
+              </a>
             </nav>
           </section>
         </details>
@@ -738,6 +753,31 @@
           <article><span>BOUNDARY</span><strong>100% 不等于真实流量零错误</strong><p>真实口语、跨领域边界和分布漂移仍需独立验证。</p></article>
           <article class="stage-handoff"><span>HANDOFF</span><strong>E-commerce Query → Retrieval</strong><p>电商类传递原始 Query；闲聊类直接旁路工具系统。</p></article>
         </div>
+
+        <details class="narrative-disclosure intent-evidence-disclosure">
+          <summary>
+            <span class="disclosure-summary-copy"><small>INTENT CHECKPOINT EVIDENCE</small><strong>查看 Keyword、Base、LoRA best 与 final 的完整结果</strong></span>
+            <span class="disclosure-summary-meta">7 ROWS · ACCURACY + MACRO-F1 · FIXED 9K</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="disclosure-body evidence-table-disclosure-body">
+            <div class="result-table-wrap" tabindex="0">
+              <table class="result-table intent-evidence-table">
+                <thead><tr><th scope="col">模型</th><th scope="col">阶段</th><th scope="col">Checkpoint</th><th scope="col">Accuracy</th><th scope="col">Macro-F1</th><th scope="col">证据角色</th></tr></thead>
+                <tbody>
+                  <tr><td>Keyword baseline</td><td>Lexical</td><td>—</td><td>50.22%</td><td>48.84%</td><td>规则起点</td></tr>
+                  <tr><td>Qwen3-0.6B</td><td>Base</td><td>Base model</td><td>84.76%</td><td>83.74%</td><td>同尺寸训练前基线</td></tr>
+                  <tr class="result-table-final"><td>Qwen3-0.6B</td><td>Full LoRA · best</td><td>checkpoint-2000</td><td>100.00%</td><td>100.00%</td><td>当前 Intent Gate</td></tr>
+                  <tr><td>Qwen3-0.6B</td><td>Full LoRA · final</td><td>checkpoint-2852</td><td>99.98%</td><td>99.97%</td><td>同一训练 Run 的 final 对照</td></tr>
+                  <tr><td>Qwen3-1.7B</td><td>Base</td><td>Base model</td><td>90.47%</td><td>88.38%</td><td>更大基座对照</td></tr>
+                  <tr><td>Qwen3-1.7B</td><td>Balanced LoRA · best</td><td>checkpoint-1600</td><td>99.88%</td><td>99.86%</td><td>同一训练 Run 的 best 对照</td></tr>
+                  <tr class="row-emphasis"><td>Qwen3-1.7B</td><td>Balanced LoRA · final</td><td>checkpoint-2852</td><td>99.96%</td><td>99.95%</td><td>1.7B 报告 checkpoint</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="a3-details-note">选择采用 0.6B Full LoRA best：它在当前 9K 合成固定集合上同时取得最高 Accuracy 与 Macro-F1，且模型规模更小。best / final 属于同一训练 Run 的不同 checkpoint，不应误写成额外独立训练方案。</p>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -866,8 +906,12 @@
           </div>
         </details>
 
-        <details class="full-results">
-          <summary><span class="result-subsection-label">04 · COMPLETE RUN LOG</span><strong>查看 39 条公开基线、训练 Run 与重排融合结果</strong></summary>
+        <details class="full-results narrative-disclosure retrieval-run-disclosure">
+          <summary>
+            <span class="disclosure-summary-copy"><small>04 · COMPLETE RUN LOG</small><strong>查看公开基线、训练 Run 与重排融合的完整结果</strong></span>
+            <span class="disclosure-summary-meta">39 CONFIGS · 5 EXPERIMENT GROUPS</span>
+            <i aria-hidden="true">+</i>
+          </summary>
           <div class="full-results-body">
             <div class="full-results-copy">
               <h3>按实验问题分组，而不是混成一张总榜</h3>
@@ -1130,6 +1174,79 @@
         </div>
         <p class="a3-freeze-note"><strong>选择边界：</strong>超参数选择文件在正式测试推理前冻结，<code>official_test_used_for_selection=false</code>。规模曲线固定模型内配置、随机种子和有效 batch，只改变嵌套训练量及其对应更新步数。</p>
 
+        <details class="narrative-disclosure planner-evidence-disclosure planner-tuning-disclosure">
+          <summary>
+            <span class="disclosure-summary-copy"><small>SFT TUNING RUN LOG</small><strong>查看 4B 三轮搜索与 8B 候选复训的完整结果</strong></span>
+            <span class="disclosure-summary-meta">21 + 3 UNIQUE CONFIGS · DEV 2.4K</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="disclosure-body">
+            <div class="planner-evidence-intro">
+              <div><span>SEARCH PROTOCOL</span><h3>先在 4B 上分层搜索，再用 8B 实际复训确认</h3></div>
+              <p>全部配置只在 9K SFT 与独立 2,400 条开发集上比较；主排序指标为 Dev TraceEM，其后依次用 SetEM、严格输出有效率与 micro-F1 破同分。正式 1K 从未参与选参。</p>
+            </div>
+
+            <div class="planner-search-rounds" role="group" aria-label="4B 三轮超参数搜索">
+              <article><span>ROUND 01 · LR × EPOCH</span><strong>9 个起始组合</strong><p>固定 rank 16、dropout 0.05，比较 1e-5 / 3e-5 / 5e-5 与 1 / 2 / 3 epoch。</p><small>ROUND BEST · 3e-5 · e3 · 92.38%</small></article>
+              <article><span>ROUND 02 · RANK × DROPOUT</span><strong>8 个新增组合</strong><p>围绕 3e-5、epoch 3 比较 rank 8 / 16 / 32 与 dropout 0 / 0.05 / 0.10，并保留重复控制。</p><small>ROUND BEST · r32 · d0.05 · 92.54%</small></article>
+              <article class="is-selected"><span>ROUND 03 · CROSS-CHECK</span><strong>4 个新增组合</strong><p>交叉组合前两轮优胜区域；三轮合计得到 21 个唯一配置，而不是只汇报最终一行。</p><small>FINAL · 5e-5 · e3 · r32 · d0.05 · 93.04%</small></article>
+            </div>
+
+            <section class="planner-run-group" aria-labelledby="planner4bRunsTitle">
+              <div class="planner-run-group-head">
+                <div><span>4B SEARCH · 21 UNIQUE CONFIGS</span><h3 id="planner4bRunsTitle">Qwen3-4B 开发集完整排名</h3></div>
+                <p>LoRA alpha 固定为 rank × 2；表内按 Dev TraceEM 排序。</p>
+              </div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table result-table-compact planner-tuning-table">
+                  <thead><tr><th scope="col">排名</th><th scope="col">Learning rate</th><th scope="col">Epoch</th><th scope="col">LoRA rank</th><th scope="col">Dropout</th><th scope="col">Dev SetEM</th><th scope="col">Dev TraceEM</th></tr></thead>
+                  <tbody>
+                    <tr class="result-table-final"><td>1</td><td>5e-5</td><td>3</td><td>32</td><td>0.05</td><td>93.04%</td><td>93.04%</td></tr>
+                    <tr><td>2</td><td>5e-5</td><td>3</td><td>32</td><td>0.00</td><td>92.92%</td><td>92.92%</td></tr>
+                    <tr><td>3</td><td>3e-5</td><td>3</td><td>32</td><td>0.05</td><td>92.54%</td><td>92.54%</td></tr>
+                    <tr><td>4</td><td>3e-5</td><td>3</td><td>16</td><td>0.05</td><td>92.38%</td><td>92.38%</td></tr>
+                    <tr><td>5</td><td>5e-5</td><td>2</td><td>32</td><td>0.00</td><td>92.38%</td><td>92.33%</td></tr>
+                    <tr><td>6</td><td>3e-5</td><td>3</td><td>32</td><td>0.00</td><td>92.29%</td><td>92.29%</td></tr>
+                    <tr><td>7</td><td>5e-5</td><td>2</td><td>32</td><td>0.05</td><td>92.21%</td><td>92.21%</td></tr>
+                    <tr><td>8</td><td>5e-5</td><td>3</td><td>16</td><td>0.05</td><td>92.21%</td><td>92.17%</td></tr>
+                    <tr><td>9</td><td>3e-5</td><td>3</td><td>16</td><td>0.00</td><td>92.17%</td><td>92.17%</td></tr>
+                    <tr><td>10</td><td>3e-5</td><td>3</td><td>16</td><td>0.10</td><td>92.17%</td><td>92.17%</td></tr>
+                    <tr><td>11</td><td>5e-5</td><td>2</td><td>16</td><td>0.05</td><td>92.12%</td><td>92.12%</td></tr>
+                    <tr><td>12</td><td>3e-5</td><td>3</td><td>8</td><td>0.05</td><td>91.83%</td><td>91.83%</td></tr>
+                    <tr><td>13</td><td>3e-5</td><td>2</td><td>16</td><td>0.05</td><td>91.75%</td><td>91.75%</td></tr>
+                    <tr><td>14</td><td>3e-5</td><td>3</td><td>8</td><td>0.00</td><td>91.67%</td><td>91.67%</td></tr>
+                    <tr><td>15</td><td>3e-5</td><td>3</td><td>8</td><td>0.10</td><td>91.54%</td><td>91.54%</td></tr>
+                    <tr><td>16</td><td>3e-5</td><td>3</td><td>32</td><td>0.10</td><td>91.42%</td><td>91.42%</td></tr>
+                    <tr><td>17</td><td>5e-5</td><td>1</td><td>16</td><td>0.05</td><td>90.96%</td><td>90.96%</td></tr>
+                    <tr><td>18</td><td>3e-5</td><td>1</td><td>16</td><td>0.05</td><td>90.17%</td><td>90.12%</td></tr>
+                    <tr><td>19</td><td>1e-5</td><td>3</td><td>16</td><td>0.05</td><td>89.62%</td><td>89.62%</td></tr>
+                    <tr><td>20</td><td>1e-5</td><td>2</td><td>16</td><td>0.05</td><td>88.21%</td><td>88.17%</td></tr>
+                    <tr><td>21</td><td>1e-5</td><td>1</td><td>16</td><td>0.05</td><td>82.46%</td><td>82.42%</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="planner-run-group planner-run-group-confirm" aria-labelledby="planner8bRunsTitle">
+              <div class="planner-run-group-head">
+                <div><span>8B CONFIRMATION · 3 TRAINED CANDIDATES</span><h3 id="planner8bRunsTitle">Qwen3-8B 候选复训结果</h3></div>
+                <p>不是直接照搬 4B 排名；三个候选均在 8B、9K 设置下实际训练。</p>
+              </div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table result-table-compact planner-tuning-table planner-tuning-table-short">
+                  <thead><tr><th scope="col">排名</th><th scope="col">Learning rate</th><th scope="col">Epoch</th><th scope="col">LoRA rank</th><th scope="col">Dropout</th><th scope="col">Dev SetEM</th><th scope="col">Dev TraceEM</th></tr></thead>
+                  <tbody>
+                    <tr class="result-table-final"><td>1</td><td>5e-5</td><td>3</td><td>32</td><td>0.05</td><td>93.54%</td><td>93.54%</td></tr>
+                    <tr><td>2</td><td>3e-5</td><td>3</td><td>32</td><td>0.05</td><td>93.46%</td><td>93.46%</td></tr>
+                    <tr><td>3</td><td>5e-5</td><td>3</td><td>32</td><td>0.00</td><td>92.92%</td><td>92.92%</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+            <p class="a3-details-note"><strong>冻结结果：</strong>两种模型都选择 <code>lr=5e-5 · epoch=3 · rank=32 · alpha=64 · dropout=0.05</code>。21 + 3 表示 24 个唯一的模型—配置组合；加上 18K / 36K / 54K 的 6 次规模训练，项目共保留 30 次训练与开发集评测记录。</p>
+          </div>
+        </details>
+
         <div class="metric-switch a3-metric-switch" id="a3ScaleMetricSwitch" role="group" aria-label="切换 SFT 数据规模指标">
           <button class="active" type="button" data-a3-scale-metric="setEm" aria-pressed="true">SetEM</button>
           <button type="button" data-a3-scale-metric="traceEm" aria-pressed="false">TraceEM</button>
@@ -1142,32 +1259,38 @@
           <article><span>NON-MONOTONIC CURVE</span><strong>更多数据不保证单调更好</strong><p>18K / 36K 存在局部回退；每档仅一个固定种子，差异可能同时包含优化随机性。</p></article>
         </div>
 
-        <details class="a3-details">
-          <summary><span>完整 SFT 数据规模矩阵</span><strong>16 CELLS · FROZEN CONFIG</strong><i>+</i></summary>
-          <div class="result-table-wrap" tabindex="0">
-            <table class="result-table a3-scale-table">
-              <thead><tr><th scope="col">模型</th><th scope="col">训练量</th><th scope="col">视图</th><th scope="col">SetEM</th><th scope="col">TraceEM</th><th scope="col">相对 Base SetEM</th></tr></thead>
-              <tbody>
-                <tr><td>Qwen3-4B</td><td>9K</td><td>Wo-RAG · 100</td><td>93.10%</td><td>93.00%</td><td>+40.80 pp</td></tr>
-                <tr><td>Qwen3-4B</td><td>9K</td><td>RAG@10</td><td>98.60%</td><td>98.60%</td><td>+44.60 pp</td></tr>
-                <tr><td>Qwen3-4B</td><td>18K</td><td>Wo-RAG · 100</td><td>91.80%</td><td>91.60%</td><td>+39.50 pp</td></tr>
-                <tr><td>Qwen3-4B</td><td>18K</td><td>RAG@10</td><td>97.70%</td><td>97.70%</td><td>+43.70 pp</td></tr>
-                <tr><td>Qwen3-4B</td><td>36K</td><td>Wo-RAG · 100</td><td>91.60%</td><td>91.20%</td><td>+39.30 pp</td></tr>
-                <tr><td>Qwen3-4B</td><td>36K</td><td>RAG@10</td><td>99.20%</td><td>99.20%</td><td>+45.20 pp</td></tr>
-                <tr class="row-emphasis"><td>Qwen3-4B</td><td>54K</td><td>Wo-RAG · 100</td><td>96.20%</td><td>96.20%</td><td>+43.90 pp</td></tr>
-                <tr class="row-emphasis"><td>Qwen3-4B</td><td>54K</td><td>RAG@10</td><td>98.60%</td><td>98.60%</td><td>+44.60 pp</td></tr>
-                <tr><td>Qwen3-8B</td><td>9K</td><td>Wo-RAG · 100</td><td>95.70%</td><td>95.60%</td><td>+38.30 pp</td></tr>
-                <tr><td>Qwen3-8B</td><td>9K</td><td>RAG@10</td><td>98.60%</td><td>98.60%</td><td>+38.60 pp</td></tr>
-                <tr><td>Qwen3-8B</td><td>18K</td><td>Wo-RAG · 100</td><td>95.30%</td><td>95.10%</td><td>+37.90 pp</td></tr>
-                <tr><td>Qwen3-8B</td><td>18K</td><td>RAG@10</td><td>99.00%</td><td>99.00%</td><td>+39.00 pp</td></tr>
-                <tr><td>Qwen3-8B</td><td>36K</td><td>Wo-RAG · 100</td><td>95.80%</td><td>95.70%</td><td>+38.40 pp</td></tr>
-                <tr><td>Qwen3-8B</td><td>36K</td><td>RAG@10</td><td>98.20%</td><td>98.20%</td><td>+38.20 pp</td></tr>
-                <tr class="row-emphasis"><td>Qwen3-8B</td><td>54K</td><td>Wo-RAG · 100</td><td>97.40%</td><td>97.40%</td><td>+40.00 pp</td></tr>
-                <tr class="result-table-final"><td>Qwen3-8B</td><td>54K</td><td>RAG@10</td><td>99.10%</td><td>99.10%</td><td>+39.10 pp</td></tr>
-              </tbody>
-            </table>
+        <details class="narrative-disclosure planner-evidence-disclosure">
+          <summary>
+            <span class="disclosure-summary-copy"><small>DATA-SCALE EVIDENCE</small><strong>查看完整 SFT 数据规模矩阵</strong></span>
+            <span class="disclosure-summary-meta">16 CELLS · FROZEN CONFIG</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="disclosure-body evidence-table-disclosure-body">
+            <div class="result-table-wrap" tabindex="0">
+              <table class="result-table a3-scale-table">
+                <thead><tr><th scope="col">模型</th><th scope="col">训练量</th><th scope="col">视图</th><th scope="col">SetEM</th><th scope="col">TraceEM</th><th scope="col">相对 Base SetEM</th></tr></thead>
+                <tbody>
+                  <tr><td>Qwen3-4B</td><td>9K</td><td>Wo-RAG · 100</td><td>93.10%</td><td>93.00%</td><td>+40.80 pp</td></tr>
+                  <tr><td>Qwen3-4B</td><td>9K</td><td>RAG@10</td><td>98.60%</td><td>98.60%</td><td>+44.60 pp</td></tr>
+                  <tr><td>Qwen3-4B</td><td>18K</td><td>Wo-RAG · 100</td><td>91.80%</td><td>91.60%</td><td>+39.50 pp</td></tr>
+                  <tr><td>Qwen3-4B</td><td>18K</td><td>RAG@10</td><td>97.70%</td><td>97.70%</td><td>+43.70 pp</td></tr>
+                  <tr><td>Qwen3-4B</td><td>36K</td><td>Wo-RAG · 100</td><td>91.60%</td><td>91.20%</td><td>+39.30 pp</td></tr>
+                  <tr><td>Qwen3-4B</td><td>36K</td><td>RAG@10</td><td>99.20%</td><td>99.20%</td><td>+45.20 pp</td></tr>
+                  <tr class="row-emphasis"><td>Qwen3-4B</td><td>54K</td><td>Wo-RAG · 100</td><td>96.20%</td><td>96.20%</td><td>+43.90 pp</td></tr>
+                  <tr class="row-emphasis"><td>Qwen3-4B</td><td>54K</td><td>RAG@10</td><td>98.60%</td><td>98.60%</td><td>+44.60 pp</td></tr>
+                  <tr><td>Qwen3-8B</td><td>9K</td><td>Wo-RAG · 100</td><td>95.70%</td><td>95.60%</td><td>+38.30 pp</td></tr>
+                  <tr><td>Qwen3-8B</td><td>9K</td><td>RAG@10</td><td>98.60%</td><td>98.60%</td><td>+38.60 pp</td></tr>
+                  <tr><td>Qwen3-8B</td><td>18K</td><td>Wo-RAG · 100</td><td>95.30%</td><td>95.10%</td><td>+37.90 pp</td></tr>
+                  <tr><td>Qwen3-8B</td><td>18K</td><td>RAG@10</td><td>99.00%</td><td>99.00%</td><td>+39.00 pp</td></tr>
+                  <tr><td>Qwen3-8B</td><td>36K</td><td>Wo-RAG · 100</td><td>95.80%</td><td>95.70%</td><td>+38.40 pp</td></tr>
+                  <tr><td>Qwen3-8B</td><td>36K</td><td>RAG@10</td><td>98.20%</td><td>98.20%</td><td>+38.20 pp</td></tr>
+                  <tr class="row-emphasis"><td>Qwen3-8B</td><td>54K</td><td>Wo-RAG · 100</td><td>97.40%</td><td>97.40%</td><td>+40.00 pp</td></tr>
+                  <tr class="result-table-final"><td>Qwen3-8B</td><td>54K</td><td>RAG@10</td><td>99.10%</td><td>99.10%</td><td>+39.10 pp</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="a3-details-note">99.20% 是固定规模曲线中的观测单点，不作为经正式测试反向选择的系统端点；54K 行对应完整训练集上的交付 checkpoint。</p>
           </div>
-          <p class="a3-details-note">99.20% 是固定规模曲线中的观测单点，不作为经正式测试反向选择的系统端点；54K 行对应完整训练集上的交付 checkpoint。</p>
         </details>
 
         <div class="a3-endpoint-bridge">
@@ -1194,26 +1317,32 @@
         </div>
         <div class="a3-result-chart" id="a3ResultChart" aria-live="polite"></div>
 
-        <details class="a3-details a3-formal-details">
-          <summary><span>完整训练方案对照矩阵</span><strong>12 CELLS · 4 METRICS</strong><i>+</i></summary>
-          <div class="result-table-wrap" tabindex="0">
-            <table class="result-table a3-formal-table">
-              <thead><tr><th scope="col">模型</th><th scope="col">训练方案</th><th scope="col">视图</th><th scope="col">SetEM</th><th scope="col">TraceEM</th><th scope="col">micro-F1</th><th scope="col">严格输出有效率</th></tr></thead>
-              <tbody>
-                <tr><td>Qwen3-4B</td><td>Base</td><td>Wo-RAG · 100</td><td>52.30%</td><td>50.40%</td><td>84.25%</td><td>93.60%</td></tr>
-                <tr><td>Qwen3-4B</td><td>Base</td><td>RAG@10</td><td>54.00%</td><td>53.10%</td><td>87.38%</td><td>86.20%</td></tr>
-                <tr><td>Qwen3-8B</td><td>Base</td><td>Wo-RAG · 100</td><td>57.40%</td><td>54.60%</td><td>87.31%</td><td>96.70%</td></tr>
-                <tr><td>Qwen3-8B</td><td>Base</td><td>RAG@10</td><td>60.00%</td><td>59.10%</td><td>88.45%</td><td>89.80%</td></tr>
-                <tr class="row-emphasis"><td>Qwen3-4B</td><td>SFT</td><td>Wo-RAG · 100</td><td>94.70%</td><td>94.60%</td><td>98.58%</td><td>99.90%</td></tr>
-                <tr class="row-emphasis"><td>Qwen3-4B</td><td>SFT</td><td>RAG@10</td><td>99.00%</td><td>99.00%</td><td>99.73%</td><td>100.00%</td></tr>
-                <tr class="row-emphasis"><td>Qwen3-8B</td><td>SFT</td><td>Wo-RAG · 100</td><td>94.80%</td><td>94.20%</td><td>98.73%</td><td>100.00%</td></tr>
-                <tr><td>Qwen3-8B</td><td>SFT</td><td>RAG@10</td><td>98.30%</td><td>98.30%</td><td>99.63%</td><td>100.00%</td></tr>
-                <tr><td>Qwen3-4B</td><td>SFT+DPO</td><td>Wo-RAG · 100</td><td>93.30%</td><td>93.20%</td><td>98.20%</td><td>100.00%</td></tr>
-                <tr><td>Qwen3-4B</td><td>SFT+DPO</td><td>RAG@10</td><td>98.90%</td><td>98.90%</td><td>99.73%</td><td>99.90%</td></tr>
-                <tr><td>Qwen3-8B</td><td>SFT+DPO</td><td>Wo-RAG · 100</td><td>93.70%</td><td>93.20%</td><td>98.52%</td><td>99.60%</td></tr>
-                <tr><td>Qwen3-8B</td><td>SFT+DPO</td><td>RAG@10</td><td>98.40%</td><td>98.40%</td><td>99.65%</td><td>100.00%</td></tr>
-              </tbody>
-            </table>
+        <details class="narrative-disclosure planner-evidence-disclosure">
+          <summary>
+            <span class="disclosure-summary-copy"><small>TRAINING-REGIME MATRIX</small><strong>查看 Base、SFT 与 SFT+DPO 的完整对照</strong></span>
+            <span class="disclosure-summary-meta">12 CELLS · 4 METRICS</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="disclosure-body evidence-table-disclosure-body">
+            <div class="result-table-wrap" tabindex="0">
+              <table class="result-table a3-formal-table">
+                <thead><tr><th scope="col">模型</th><th scope="col">训练方案</th><th scope="col">视图</th><th scope="col">SetEM</th><th scope="col">TraceEM</th><th scope="col">micro-F1</th><th scope="col">严格输出有效率</th></tr></thead>
+                <tbody>
+                  <tr><td>Qwen3-4B</td><td>Base</td><td>Wo-RAG · 100</td><td>52.30%</td><td>50.40%</td><td>84.25%</td><td>93.60%</td></tr>
+                  <tr><td>Qwen3-4B</td><td>Base</td><td>RAG@10</td><td>54.00%</td><td>53.10%</td><td>87.38%</td><td>86.20%</td></tr>
+                  <tr><td>Qwen3-8B</td><td>Base</td><td>Wo-RAG · 100</td><td>57.40%</td><td>54.60%</td><td>87.31%</td><td>96.70%</td></tr>
+                  <tr><td>Qwen3-8B</td><td>Base</td><td>RAG@10</td><td>60.00%</td><td>59.10%</td><td>88.45%</td><td>89.80%</td></tr>
+                  <tr class="row-emphasis"><td>Qwen3-4B</td><td>SFT</td><td>Wo-RAG · 100</td><td>94.70%</td><td>94.60%</td><td>98.58%</td><td>99.90%</td></tr>
+                  <tr class="row-emphasis"><td>Qwen3-4B</td><td>SFT</td><td>RAG@10</td><td>99.00%</td><td>99.00%</td><td>99.73%</td><td>100.00%</td></tr>
+                  <tr class="row-emphasis"><td>Qwen3-8B</td><td>SFT</td><td>Wo-RAG · 100</td><td>94.80%</td><td>94.20%</td><td>98.73%</td><td>100.00%</td></tr>
+                  <tr><td>Qwen3-8B</td><td>SFT</td><td>RAG@10</td><td>98.30%</td><td>98.30%</td><td>99.63%</td><td>100.00%</td></tr>
+                  <tr><td>Qwen3-4B</td><td>SFT+DPO</td><td>Wo-RAG · 100</td><td>93.30%</td><td>93.20%</td><td>98.20%</td><td>100.00%</td></tr>
+                  <tr><td>Qwen3-4B</td><td>SFT+DPO</td><td>RAG@10</td><td>98.90%</td><td>98.90%</td><td>99.73%</td><td>99.90%</td></tr>
+                  <tr><td>Qwen3-8B</td><td>SFT+DPO</td><td>Wo-RAG · 100</td><td>93.70%</td><td>93.20%</td><td>98.52%</td><td>99.60%</td></tr>
+                  <tr><td>Qwen3-8B</td><td>SFT+DPO</td><td>RAG@10</td><td>98.40%</td><td>98.40%</td><td>99.65%</td><td>100.00%</td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </details>
 
@@ -1224,26 +1353,32 @@
           <article><span>04 · RETRIEVAL EFFECT</span><h3>RAG 高分依赖候选覆盖</h3><p>正式 1K 的 tuned AllHit@10=100.00%，untuned 仅 84.20%。必须区分检索上限、条件规划能力与完整目录迁移。</p></article>
         </div>
 
-        <details class="a3-details a3-selection-details">
-          <summary><span>训练方案对照的 checkpoint 选择与 DPO 数据来源</span><strong>DEV 2.4K · OFFICIAL TEST UNTOUCHED</strong><i>+</i></summary>
-          <div class="a3-selection-grid">
-            <article>
-              <header><span>CONTROL-MATRIX 4B SFT</span><h3>epoch 1 被开发集选中</h3></header>
-              <div><span>epoch 1</span><strong>93.38% / 93.38%</strong><small>SetEM / TraceEM · SELECTED</small></div>
-              <div><span>epoch 2</span><strong>91.96% / 91.96%</strong><small>SetEM / TraceEM</small></div>
-            </article>
-            <article>
-              <header><span>4B DPO BETA</span><h3>beta 0.05 被开发集选中</h3></header>
-              <div><span>beta 0.05</span><strong>93.88% / 93.88%</strong><small>SetEM / TraceEM · SELECTED</small></div>
-              <div><span>beta 0.10</span><strong>93.54% / 93.54%</strong><small>SetEM / TraceEM</small></div>
-            </article>
-            <article class="a3-selection-source">
-              <header><span>PREFERENCE PROVENANCE</span><h3>5,000 对均为真实模型错误</h3></header>
-              <div><span>CONTROL SFT</span><strong>43</strong><small>对照 checkpoint 错误</small></div>
-              <div><span>STEP-20 SFT</span><strong>4,957</strong><small>训练早期真实错误</small></div>
-            </article>
+        <details class="narrative-disclosure planner-evidence-disclosure">
+          <summary>
+            <span class="disclosure-summary-copy"><small>SELECTION PROVENANCE</small><strong>查看对照 checkpoint 选择与 DPO 数据来源</strong></span>
+            <span class="disclosure-summary-meta">DEV 2.4K · OFFICIAL TEST UNTOUCHED</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="disclosure-body planner-selection-disclosure-body">
+            <div class="a3-selection-grid">
+              <article>
+                <header><span>CONTROL-MATRIX 4B SFT</span><h3>epoch 1 被开发集选中</h3></header>
+                <div><span>epoch 1</span><strong>93.38% / 93.38%</strong><small>SetEM / TraceEM · SELECTED</small></div>
+                <div><span>epoch 2</span><strong>91.96% / 91.96%</strong><small>SetEM / TraceEM</small></div>
+              </article>
+              <article>
+                <header><span>4B DPO BETA</span><h3>beta 0.05 被开发集选中</h3></header>
+                <div><span>beta 0.05</span><strong>93.88% / 93.88%</strong><small>SetEM / TraceEM · SELECTED</small></div>
+                <div><span>beta 0.10</span><strong>93.54% / 93.54%</strong><small>SetEM / TraceEM</small></div>
+              </article>
+              <article class="a3-selection-source">
+                <header><span>PREFERENCE PROVENANCE</span><h3>5,000 对均为真实模型错误</h3></header>
+                <div><span>CONTROL SFT</span><strong>43</strong><small>对照 checkpoint 错误</small></div>
+                <div><span>STEP-20 SFT</span><strong>4,957</strong><small>训练早期真实错误</small></div>
+              </article>
+            </div>
+            <p class="a3-details-note">本区记录训练方案对照矩阵的选择过程，与上方 lr=5e-5、epoch=3、rank=32 的调参 SFT endpoint 分开解释。synthetic_pairs=0，核心偏好对占 98.22%，覆盖 100 / 100 工具；正式 1K 未参与这些选择。</p>
           </div>
-          <p class="a3-details-note">本区记录训练方案对照矩阵的选择过程，与上方 lr=5e-5、epoch=3、rank=32 的调参 SFT endpoint 分开解释。synthetic_pairs=0，核心偏好对占 98.22%，覆盖 100 / 100 工具；正式 1K 未参与这些选择。</p>
         </details>
 
         <div class="diagnostic-summary planning-diagnostic-summary" role="group" aria-label="Planner 结果与剩余边界摘要">
@@ -1278,20 +1413,34 @@
           </div>
         </details>
 
-        <details class="a3-details">
-          <summary><span>四、五工具 seen / unseen 组合拆分</span><strong>400 ROWS · CONTROL SFT</strong><i>+</i></summary>
-          <div class="result-table-wrap" tabindex="0">
-            <table class="result-table a3-seen-table">
-              <thead><tr><th scope="col">模型</th><th scope="col">视图</th><th scope="col">seen N</th><th scope="col">seen SetEM / TraceEM</th><th scope="col">unseen N</th><th scope="col">unseen SetEM / TraceEM</th></tr></thead>
-              <tbody>
-                <tr><td>Qwen3-4B SFT · 对照</td><td>Wo-RAG · 100</td><td>221</td><td>92.31% / 92.31%</td><td>179</td><td>89.94% / 89.39%</td></tr>
-                <tr><td>Qwen3-4B SFT · 对照</td><td>RAG@10</td><td>221</td><td>98.64% / 98.64%</td><td>179</td><td>99.44% / 99.44%</td></tr>
-                <tr><td>Qwen3-8B SFT · 对照</td><td>Wo-RAG · 100</td><td>221</td><td>92.31% / 91.86%</td><td>179</td><td>92.74% / 90.50%</td></tr>
-                <tr><td>Qwen3-8B SFT · 对照</td><td>RAG@10</td><td>221</td><td>97.74% / 97.74%</td><td>179</td><td>99.44% / 99.44%</td></tr>
-              </tbody>
-            </table>
+        <details class="narrative-disclosure planner-evidence-disclosure planner-seen-disclosure">
+          <summary>
+            <span class="disclosure-summary-copy"><small>COMBINATION GENERALIZATION</small><strong>查看四、五工具 seen / unseen 组合拆分</strong></span>
+            <span class="disclosure-summary-meta">400 QUERIES · 221 SEEN / 179 UNSEEN</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="disclosure-body evidence-table-disclosure-body">
+            <div class="planner-seen-key" role="group" aria-label="seen 与 unseen 定义">
+              <article><span>SEEN TRACE</span><strong>221</strong><p>四、五工具样本的有序金标轨迹曾在 54K SFT 目标中出现。</p></article>
+              <article><span>UNSEEN TRACE</span><strong>179</strong><p>有序金标轨迹未在 SFT 目标中出现；工具本身仍属于固定 100 工具库。</p></article>
+              <article><span>WHY 4–5 TOOLS</span><strong>400</strong><p>单工具与两工具全部属于 seen，真正的组合新颖性主要集中在四、五工具样本。</p></article>
+            </div>
+            <div class="result-table-wrap" tabindex="0">
+              <table class="result-table a3-seen-table">
+                <thead>
+                  <tr><th scope="col" rowspan="2">模型</th><th scope="col" rowspan="2">视图</th><th scope="colgroup" colspan="3">Seen ordered trace</th><th class="metric-group-unseen" scope="colgroup" colspan="3">Unseen ordered trace</th></tr>
+                  <tr><th scope="col">N</th><th scope="col">SetEM</th><th scope="col">TraceEM</th><th class="metric-group-unseen" scope="col">N</th><th class="metric-group-unseen" scope="col">SetEM</th><th class="metric-group-unseen" scope="col">TraceEM</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Qwen3-4B SFT · 对照</td><td>Wo-RAG · 100</td><td>221</td><td>92.31%</td><td>92.31%</td><td>179</td><td>89.94%</td><td>89.39%</td></tr>
+                  <tr><td>Qwen3-4B SFT · 对照</td><td>RAG@10</td><td>221</td><td>98.64%</td><td>98.64%</td><td>179</td><td>99.44%</td><td>99.44%</td></tr>
+                  <tr><td>Qwen3-8B SFT · 对照</td><td>Wo-RAG · 100</td><td>221</td><td>92.31%</td><td>91.86%</td><td>179</td><td>92.74%</td><td>90.50%</td></tr>
+                  <tr><td>Qwen3-8B SFT · 对照</td><td>RAG@10</td><td>221</td><td>97.74%</td><td>97.74%</td><td>179</td><td>99.44%</td><td>99.44%</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="a3-details-note">高分不只来自相同 Query 或候选位置复制；RAG@10 的 unseen 行也没有低于 seen 行。但该拆分仍位于固定工具库内，只说明组合复用不是全部解释，不能表述成新工具或开放世界泛化。</p>
           </div>
-          <p class="a3-details-note">高分不只来自相同 Query 或候选位置复制，但该拆分仍位于固定工具库内，不能表述成开放世界泛化。</p>
         </details>
 
         <details class="narrative-disclosure planner-case-disclosure">
@@ -1311,42 +1460,48 @@
           </div>
         </details>
 
-        <details class="a3-details a3-diagnostics">
-          <summary><span>辅助机制诊断：query-only 与 tuned / untuned</span><strong>DEV 2.4K · DIAGNOSTIC CHECKPOINT</strong><i>+</i></summary>
-          <div class="a3-diagnostic-grid">
-            <article>
-              <header><span>QUERY-ONLY ABLATION</span><h3>没有 ontology grounding 时无法稳定恢复工具 ID</h3></header>
-              <div class="result-table-wrap" tabindex="0">
-                <table class="result-table result-table-compact">
-                  <thead><tr><th scope="col">模型</th><th scope="col">视图</th><th scope="col">SetEM</th><th scope="col">TraceEM</th><th scope="col">严格输出有效率</th><th scope="col">平均输入 token</th></tr></thead>
-                  <tbody>
-                    <tr><td>4B Base</td><td>query-only</td><td>1.25%</td><td>1.25%</td><td>1.42%</td><td>206.9</td></tr>
-                    <tr><td>4B Base</td><td>full-catalog</td><td>49.00%</td><td>48.62%</td><td>94.12%</td><td>2,825.9</td></tr>
-                    <tr><td>机制诊断 4B SFT</td><td>query-only</td><td>3.21%</td><td>3.21%</td><td>4.04%</td><td>206.9</td></tr>
-                    <tr><td>机制诊断 4B SFT</td><td>full-catalog</td><td>95.88%</td><td>95.88%</td><td>99.79%</td><td>2,825.9</td></tr>
-                  </tbody>
-                </table>
-              </div>
-              <p class="a3-diagnostic-note">query-only 的 JSON schema 合法率仍有 99.92% / 98.75%，但 Base / 机制诊断 SFT 分别有 2,364 / 2,268 条输出包含不存在的工具 ID；失败来自 ontology grounding 缺失，而非只是不懂 JSON。</p>
-            </article>
-            <article>
-              <header><span>RETRIEVAL CAUSAL CONTROL</span><h3>端到端集合准确率受 AllHit 上限约束</h3></header>
-              <div class="result-table-wrap" tabindex="0">
-                <table class="result-table result-table-compact">
-                  <thead><tr><th scope="col">视图</th><th scope="col">检索</th><th scope="col">AllHit</th><th scope="col">条件规划</th><th scope="col">SetEM</th><th scope="col">TraceEM</th></tr></thead>
-                  <tbody>
-                    <tr><td>RAG@10</td><td>tuned</td><td>95.00%</td><td>96.93%</td><td>92.08%</td><td>92.08%</td></tr>
-                    <tr><td>RAG@10</td><td>untuned</td><td>76.33%</td><td>97.54%</td><td>74.46%</td><td>74.42%</td></tr>
-                    <tr><td>RAG@20</td><td>tuned</td><td>99.00%</td><td>97.35%</td><td>96.38%</td><td>96.38%</td></tr>
-                    <tr><td>RAG@20</td><td>untuned</td><td>91.75%</td><td>97.91%</td><td>89.83%</td><td>89.83%</td></tr>
-                  </tbody>
-                </table>
-              </div>
-              <p class="a3-equation">SetEM = AllHit@K × P(SetEM | AllHit@K)</p>
-              <p class="a3-diagnostic-note">开发集含 240 条六工具样本，RAG@5 在容量上不可能覆盖；这些样本占该设置 433 个检索失败的 55.43%。比较 K 前必须先检查 K ≥ gold tool_count。</p>
-            </article>
+        <details class="narrative-disclosure planner-evidence-disclosure a3-diagnostics">
+          <summary>
+            <span class="disclosure-summary-copy"><small>MECHANISM DIAGNOSTICS</small><strong>查看 query-only 与 tuned / untuned 因果对照</strong></span>
+            <span class="disclosure-summary-meta">DEV 2.4K · DIAGNOSTIC CHECKPOINT</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="disclosure-body planner-diagnostics-disclosure-body">
+            <div class="a3-diagnostic-grid">
+              <article>
+                <header><span>QUERY-ONLY ABLATION</span><h3>没有 ontology grounding 时无法稳定恢复工具 ID</h3></header>
+                <div class="result-table-wrap" tabindex="0">
+                  <table class="result-table result-table-compact">
+                    <thead><tr><th scope="col">模型</th><th scope="col">视图</th><th scope="col">SetEM</th><th scope="col">TraceEM</th><th scope="col">严格输出有效率</th><th scope="col">平均输入 token</th></tr></thead>
+                    <tbody>
+                      <tr><td>4B Base</td><td>query-only</td><td>1.25%</td><td>1.25%</td><td>1.42%</td><td>206.9</td></tr>
+                      <tr><td>4B Base</td><td>full-catalog</td><td>49.00%</td><td>48.62%</td><td>94.12%</td><td>2,825.9</td></tr>
+                      <tr><td>机制诊断 4B SFT</td><td>query-only</td><td>3.21%</td><td>3.21%</td><td>4.04%</td><td>206.9</td></tr>
+                      <tr><td>机制诊断 4B SFT</td><td>full-catalog</td><td>95.88%</td><td>95.88%</td><td>99.79%</td><td>2,825.9</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="a3-diagnostic-note">query-only 的 JSON schema 合法率仍有 99.92% / 98.75%，但 Base / 机制诊断 SFT 分别有 2,364 / 2,268 条输出包含不存在的工具 ID；失败来自 ontology grounding 缺失，而非只是不懂 JSON。</p>
+              </article>
+              <article>
+                <header><span>RETRIEVAL CAUSAL CONTROL</span><h3>端到端集合准确率受 AllHit 上限约束</h3></header>
+                <div class="result-table-wrap" tabindex="0">
+                  <table class="result-table result-table-compact">
+                    <thead><tr><th scope="col">视图</th><th scope="col">检索</th><th scope="col">AllHit</th><th scope="col">条件规划</th><th scope="col">SetEM</th><th scope="col">TraceEM</th></tr></thead>
+                    <tbody>
+                      <tr><td>RAG@10</td><td>tuned</td><td>95.00%</td><td>96.93%</td><td>92.08%</td><td>92.08%</td></tr>
+                      <tr><td>RAG@10</td><td>untuned</td><td>76.33%</td><td>97.54%</td><td>74.46%</td><td>74.42%</td></tr>
+                      <tr><td>RAG@20</td><td>tuned</td><td>99.00%</td><td>97.35%</td><td>96.38%</td><td>96.38%</td></tr>
+                      <tr><td>RAG@20</td><td>untuned</td><td>91.75%</td><td>97.91%</td><td>89.83%</td><td>89.83%</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="a3-equation">SetEM = AllHit@K × P(SetEM | AllHit@K)</p>
+                <p class="a3-diagnostic-note">开发集含 240 条六工具样本，RAG@5 在容量上不可能覆盖；这些样本占该设置 433 个检索失败的 55.43%。比较 K 前必须先检查 K ≥ gold tool_count。</p>
+              </article>
+            </div>
+            <p class="a3-details-note">本折叠区使用独立 2.4K 开发集和机制诊断 checkpoint，只解释 ontology grounding 与检索上限，不参与正式 1K 的模型横向排名。</p>
           </div>
-          <p class="a3-details-note">本折叠区使用独立 2.4K 开发集和机制诊断 checkpoint，只解释 ontology grounding 与检索上限，不参与正式 1K 的模型横向排名。</p>
         </details>
 
         <div class="a3-boundary-grid">

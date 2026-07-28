@@ -301,14 +301,16 @@
   function renderIntent() {
     var root = $('#intentChart');
     if (!root) return;
-    root.innerHTML = data.metrics.intent.map(function (row) {
-      var finalClass = row.kind === 'final' ? ' is-final' : (row.kind === 'baseline' ? ' is-baseline' : '');
-      return '<div class="intent-row' + finalClass + '">' +
-        '<span>' + escapeHtml(row.short) + '</span>' +
-        '<div class="intent-track" title="Macro-F1 ' + percent(row.f1, 2) + '"><div class="intent-fill" style="--bar-width:' + (row.accuracy * 100).toFixed(3) + '%"></div></div>' +
-        '<strong>' + percent(row.accuracy, 2) + '</strong>' +
-      '</div>';
-    }).join('');
+    root.innerHTML = '<div class="intent-chart-head"><span>MODEL</span><span>ACCURACY BAR</span><span>ACC.</span><span>MACRO-F1</span></div>' +
+      data.metrics.intent.map(function (row) {
+        var finalClass = row.kind === 'final' ? ' is-final' : (row.kind === 'baseline' ? ' is-baseline' : '');
+        return '<div class="intent-row' + finalClass + '">' +
+          '<span>' + escapeHtml(row.short) + '</span>' +
+          '<div class="intent-track" title="Accuracy ' + percent(row.accuracy, 2) + '"><div class="intent-fill" style="--bar-width:' + (row.accuracy * 100).toFixed(3) + '%"></div></div>' +
+          '<strong>' + percent(row.accuracy, 2) + '</strong>' +
+          '<em>' + percent(row.f1, 2) + '</em>' +
+        '</div>';
+      }).join('');
   }
 
   function renderInsight() {
