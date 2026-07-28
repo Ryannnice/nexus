@@ -21,7 +21,7 @@
   <meta name="twitter:description" content="100-Tool Commerce Agent · One integrated pipeline">
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=20260727">
 
-  <link rel="stylesheet" href="project.css?v=22">
+  <link rel="stylesheet" href="project.css?v=23">
   <script defer src="project-data.js?v=10"></script>
   <script defer src="project.js?v=14"></script>
 </head>
@@ -358,116 +358,147 @@
       <div class="wrap">
         <p class="eyebrow">FOUNDATION 03 · DATA &amp; PROTOCOL</p>
         <div class="section-heading split-heading">
-          <h2 id="dataTitle">数据基础与评测隔离</h2>
-          <p>所有模块共享同一份 100 工具能力事实源，但按任务用途隔离数据：30K 基础轨迹支撑入口分流与候选检索，9K–54K 嵌套 API 原生候选视图支撑有序规划的调参与规模分析；9K Intent 集与 6K Retrieval 集是固定的模块比较基准，Planner 另设 2.4K 开发集和未参与选参的正式 1K。</p>
+          <h2 id="dataTitle"><span>一份事实源，</span><span>三套数据契约</span></h2>
+          <p>100 工具 Catalog 统一能力定义，但三个模块不共用同一套训练与评测切分。这里先说明每个阶段“用什么训练、在哪里选型、用什么报告”，再把完整资产台账与隔离审计收进证据层。</p>
         </div>
 
-        <div class="dataset-layout">
-          <article class="split-visual">
-            <div class="split-head"><span>ROUTING + RETRIEVAL · FOUNDATION TRACE CORPUS</span><strong>30,000 QUERIES</strong></div>
-            <div class="split-bar" role="img" aria-label="训练集 24000，冻结项目基准 6000">
-              <div class="split-train"><b>24,000</b><span>TRAIN · MODEL LEARNING</span></div>
-              <div class="split-test"><b>6,000</b><span>FIXED PROJECT BENCHMARK</span></div>
-            </div>
-            <div class="split-details">
-              <div><strong>12K</strong><span>单工具轨迹</span></div>
-              <div><strong>18K</strong><span>多工具轨迹</span></div>
-              <div><strong>1–6</strong><span>每条 Gold 工具</span></div>
-              <div><strong>8</strong><span>业务领域</span></div>
-            </div>
+        <p class="phase-context-label">DATA FLOW · SHARED FACTS → MODULE SPLITS → EVALUATION BOUNDARIES</p>
+        <article class="data-source-band" aria-labelledby="dataSourceTitle">
+          <div class="data-source-copy">
+            <span class="corner-square" aria-hidden="true"></span>
+            <p>SHARED FACT SOURCE</p>
+            <h3 id="dataSourceTitle">100 工具 Catalog 只统一“能力是什么”</h3>
+            <span>名称、描述、操作类型、负向边界、易混关系与依赖共同生成检索文档、训练样本和 Planner 候选视图；它不意味着三个模块共享同一评测集。</span>
+          </div>
+          <dl class="data-source-stats">
+            <div><dt>100</dt><dd>TOOL DOCUMENTS</dd></div>
+            <div><dt>8</dt><dd>BUSINESS DOMAINS</dd></div>
+            <div><dt>52 / 48</dt><dd>READ / ACTION</dd></div>
+          </dl>
+        </article>
+
+        <div class="data-contract-grid" role="group" aria-label="三个模块的数据使用契约">
+          <article>
+            <header><span>STAGE 01</span><strong>INTENT GATE</strong></header>
+            <h3>判断请求是否进入工具链</h3>
+            <p class="data-contract-purpose">电商轨迹与独立闲聊样本构成二分类训练；固定集合用于入口模型和数据配方比较。</p>
+            <dl class="data-contract-rows">
+              <div><dt>TRAIN</dt><dd><strong>48,006</strong><span>full / balanced 配方；各切 5% validation</span></dd></div>
+              <div><dt>MODEL SELECTION</dt><dd><strong>9,000</strong><span>6K 电商 + 3K 独立闲聊</span></dd></div>
+              <div><dt>REPORTING BOUNDARY</dt><dd><strong>模块比较集</strong><span>不等同于独立真实流量 holdout</span></dd></div>
+            </dl>
+            <footer><span>OUTPUT METRICS</span><strong>Accuracy / Macro-F1</strong></footer>
           </article>
 
-          <article class="dataset-card">
-            <span class="corner-square" aria-hidden="true"></span>
-            <p class="dataset-kicker">TOOL CORPUS</p>
-            <strong class="dataset-total">100</strong>
-            <div class="dataset-ratio equal"><span>52 READ</span><span>48 ACTION</span></div>
-            <p>由 Catalog 生成 100 篇可检索文档，统一服务 BM25、向量索引与 Reranker。</p>
+          <article>
+            <header><span>STAGE 02</span><strong>RETRIEVAL</strong></header>
+            <h3>把全部必要工具送入候选</h3>
+            <p class="data-contract-purpose">30K 轨迹按 24K / 6K 固定划分；训练侧派生 Embedding、Reranker 与融合特征。</p>
+            <dl class="data-contract-rows">
+              <div><dt>TRAIN</dt><dd><strong>24,000</strong><span>70,012 positives · 96K explicit negatives</span></dd></div>
+              <div><dt>MODEL SELECTION</dt><dd><strong>6,000</strong><span>固定 Benchmark · 15,196 Gold positives</span></dd></div>
+              <div><dt>REPORTING BOUNDARY</dt><dd><strong>模块比较集</strong><span>路线横评集，不是一次性最终 holdout</span></dd></div>
+            </dl>
+            <footer><span>OUTPUT METRICS</span><strong>AllHit@K / MRR</strong></footer>
           </article>
 
-          <article class="dataset-card">
-            <span class="corner-square" aria-hidden="true"></span>
-            <p class="dataset-kicker">INTENT EVALUATION</p>
-            <strong class="dataset-total">9,000</strong>
-            <div class="dataset-ratio"><span>电商 6,000</span><span>闲聊 3,000</span></div>
-            <p>电商请求来自固定工具测试集，闲聊请求独立构建，用于入口分流评测。</p>
+          <article>
+            <header><span>STAGE 03</span><strong>STATIC PLANNER</strong></header>
+            <h3>从候选集合生成有序轨迹</h3>
+            <p class="data-contract-purpose">嵌套 SFT 规模研究、开发集选参和正式测试严格分工；正式 1K 不参与 checkpoint 或超参数选择。</p>
+            <dl class="data-contract-rows">
+              <div><dt>TRAIN</dt><dd><strong>9K → 54K</strong><span>9K / 18K / 36K / 54K 稳定哈希嵌套</span></dd></div>
+              <div><dt>MODEL SELECTION</dt><dd><strong>2,400</strong><span>4B 21 runs + 8B 3 runs；选择 DPO beta</span></dd></div>
+              <div><dt>REPORTING BOUNDARY</dt><dd><strong>Official 1,000</strong><span>1–5 工具各 200 条；冻结后正式对照</span></dd></div>
+            </dl>
+            <footer><span>OUTPUT METRICS</span><strong>SetEM / TraceEM</strong></footer>
           </article>
+        </div>
+
+        <div class="data-role-grid" role="group" aria-label="训练、选型与正式报告的阅读规则">
+          <article><span>01 · GRADIENT</span><strong>训练数据更新参数</strong><p>Intent 配方、Retrieval 24K 及 Planner 9K–54K 才进入对应模型训练。</p></article>
+          <article><span>02 · SELECT</span><strong>比较集负责选路线</strong><p>Intent 9K、Retrieval 6K 与 Planner 2.4K 都承担模型或超参数选择，不能伪装成完全独立终测。</p></article>
+          <article><span>03 · REPORT</span><strong>正式 1K 只属于 Planner</strong><p>当前没有同批样本贯穿三模块的端到端终测，因此三个模块指标只能并列，不能相乘。</p></article>
         </div>
 
         <details class="narrative-disclosure data-disclosure">
           <summary>
-            <span class="disclosure-summary-copy"><small>DATA EVIDENCE</small><strong>查看完整数据用途、隔离审计与 Planner 数据</strong></span>
-            <span class="disclosure-summary-meta">TRAIN · DEV · FIXED BENCHMARK · OFFICIAL TEST</span>
+            <span class="disclosure-summary-copy"><small>COMPLETE DATA LEDGER &amp; AUDIT</small><strong>查看 12 类数据资产、划分用途与隔离证据</strong></span>
+            <span class="disclosure-summary-meta">TRAIN · SELECT · OFFICIAL · LEAKAGE AUDIT</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body">
-            <div class="data-asset-heading">
-              <div><p class="eyebrow">数据用途</p><h3>每类数据分别用于什么</h3></div>
-              <p>表格显式区分梯度训练、模块内路线比较与 Planner 正式评测，避免把“数据来自同一底座”误读为 train/test 混用。</p>
-            </div>
+            <section class="data-evidence-section" aria-labelledby="dataLedgerTitle">
+              <div class="data-evidence-heading">
+                <div><p>ASSET LEDGER</p><h3 id="dataLedgerTitle">从事实源到正式测试的完整台账</h3></div>
+                <span>同一行只回答五件事：是什么、从哪里来、规模多大、承担什么角色、边界在哪里。</span>
+              </div>
 
-        <div class="data-table-wrap" tabindex="0">
-          <table class="data-table">
-            <thead>
-              <tr><th scope="col">数据资产</th><th scope="col">来源</th><th scope="col">规模与划分</th><th scope="col">训练与选参</th><th scope="col">固定评测</th></tr>
-            </thead>
-            <tbody>
-              <tr><td><strong>Tool Catalog / Corpus</strong><span>能力事实源</span></td><td>8 个业务域的结构化工具定义</td><td>100 tools<br>100 documents</td><td>轨迹生成、BM25、向量建库及 Reranker 文档侧</td><td>所有检索方案共用同一 100 文档空间</td></tr>
-              <tr><td><strong>Tool-call Traces</strong><span>路由与检索基础数据</span></td><td>Catalog 能力片段、独立表达簇与场景上下文</td><td>30,000 queries<br>24K train / 6K fixed test</td><td>仅 24K train 用于 Intent SFT、Embedding、Task Reranker 和 train-side 融合选参</td><td>仅 6K test 用于检索、重排与融合结果比较</td></tr>
-              <tr><td><strong>Intent SFT</strong><span>LoRA 训练数据</span></td><td>Train 轨迹电商样本 + 独立闲聊模板 + 6 条边界样本</td><td>base 36,000<br>full / balanced 48,006<br>hard 12,006；均切 5% val</td><td>0.6B 使用 full；1.7B 使用 balanced；val 用于 checkpoint 选择</td><td>不进入 9K Intent 固定评测集</td></tr>
-              <tr><td><strong>Intent Fixed Set</strong><span>入口分流评测</span></td><td>6K 工具测试 Query + 3K 独立闲聊</td><td>9,000 queries<br>电商 : 闲聊 = 2 : 1</td><td>不参与梯度；用于入口模型横向比较与系统配置选择</td><td>Accuracy 与 Macro-F1；不是独立真实流量 holdout</td></tr>
-              <tr><td><strong>Embedding / Reranker Train</strong><span>派生训练数据</span></td><td>24K train 轨迹 + 100 篇工具文档</td><td>24K groups<br>70,012 positive<br>96,000 explicit negative</td><td>MNRL 展开正对；Task Reranker 动态采样 1 正 + 7 负</td><td>不读取 test 派生文件</td></tr>
-              <tr><td><strong>Retrieval Fixed Set</strong><span>派生评测数据</span></td><td>6K test 轨迹 + 100 篇工具文档</td><td>6K groups<br>15,196 positive<br>24,000 explicit negative</td><td>不参与梯度；9 个 Embedding Run 与候选路线在此横向比较</td><td>AllHit@K、MRR、成功/失败转移与 Badcase；不是一次性最终 holdout</td></tr>
-              <tr><td><strong>Ranking Features</strong><span>候选排序数据</span></td><td>Train / Test 两侧固定 Top-50 预测</td><td>1.20M train rows<br>300K test rows</td><td>Residual 训练；RRF 参数仅在 24K train Query 上选择</td><td>参数固定后，在 6K test Query 上评测</td></tr>
-            </tbody>
-          </table>
-        </div>
+              <div class="data-table-wrap" tabindex="0">
+                <table class="data-table">
+                  <thead>
+                    <tr><th scope="col">数据资产</th><th scope="col">来源与内容</th><th scope="col">规模与划分</th><th scope="col">实验角色</th><th scope="col">边界与输出</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><strong>Tool Catalog / Corpus</strong><span>统一能力事实源</span></td><td>8 个业务域的结构化工具定义，包含能力边界与依赖</td><td>100 tools<br>100 documents</td><td>轨迹生成、BM25、向量建库、Reranker 文档侧与 Planner 候选定义</td><td>所有方案共用同一闭集能力空间；不承担模型评测</td></tr>
+                    <tr><td><strong>Tool-call Traces</strong><span>上游基础轨迹</span></td><td>Catalog 能力片段、独立表达簇与场景上下文</td><td>30,000 queries<br>12K single / 18K multi<br>24K train / 6K fixed</td><td>训练侧支撑 Intent 与 Retrieval；测试侧形成检索比较集</td><td>train / test 的 Query、Trace ID、表达簇与两套 context salt 隔离</td></tr>
+                    <tr><td><strong>Intent SFT</strong><span>入口分类训练</span></td><td>Train 轨迹电商样本 + 独立闲聊模板 + 6 条边界样本</td><td>base 36,000<br>full / balanced 48,006<br>hard 12,006；各切 5% val</td><td>0.6B 使用 full；1.7B 使用 balanced；validation 选择 checkpoint</td><td>不进入 9K Intent 固定比较集</td></tr>
+                    <tr><td><strong>Intent Fixed Set</strong><span>入口模块比较</span></td><td>6K 工具测试 Query + 3K 独立闲聊</td><td>9,000 queries<br>电商 : 闲聊 = 2 : 1</td><td>比较模型和训练配方；不参与梯度</td><td>输出 Accuracy / Macro-F1；不是独立真实流量 holdout</td></tr>
+                    <tr><td><strong>Embedding / Reranker Train</strong><span>检索派生训练</span></td><td>24K train 轨迹 + 100 篇工具文档</td><td>24K groups<br>70,012 positive<br>96,000 explicit negative</td><td>MNRL 展开正对；Task Reranker 动态采样 1 正 + 7 负</td><td>训练入口不读取 test 派生文件</td></tr>
+                    <tr><td><strong>Retrieval Fixed Set</strong><span>候选模块比较</span></td><td>6K test 轨迹 + 100 篇工具文档</td><td>3K single / 3K multi<br>multi = 1.5K seen + 1.5K unseen<br>15,196 positive · 24K negative</td><td>比较 9 个 Embedding Run、重排与融合路线；不参与梯度</td><td>输出 AllHit@K、MRR、转移分析与 Badcase；不是一次性最终 holdout</td></tr>
+                    <tr><td><strong>Ranking Features</strong><span>候选排序特征</span></td><td>Train / Test 两侧固定 Top-50 预测</td><td>1.20M train rows<br>300K test rows</td><td>训练 Residual；RRF 参数仅在 24K train Query 上选择</td><td>参数冻结后在 6K fixed set 上比较</td></tr>
+                    <tr><td><strong>Planner Nested SFT</strong><span>有序轨迹训练</span></td><td>固定工具闭集中的 API 原生候选视图与 Gold Trace</td><td>9K / 18K / 36K / 54K<br>严格嵌套</td><td>训练 4B / 8B，并研究监督规模与完整目录迁移</td><td>稳定哈希前缀；与 Dev / Official Test 的规范化 Query、Trace ID 重合均为 0</td></tr>
+                    <tr><td><strong>Planner Selection Dev</strong><span>规划模块选型</span></td><td>独立开发查询、候选与有序目标</td><td>2,400 queries</td><td>4B 21 个组合 + 8B 3 个复训确认，并选择 DPO beta</td><td>选型证据先冻结；不与正式 1K 指标混算</td></tr>
+                    <tr><td><strong>Planner Official Test</strong><span>规划正式评测</span></td><td>冻结查询、候选与有序目标</td><td>1,000 queries<br>1–5 tools 各 200</td><td>训练方案对照、规模曲线与最终系统端点评测</td><td>不选择 checkpoint 或超参数；输出 SetEM / TraceEM</td></tr>
+                    <tr><td><strong>DPO Preferences</strong><span>偏好辅助训练</span></td><td>真实 Planner 错误构建 chosen / rejected</td><td>5,000 pairs<br>synthetic pairs = 0</td><td>验证偏好训练能否改善静态主指标与顺序鲁棒性</td><td>beta 只在 2.4K Dev 选择；正式结果仍在 1K 报告</td></tr>
+                    <tr><td><strong>Order Stress Set</strong><span>顺序反事实压力测试</span></td><td>同工具集合、不同业务顺序的成对请求</td><td>176 pairs<br>352 traces · 2–6 tools</td><td>单独检验顺序敏感性，补充 TraceEM 主评测</td><td>辅助鲁棒性证据，不替代 Official 1K 主指标</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
 
-        <div class="data-highlight-grid">
-          <article><span>MULTI-TOOL TEST</span><strong>3,000</strong><p>Seen Combo 1,500 + Unseen Combo 1,500，覆盖 2–6 工具组合。</p></article>
-          <article><span>TRAINING GROUPS</span><strong>24,000</strong><p>同一 grouped 数据支撑 Embedding 与 Task Reranker 训练。</p></article>
-          <article><span>TEST POSITIVES</span><strong>15,196</strong><p>6,000 条检索请求对应的 Gold Query–Tool 正样本总数。</p></article>
-          <article><span>CONTEXT DESIGN</span><strong>2 SALTS</strong><p>Train / Test 使用独立表达簇与 context salt，保持评测差异。</p></article>
-        </div>
+            <section class="data-evidence-section" aria-labelledby="upstreamAuditTitle">
+              <div class="data-evidence-heading">
+                <div><p>UPSTREAM SPLIT AUDIT</p><h3 id="upstreamAuditTitle">路由与检索的表达隔离</h3></div>
+                <span>先检查显式重合，再检查上下文骨架是否足以“猜中”工具；后者用于区分场景复用与能力泄漏。</span>
+              </div>
 
-        <h3 class="subsection-title">数据质量与划分检查</h3>
-        <div class="audit-grid" id="auditGrid"></div>
+              <div class="audit-grid" id="auditGrid"></div>
 
-        <div class="context-audit">
-          <div class="context-copy">
-            <p class="eyebrow">隔离验证</p>
-            <h3>表达与上下文隔离</h3>
-            <p>训练与测试使用不同表达簇和 context salt。商品、城市、预算等通用场景仍会自然复用，但仅依赖场景骨架的匹配器 AllHit@10 只有 2.92%，模型需要真正理解工具能力。</p>
-          </div>
-          <div class="context-metrics" id="contextMetrics"></div>
-        </div>
+              <div class="context-audit">
+                <div class="context-copy">
+                  <p class="eyebrow">CONTEXT CONTROL</p>
+                  <h3>场景可以复用，能力答案不能靠骨架推出</h3>
+                  <p>商品、城市、预算等通用场景会自然复用，但同骨架精确工具序列重合仅 1.97%；只依赖场景骨架的匹配器 AllHit@10 为 2.92%，说明工具能力语义仍是主要信号。</p>
+                </div>
+                <div class="context-metrics" id="contextMetrics"></div>
+              </div>
+            </section>
 
-        <div class="a3-data-block">
-          <div class="data-asset-heading">
-            <div><p class="eyebrow">ORDERED-TRACE DATA</p><h3>为静态 Planner 建立独立训练、选参与正式评测</h3></div>
-            <p>规划数据与上游 24K/6K 轨迹各司其职：SFT 使用 9K/18K/36K/54K 稳定哈希前缀，2.4K 只负责超参数与 DPO beta 选择；选择证据先冻结，1K 再用于训练方案对照和规模曲线评测。</p>
-          </div>
-          <div class="a3-data-grid" role="group" aria-label="静态规划数据规模">
-            <article><span>NESTED SFT TRAIN</span><strong>9–54K</strong><p>9K / 18K / 36K / 54K；每档均保持单意图 : 顺序 : 干扰 = 3 : 4 : 2。</p></article>
-            <article><span>SELECTION DEV</span><strong>2.4K</strong><p>完成 4B 21 个组合与 8B 3 个复训确认，并选择 DPO beta；不与正式测试指标混算。</p></article>
-            <article class="is-primary"><span>OFFICIAL TEST</span><strong>1K</strong><p>工具数 1–5 各 200 条；冻结后不用于 checkpoint 选择。</p></article>
-            <article><span>DPO PREFERENCES</span><strong>5K</strong><p>全部来自真实模型错误；synthetic pairs = 0。</p></article>
-            <article><span>ORDER STRESS</span><strong>176 对</strong><p>352 条 API 顺序反事实，覆盖 2–6 工具。</p></article>
-          </div>
-          <div class="a3-audit-strip" role="group" aria-label="静态规划数据审计摘要">
-            <div><strong>0</strong><span>各训练档与 Dev / Test 的规范化 Query / Trace ID overlap</span></div>
-            <div><strong>0</strong><span>Full-catalog SFT rows</span></div>
-            <div><strong>100 / 100</strong><span>每个训练规模覆盖的工具数</span></div>
-            <div><strong>82.1%</strong><span>正式目标有序序列在 54K SFT 中 seen</span></div>
-          </div>
-          <p class="a3-data-boundary">四档训练集按稳定哈希前缀严格嵌套，数据审计 strict_ok=true。零文本泄漏不等于目标组合从未出现：表达簇同序列仅命中 1 / 1,000，context-skeleton 命中为 0；但目标组合复用依然存在，任务仍属于固定 100 工具的合成闭集。</p>
-            </div>
+            <section class="data-evidence-section" aria-labelledby="plannerAuditTitle">
+              <div class="data-evidence-heading">
+                <div><p>PLANNER SPLIT AUDIT</p><h3 id="plannerAuditTitle">规划数据的隔离与闭集边界</h3></div>
+                <span>“没有文本泄漏”和“目标组合从未出现”是两件事；本项目验证前者，同时如实报告固定 100 工具闭集中的组合复用。</span>
+              </div>
+
+              <div class="planner-audit-grid" role="group" aria-label="Planner 数据审计摘要">
+                <article><strong>0</strong><span>Query / Trace overlap</span><p>四档训练集与 Dev / Official Test 的规范化 Query、Trace ID 均不重合。</p></article>
+                <article><strong>0</strong><span>Full-catalog SFT rows</span><p>训练样本不直接暴露完整 100 工具目录视图。</p></article>
+                <article><strong>100 / 100</strong><span>Tool coverage</span><p>每个训练规模都覆盖全部工具，避免小规模档缺类。</p></article>
+                <article><strong>82.1%</strong><span>Target sequence seen</span><p>Official 目标有序序列在 54K SFT 中出现过，属于闭集组合复用而非文本重合。</p></article>
+              </div>
+              <p class="data-boundary-note"><strong>解释边界：</strong>四档训练集按稳定哈希前缀严格嵌套，数据审计 <code>strict_ok=true</code>。表达簇同序列仅命中 1 / 1,000，context-skeleton 命中为 0；但目标组合复用依然存在，所以任务应被理解为固定 100 工具的合成闭集，而不是开放世界泛化测试。</p>
+            </section>
           </div>
         </details>
+      </div>
+    </section>
 
+    <aside class="method-index-section" aria-label="实验方法索引">
+      <div class="wrap">
         <details class="narrative-disclosure method-disclosure">
           <summary>
-            <span class="disclosure-summary-copy"><small>EXPERIMENT METHOD INDEX</small><strong>查看六类训练、排序与融合方法</strong></span>
+            <span class="disclosure-summary-copy"><small>EXPERIMENT METHOD INDEX</small><strong>实验展开前，查看六类训练、排序与融合方法</strong></span>
             <span class="disclosure-summary-meta">SFT · MNRL · RERANK · RRF · DPO</span>
             <i aria-hidden="true">+</i>
           </summary>
@@ -482,9 +513,8 @@
             </div>
           </div>
         </details>
-
       </div>
-    </section>
+    </aside>
 
     <section class="section experiment-section" id="intent" aria-labelledby="intentTitle">
       <div class="wrap">
