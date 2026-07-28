@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0V64" fill="none" stroke="#252925" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="#090b09"/>
+  <rect width="1200" height="630" fill="url(#grid)" opacity=".65"/>
+  <rect x="0" width="16" height="630" fill="#a6ef3c"/>
+  <rect x="72" y="64" width="50" height="50" fill="#a6ef3c"/>
+  <text x="97" y="98" text-anchor="middle" fill="#090b09" font-family="Arial, sans-serif" font-size="17" font-weight="800">RL</text>
+  <text x="142" y="84" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="2">RENYUAN LIU</text>
+  <text x="142" y="106" fill="#858b83" font-family="monospace" font-size="11" letter-spacing="1">AI AGENT · LLM SYSTEMS</text>
+
+  <text x="72" y="246" fill="#ffffff" font-family="Arial, sans-serif" font-size="77" font-weight="700" letter-spacing="-4">Building verifiable</text>
+  <text x="72" y="334" fill="#a6ef3c" font-family="Arial, sans-serif" font-size="77" font-weight="700" letter-spacing="-4">agent systems.</text>
+  <text x="76" y="390" fill="#aeb3aa" font-family="Arial, sans-serif" font-size="23">Tool routing · Model serving · Research-grade engineering</text>
+
+  <line x1="72" y1="458" x2="1128" y2="458" stroke="#3a3f39"/>
+  <g font-family="monospace">
+    <text x="76" y="495" fill="#777d75" font-size="11" letter-spacing="1">KNOWN TOOLS</text>
+    <text x="76" y="548" fill="#ffffff" font-size="44" font-weight="700">100</text>
+
+    <text x="350" y="495" fill="#777d75" font-size="11" letter-spacing="1">RETRIEVAL · ALLHIT@10</text>
+    <text x="350" y="548" fill="#ffffff" font-size="44" font-weight="700">98.30%</text>
+
+    <text x="714" y="495" fill="#777d75" font-size="11" letter-spacing="1">PLANNING · TRACEEM</text>
+    <text x="714" y="548" fill="#a6ef3c" font-size="44" font-weight="700">99.10%</text>
+
+    <text x="1018" y="495" fill="#777d75" font-size="11" letter-spacing="1">BASED IN</text>
+    <text x="1018" y="537" fill="#ffffff" font-size="20" font-weight="700">SZ</text>
+  </g>
+  <rect x="72" y="586" width="1056" height="1" fill="#252925"/>
+  <text x="72" y="610" fill="#555b54" font-family="monospace" font-size="9" letter-spacing="1">EVIDENCE · SYSTEMS · HONEST BOUNDARIES</text>
+</svg>
