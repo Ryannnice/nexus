@@ -85,7 +85,7 @@
       matrix.innerHTML = tools.map(function (tool) {
         return '<i class="' + (selected.has(tool.id) ? 'selected' : '') + '"></i>';
       }).join('');
-      matrixCount.textContent = selectedIds.length + ' SELECTED';
+      matrixCount.textContent = selectedIds.length + (selectedIds.length === 1 ? ' GOLD TARGET' : ' GOLD TARGETS');
     }
 
     function renderRows(rows, tag) {
