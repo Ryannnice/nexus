@@ -648,18 +648,41 @@
     var links = $('#navLinks');
     var toTop = $('#toTop');
     if (!nav || !toggle || !links) return;
+    var anchorLinks = $$('a[href^="#"]', links);
+    var menuLinks = $$('a[href]', links);
+    var mobileNav = window.matchMedia ? window.matchMedia('(max-width: 900px)') : null;
 
     function onScroll() {
       nav.classList.toggle('scrolled', window.scrollY > 8);
       if (toTop) toTop.classList.toggle('show', window.scrollY > 720);
     }
 
-    function closeMenu() {
+    function isMobileMenu() {
+      return !!(mobileNav && mobileNav.matches);
+    }
+
+    function syncMenuAccessibility() {
+      if (!isMobileMenu()) {
+        links.removeAttribute('aria-hidden');
+        links.removeAttribute('inert');
+        return;
+      }
+      var open = links.classList.contains('open');
+      links.setAttribute('aria-hidden', open ? 'false' : 'true');
+      links.toggleAttribute('inert', !open);
+    }
+
+    function closeMenu(returnFocus) {
+      var focusWasInside = links.contains(document.activeElement);
       links.classList.remove('open');
       toggle.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
       toggle.setAttribute('aria-label', '打开导航菜单');
       document.body.classList.remove('menu-open');
+      syncMenuAccessibility();
+      if (isMobileMenu() && (returnFocus || focusWasInside)) {
+        toggle.focus({ preventScroll: true });
+      }
     }
 
     toggle.addEventListener('click', function () {
@@ -668,15 +691,33 @@
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       toggle.setAttribute('aria-label', open ? '关闭导航菜单' : '打开导航菜单');
       document.body.classList.toggle('menu-open', open);
+      syncMenuAccessibility();
     });
 
     links.addEventListener('click', function (event) {
-      if (event.target.closest('a')) closeMenu();
+      if (event.target.closest('a')) closeMenu(false);
     });
 
     document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape') closeMenu();
+      var menuOpen = isMobileMenu() && links.classList.contains('open');
+      if (event.key === 'Escape' && menuOpen) {
+        closeMenu(true);
+        return;
+      }
+      if (event.key !== 'Tab' || !menuOpen || !menuLinks.length) return;
+      if (event.shiftKey && document.activeElement === toggle) {
+        event.preventDefault();
+        menuLinks[menuLinks.length - 1].focus();
+      } else if (!event.shiftKey && document.activeElement === menuLinks[menuLinks.length - 1]) {
+        event.preventDefault();
+        toggle.focus();
+      }
     });
+
+    syncMenuAccessibility();
+    if (mobileNav && mobileNav.addEventListener) {
+      mobileNav.addEventListener('change', function () { closeMenu(false); });
+    }
 
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
@@ -685,7 +726,6 @@
       toTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
     }
 
-    var anchorLinks = $$('a[href^="#"]', links);
     var sectionGroups = {
       abstract: '#abstract',
       problem: '#problem',

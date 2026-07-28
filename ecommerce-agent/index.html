@@ -21,9 +21,9 @@
   <meta name="twitter:description" content="100-Tool Commerce Agent · One integrated pipeline">
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=20260727">
 
-  <link rel="stylesheet" href="project.css?v=17">
+  <link rel="stylesheet" href="project.css?v=18">
   <script defer src="project-data.js?v=10"></script>
-  <script defer src="project.js?v=11"></script>
+  <script defer src="project.js?v=12"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">跳到主要内容</a>
@@ -35,6 +35,10 @@
         <span>TOOLSET<span class="brand-slash">/</span>100</span>
       </a>
 
+      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="打开导航菜单">
+        <span></span><span></span><span></span>
+      </button>
+
       <nav class="nav-links" id="navLinks" aria-label="项目页导航">
         <a href="#abstract">项目概览</a>
         <a href="#problem">任务与数据</a>
@@ -44,10 +48,6 @@
         <a href="#limits">系统结论</a>
         <a class="nav-github" href="#evidence">复现</a>
       </nav>
-
-      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="打开导航菜单">
-        <span></span><span></span><span></span>
-      </button>
     </div>
   </header>
 
@@ -1462,10 +1462,14 @@
           <p>Catalog、数据脚本、训练入口、预测文件和专题报告共同构成项目资产。关键结果可以回到对应运行产物，数据构建与主要实验也保留了可重复执行的入口。</p>
         </div>
 
+        <aside class="evidence-access-note" aria-label="证据仓库访问说明">
+          <strong>ACCESS NOTE</strong>
+          <span>以下报告与结构化产物位于受限 GitHub 仓库；访问链接前需要登录并拥有仓库权限。</span>
+        </aside>
+
         <div class="evidence-grid">
           <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/06_Assignment3_100%E5%B7%A5%E5%85%B7%E5%AE%9E%E9%AA%8C%E6%80%BB%E6%8A%A5%E5%91%8A.md" target="_blank" rel="noopener noreferrer"><span>PLANNING REPORT</span><h3>有序轨迹规划总报告</h3><p>训练方案、SFT 调参与规模、RAG/Wo-RAG、顺序鲁棒性与最终边界的统一口径。</p><b>规划实验源报告</b></a>
           <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_100tool_api/final_summary.json" target="_blank" rel="noopener noreferrer"><span>STRUCTURED EVIDENCE</span><h3>规划实验结构化汇总</h3><p>正式矩阵、配对比较、数据审计、预测路径与文件哈希。</p><b>final_summary.json</b></a>
-          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/07_Assignment3_SFT%E6%95%B0%E6%8D%AE%E8%A7%84%E6%A8%A1%E4%B8%8E%E8%B0%83%E5%8F%82%E5%AE%9E%E9%AA%8C.md" target="_blank" rel="noopener noreferrer"><span>SFT STUDY</span><h3>SFT 数据规模与调参实验</h3><p>21 + 3 个参数运行、四档嵌套训练规模、完整结果与审慎结论。</p><b>调参与规模实验报告</b></a>
           <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_100tool_api/sft_ablation/results_summary.json" target="_blank" rel="noopener noreferrer"><span>MACHINE-READABLE RESULTS</span><h3>SFT 消融结构化汇总</h3><p>参数选择证据、16 个规模评测单元、checkpoint、预测与指标哈希。</p><b>results_summary.json</b></a>
         </div>
 

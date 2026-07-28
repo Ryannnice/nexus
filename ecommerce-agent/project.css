@@ -406,8 +406,8 @@ code, pre { font-family: var(--font); }
 
 .demo-pause {
   display: flex;
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   align-items: center;
   justify-content: center;
   border: 1px solid #4a4a4a;
@@ -465,8 +465,8 @@ code, pre { font-family: var(--font); }
 .demo-trace-controls { display: flex; flex: 0 0 auto; align-items: center; gap: 6px; }
 .demo-trace-controls > button {
   display: flex;
-  width: 25px;
-  height: 25px;
+  width: 32px;
+  height: 32px;
   align-items: center;
   justify-content: center;
   border: 1px solid #4a4a4a;
@@ -482,15 +482,15 @@ code, pre { font-family: var(--font); }
 .demo-trace-dots { display: flex; align-items: center; gap: 3px; }
 .demo-trace-dots button {
   position: relative;
-  width: 18px;
-  height: 25px;
+  width: 24px;
+  height: 32px;
   padding: 0;
   border: 0;
   background: transparent;
   cursor: pointer;
 }
 .demo-trace-dots button i,
-.demo-trace-dots button::after { position: absolute; top: 11px; left: 1px; width: 16px; height: 2px; content: ''; }
+.demo-trace-dots button::after { position: absolute; top: 15px; left: 1px; width: 22px; height: 2px; content: ''; }
 .demo-trace-dots button i { background: #4a4a4a; }
 .demo-trace-dots button::after { background: transparent; transform-origin: left; }
 .demo-trace-dots button.active::after { background: var(--primary); animation: demoTraceProgress 6.5s linear both; }
@@ -1863,10 +1863,11 @@ code, pre { font-family: var(--font); }
     padding: 8px var(--gutter) 20px;
     border-top: 1px solid var(--hairline-strong);
     background: var(--surface-dark);
+    visibility: hidden;
     transform: translateY(-120%);
-    transition: transform .22s ease;
+    transition: transform .22s ease, visibility 0s linear .22s;
   }
-  .nav-links.open { transform: none; }
+  .nav-links.open { visibility: visible; transform: none; transition-delay: 0s; }
   .nav-links a { padding: 14px 0; border-bottom: 1px solid var(--surface-elevated); font-size: 14px; }
   .nav-links .nav-github { margin-top: 10px; padding-inline: 16px; text-align: center; }
   .nav-toggle { display: block; }
@@ -1957,9 +1958,17 @@ code, pre { font-family: var(--font); }
   .demo-chrome { align-items: flex-start; flex-direction: column; gap: 5px; }
   .demo-chrome-actions { width: 100%; justify-content: space-between; }
   .demo-footer { align-items: flex-start; flex-direction: column; }
-  .demo-trace-controls { width: 100%; gap: 4px; }
-  .demo-trace-dots { flex: 1; gap: 2px; }
-  .demo-trace-dots button { flex: 1; width: auto; min-width: 0; }
+  .demo-trace-controls {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 32px 1fr 32px;
+    gap: 4px 8px;
+  }
+  #heroTracePrev { grid-column: 1; grid-row: 1; }
+  .demo-trace-controls > span { grid-column: 2; grid-row: 1; }
+  #heroTraceNext { grid-column: 3; grid-row: 1; }
+  .demo-trace-dots { grid-column: 1 / -1; grid-row: 2; justify-content: center; gap: 2px; }
+  .demo-trace-dots button { flex: 0 0 24px; width: 24px; min-width: 24px; }
   .demo-trace-dots button i,
   .demo-trace-dots button::after { right: 1px; width: auto; }
   .scope-strip-inner { padding-inline: 0; }
@@ -4651,6 +4660,10 @@ main summary {
   color: var(--mute);
 }
 
+.formula-card > p:not(.formula-label) {
+  color: var(--body);
+}
+
 .formula-card .formula {
   color: var(--ink);
 }
@@ -5483,6 +5496,15 @@ main summary {
   font-size: 12px;
 }
 
+.tree-branch-end:not(.tree-branch-end-final) span,
+.tree-subdecision > span {
+  color: var(--mute);
+}
+
+.tree-connector span {
+  color: var(--primary-text);
+}
+
 .tree-option > b,
 .tree-stage-output > strong,
 .tree-branch-end strong {
@@ -5542,6 +5564,10 @@ main summary {
 
 .a3-selection-source {
   background: var(--primary) !important;
+}
+
+.a3-selection-source header span {
+  color: var(--ink);
 }
 
 .a3-selection-source header,
@@ -5778,6 +5804,26 @@ main summary {
 }
 
 /* Only the terminal remains a bounded dark body surface */
+.evidence-access-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  align-items: baseline;
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border: 1px solid var(--hairline);
+  border-left: 5px solid var(--primary);
+  background: var(--surface-soft);
+  color: var(--body);
+  font-size: 13px;
+}
+
+.evidence-access-note strong {
+  color: var(--ink);
+  font-size: 11px;
+  letter-spacing: .5px;
+}
+
 .command-head span,
 .command-head button,
 .command-panel pre,
