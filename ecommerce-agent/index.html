@@ -4,22 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>100-Tool Commerce Agent — 从意图识别、工具检索到静态有序选链</title>
-  <meta name="description" content="100 个已知工具合成闭集上的一体化实验系统：Intent Gate 完成请求分流，检索与重排生成候选，Qwen3-4B/8B Planner 输出静态有序工具链。">
+  <meta name="description" content="100 个已知工具合成闭集上的一体化实验系统：当前 8B 跨风格 SFT 在对齐 9K 上取得 90.37% Static Full Trace；API-native 1K 的 99.70% 仅作为 Planner 模块指标。">
   <meta name="theme-color" content="#000000">
   <link rel="canonical" href="https://ryannnice.github.io/nexus/ecommerce-agent/">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="让复杂电商请求，先找齐工具，再排对工具链。">
-  <meta property="og:description" content="一条完整的 100 工具系统链路：Intent 100.00%，检索 AllHit@10 98.30%，当前 8B 跨风格 Planner 在 API-native 1K 上 SetEM / TraceEM 99.70%。">
+  <meta property="og:description" content="最终结果以对齐 9K 的静态端到端 Full Trace 90.37% 为主；API-native 1K 的 99.70% 仅作为 Planner 模块指标。">
   <meta property="og:url" content="https://ryannnice.github.io/nexus/ecommerce-agent/">
-  <meta property="og:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=20260729">
+  <meta property="og:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026072902">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="100-Tool Commerce Agent：Static Full Trace 90.37%，aligned 9K">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="让复杂电商请求，先找齐工具，再排对工具链。">
-  <meta name="twitter:description" content="100-Tool Commerce Agent · One integrated pipeline">
-  <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=20260729">
+  <meta name="twitter:description" content="100-Tool Commerce Agent · Static end-to-end Full Trace 90.37% on the aligned 9K set">
+  <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026072902">
+  <meta name="twitter:image:alt" content="100-Tool Commerce Agent：Static Full Trace 90.37%，aligned 9K">
 
   <link rel="stylesheet" href="project.css?v=24">
   <script defer src="project-data.js?v=11"></script>
@@ -73,7 +75,7 @@
             <div><dt>100</dt><dd>固定工具空间</dd></div>
             <div><dt>1.0000</dt><dd>Intent Gate · Accuracy · 9K</dd></div>
             <div><dt>98.30%</dt><dd>Retrieval · AllHit@10 · 6K</dd></div>
-            <div class="hero-stat-primary"><dt>99.70%</dt><dd>Selected Planner · API-native frozen 1K · SetEM / TraceEM</dd></div>
+            <div class="hero-stat-primary"><dt>90.37%</dt><dd>Static End-to-End · Full Trace · aligned 9K</dd></div>
           </dl>
         </div>
 
@@ -139,9 +141,9 @@
             <p>本项目围绕同一份 100 工具 Catalog 构建一条连续系统链路：Intent Gate 先判断请求是否进入工具系统；BM25、任务内微调 Embedding、Task Reranker 与 RRF 生成高覆盖候选集；Qwen3-4B/8B Planner 再从候选视图或完整目录中输出有序工具 ID 轨迹。</p>
           </div>
           <div class="abstract-brief-result">
-            <span>CURRENT DEFAULT PLANNER</span>
-            <strong>SetEM / TraceEM · 99.70%</strong>
-            <p>当前默认模型为 Qwen3-8B 跨风格 SFT checkpoint-2429，在 API-native frozen 1K 上取得该结果；同一模型在 Legacy frozen 6K 上为 85.95% / 85.62%。DPO-v2 不替代默认端点，而作为候选顺序可能漂移时的鲁棒性选项。</p>
+            <span>CURRENT FINAL SYSTEM RESULT</span>
+            <strong>Static Full Trace · 90.37%</strong>
+            <p>当前默认模型为 Qwen3-8B 跨风格 SFT checkpoint-2429。在对齐的 9K（3K 闲聊 + 6K 电商）上，Full Trace 为 8,133 / 9,000（90.37%），Full Set 为 8,153 / 9,000（90.59%）。API-native frozen 1K 的 99.70% 只作为 Planner 模块证据；DPO-v2 是候选顺序可能漂移时的鲁棒性选项。</p>
           </div>
         </div>
 
@@ -154,7 +156,7 @@
           <div><span>TOOL SPACE</span><strong>100</strong><small>固定工具文档 · 8 个业务域</small></div>
           <div><span>INTENT GATE</span><strong>1.0000</strong><small>Accuracy / Macro-F1 · 9K</small></div>
           <div><span>RETRIEVAL</span><strong>98.30%</strong><small>AllHit@10 · 6K</small></div>
-          <div class="abstract-kpi-primary"><span>STATIC PLANNER</span><strong>99.70%</strong><small>8B · cross-style SFT · RAG@10 · API-native 1K</small></div>
+          <div class="abstract-kpi-primary"><span>STATIC END-TO-END</span><strong>90.37%</strong><small>8B · cross-style SFT · Full Trace · aligned 9K</small></div>
         </div>
 
         <p class="phase-context-label overview-context-label">PROJECT LOGIC · FOUR DESIGN DECISIONS</p>
@@ -199,7 +201,7 @@
             <small>API-NATIVE FROZEN 1K · BOTH 99.70%</small>
           </article>
         </div>
-        <p class="metric-contract-note"><strong>阅读规则：</strong>三项模块结果来自不同职责和不同样本，只能作为证据链并列阅读，不能相乘。另有对齐 Legacy 9K 的静态 Full Set / Trace 逐样本联合统计；它验证路由与选链，不覆盖参数、工具调用或失败恢复。Planner 的 API-native 1K 候选 AllHit@10 为 100.00%，与 Retrieval 6K 的 98.30% 不是同一评测集合。</p>
+        <p class="metric-contract-note"><strong>阅读规则：</strong>页面最终结果采用对齐 Legacy 9K 的逐样本联合统计：Static Full Trace 90.37%，Full Set 90.59%。上方三项模块结果来自不同职责和不同样本，只能作为证据链并列阅读，不能相乘。静态 Full 验证路由与选链，不覆盖参数、工具调用或失败恢复；Planner 的 API-native 1K 候选 AllHit@10 为 100.00%，与 Retrieval 6K 的 98.30% 不是同一评测集合。</p>
 
         <div class="metric-detail-stack">
           <article class="metric-detail-module" aria-labelledby="retrievalMetricTitle">
@@ -669,7 +671,7 @@
 
 
         <div class="result-footnotes">
-          <p><span>01</span>AllHit@6 与 AllHit@10 分别要求全部目标工具进入前 6 / 前 10；本项目以 AllHit@10 为主结果。</p>
+          <p><span>01</span>AllHit@6 与 AllHit@10 分别要求全部目标工具进入前 6 / 前 10；本节 Retrieval 以 AllHit@10 为模块主指标。</p>
           <p><span>02</span>AllHit@30 观察深候选覆盖；MRR 只看最靠前目标工具的倒数名次，不能替代完整集合指标。</p>
           <p><span>03</span>多工具请求的主要判断依据是 AllHit；不同候选源与深度只在对应实验问题内比较。</p>
         </div>
@@ -848,7 +850,7 @@
         <p class="eyebrow">EXPERIMENT 02 · INLINE DIAGNOSTICS</p>
         <div class="section-heading split-heading">
           <h2 id="analysisTitle">98.30% 之后，还错在哪里？</h2>
-          <p>主结果仍以 AllHit@10 为准；更紧的 AllHit@6 只用于定位前缀排序问题。两个口径在本节明确分开，诊断数字不替代主结果。</p>
+          <p>本节 Retrieval 仍以 AllHit@10 为模块主指标；更紧的 AllHit@6 只用于定位前缀排序问题。两个口径在本节明确分开，诊断数字不替代模块报告指标。</p>
         </div>
 
         <div class="diagnostic-summary" role="group" aria-label="Retrieval 剩余误差摘要">
@@ -878,7 +880,7 @@
           <article class="rank-band-card">
             <header><div><span>MISSING GOLD RANK</span><h3>主要漏召目标落在 rank 7–10</h3></div></header>
             <div class="rank-band-list" id="rankBandList"></div>
-            <p class="rank-band-note">以 AllHit@6 下的 560 条未完整覆盖 Query 为分析单位；458 条的全部漏召工具都在 rank 7–10。这里用更紧凑的 Top-6 定位前缀排序空间，主结果仍以 AllHit@10 为准。</p>
+            <p class="rank-band-note">以 AllHit@6 下的 560 条未完整覆盖 Query 为分析单位；458 条的全部漏召工具都在 rank 7–10。这里用更紧凑的 Top-6 定位前缀排序空间；本节 Retrieval 的模块报告指标仍为 AllHit@10。</p>
           </article>
         </div>
 
@@ -954,7 +956,7 @@
           <p>旧 54K 规模研究与 5K DPO 对照继续保留在下方。最新跟进不重写旧协议：默认固定候选顺序使用 8B 跨风格 SFT；只有 Top10 集合不变但展示顺序可能漂移时，才切换 DPO-v2。</p>
         </div>
         <div class="a3-endpoint-grid" role="group" aria-label="跨风格 SFT 与 DPO-v2 最新选型">
-          <article class="is-primary"><span>DEFAULT · 8B CROSS-STYLE SFT</span><strong>90.59 / 90.37%</strong><small>Static Full Set / Trace · Legacy-aligned 9K · checkpoint-2429</small></article>
+          <article class="is-primary"><span>FINAL DEFAULT · 8B CROSS-STYLE SFT</span><strong>90.59 / 90.37%</strong><small>Static Full Set / Trace · Legacy-aligned 9K · checkpoint-2429</small></article>
           <article><span>API-NATIVE FROZEN 1K</span><strong>99.70%</strong><small>8B default SFT · SetEM / TraceEM</small></article>
           <article><span>ROBUST · 8B DPO-V2</span><strong>+0.5278 pp</strong><small>三顺序平均 TraceEM · lr 1e-6 · checkpoint-111</small></article>
           <article><span>RESOURCE · 4B DPO-V2</span><strong>+1.7500 pp</strong><small>最差候选顺序 TraceEM · 静态 Full 基本无损</small></article>
@@ -1397,7 +1399,7 @@
               <span>FINAL SYSTEM OVERVIEW · THREE MODULES / FIVE STEPS</span>
               <h3 id="systemTitle">实验选择汇成的最终静态工具链</h3>
             </div>
-            <p>这里只保留当前默认配置，并明确标出模块交接。DPO-v2 是候选顺序可能漂移时的可选鲁棒端点，不与默认固定顺序链路混写。</p>
+            <p>这里只保留当前默认配置，并以对齐 9K 的 Static Full Trace 90.37% 作为最终结果。DPO-v2 是候选顺序可能漂移时的可选鲁棒端点，不与默认固定顺序链路混写。</p>
           </header>
 
           <ol class="route-phases final-route-phases">
@@ -1500,13 +1502,13 @@
           </article>
         </section>
 
-        <p class="phase-context-label final-results-label">MODULE RESULTS · SEPARATE FIXED BENCHMARKS</p>
-        <div class="system-outcome-grid" role="group" aria-label="三阶段系统结果">
+        <p class="phase-context-label final-results-label">FINAL RESULT · ALIGNED 9K STATIC END-TO-END</p>
+        <div class="system-outcome-grid" role="group" aria-label="主要模块证据与静态端到端最终结果">
           <article><span>01 · INTENT</span><h3>0.6B Full LoRA</h3><strong>100.00%</strong><p>Accuracy / Macro-F1 · 9K 合成固定集合</p><small>OUTPUT · E-commerce Query</small></article>
           <article><span>02 · RETRIEVAL</span><h3>Source + Task Reranker RRF</h3><strong>98.30%</strong><p>AllHit@10 · 6K 固定项目基准</p><small>OUTPUT · Top-10 Tool Set</small></article>
-          <article class="is-selected"><span>03 · PLANNER</span><h3>8B · cross-style SFT</h3><strong>99.70%</strong><p>SetEM / TraceEM · API-native frozen 1K</p><small>LEGACY TRACEEM · 85.62%</small></article>
+          <article class="is-selected"><span>FINAL · STATIC END-TO-END</span><h3>8B · cross-style SFT</h3><strong>90.37%</strong><p>Full Trace · aligned 9K · 8,133 / 9,000</p><small>FULL SET 90.59% · API 1K PLANNER 99.70%</small></article>
         </div>
-        <p class="system-outcome-note"><strong>解释规则：</strong>三项模块指标来自不同职责和评测口径，不能相乘。另在对齐 Legacy 9K 上逐样本得到当前默认模型 Static Full Set / Trace 90.5889% / 90.3667%；它是静态联合判定，不是工具执行成功率。</p>
+        <p class="system-outcome-note"><strong>最终口径：</strong>当前默认模型在对齐 Legacy 9K 上逐样本得到 Static Full Trace 90.3667%（8,133 / 9,000）与 Full Set 90.5889%（8,153 / 9,000）。前两张卡是不同固定基准上的模块证据，不能与最终结果相乘；Static Full 是静态联合判定，不是工具真实执行成功率。</p>
 
         <div class="verified-limitations" role="group" aria-label="已核实的适用边界">
           <article><strong>合成闭集</strong><span>目录固定为 100 项，Query 来自合成流程；不能直接外推到开放世界或真实流量。</span></article>
@@ -1523,7 +1525,7 @@
         <div class="limit-grid">
           <article><span>已完成 · 01</span><h3>能力与数据底座</h3><p>100 工具 Catalog、30K 路由与检索基础轨迹，以及 9K–54K 严格嵌套的 Planner API 原生 SFT 数据均已沉淀。</p></article>
           <article><span>已完成 · 02</span><h3>入口与候选检索</h3><p>LoRA Intent Gate、微调 Retriever、Task Reranker 和双路 RRF 已串成稳定的上游候选生成链路。</p></article>
-          <article><span>已完成 · 03</span><h3>静态有序选链</h3><p>当前 8B 跨风格 SFT 在 API 1K 达到 99.70%，Legacy 6K TraceEM 为 85.62%；对齐 9K Static Full Trace 为 90.37%。</p></article>
+          <article><span>已完成 · 03</span><h3>静态有序选链</h3><p>当前 8B 跨风格 SFT 在对齐 9K 上取得 Static Full Set / Trace 90.59% / 90.37%；API-native 1K 的 99.70% 保留为 Planner 模块结果。</p></article>
           <article><span>已沉淀 · 04</span><h3>鲁棒性证据链</h3><p>DPO-v2 以 2K 当前父模型错误训练，在新 sealed final 上提升三顺序平均与最差顺序 TraceEM，审计和文件哈希均可追溯。</p></article>
         </div>
 
