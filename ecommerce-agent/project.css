@@ -5682,6 +5682,14 @@ main summary {
   margin-top: 0;
 }
 
+.dpo2-update-disclosure .a3-robustness-heading:first-child {
+  margin-top: 0;
+}
+
+.dpo2-selection-grid {
+  margin-top: 24px;
+}
+
 .planner-evidence-disclosure {
   margin-top: 18px;
 }

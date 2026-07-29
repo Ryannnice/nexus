@@ -10,8 +10,8 @@
   <text x="64" y="514" fill="#898989" font-family="Inter,Arial,sans-serif" font-size="14">KNOWN TOOLS</text>
   <text x="224" y="484" fill="#ffffff" font-family="Inter,Arial,sans-serif" font-size="32" font-weight="700">98.30%</text>
   <text x="224" y="514" fill="#898989" font-family="Inter,Arial,sans-serif" font-size="14">RETRIEVAL · ALLHIT@10</text>
-  <text x="454" y="484" fill="#76b900" font-family="Inter,Arial,sans-serif" font-size="32" font-weight="700">99.10%</text>
-  <text x="454" y="514" fill="#898989" font-family="Inter,Arial,sans-serif" font-size="14">PLANNING · FINAL ENDPOINT</text>
+  <text x="454" y="484" fill="#76b900" font-family="Inter,Arial,sans-serif" font-size="32" font-weight="700">99.70%</text>
+  <text x="454" y="514" fill="#898989" font-family="Inter,Arial,sans-serif" font-size="14">PLANNING · SELECTED ENDPOINT</text>
   <rect x="64" y="554" width="270" height="32" fill="#1a1a1a" stroke="#5e5e5e"/>
   <rect x="64" y="554" width="8" height="32" fill="#76b900"/>
   <text x="86" y="575" fill="#d0d0d0" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700">STATIC SYNTHETIC CLOSED SET</text>

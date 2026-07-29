@@ -1,7 +1,7 @@
-/* Generated from /renyuanliu/Agent/PROJECT artifacts on 2026-07-27. */
+/* Generated from /renyuanliu/Agent/PROJECT artifacts through 2026-07-29. */
 window.PROJECT_DATA = {
   "snapshot": {
-    "date": "2026-07-27",
+    "date": "2026-07-29",
     "label": "INTEGRATED SYSTEM SNAPSHOT",
     "catalogVersion": "2026-07-06",
     "scope": "100 个已知工具的 Intent、检索与静态有序选链一体化离线评测",
@@ -1726,7 +1726,7 @@ window.PROJECT_DATA = {
       {
         "model": "Qwen3-4B",
         "modelShort": "4B",
-        "stage": "SFT+DPO",
+        "stage": "Initial SFT+DPO",
         "stageKey": "dpo",
         "view": "Wo-RAG · 100",
         "viewKey": "global",
@@ -1738,7 +1738,7 @@ window.PROJECT_DATA = {
       {
         "model": "Qwen3-4B",
         "modelShort": "4B",
-        "stage": "SFT+DPO",
+        "stage": "Initial SFT+DPO",
         "stageKey": "dpo",
         "view": "RAG@10",
         "viewKey": "rag",
@@ -1750,7 +1750,7 @@ window.PROJECT_DATA = {
       {
         "model": "Qwen3-8B",
         "modelShort": "8B",
-        "stage": "SFT+DPO",
+        "stage": "Initial SFT+DPO",
         "stageKey": "dpo",
         "view": "Wo-RAG · 100",
         "viewKey": "global",
@@ -1762,7 +1762,7 @@ window.PROJECT_DATA = {
       {
         "model": "Qwen3-8B",
         "modelShort": "8B",
-        "stage": "SFT+DPO",
+        "stage": "Initial SFT+DPO",
         "stageKey": "dpo",
         "view": "RAG@10",
         "viewKey": "rag",
@@ -2019,7 +2019,7 @@ window.PROJECT_DATA = {
       },
       {
         "model": "4B",
-        "stage": "SFT+DPO",
+        "stage": "Initial SFT+DPO",
         "stageKey": "dpo",
         "rowTraceEm": 0.9489,
         "pairBothTraceEm": 0.9205,
@@ -2027,7 +2027,7 @@ window.PROJECT_DATA = {
       },
       {
         "model": "8B",
-        "stage": "SFT+DPO",
+        "stage": "Initial SFT+DPO",
         "stageKey": "dpo",
         "rowTraceEm": 0.9574,
         "pairBothTraceEm": 0.9261,
