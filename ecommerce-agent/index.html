@@ -23,9 +23,9 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026073001">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：静态全链路成功率 90.37%，工具链口径，共 9,000 条">
 
-  <link rel="stylesheet" href="project.css?v=30">
+  <link rel="stylesheet" href="project.css?v=31">
   <script defer src="project-data.js?v=12"></script>
-  <script defer src="project.js?v=15"></script>
+  <script defer src="project.js?v=16"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">跳到主要内容</a>
@@ -149,7 +149,7 @@
 
         <div class="abstract-definition">
           <div><span>三个模块的指标</span><strong>分类准确率 → 完整召回率 → 集合 / 工具链全对率</strong></div>
-          <p>路由、检索和规划模块分别在各自的固定测试集上验证，模块指标不能直接相乘。最终结果在 9,000 条静态全链路测试中逐样本联合统计，并固定使用 1.7B 路由预测；0.6B 的 100% 是单独的模块选择结果。</p>
+          <p>路由、检索和规划使用不同输出与计分协议；部分测试共享同一批基础请求，但模块指标仍不能直接相乘。最终结果在 9,000 条静态全链路测试中逐样本联合统计，并固定使用 1.7B 路由预测；0.6B 的 100% 是单独的模块选择结果。</p>
         </div>
 
         <div class="abstract-kpis" role="group" aria-label="项目摘要指标">
@@ -201,7 +201,7 @@
             <small>接口式表达测试集 · 1,000 条 · 均为 99.70%</small>
           </article>
         </div>
-        <p class="metric-contract-note"><strong>阅读规则：</strong>页面最终结果来自 9,000 条逐样本联合统计：静态全链路成功率按工具链口径为 90.37%，按集合口径为 90.59%。该联合统计使用冻结的 1.7B 路由预测；0.6B 的 100% 是意图模块选择结果，尚未另行生成结构化全链路评分文件。上方三项模块结果来自不同职责和不同样本，只能并列阅读，不能相乘。静态全链路测试验证路由与选链，不覆盖参数、真实工具调用或失败恢复；规划模块在 1,000 条接口式表达测试中的候选完整召回率为 100.00%，与检索模块 6,000 条测试的 98.30% 不是同一评测集合。</p>
+        <p class="metric-contract-note"><strong>阅读规则：</strong>页面最终结果来自 9,000 条逐样本联合统计：静态全链路成功率按工具链口径为 90.37%，按集合口径为 90.59%。该联合统计使用冻结的 1.7B 路由预测；0.6B 的 100% 是意图模块选择结果，尚未另行生成结构化全链路评分文件。上方三项模块结果承担不同职责、采用不同计分事件；部分样本共享基础请求，也只能并列阅读，不能相乘。静态全链路测试验证路由、候选检索与选链，不覆盖参数、真实工具调用或失败恢复；规划模块在 1,000 条接口式表达测试中的候选完整召回率为 100.00%，与检索模块 6,000 条测试的 98.30% 不是同一评测协议。</p>
 
         <div class="metric-detail-stack">
           <article class="metric-detail-module" aria-labelledby="retrievalMetricTitle">
@@ -356,148 +356,6 @@
       </div>
     </section>
 
-    <section class="section" id="data" aria-labelledby="dataTitle">
-      <div class="wrap">
-        <p class="eyebrow">基础 03 · 数据与协议</p>
-        <div class="section-heading split-heading">
-          <h2 id="dataTitle"><span>一份工具目录，</span><span>三套独立数据</span></h2>
-          <p>100 工具目录统一能力定义，但三个模块不共用同一套训练与评测切分。这里先说明每个阶段“用什么训练、在哪里选型、用什么报告”，再把完整资产台账与隔离审计收进证据层。</p>
-        </div>
-
-        <p class="phase-context-label">数据流 · 统一能力定义 → 分模块切分 → 独立评测边界</p>
-        <article class="data-source-band" aria-labelledby="dataSourceTitle">
-          <div class="data-source-copy">
-            <span class="corner-square" aria-hidden="true"></span>
-            <p>统一能力事实源</p>
-            <h3 id="dataSourceTitle">100 工具目录只统一“能力是什么”</h3>
-            <span>名称、描述、操作类型、负向边界、易混关系与依赖共同生成检索文档、训练样本和规划候选视图；它不意味着三个模块共享同一评测集。</span>
-          </div>
-          <dl class="data-source-stats">
-            <div><dt>100</dt><dd>工具文档</dd></div>
-            <div><dt>8</dt><dd>业务域</dd></div>
-            <div><dt>52 / 48</dt><dd>查询类 / 操作类</dd></div>
-          </dl>
-        </article>
-
-        <div class="data-contract-grid" role="group" aria-label="三个模块的数据使用契约">
-          <article>
-            <header><span>阶段 01</span><strong>意图分流</strong></header>
-            <h3>判断请求是否进入工具链</h3>
-            <p class="data-contract-purpose">电商轨迹与独立闲聊样本构成二分类训练；固定集合用于入口模型和数据配方比较。</p>
-            <dl class="data-contract-rows">
-              <div><dt>训练</dt><dd><strong>48,006</strong><span>完整 / 均衡配方；各切 5% 验证集</span></dd></div>
-              <div><dt>模型比较</dt><dd><strong>9,000</strong><span>6K 电商 + 3K 独立闲聊</span></dd></div>
-              <div><dt>报告边界</dt><dd><strong>模块比较集</strong><span>不等同于独立真实流量留出集</span></dd></div>
-            </dl>
-            <footer><span>输出指标</span><strong>Accuracy / Macro-F1</strong></footer>
-          </article>
-
-          <article>
-            <header><span>阶段 02</span><strong>候选检索</strong></header>
-            <h3>把全部必要工具送入候选</h3>
-            <p class="data-contract-purpose">30K 轨迹按 24K / 6K 固定划分；训练侧派生向量模型、重排模型与融合特征。</p>
-            <dl class="data-contract-rows">
-              <div><dt>训练</dt><dd><strong>24,000</strong><span>70,012 个正例 · 96K 个显式负例</span></dd></div>
-              <div><dt>模型比较</dt><dd><strong>6,000</strong><span>固定项目基准 · 15,196 个目标工具</span></dd></div>
-              <div><dt>报告边界</dt><dd><strong>模块比较集</strong><span>路线横评集，不是一次性最终留出集</span></dd></div>
-            </dl>
-            <footer><span>输出指标</span><strong>AllHit@K / MRR</strong></footer>
-          </article>
-
-          <article>
-            <header><span>阶段 03</span><strong>工具链规划</strong></header>
-            <h3>从候选集合生成有序轨迹</h3>
-            <p class="data-contract-purpose">嵌套监督微调规模研究、开发集选参和正式测试严格分工；1,000 条正式测试不参与模型版本或超参数选择。</p>
-            <dl class="data-contract-rows">
-              <div><dt>训练</dt><dd><strong>9K → 77.7K</strong><span>嵌套规模研究 9K–54K；混合表达正式训练 77,724 条</span></dd></div>
-              <div><dt>模型比较</dt><dd><strong>2.4K + 1.2K</strong><span>早期训练对照 + 候选顺序稳健优化开发集</span></dd></div>
-              <div><dt>报告边界</dt><dd><strong>1K / 6K / 1.2K</strong><span>接口式表达、跨表达测试与候选顺序压力测试分别报告</span></dd></div>
-            </dl>
-            <footer><span>输出指标</span><strong>集合 / 工具链全对率</strong></footer>
-          </article>
-        </div>
-
-        <div class="data-role-grid" role="group" aria-label="训练、选型与正式报告的阅读规则">
-          <article><span>01 · 进入梯度</span><strong>训练数据更新参数</strong><p>意图分流训练集、检索训练集、规划监督数据与偏好数据才进入对应模型训练。</p></article>
-          <article><span>02 · 模型比较</span><strong>比较集负责选路线</strong><p>原规划开发集 2,400 条与顺序稳健开发集 1,200 条分别承担选型；顺序压力测试只在模型版本锁定后使用。</p></article>
-          <article><span>03 · 结果报告</span><strong>报告协议保持分开</strong><p>接口式表达 1,000 条、跨表达测试 6,000 条与顺序压力测试 1,200 条不混算；9,000 条静态全链路结果也不代表真实执行成功。</p></article>
-        </div>
-
-        <details class="narrative-disclosure data-disclosure">
-          <summary>
-            <span class="disclosure-summary-copy"><small>完整数据台账与审计</small><strong>查看 14 类数据资产、划分用途与隔离证据</strong></span>
-            <span class="disclosure-summary-meta">训练 · 选型 · 正式测试 · 泄漏审计</span>
-            <i aria-hidden="true">+</i>
-          </summary>
-          <div class="disclosure-body">
-            <section class="data-evidence-section" aria-labelledby="dataLedgerTitle">
-              <div class="data-evidence-heading">
-                <div><p>数据资产台账</p><h3 id="dataLedgerTitle">从事实源到正式测试的完整台账</h3></div>
-                <span>同一行只回答五件事：是什么、从哪里来、规模多大、承担什么角色、边界在哪里。</span>
-              </div>
-
-              <div class="data-table-wrap" tabindex="0">
-                <table class="data-table">
-                  <thead>
-                    <tr><th scope="col">数据资产</th><th scope="col">来源与内容</th><th scope="col">规模与划分</th><th scope="col">实验角色</th><th scope="col">边界与输出</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td><strong>工具目录与语料</strong><span>统一能力事实源</span></td><td>8 个业务域的结构化工具定义，包含能力边界与依赖</td><td>100 个工具<br>100 篇文档</td><td>轨迹生成、BM25、向量建库、重排文档侧与规划候选定义</td><td>所有方案共用同一闭集能力空间；不承担模型评测</td></tr>
-                    <tr><td><strong>工具调用轨迹</strong><span>上游基础轨迹</span></td><td>工具能力片段、独立表达簇与场景上下文</td><td>30,000 条请求<br>12K 单工具 / 18K 多工具<br>24K 训练 / 6K 测试</td><td>训练侧支撑意图分流与候选检索；测试侧形成检索比较集</td><td>训练 / 测试的请求、轨迹 ID、表达簇与两套上下文盐值隔离</td></tr>
-                    <tr><td><strong>意图模型监督数据</strong><span>入口分类训练</span></td><td>训练轨迹中的电商样本 + 独立闲聊模板 + 6 条边界样本</td><td>基础 36,000<br>完整 / 均衡 48,006<br>困难样本 12,006；各切 5% 验证集</td><td>0.6B 使用完整训练集；1.7B 使用均衡训练集；验证集选择模型版本</td><td>不进入 9K 意图分流固定比较集</td></tr>
-                    <tr><td><strong>意图分流固定集合</strong><span>入口模块比较</span></td><td>6K 工具请求 + 3K 独立闲聊</td><td>9,000 条请求<br>电商 : 闲聊 = 2 : 1</td><td>比较模型和训练配方；不参与梯度</td><td>输出 Accuracy / Macro-F1；不是独立真实流量留出集</td></tr>
-                    <tr><td><strong>向量 / 重排训练集</strong><span>检索派生训练</span></td><td>24K 训练轨迹 + 100 篇工具文档</td><td>24K 组<br>70,012 个正例<br>96,000 个显式负例</td><td>MNRL 展开正对；任务内重排动态采样 1 正 + 7 负</td><td>训练入口不读取测试侧派生文件</td></tr>
-                    <tr><td><strong>候选检索固定集合</strong><span>候选模块比较</span></td><td>6K 测试轨迹 + 100 篇工具文档</td><td>3K 单工具 / 3K 多工具<br>多工具 = 1.5K 已见组合 + 1.5K 未见组合<br>15,196 个正例 · 24K 个负例</td><td>比较 9 个向量模型训练版本、重排与融合路线；不参与梯度</td><td>输出 AllHit@K、MRR、转移分析与错误案例；不是一次性最终留出集</td></tr>
-                    <tr><td><strong>候选排序特征</strong><span>轻量校准输入</span></td><td>训练 / 测试两侧固定 Top-50 预测</td><td>1.20M 训练行<br>300K 测试行</td><td>训练残差校准器；RRF 参数仅在 24K 训练请求上选择</td><td>参数冻结后在 6K 固定集合上比较</td></tr>
-                    <tr><td><strong>规划模型嵌套监督数据</strong><span>有序轨迹训练</span></td><td>固定工具闭集中的接口式候选视图与目标工具链</td><td>9K / 18K / 36K / 54K<br>严格嵌套</td><td>训练 4B / 8B，并研究监督规模与完整目录迁移</td><td>稳定哈希前缀；与开发集、正式测试集的规范化请求、轨迹 ID 重合均为 0</td></tr>
-                    <tr><td><strong>规划模型开发集</strong><span>早期方案选型</span></td><td>独立开发请求、候选与有序目标</td><td>2,400 条请求</td><td>4B 21 个组合 + 8B 3 个复训确认，并选择早期偏好优化强度</td><td>选型证据先固定；不与接口式表达正式测试的 1,000 条指标混算</td></tr>
-                    <tr><td><strong>接口式表达测试集</strong><span>规划模块正式评测</span></td><td>固定请求、候选与有序目标</td><td>1,000 条请求<br>1–5 个工具各 200 条</td><td>早期训练方案对照与规模曲线评测</td><td>不选择模型版本或超参数；输出集合与工具链全对率</td></tr>
-                    <tr><td><strong>早期偏好数据</strong><span>历史训练对照</span></td><td>由不同训练阶段的规划错误构建偏好对</td><td>5,000 对<br>合成偏好对为 0</td><td>形成早期监督微调对照与顺序诊断</td><td>偏好强度只在原 2,400 条开发集上选择；不与当前顺序稳健优化混写</td></tr>
-                    <tr><td><strong>历史顺序约束检查</strong><span>辅助能力测试</span></td><td>同工具集合、不同业务步骤顺序的成对请求</td><td>176 对<br>352 条轨迹 · 2–6 个工具</td><td>单独检验用户顺序约束跟随能力</td><td>历史辅助证据，不等同于候选展示顺序变化</td></tr>
-                    <tr><td><strong>混合表达监督数据</strong><span>当前默认规划模型</span></td><td>Top-10 候选下合并接口式表达与另一种合成表达两种训练数据</td><td>77,724 行<br>模型版本 2429</td><td>将 8B 的跨表达测试工具链全对率从 72.18% 提高到 85.62%；作为默认静态规划模型</td><td>两套测试集独立报告，不跨协议合分</td></tr>
-                    <tr><td><strong>候选顺序稳健优化与压力测试</strong><span>候选排列稳定性</span></td><td>仅用当前混合表达监督微调模型的真实语义错误；只改变同一 Top-10 的展示顺序</td><td>2,000 对<br>1,776 训练 / 224 监控<br>1,200 正式测试</td><td>比较原顺序、倒序与固定规则打乱，选择顺序稳健模型</td><td>全部目标命中率@10 为 99.75%；3 条漏召保留；历史测试集只作回归审计</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </section>
-
-            <section class="data-evidence-section" aria-labelledby="upstreamAuditTitle">
-              <div class="data-evidence-heading">
-                <div><p>上游数据划分审计</p><h3 id="upstreamAuditTitle">路由与检索的表达隔离</h3></div>
-                <span>先检查显式重合，再检查上下文骨架是否足以“猜中”工具；后者用于区分场景复用与能力泄漏。</span>
-              </div>
-
-              <div class="audit-grid" id="auditGrid"></div>
-
-              <div class="context-audit">
-                <div class="context-copy">
-                  <p class="eyebrow">上下文控制</p>
-                  <h3>场景可以复用，能力答案不能靠骨架推出</h3>
-                  <p>商品、城市、预算等通用场景会自然复用，但同骨架精确工具序列重合仅 1.97%；只依赖场景骨架的匹配器 AllHit@10 为 2.92%，说明工具能力语义仍是主要信号。</p>
-                </div>
-                <div class="context-metrics" id="contextMetrics"></div>
-              </div>
-            </section>
-
-            <section class="data-evidence-section" aria-labelledby="plannerAuditTitle">
-              <div class="data-evidence-heading">
-                <div><p>规划数据划分审计</p><h3 id="plannerAuditTitle">规划数据的隔离与闭集边界</h3></div>
-                <span>“没有文本泄漏”和“目标组合从未出现”是两件事；本项目验证前者，同时如实报告固定 100 工具闭集中的组合复用。</span>
-              </div>
-
-              <div class="planner-audit-grid" role="group" aria-label="工具链规划数据审计摘要">
-                <article><strong>0</strong><span>请求 / 轨迹重合</span><p>四档训练集与开发集、正式测试集的规范化请求、轨迹 ID 均不重合。</p></article>
-                <article><strong>0</strong><span>完整目录训练样本</span><p>训练样本不直接暴露完整 100 工具目录视图。</p></article>
-                <article><strong>100 / 100</strong><span>工具覆盖</span><p>每个训练规模都覆盖全部工具，避免小规模档缺类。</p></article>
-                <article><strong>82.1%</strong><span>目标工具链曾在训练中出现</span><p>正式测试的目标有序序列在 54K 监督数据中出现过，属于闭集组合复用而非文本重合。</p></article>
-              </div>
-              <p class="data-boundary-note"><strong>解释边界：</strong>四档训练集按稳定哈希前缀严格嵌套，数据审计 <code>strict_ok=true</code>。表达簇同序列仅命中 1 / 1,000，上下文骨架命中为 0；但目标组合复用依然存在，所以任务应被理解为固定 100 工具的合成闭集，而不是开放世界泛化测试。</p>
-            </section>
-          </div>
-        </details>
-      </div>
-    </section>
-
     <aside class="method-index-section" aria-label="实验方法索引">
       <div class="wrap">
         <details class="narrative-disclosure method-disclosure">
@@ -582,13 +440,30 @@
           </div>
         </details>
 
-        <details class="narrative-disclosure efficiency-disclosure experiment-environment-disclosure" id="intentEnvironment">
+        <details class="narrative-disclosure data-disclosure efficiency-disclosure experiment-environment-disclosure" id="intentEnvironment">
           <summary>
-            <span class="disclosure-summary-copy"><small>实验环境与耗时</small><strong>查看意图分流的训练配置、评测批量与缺失记录</strong></span>
-            <span class="disclosure-summary-meta">2 次 LoRA 训练 · 完整运行 19 分 39 秒 / 29 分 05 秒</span>
+            <span class="disclosure-summary-copy"><small>实验数据、协议与环境</small><strong>查看意图分流的训练数据、比较口径与运行记录</strong></span>
+            <span class="disclosure-summary-meta">48,006 条监督样本 · 9,000 条固定比较 · 2 次 LoRA 训练</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body efficiency-body">
+            <section class="data-evidence-section experiment-data-section" aria-labelledby="intentDataTitle">
+              <div class="data-evidence-heading">
+                <div><p>01 · 实验数据</p><h3 id="intentDataTitle">训练、验证与固定比较各自承担什么职责</h3></div>
+                <span>本实验只判断“电商请求 / 开放闲聊”。训练数据更新参数，验证集选择模型版本，固定集合比较规则、未微调模型与 LoRA 方案。</span>
+              </div>
+              <div class="data-table-wrap" tabindex="0">
+                <table class="data-table experiment-data-table">
+                  <thead><tr><th scope="col">数据资产</th><th scope="col">来源与内容</th><th scope="col">规模与划分</th><th scope="col">实验角色</th><th scope="col">边界与输出</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>意图监督数据</strong><span>入口分类训练</span></td><td>训练侧电商轨迹、独立闲聊样本与 6 条边界样本；两个模型使用同一样本全集，1.7B 采用类别均衡排列版本</td><td>基础样本 36,000 条<br>困难与边界样本 12,006 条<br><strong>总计 48,006 条</strong><br>训练 45,606 / 验证 2,400</td><td>0.6B 与 1.7B 的训练集更新参数；验证集选择模型版本</td><td>训练与验证样本不进入 9,000 条固定比较集合</td></tr>
+                    <tr><td><strong>意图分流固定集合</strong><span>入口模块比较</span></td><td>6,000 条电商请求 + 3,000 条独立闲聊</td><td><strong>9,000 条</strong><br>电商 : 闲聊 = 2 : 1</td><td>比较关键词规则、未微调模型与 LoRA 版本；不参与梯度</td><td>输出 Accuracy / Macro-F1；同一 9K 后续复用于静态全链路统计，不是一次性真实流量留出集</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="data-boundary-note"><strong>划分边界：</strong>上游电商轨迹的训练 / 测试划分中，归一化请求、轨迹 ID 与表达簇精确重合均为 0；闲聊来自独立样本。当前 100% 只说明固定合成集合上的模块表现，90.37% 静态全链路统计仍使用冻结的 1.7B 路由预测。</p>
+            </section>
+
             <div class="efficiency-summary" role="group" aria-label="意图分流实验环境摘要">
               <article><span>训练数据</span><strong>45,606 条</strong><small>验证集 2,400 条；两个模型使用同一样本全集，1.7B 采用类别均衡排列版本</small></article>
               <article><span>0.6B 完整训练</span><strong>19 分 39 秒</strong><small>2 轮 · 2,852 步；模块横评最优取训练步 2000</small></article>
@@ -598,7 +473,7 @@
 
             <section class="efficiency-table-block" aria-labelledby="intentTrainingEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>01 · 训练</span><h3 id="intentTrainingEnvironmentTitle">两次 LoRA 训练使用同一套核心参数</h3></div>
+                <div><span>02 · 训练环境</span><h3 id="intentTrainingEnvironmentTitle">两次 LoRA 训练使用同一套核心参数</h3></div>
                 <p>训练产物能确认单进程运行，但没有保存 GPU 型号或可解释的峰值显存。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -614,7 +489,7 @@
 
             <section class="efficiency-table-block" aria-labelledby="intentInferenceEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>02 · 评测</span><h3 id="intentInferenceEnvironmentTitle">同一 9,000 条固定集合上的推理设置</h3></div>
+                <div><span>03 · 评测环境</span><h3 id="intentInferenceEnvironmentTitle">同一 9,000 条固定集合上的推理设置</h3></div>
                 <p>规则、未微调模型与微调模型使用同一固定集合；神经模型的逐条延迟、吞吐和显存没有写入评测产物。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -641,12 +516,6 @@
         <div class="section-heading split-heading">
           <h2 id="resultsTitle">候选检索：基线、任务内训练与最终方案</h2>
           <p>意图分流放行电商请求后，候选检索必须让一条请求的全部必要工具同时进入 Top-K。本阶段先测公开模型，再进行任务内训练与排序融合，最终确定候选生成方案。</p>
-        </div>
-
-        <div class="evaluation-protocol" role="group" aria-label="离线评测协议">
-          <article><strong>训练</strong><span>24K 训练集用于向量模型、任务内重排模型学习与融合参数选择。</span></article>
-          <article><strong>方案比较</strong><span>6K 固定项目基准不进入梯度，但承担路线与训练版本比较，因此不是一次性最终留出集。</span></article>
-          <article><strong>结果边界</strong><span>AllHit@K 验证候选完整覆盖，不能与规划模块的独立 1K 指标相乘。</span></article>
         </div>
 
         <div class="experiment-paths" role="group" aria-label="候选检索的两条实验路线">
@@ -870,13 +739,49 @@
           </div>
         </details>
 
-        <details class="narrative-disclosure efficiency-disclosure experiment-environment-disclosure" id="retrievalEnvironment">
+        <details class="narrative-disclosure data-disclosure efficiency-disclosure experiment-environment-disclosure" id="retrievalEnvironment">
           <summary>
-            <span class="disclosure-summary-copy"><small>实验环境与耗时</small><strong>查看公开基线、9 次向量训练、重排与最终检索路径的运行记录</strong></span>
-            <span class="disclosure-summary-meta">9 次向量训练 · 最长 10 分 18 秒 · 最终检索稳态均值 140.6ms / 条</span>
+            <span class="disclosure-summary-copy"><small>实验数据、协议与环境</small><strong>查看候选检索的数据划分、隔离审计与运行记录</strong></span>
+            <span class="disclosure-summary-meta">24K 训练 · 6K 方案比较 · 9 次向量训练 · 检索均值 140.6ms / 条</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body efficiency-body">
+            <section class="data-evidence-section experiment-data-section" aria-labelledby="retrievalDataTitle">
+              <div class="data-evidence-heading">
+                <div><p>01 · 实验数据</p><h3 id="retrievalDataTitle">24K 用于训练，6K 用于比较检索路线</h3></div>
+                <span>检索实验始终使用同一份 100 工具目录。训练侧学习向量表示、任务内重排与融合参数；6,000 条固定项目基准只负责比较方案和版本。</span>
+              </div>
+              <div class="data-table-wrap" tabindex="0">
+                <table class="data-table experiment-data-table">
+                  <thead><tr><th scope="col">数据资产</th><th scope="col">来源与内容</th><th scope="col">规模与划分</th><th scope="col">实验角色</th><th scope="col">边界与输出</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>工具文档</strong><span>固定能力空间</span></td><td>100 个结构化工具定义生成的检索文档</td><td>100 个工具<br>100 篇文档</td><td>BM25、向量建库、重排文档侧与目标定义</td><td>统一能力空间，不承担模型选型或结果计分</td></tr>
+                    <tr><td><strong>检索训练轨迹</strong><span>上游训练侧</span></td><td>30,000 条工具调用轨迹中的训练划分</td><td><strong>24,000 组</strong><br>上游另有 6,000 条固定测试划分</td><td>训练向量模型与任务内重排模型；RRF 参数只在训练请求上选择</td><td>训练入口不读取测试侧派生文件</td></tr>
+                    <tr><td><strong>派生训练资产</strong><span>表示与重排学习</span></td><td>训练轨迹与工具文档展开的正负样本</td><td>70,012 个正对<br>96,000 个显式负例<br>任务内重排每组 1 正 + 7 负</td><td>正对进入多负例对比学习；动态组内负例训练重排模型</td><td>当前向量训练入口不直接读取显式负例文件，不能把“已生成”写成“实际进入该训练”</td></tr>
+                    <tr><td><strong>候选排序特征</strong><span>轻量校准输入</span></td><td>训练 / 测试两侧固定 Top-50 预测</td><td>120 万训练行<br>30 万测试行</td><td>训练与评测轻量残差校准器</td><td>只服务校准对照，不改动 6K 目标标签</td></tr>
+                    <tr><td><strong>候选检索固定集合</strong><span>候选模块比较</span></td><td>3,000 条单工具 + 3,000 条多工具；多工具含 1,500 个已见组合与 1,500 个未见组合</td><td><strong>6,000 条</strong><br>15,196 个目标工具</td><td>比较公开基线、9 个向量训练版本、重排与融合路线；输出 AllHit@K / MRR</td><td>同一批原始请求与轨迹也构成静态全链路的电商 6K；这里按候选覆盖计分</td></tr>
+                    <tr><td><strong>封存路径复算集</strong><span>最终路径计时</span></td><td>模型锁定后对当前检索路径进行离线整批重算</td><td><strong>1,200 条</strong><br>全部目标命中率@10 为 99.75%</td><td>记录当前路径耗时，并为候选顺序压力测试提供同一 Top-10</td><td>3 条漏召原样保留，没有人为注入目标工具</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="data-evidence-section" aria-labelledby="upstreamAuditTitle">
+              <div class="data-evidence-heading">
+                <div><p>01B · 划分审计</p><h3 id="upstreamAuditTitle">训练与测试的表达隔离</h3></div>
+                <span>先检查显式重合，再检查上下文骨架是否足以“猜中”工具；该审计也覆盖意图分流使用的上游电商轨迹。</span>
+              </div>
+              <div class="audit-grid" id="auditGrid"></div>
+              <div class="context-audit">
+                <div class="context-copy">
+                  <p class="eyebrow">上下文控制</p>
+                  <h3>场景可以复用，能力答案不能靠骨架推出</h3>
+                  <p>商品、城市、预算等通用场景会自然复用，但同骨架精确工具序列重合仅 1.97%；只依赖场景骨架的匹配器 AllHit@10 为 2.92%，说明工具能力语义仍是主要信号。</p>
+                </div>
+                <div class="context-metrics" id="contextMetrics"></div>
+              </div>
+            </section>
+
             <div class="efficiency-summary" role="group" aria-label="候选检索实验环境摘要">
               <article><span>共同评测协议</span><strong>100 工具 · 6K</strong><small>3,000 条单工具 + 3,000 条多工具；公开基线与任务内方案使用同一固定项目基准</small></article>
               <article><span>向量训练</span><strong>9 次完整运行</strong><small>70,012 个正对 · BF16 · 最大长度 256；最长一轮为 10 分 18 秒</small></article>
@@ -886,7 +791,7 @@
 
             <section class="efficiency-table-block" aria-labelledby="retrievalPublicEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>01 · 公开模型基线</span><h3 id="retrievalPublicEnvironmentTitle">向量检索与通用重排的离线计时</h3></div>
+                <div><span>02 · 公开模型基线</span><h3 id="retrievalPublicEnvironmentTitle">向量检索与通用重排的离线计时</h3></div>
                 <p>向量编码与重排延迟均为批内均摊；索引构建包含模型加载和 100 条工具文档编码。公开基线没有保存 GPU 型号、卡数或峰值显存。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -910,7 +815,7 @@
 
             <section class="efficiency-table-block" aria-labelledby="embeddingTrainingEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>02 · 任务内向量训练</span><h3 id="embeddingTrainingEnvironmentTitle">9 次完整运行及对应推理计时</h3></div>
+                <div><span>03 · 任务内向量训练</span><h3 id="embeddingTrainingEnvironmentTitle">9 次完整运行及对应推理计时</h3></div>
                 <p>共同配置：全参数多负例对比学习（MNRL）、BF16、梯度累积 1、warmup 0.05、最大长度 256、固定种子；bge 批量 64，Qwen3-Embedding 批量 32。GPU 具体型号、数量与峰值显存未记录。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -933,7 +838,7 @@
 
             <section class="efficiency-table-block" aria-labelledby="retrievalTrainedEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>03 · 重排与融合</span><h3 id="retrievalTrainedEnvironmentTitle">任务内重排、轻量校准与两次排名融合</h3></div>
+                <div><span>04 · 重排与融合</span><h3 id="retrievalTrainedEnvironmentTitle">任务内重排、轻量校准与两次排名融合</h3></div>
                 <p>只有任务内重排进行神经网络训练；轻量校准使用 CPU 逻辑回归，两次排名融合都是无梯度网格选择。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -951,7 +856,7 @@
 
             <section class="efficiency-table-block" aria-labelledby="retrievalFinalPathTitle">
               <div class="efficiency-table-heading">
-                <div><span>04 · 最终检索路径</span><h3 id="retrievalFinalPathTitle">1,200 条封存压力测试的离线整批重算记录</h3></div>
+                <div><span>05 · 最终检索路径</span><h3 id="retrievalFinalPathTitle">1,200 条封存压力测试的离线整批重算记录</h3></div>
                 <p>同一批请求依次运行 BM25、微调向量模型、第一阶段融合、任务内重排与最终融合；关闭未微调诊断支路。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -1253,13 +1158,65 @@
           </div>
         </section>
 
-        <details class="narrative-disclosure efficiency-disclosure experiment-environment-disclosure" id="plannerEnvironment">
+        <details class="narrative-disclosure data-disclosure efficiency-disclosure experiment-environment-disclosure" id="plannerEnvironment">
           <summary>
-            <span class="disclosure-summary-copy"><small>实验环境与耗时</small><strong>查看首次监督微调、规模实验、混合表达训练、顺序稳健训练与推理效率</strong></span>
-            <span class="disclosure-summary-meta">每次训练 1–4 GPU · 默认 8B 训练 4 小时 58 分 · 规划 p50 270.6ms</span>
+            <span class="disclosure-summary-copy"><small>实验数据、协议与环境</small><strong>查看工具链规划的数据职责、评测口径与运行记录</strong></span>
+            <span class="disclosure-summary-meta">监督训练 · 模型选择 · 分开报告 · 每次训练 1–4 GPU</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body efficiency-body">
+            <section class="data-evidence-section experiment-data-section" aria-labelledby="plannerTrainingDataTitle">
+              <div class="data-evidence-heading">
+                <div><p>01A · 训练与选型数据</p><h3 id="plannerTrainingDataTitle">训练数据更新参数，开发数据只负责选择方案</h3></div>
+                <span>9K–54K 嵌套监督与 77,724 条混合表达监督是两套不同训练，不是连续扩容；偏好数据也只服务各自对应的训练阶段。</span>
+              </div>
+              <div class="data-table-wrap" tabindex="0">
+                <table class="data-table experiment-data-table">
+                  <thead><tr><th scope="col">数据资产</th><th scope="col">来源与内容</th><th scope="col">规模与划分</th><th scope="col">实验角色</th><th scope="col">边界与输出</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>嵌套监督数据</strong><span>数据规模研究</span></td><td>接口式表达、Top-10 候选视图与目标有序工具链</td><td>9K / 18K / 36K / 54K<br>稳定哈希前缀严格嵌套</td><td>训练 4B / 8B，研究监督规模与完整目录迁移</td><td>每档覆盖 100 / 100 工具；训练样本不直接暴露完整 100 工具目录视图</td></tr>
+                    <tr><td><strong>规划开发集</strong><span>早期方案选择</span></td><td>独立请求、候选与有序目标</td><td><strong>2,400 条</strong></td><td>比较 4B 的 21 个参数组合、8B 的 3 个确认运行及早期偏好强度</td><td>不与接口式表达测试的 1,000 条结果混算</td></tr>
+                    <tr><td><strong>混合表达监督数据</strong><span>当前默认模型训练</span></td><td>Top-10 候选下合并两种合成表达的训练请求</td><td><strong>77,724 条</strong><br>模型版本 2429</td><td>训练当前默认的 4B / 8B 规划模型</td><td>两种表达的测试协议仍分别计分，不跨协议合并</td></tr>
+                    <tr><td><strong>早期偏好数据</strong><span>未采用的历史对照</span></td><td>由不同训练阶段的真实规划错误构建</td><td>5,000 对总计<br>4,499 训练 / 501 监控</td><td>训练早期偏好方案，解释后续为什么更换数据来源与学习率</td><td>主指标没有稳定改善，不参与最终模型选择</td></tr>
+                    <tr><td><strong>顺序稳健偏好数据</strong><span>当前候选排列训练</span></td><td>只使用当前混合表达监督微调模型的真实语义错误</td><td>2,000 对总计<br>1,776 训练 / 224 监控</td><td>训练候选顺序稳健模型</td><td>冻结 ID、请求与源轨迹泄漏均为 0；合成错误对为 0</td></tr>
+                    <tr><td><strong>顺序稳健开发协议</strong><span>学习率选择</span></td><td>同一批请求分别使用原顺序、倒序和固定规则打乱的 Top-10</td><td>1,200 条开发请求 × 3 种排列</td><td>按预先固定规则选择 lr1e-6 的训练步 111 版本</td><td>与下方 1,200 条封存压力测试不是同一批请求</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="data-evidence-section" aria-labelledby="plannerReportDataTitle">
+              <div class="data-evidence-heading">
+                <div><p>01B · 报告数据</p><h3 id="plannerReportDataTitle">四套报告协议分别回答不同问题</h3></div>
+                <span>接口式表达、跨表达、候选顺序压力测试与静态全链路不能合并计分；正文中的每个结果只对应本行注明的协议。</span>
+              </div>
+              <div class="data-table-wrap" tabindex="0">
+                <table class="data-table experiment-data-table">
+                  <thead><tr><th scope="col">报告数据</th><th scope="col">来源与设置</th><th scope="col">规模与划分</th><th scope="col">回答的问题</th><th scope="col">不应如何解读</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>接口式表达测试</strong><span>规划模块评测</span></td><td>固定请求、Top-10 候选与有序目标</td><td><strong>1,000 条</strong><br>1–5 个工具各 200 条</td><td>规划模块在训练表达方式下能否选对集合与顺序</td><td>不参与模型版本或超参数选择；约 99% 不是全链路结果</td></tr>
+                    <tr><td><strong>跨表达测试</strong><span>表达变化评测</span></td><td>与检索固定 6K 对齐同一批轨迹 ID 与目标工具链，改用另一种合成表达</td><td><strong>6,000 条</strong></td><td>比较首次与混合表达监督微调模型在表达变化下的稳定性</td><td>共享基础任务不等于同一输入文本；本轮已用于模型比较与报告，后续优化需建立新协议</td></tr>
+                    <tr><td><strong>候选顺序压力测试</strong><span>模型锁定后报告</span></td><td>同一 Top-10 只改变展示顺序：原顺序、倒序、固定规则打乱</td><td><strong>1,200 条封存请求 × 3</strong></td><td>候选排列变化时，集合与顺序是否稳定</td><td>不是 3,600 条独立请求；3 条检索漏召原样保留</td></tr>
+                    <tr><td><strong>静态全链路测试</strong><span>最终主结果</span></td><td>复用意图分流固定 9K；其中电商 6K 与检索固定集合为同一批原始请求和轨迹</td><td><strong>9,000 条</strong><br>3,000 闲聊 + 6,000 电商</td><td>冻结路由、候选检索与规划预测后逐样本联合计分</td><td>用于最终模型比较与报告；不等于参数正确、真实工具执行成功或多轮任务完成</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="data-evidence-section" aria-labelledby="plannerAuditTitle">
+              <div class="data-evidence-heading">
+                <div><p>01C · 数据审计</p><h3 id="plannerAuditTitle">文本隔离成立，但闭集组合仍会复用</h3></div>
+                <span>“没有请求或轨迹泄漏”和“目标工具链从未出现”是两件事；本项目验证前者，并如实保留后者的闭集边界。</span>
+              </div>
+              <div class="planner-audit-grid" role="group" aria-label="工具链规划数据审计摘要">
+                <article><strong>0</strong><span>请求 / 轨迹重合</span><p>嵌套训练集与开发集、正式测试集的规范化请求和轨迹 ID 均不重合。</p></article>
+                <article><strong>0</strong><span>完整目录训练样本</span><p>训练样本不直接暴露完整 100 工具目录视图。</p></article>
+                <article><strong>100 / 100</strong><span>工具覆盖</span><p>每个嵌套训练规模都覆盖全部工具，避免小规模档缺类。</p></article>
+                <article><strong>82.1%</strong><span>目标工具链曾在训练中出现</span><p>接口式表达测试的目标有序序列在 54K 监督数据中出现过，属于闭集组合复用。</p></article>
+              </div>
+              <p class="data-boundary-note"><strong>解释边界：</strong>数据审计 <code>strict_ok=true</code>；表达簇同序列仅命中 1 / 1,000，上下文骨架同序列为 0。54K 补充微调的 8B 在接口式表达测试上达到 99.10%，但该版本没有对应的跨表达测试或静态全链路结果，不能与 72.18% 或 90.37% 串成连续增益。全部结果都应理解为固定 100 工具合成闭集中的静态选链。</p>
+            </section>
+
             <div class="efficiency-summary" role="group" aria-label="工具链规划实验环境摘要">
               <article><span>首次 8B 监督微调</span><strong>50 分 17 秒</strong><small>4 GPU · 1 轮 · 1,688 步；4B 完整两轮训练为 1 小时 00 分 02 秒</small></article>
               <article><span>默认 8B 规划模型</span><strong>4 小时 58 分</strong><small>混合表达监督微调 · 2 GPU · 77,724 条 · 1 轮 · 2,429 步</small></article>
@@ -1269,7 +1226,7 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerSftEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>01 · 主要监督微调</span><h3 id="plannerSftEnvironmentTitle">首次训练与混合表达训练</h3></div>
+                <div><span>02 · 主要监督微调</span><h3 id="plannerSftEnvironmentTitle">首次训练与混合表达训练</h3></div>
                 <p>每次训练使用的 GPU 数量来自对应运行产物；GPU 型号和物理卡号没有与单次运行绑定。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -1287,7 +1244,7 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerScaleEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>02 · 数据规模与参数搜索</span><h3 id="plannerScaleEnvironmentTitle">9K–54K 补充训练的实际耗时</h3></div>
+                <div><span>03 · 数据规模与参数搜索</span><h3 id="plannerScaleEnvironmentTitle">9K–54K 补充训练的实际耗时</h3></div>
                 <p>共同配置：1 GPU、BF16、全局批量 32、3 轮、lr5e-5、LoRA r32 / α64 / dropout 0.05、最大长度 2048；4B 为批量 8 × 累积 4，8B 为批量 4 × 累积 8。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -1305,7 +1262,7 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerPreferenceEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>03 · 偏好训练</span><h3 id="plannerPreferenceEnvironmentTitle">未采用的早期方案与当前顺序稳健方案</h3></div>
+                <div><span>04 · 偏好训练</span><h3 id="plannerPreferenceEnvironmentTitle">未采用的早期方案与当前顺序稳健方案</h3></div>
                 <p>早期方案保留为失败对照；当前方案只使用混合表达监督微调模型的真实错误，页面不把两者合并成连续增益。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -1323,7 +1280,7 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerInferenceEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>04 · 规划推理</span><h3 id="plannerInferenceEnvironmentTitle">各主要模型版本的离线生成效率</h3></div>
+                <div><span>05 · 规划推理</span><h3 id="plannerInferenceEnvironmentTitle">各主要模型版本的离线生成效率</h3></div>
                 <p>共同设置：BF16、SDPA、贪心生成、最多生成 128 个 token、无预热。延迟为批次墙钟时间除以批量的均摊值，不是在线单请求延迟。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -1355,23 +1312,6 @@
           </div>
         </details>
 
-        <details class="narrative-disclosure planner-compact-appendix" id="plannerResearchArchive">
-          <summary>
-            <span class="disclosure-summary-copy"><small>补充材料</small><strong>口径说明、54K 补充实验与能力边界</strong></span>
-            <span class="disclosure-summary-meta">不影响主结论</span>
-            <i aria-hidden="true">+</i>
-          </summary>
-          <div class="disclosure-body">
-            <div class="planner-appendix-grid">
-              <article><strong>接口式表达测试集（1,000 条）</strong><span>只衡量规划模块；用于比较未微调模型、首次监督微调与 54K 补充实验。</span></article>
-              <article><strong>跨表达测试集（6,000 条）</strong><span>使用另一种合成表达方式，并非线上数据；用于检验表达方式变化后的稳定性。</span></article>
-              <article><strong>静态全链路测试集（9,000 条）</strong><span>3,000 条闲聊 + 6,000 条电商；用于报告最终结果。</span></article>
-              <article><strong>候选顺序压力测试（1,200 条 × 3）</strong><span>同一批请求使用三种候选排列；只检验候选顺序稳健模型。</span></article>
-            </div>
-            <p class="planner-appendix-note"><strong>54K 补充监督微调：</strong>8B 在接口式表达测试集上取得 99.10% 的集合与工具链全对率，但它是独立模型版本，没有对应的跨表达测试或静态全链路结果，因此不与 72.18% 或 90.37% 串成连续增益。</p>
-            <p class="planner-appendix-note"><strong>能力边界：</strong>所有结果均来自固定 100 工具合成闭集上的静态选链；不覆盖新工具、参数生成、真实 API 返回结果、异常恢复或多轮状态。</p>
-          </div>
-        </details>
       </div>
     </section>
     <section class="section section-soft" id="limits" aria-labelledby="limitsTitle">
@@ -1499,16 +1439,55 @@
         </div>
         <p class="system-outcome-note"><strong>最终口径：</strong>冻结 1.7B 路由预测与 8B 混合表达监督微调规划模型在 9,000 条测试中逐样本得到静态全链路成功率 90.3667%（工具链口径，8,133 / 9,000）与 90.5889%（集合口径，8,153 / 9,000）。前两张卡是模块选择证据，不能与最终结果相乘；0.6B 的模块结果也不代表它已用于这组全链路统计。该结果是离线静态联合判定，不是工具真实执行成功率。</p>
 
+        <details class="narrative-disclosure data-disclosure system-data-disclosure" id="systemDataLedger">
+          <summary>
+            <span class="disclosure-summary-copy"><small>项目总数据表</small><strong>查看三个实验的数据规模、用途与复用边界</strong></span>
+            <span class="disclosure-summary-meta">15 类数据资产 · 训练 / 选型 / 报告</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="disclosure-body">
+            <section class="data-evidence-section" aria-labelledby="dataLedgerTitle">
+              <div class="data-evidence-heading">
+                <div><p>项目级索引</p><h3 id="dataLedgerTitle">从工具目录到静态全链路的完整数据台账</h3></div>
+                <span>详细协议与隔离审计已放回对应实验；这里仅汇总全项目资产。同一数字不代表同一协议，模块指标也不能直接相乘。</span>
+              </div>
+              <div class="data-table-wrap" tabindex="0">
+                <table class="data-table project-data-ledger">
+                  <thead><tr><th scope="col">数据资产</th><th scope="col">来源与内容</th><th scope="col">规模与划分</th><th scope="col">实验角色</th><th scope="col">边界与输出</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>工具目录与文档</strong><span>三个实验的共同能力底座</span></td><td>8 个电商业务域；每项工具包含名称、描述与接口信息</td><td><strong>100 项工具</strong><br>52 项查询类 / 48 项操作类</td><td>定义闭集标签空间并生成检索文档</td><td>固定目录，不是评测请求；不覆盖新工具</td></tr>
+                    <tr><td><strong>工具调用轨迹</strong><span>意图与检索的上游样本</span></td><td>单工具与多工具电商请求及目标工具链</td><td><strong>30,000 条</strong><br>12K 单工具 / 18K 多工具<br>24K 训练 / 6K 测试</td><td>生成意图监督数据、检索训练样本与固定检索集合</td><td>请求、轨迹 ID 与表达簇按稳定规则隔离</td></tr>
+                    <tr><td><strong>意图监督数据</strong><span>实验 01</span></td><td>训练侧电商轨迹、独立闲聊样本与 6 条边界样本</td><td><strong>48,006 条总计</strong><br>45,606 训练 / 2,400 验证</td><td>训练 0.6B 与 1.7B 路由模型；验证集选择模型版本</td><td>两个模型使用同一样本全集；1.7B 采用类别均衡排列</td></tr>
+                    <tr><td><strong>意图分流固定集合</strong><span>实验 01</span></td><td>6K 电商请求 + 3K 独立闲聊</td><td><strong>9,000 条</strong></td><td>比较规则、未微调模型与 LoRA 版本</td><td>同一 9K 后续复用于静态全链路；是合成固定集合，不是线上留出流量</td></tr>
+                    <tr><td><strong>向量与重排训练数据</strong><span>实验 02</span></td><td>24K 训练轨迹与 100 份工具文档组成请求—工具样本</td><td>70,012 个正对<br>96,000 个显式负例<br>重排每组 1 正 + 7 负</td><td>训练任务内向量模型与交叉编码重排模型</td><td>当前向量训练入口只读取正对；显式负例并非所有方法都直接使用</td></tr>
+                    <tr><td><strong>候选检索固定集合</strong><span>实验 02</span></td><td>3K 单工具 + 3K 多工具；多工具含已见与未见组合</td><td><strong>6,000 条请求</strong><br>15,196 个目标工具</td><td>比较公开模型、任务内训练、重排与融合方案</td><td>与静态全链路的电商 6K 共享原始请求和轨迹；这里按 AllHit@K 计分</td></tr>
+                    <tr><td><strong>候选排序特征</strong><span>实验 02</span></td><td>训练 / 测试两侧 Top-50 的向量、词面、名次与重排分数</td><td><strong>1.2M 训练 / 300K 测试</strong></td><td>训练残差校准对照；RRF 参数在 24K 训练侧确定</td><td>参数冻结后才进入 6K 固定集合比较</td></tr>
+                    <tr><td><strong>嵌套规划监督数据</strong><span>实验 03 · 规模研究</span></td><td>接口式请求、Top-10 候选与目标有序工具 ID</td><td><strong>9K / 18K / 36K / 54K</strong><br>四档严格嵌套</td><td>比较 4B / 8B、训练规模与完整目录迁移</td><td>四档是同一研究的嵌套子集，不与 77,724 条混合表达训练串成连续扩容</td></tr>
+                    <tr><td><strong>规划开发集</strong><span>实验 03 · 早期选型</span></td><td>与正式测试隔离的接口式规划请求</td><td><strong>2,400 条</strong></td><td>完成早期学习率、候选视图和训练配置选择</td><td>不是 1K 正式测试集；不报告为最终结果</td></tr>
+                    <tr><td><strong>接口式表达测试集</strong><span>实验 03 · 模块测试</span></td><td>1–5 个工具的接口式请求，每档 200 条</td><td><strong>1,000 条</strong></td><td>对照未微调、首次、54K 补充及混合表达等规划模型</td><td>不用于参数选择；报告集合与工具链全对率</td></tr>
+                    <tr><td><strong>早期偏好数据</strong><span>实验 03 · 历史对照</span></td><td>来自早期规划模型错误的偏好样本</td><td><strong>5,000 对</strong><br>4,499 训练 / 501 监控</td><td>验证早期偏好训练方案，最终未采用</td><td>只作为失败对照，不与当前顺序稳健方案合并计算</td></tr>
+                    <tr><td><strong>混合表达监督数据</strong><span>实验 03 · 默认规划模型</span></td><td>两种合成表达混合的请求、候选与目标工具链</td><td><strong>77,724 条</strong></td><td>训练 4B / 8B 跨表达规划模型</td><td>是独立训练方案；结果分别在 6K 跨表达测试与 9K 全链路中报告</td></tr>
+                    <tr><td><strong>跨表达测试集</strong><span>实验 03 · 稳定性测试</span></td><td>与检索固定 6K 对齐同一批轨迹 ID 与目标工具链，改用另一种合成表达</td><td><strong>6,000 条</strong></td><td>比较首次监督微调与混合表达监督微调模型</td><td>共享基础任务但输入文本不同；已用于模型比较与报告，继续调优需建立新协议</td></tr>
+                    <tr><td><strong>候选顺序稳健数据</strong><span>实验 03 · 专项优化</span></td><td>当前规划模型的真实语义错误，以及同一请求的三种候选排列</td><td>2,000 对偏好样本<br>1,776 训练 / 224 监控<br>1.2K 开发 × 3 + 1.2K 封存 × 3</td><td>开发集选择学习率；模型锁定后用封存集报告候选顺序稳定性</td><td>1.2K × 3 是同一批请求的三种排列，不是 3.6K 个独立请求；3 条检索未命中原样保留</td></tr>
+                    <tr><td><strong>静态全链路测试集</strong><span>项目最终结果</span></td><td>复用意图分流固定 9K；电商 6K 同时复用检索固定集合的原始请求与轨迹</td><td><strong>9,000 条</strong></td><td>冻结路由、候选检索与规划预测后联合计分；工具链成功 8,133 / 9,000</td><td>用于最终模型比较与报告，不用于训练或继续调参；未执行真实工具</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="data-boundary-note"><strong>统一边界：</strong>这些数据都来自固定 100 工具的合成闭集。部分协议共享基础请求或目标轨迹，但预测对象与计分事件不同；文本、轨迹与表达簇的训练 / 测试隔离已审计，规划目标组合仍有复用。现有证据支持离线静态选型，不覆盖真实流量、开放工具目录、参数生成、实际调用或失败恢复。</p>
+            </section>
+          </div>
+        </details>
+
         <div class="system-environment-index" aria-labelledby="systemEnvironmentIndexTitle">
           <div class="system-environment-index-copy">
-            <span>实验环境索引</span>
-            <h3 id="systemEnvironmentIndexTitle">训练资源与离线推理效率已放回各实验章节</h3>
-            <p>正文结论不再重复堆放环境表；展开对应章节即可查看全部已记录配置、耗时、显存和缺失项。</p>
+            <span>实验记录索引</span>
+            <h3 id="systemEnvironmentIndexTitle">数据、训练资源与离线推理记录已放回各实验章节</h3>
+            <p>展开对应章节即可就近查看所用数据、比较协议、训练配置、耗时、显存和未记录项。</p>
           </div>
-          <nav aria-label="各实验环境与耗时">
-            <a href="#intentEnvironment"><span>实验 01</span><strong>意图分流</strong><small>2 次 LoRA 训练 · 评测批量 · 延迟缺口</small></a>
-            <a href="#retrievalEnvironment"><span>实验 02</span><strong>候选检索</strong><small>公开基线 · 9 次向量训练 · 最终路径计时</small></a>
-            <a href="#plannerEnvironment"><span>实验 03</span><strong>工具链规划</strong><small>监督微调 · 规模实验 · 顺序稳健训练 · 推理显存</small></a>
+          <nav aria-label="各实验数据、环境与耗时">
+            <a href="#intentEnvironment"><span>实验 01</span><strong>意图分流</strong><small>监督与固定集合 · 2 次 LoRA 训练 · 延迟缺口</small></a>
+            <a href="#retrievalEnvironment"><span>实验 02</span><strong>候选检索</strong><small>训练与固定集合 · 9 次向量训练 · 最终路径计时</small></a>
+            <a href="#plannerEnvironment"><span>实验 03</span><strong>工具链规划</strong><small>多套规划数据 · 监督与顺序稳健训练 · 推理显存</small></a>
           </nav>
           <p class="efficiency-boundary"><strong>统一性能边界：</strong>目前没有在同一请求分布和并发设置下测量“意图分流 → 候选检索 → 工具链规划”的完整链路 p50、p95、吞吐或峰值显存，也没有计入真实工具执行。各章节的离线数字来自不同协议，不能直接相加。</p>
         </div>
