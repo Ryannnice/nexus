@@ -85,7 +85,7 @@
       matrix.innerHTML = tools.map(function (tool) {
         return '<i class="' + (selected.has(tool.id) ? 'selected' : '') + '"></i>';
       }).join('');
-      matrixCount.textContent = selectedIds.length + (selectedIds.length === 1 ? ' GOLD TARGET' : ' GOLD TARGETS');
+      matrixCount.textContent = selectedIds.length + ' 个目标工具';
     }
 
     function renderRows(rows, tag) {
@@ -128,35 +128,35 @@
       var caseNumber = String((index + traces.length) % traces.length + 1).padStart(2, '0');
       var isChat = trace.type === 'chat';
       currentIndex = (index + traces.length) % traces.length;
-      queryLabel.textContent = 'CASE ' + caseNumber + ' · ' + trace.label + ' · ' + (isChat ? 'INTENT FIXED SET' : 'RETRIEVAL FIXED TEST · CONDENSED');
+      queryLabel.textContent = '案例 ' + caseNumber + ' · ' + trace.label + ' · ' + (isChat ? '意图分流固定集合' : '固定检索测试');
       query.textContent = trace.query;
       counter.textContent = caseNumber + ' / ' + String(traces.length).padStart(2, '0');
 
       if (isChat) {
-        status.textContent = 'CHAT · BYPASS';
-        resultsLabel.textContent = 'ROUTE RESULT · NO TOOL CALL';
-        results.innerHTML = '<div class="result-row result-row-empty"><b>—</b><span>直接响应 · 工具检索旁路</span><em>CHAT</em></div>';
+        status.textContent = '闲聊 · 旁路';
+        resultsLabel.textContent = '分流结果 · 无需工具调用';
+        results.innerHTML = '<div class="result-row result-row-empty"><b>—</b><span>直接响应 · 工具检索旁路</span><em>闲聊</em></div>';
         renderMatrix([]);
         setPipeline(
-          { detail: '闲聊类 · 直接响应', state: 'CHAT' },
-          { detail: '无需进入工具检索', state: 'BYPASS' },
-          { detail: '无需生成工具短名单', state: 'BYPASS' }
+          { detail: '闲聊类 · 直接响应', state: '闲聊' },
+          { detail: '无需进入工具检索', state: '旁路' },
+          { detail: '无需生成工具短名单', state: '旁路' }
         );
-        footnote.innerHTML = 'Intent 固定集回放 · <strong>' + escapeHtml(trace.id) + '</strong>';
+        footnote.innerHTML = '意图分流固定集合回放 · <strong>' + escapeHtml(trace.id) + '</strong>';
       } else {
         var gold = new Set(trace.gold);
         var recalled = trace.prediction.reduce(function (items, toolId, rank) {
           if (gold.has(toolId)) items.push({ id: toolId, rank: rank + 1 });
           return items;
         }, []);
-        status.textContent = (trace.gold.length > 1 ? 'MULTI-TOOL' : 'SINGLE-TOOL') + ' · ' + recalled.length + ' / ' + trace.gold.length;
-        resultsLabel.textContent = 'RECALLED TOOLS · ALL ' + trace.gold.length + (trace.gold.length === 1 ? ' GOLD TOOL' : ' GOLD TOOLS');
-        renderRows(recalled, 'GOLD');
+        status.textContent = (trace.gold.length > 1 ? '多工具' : '单工具') + ' · ' + recalled.length + ' / ' + trace.gold.length;
+        resultsLabel.textContent = '已召回全部 ' + trace.gold.length + ' 个目标工具';
+        renderRows(recalled, '目标');
         renderMatrix(trace.gold);
         setPipeline(
-          { detail: '电商类 · 进入工具选择', state: 'PASS' },
-          { detail: 'BM25 + Fine-tuned Embedding', state: 'TOP 50' },
-          { detail: 'Source + Task Reranker RRF', state: 'TOP 10' }
+          { detail: '电商类 · 进入工具选择', state: '通过' },
+          { detail: 'BM25 + 微调向量模型', state: '前 50' },
+          { detail: '初排 + 任务内重排的 RRF 融合', state: '前 10' }
         );
         footnote.innerHTML = '固定检索集回放 · <strong>' + escapeHtml(trace.id) + '</strong>';
       }
@@ -345,12 +345,12 @@
       return '<div class="failure-row">' +
         '<span>' + row.tools + ' 工具</span>' +
         '<div class="failure-bars">' +
-          '<div class="failure-track" title="Embedding 单路 ' + percent(row.embedding, 2) + '"><div class="failure-fill" style="--bar-width:' + (row.embedding * 100).toFixed(3) + '%"></div></div>' +
+          '<div class="failure-track" title="向量单路 ' + percent(row.embedding, 2) + '"><div class="failure-fill" style="--bar-width:' + (row.embedding * 100).toFixed(3) + '%"></div></div>' +
           '<div class="failure-track final" title="最终检索链路 ' + percent(row.final, 2) + '"><div class="failure-fill" style="--bar-width:' + (row.final * 100).toFixed(3) + '%"></div></div>' +
         '</div>' +
         '<strong>' + percent(row.final, 2) + '</strong>' +
       '</div>';
-    }).join('') + '<div class="failure-legend"><span><i></i>Embedding 单路</span><span><i></i>最终检索链路</span></div>';
+    }).join('') + '<div class="failure-legend"><span><i></i>向量单路</span><span><i></i>最终检索链路</span></div>';
 
     var ranks = $('#rankBandList');
     if (ranks) {

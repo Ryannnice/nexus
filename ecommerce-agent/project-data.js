@@ -4,7 +4,7 @@ window.PROJECT_DATA = {
     "date": "2026-07-29",
     "label": "INTEGRATED SYSTEM SNAPSHOT",
     "catalogVersion": "2026-07-06",
-    "scope": "100 个已知工具的 Intent、检索与静态有序选链一体化离线评测",
+    "scope": "100 个已知工具的意图分流、候选检索与静态有序选链一体化离线评测",
     "repository": "https://github.com/Ryannnice/Agent"
   },
   "heroTraces": [
@@ -1266,7 +1266,7 @@ window.PROJECT_DATA = {
         "kind": "base"
       },
       {
-        "label": "Qwen3-0.6B full LoRA",
+        "label": "Qwen3-0.6B LoRA（完整训练集）",
         "short": "0.6B LoRA",
         "accuracy": 1,
         "f1": 1,
@@ -1280,7 +1280,7 @@ window.PROJECT_DATA = {
         "kind": "base"
       },
       {
-        "label": "Qwen3-1.7B balanced LoRA",
+        "label": "Qwen3-1.7B LoRA（均衡训练集）",
         "short": "1.7B LoRA",
         "accuracy": 0.9996,
         "f1": 0.9995,
@@ -1290,7 +1290,7 @@ window.PROJECT_DATA = {
     "retrieval": {
       "generic": [
         {
-          "label": "Zero-shot bge-large",
+          "label": "未微调 bge-large",
           "short": "向量单路",
           "a10": 0.4763,
           "a30": 0.7347,
@@ -1328,7 +1328,7 @@ window.PROJECT_DATA = {
       ],
       "trained": [
         {
-          "label": "Zero-shot bge-large",
+          "label": "未微调 bge-large",
           "short": "训练起点",
           "a10": 0.4763,
           "a30": 0.7347,
@@ -1337,8 +1337,8 @@ window.PROJECT_DATA = {
           "a6": 0.3823
         },
         {
-          "label": "Fine-tuned bge-large",
-          "short": "Embedding 微调",
+          "label": "任务内微调 bge-large",
+          "short": "向量模型微调",
           "a10": 0.9575,
           "a30": 0.9972,
           "mrr": 0.9668,
@@ -1346,7 +1346,7 @@ window.PROJECT_DATA = {
           "a6": 0.858
         },
         {
-          "label": "Tuned Hybrid Source",
+          "label": "向量 + BM25 初排融合",
           "short": "向量主导融合",
           "a10": 0.9595,
           "a30": 0.9975,
@@ -1355,7 +1355,7 @@ window.PROJECT_DATA = {
           "a6": 0.8578
         },
         {
-          "label": "Source + Task Reranker",
+          "label": "初排 + 任务内重排",
           "short": "最终链路",
           "a10": 0.983,
           "a30": 0.998667,
@@ -1367,25 +1367,25 @@ window.PROJECT_DATA = {
     },
     "rerankerInsight": [
       {
-        "label": "Tuned Hybrid Source",
+        "label": "向量 + BM25 初排融合",
         "value": 0.9595,
         "tone": "source",
         "note": "稳定提供已学能力边界"
       },
       {
-        "label": "通用 Reranker 纯重排",
+        "label": "通用重排模型单路",
         "value": 0.7028,
         "tone": "danger",
         "note": "通用交互信号与任务边界未对齐"
       },
       {
-        "label": "任务内 Reranker 纯重排",
+        "label": "任务内重排模型单路",
         "value": 0.945,
         "tone": "trained",
         "note": "任务内训练后形成有效补充"
       },
       {
-        "label": "Source + Task Reranker RRF",
+        "label": "初排 + 任务内重排的 RRF 融合",
         "value": 0.983,
         "tone": "final",
         "note": "两路排序形成最佳互补"
@@ -1433,8 +1433,8 @@ window.PROJECT_DATA = {
   "audit": [
     {
       "value": "0",
-      "label": "归一化 Query 重合",
-      "detail": "train / test exact overlap"
+      "label": "归一化请求重合",
+      "detail": "训练 / 测试精确重合"
     },
     {
       "value": "0",
@@ -1443,24 +1443,24 @@ window.PROJECT_DATA = {
     },
     {
       "value": "0",
-      "label": "Catalog 触发词命中",
-      "detail": "test gold trigger rate"
+      "label": "工具目录触发词命中",
+      "detail": "测试目标触发词命中率"
     },
     {
       "value": "0",
       "label": "表达簇泄漏",
-      "detail": "test phrase seen in train"
+      "detail": "测试表达是否见于训练集"
     },
     {
       "value": "TRUE",
       "label": "划分检查通过",
-      "detail": "generation audit strict_ok"
+      "detail": "生成数据严格审计通过"
     }
   ],
   "contextAudit": [
     {
       "value": 0.936,
-      "label": "Context 骨架曾出现",
+      "label": "上下文骨架曾出现",
       "interpretation": "通用商品、地区和预算框架自然复用"
     },
     {
