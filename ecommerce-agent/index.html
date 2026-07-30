@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026072902">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：Static Full Trace 90.37%，aligned 9K">
 
-  <link rel="stylesheet" href="project.css?v=25">
+  <link rel="stylesheet" href="project.css?v=26">
   <script defer src="project-data.js?v=11"></script>
   <script defer src="project.js?v=14"></script>
 </head>
@@ -916,7 +916,7 @@
           <p class="eyebrow">EXPERIMENT 03 · ORDERED-TRACE PLANNING</p>
           <div class="section-heading split-heading">
             <h2 id="planningTitle">有序轨迹规划：从高覆盖候选集到精确工具链</h2>
-            <p>上游检索层固定后，Planner 需要在候选集合中选对工具，并按用户意图与业务依赖排出严格顺序。本章先定义判分口径，再给出当前部署决策，最后归档原始 SFT 研究与诊断证据。</p>
+            <p>上游检索层固定后，Planner 需要在候选集合中选对工具，并按用户意图与业务依赖排出严格顺序。本章沿一条单向主线展开：先定义成功口径，再说明 SFT、跨风格修复与 DPO-v2 如何逐步改变结论，最后给出部署选择和边界。</p>
           </div>
 
           <div class="planner-question" role="group" aria-label="静态 Planner 的输入、模型与输出">
@@ -926,7 +926,7 @@
               <p>任务只输出有序工具 ID，不生成参数、不调用 API，也不消费工具返回值。</p>
             </div>
             <div class="planner-trace-map">
-              <div><small>INPUT</small><strong>RAG@10 / 100 tools</strong><span>候选视图或完整目录</span></div>
+              <div><small>INPUT</small><strong>Query + Tool View</strong><span>当前 RAG@10 · 历史完整目录</span></div>
               <i aria-hidden="true">→</i>
               <div class="is-model"><small>PLANNER</small><strong>Qwen3-4B / 8B</strong><span>选择集合并解析依赖</span></div>
               <i aria-hidden="true">→</i>
@@ -935,22 +935,23 @@
           </div>
 
           <nav class="planner-local-nav" aria-label="Planner 章节内导航">
-            <a href="#plannerContract"><span>01</span><strong>评测契约</strong><small>先理解输入与指标</small></a>
-            <a href="#plannerDecision"><span>02</span><strong>当前决策</strong><small>默认与条件端点</small></a>
-            <a href="#plannerEvidence"><span>03</span><strong>证据主线</strong><small>为什么这样选择</small></a>
-            <a href="#plannerDiagnostics"><span>04</span><strong>诊断边界</strong><small>压力测试与限制</small></a>
+            <a href="#plannerContract"><span>01</span><strong>评测契约</strong><small>指标与四套协议</small></a>
+            <a href="#plannerEvidence"><span>02</span><strong>实验路线</strong><small>四个关键转折</small></a>
+            <a href="#plannerDecision"><span>03</span><strong>部署结论</strong><small>默认与条件端点</small></a>
+            <a href="#plannerArchive"><span>04</span><strong>历史附录</strong><small>调参、规模与旧对照</small></a>
+            <a href="#plannerDiagnostics"><span>05</span><strong>诊断边界</strong><small>剩余风险与限制</small></a>
           </nav>
         </header>
 
         <section class="planner-chapter planner-contract" id="plannerContract" aria-labelledby="plannerContractTitle">
           <div class="planner-chapter-head">
             <span>01 · EVALUATION CONTRACT</span>
-            <div><h3 id="plannerContractTitle">先理解输入视图与判分口径</h3><p>同一个百分比只有放回对应数据集、输入视图和证据角色中才有意义。</p></div>
+            <div><h3 id="plannerContractTitle">先分清“怎么判对”和“在哪套数据上判”</h3><p>SetEM、TraceEM 和 Static Full 回答不同层级的问题；同一个百分比只有放回对应数据集与证据角色中才有意义。</p></div>
           </div>
 
           <div class="a3-scope-banner">
-            <div><span>TWO PROTOCOL FAMILIES</span><strong>Current deployment follow-up ≠ original SFT study</strong></div>
-            <p>当前选型使用跨风格冻结集、Legacy-aligned 9K 与 sealed order final；历史规模研究使用 2,400 条开发集选参和 1,000 条正式测试。各协议独立回答问题，不跨集合合分或拼成阶段增量。</p>
+            <div><span>READING RULE</span><strong>四套协议，分别回答四个问题</strong></div>
+            <p>API-native 1K、Legacy 6K、对齐 9K Static Full 与 sealed order 1.2K 不是一条可相加的分数曲线。页面按“研究选型 → 分布复测 → 系统终评 → 顺序压力测试”分别报告。</p>
           </div>
 
           <div class="a3-metric-panel">
@@ -966,24 +967,82 @@
             </div>
           </div>
 
-          <div class="a3-view-grid">
+          <div class="planner-protocol-grid" role="group" aria-label="Planner 四套评测协议及其职责">
             <article>
-              <div><span>VIEW A · RAG@10</span><strong>上游调优检索器提供 10 个候选</strong></div>
-              <p>历史 Planner 正式 1K 的候选 AllHit@10 为 100.00%，因此 99% 级结果描述的是强闭集候选下的条件规划能力，不能归功于生成模型单独完成。</p>
-              <small>10-TOOL CANDIDATE VIEW</small>
+              <span>01 · HISTORICAL RESEARCH</span>
+              <strong>Dev 2.4K → API-native 1K</strong>
+              <p>开发集选择 SFT 参数与旧 DPO 配方；冻结 1K 只报告 Base、SFT、规模和历史训练方案对照。</p>
+              <small>回答：SFT 是否建立能力</small>
             </article>
             <article>
-              <div><span>VIEW B · WO-RAG</span><strong>一次展示完整 100 工具目录</strong></div>
-              <p>SFT 从未见过 full-catalog 训练 prompt。该视图检验模型能否把候选视图中学到的工具语义迁移到约 2.8K token 的完整目录。</p>
-              <small>WO-RAG ≠ QUERY-ONLY</small>
+              <span>02 · DISTRIBUTION CHECK</span>
+              <strong>Legacy frozen 6K</strong>
+              <p>在部署等价 RAG@10 下检查跨表达风格表现，定位 API-native 高分能否迁移到另一套请求分布。</p>
+              <small>回答：跨风格失配是否修复</small>
+            </article>
+            <article class="is-final">
+              <span>03 · FINAL SYSTEM RESULT</span>
+              <strong>Aligned 9K Static Full</strong>
+              <p>3K 闲聊要求路由正确；6K 电商同时要求路由正确并命中工具集合或有序轨迹。</p>
+              <small>最终口径：Full Trace 90.37%</small>
+            </article>
+            <article>
+              <span>04 · ORDER ROBUSTNESS</span>
+              <strong>Sealed final 1.2K × 3</strong>
+              <p>Top10 集合保持不变，只改变 original、reverse 与固定 hash 的候选展示顺序。</p>
+              <small>回答：DPO-v2 是否降低顺序依赖</small>
             </article>
           </div>
+          <p class="planner-protocol-note"><strong>不可混写：</strong>99.70% 是 API-native 1K 的 Planner 模块结果；90.37% 是 aligned 9K 的静态端到端 Full Trace；98.58% 是 sealed 三顺序平均 TraceEM。三者分母、职责和选择阶段均不同。</p>
+        </section>
+
+        <section class="planner-chapter planner-evidence-overview" id="plannerEvidence" aria-labelledby="plannerEvidenceTitle">
+          <div class="planner-chapter-head">
+            <span>02 · EXPERIMENT ROUTE</span>
+            <div><h3 id="plannerEvidenceTitle">四个转折，把“高分”变成可部署结论</h3><p>每一步只回答一个新问题：先证明 SFT 能学会任务，再暴露跨风格回退，随后修复分布失配，最后单独增强候选顺序鲁棒性。</p></div>
+          </div>
+
+          <div class="planner-evidence-path planner-experiment-path" role="group" aria-label="Planner 从基础 SFT 到 DPO-v2 的四阶段实验路线">
+            <article>
+              <span>STEP 01 · ESTABLISH</span>
+              <small>API-NATIVE FOUNDATION</small>
+              <h4>SFT 建立静态选链能力</h4>
+              <strong>+37.40–45.00 pp</strong>
+              <p>历史公平对照中，SFT 相对同尺寸 Base 大幅提高 RAG@10 SetEM；2.4K Dev 负责选参，API-native 1K 只作终评。</p>
+              <footer>得到：历史 8B · 54K SFT 模块端点 99.10%</footer>
+            </article>
+            <article class="is-warning">
+              <span>STEP 02 · STRESS</span>
+              <small>LEGACY FROZEN 6K</small>
+              <h4>另一种表达风格暴露回退</h4>
+              <strong>72.18%</strong>
+              <p>原 8B SFT 的 Legacy TraceEM 仅 72.18%，而检索 AllHit@10 仍有 98.30%；问题不只是漏召，也包括训练表达与候选协议失配。</p>
+              <footer>结论：API-native 1K 的约 99% 不能代表部署分布</footer>
+            </article>
+            <article class="is-repair">
+              <span>STEP 03 · REPAIR</span>
+              <small>CROSS-STYLE SFT · 77,724 ROWS</small>
+              <h4>合并两种训练表达重新对齐</h4>
+              <strong>85.62%</strong>
+              <p>8B Legacy TraceEM 提升 +13.43 pp，同时 API-native TraceEM 保持 99.70%；aligned 9K Static Full Trace 达到 90.37%。</p>
+              <footer>得到：当前父模型 checkpoint-2429</footer>
+            </article>
+            <article class="is-robust">
+              <span>STEP 04 · HARDEN</span>
+              <small>DPO-V2 · SEALED 3 ORDERS</small>
+              <h4>只针对候选展示顺序做加固</h4>
+              <strong>+0.53 pp</strong>
+              <p>8B 三顺序平均 TraceEM 升至 98.58%，但 Static Full Trace 从 90.37% 降至 90.16%，因此鲁棒性收益不等于默认精度提升。</p>
+              <footer>得到：条件端点 checkpoint-111</footer>
+            </article>
+          </div>
+          <p class="planner-journey-note"><strong>阅读方式：</strong>四张卡按实验决策顺序排列，但不是同一测试集上的连续增量。旧 99.10%、Legacy 72.18% / 85.62%、Static Full 90.37% 与 sealed 98.58% 必须在各自协议内解读。</p>
         </section>
 
         <section class="planner-chapter planner-decision-chapter" id="plannerDecision" aria-labelledby="plannerDecisionTitle">
           <div class="planner-chapter-head" id="plannerLatestUpdate">
-            <span>02 · CURRENT DECISION · 2026-07-29</span>
-            <div><h3 id="plannerDecisionTitle">固定候选顺序默认用 SFT；顺序可能漂移时才切换 DPO-v2</h3><p>当前选择与历史规模端点分开陈述，绿色只标记默认采用项。</p></div>
+            <span>03 · DEPLOYMENT DECISION · 2026-07-29</span>
+            <div><h3 id="plannerDecisionTitle">最终选择取决于候选顺序是否稳定</h3><p>默认目标优先保持 aligned 9K 的最高 Static Full Trace；只有运行时可能改变同一 Top10 的展示顺序，才用部分静态精度换取鲁棒性。</p></div>
           </div>
 
           <div class="planner-decision-board" role="group" aria-label="当前 Planner 部署决策">
@@ -992,16 +1051,20 @@
               <h4>Qwen3-8B cross-style SFT</h4>
               <p>跨风格 SFT 修复主要表达分布回退，在固定候选顺序下保留更好的 Legacy 与静态完整链路表现。</p>
               <dl>
-                <div><dt>90.37%</dt><dd>Static Full Trace<br>Legacy-aligned 9K</dd></div>
-                <div><dt>90.59%</dt><dd>Static Full Set<br>Legacy-aligned 9K</dd></div>
-                <div><dt>99.70%</dt><dd>Planner Set / Trace<br>API-native frozen 1K</dd></div>
+                <div><dt>90.37%</dt><dd>FINAL · Static Full Trace<br>aligned 9K</dd></div>
+                <div><dt>90.59%</dt><dd>SUPPORT · Static Full Set<br>aligned 9K</dd></div>
+                <div><dt>99.70%</dt><dd>MODULE ONLY · Planner TraceEM<br>API-native 1K</dd></div>
               </dl>
             </article>
             <article class="planner-decision-conditional">
               <span>CONDITIONAL ENDPOINT</span>
               <h4>候选展示顺序可能漂移</h4>
               <strong>切换 8B DPO-v2</strong>
-              <p>sealed final 的三顺序平均 TraceEM 提升 <b>+0.53 pp</b>，但 8B Static Full 略有回退，因此不替代默认 SFT。</p>
+              <div class="planner-conditional-metrics">
+                <div><b>98.58%</b><span>sealed 三顺序平均 TraceEM<br>相对父 SFT +0.53 pp</span></div>
+                <div><b>90.16%</b><span>Static Full Trace<br>相对父 SFT −0.21 pp</span></div>
+              </div>
+              <p>它降低同一候选集合对展示排列的敏感性，但不替代固定顺序下端到端分数更高的默认 SFT。</p>
               <small>RESOURCE OPTION · 4B DPO-v2 最差顺序 TraceEM +1.75 pp</small>
             </article>
           </div>
@@ -1065,23 +1128,9 @@
         </details>
         </section>
 
-        <section class="planner-chapter planner-evidence-overview" id="plannerEvidence" aria-labelledby="plannerEvidenceTitle">
-          <div class="planner-chapter-head">
-            <span>03 · EVIDENCE PATH</span>
-            <div><h3 id="plannerEvidenceTitle">四条证据共同决定当前选型</h3><p>这里只保留影响决策的结论；完整参数、规模矩阵与旧对照统一收入历史档案。</p></div>
-          </div>
-
-          <div class="planner-evidence-path" role="group" aria-label="Planner 当前选型的四条证据">
-            <article><span>01 · MAIN GAIN</span><strong>SFT 是能力跃迁来源</strong><p>历史公平对照中，SFT 相对同模型 Base 的 SetEM 提升 37.40–45.00 pp。</p></article>
-            <article><span>02 · SCALE</span><strong>9K 已取得主要增益</strong><p>9K → 54K 的额外收益有限且不单调，数据量不是高分的唯一解释。</p></article>
-            <article><span>03 · RETRIEVAL</span><strong>高分受候选覆盖约束</strong><p>历史正式 1K 的 RAG@10 AllHit 为 100%；Planner 结果必须作为条件规划能力解读。</p></article>
-            <article><span>04 · ROBUSTNESS</span><strong>DPO-v2 是条件端点</strong><p>它改善候选排列鲁棒性，但 8B Static Full 略有回退，因此只在顺序漂移场景启用。</p></article>
-          </div>
-        </section>
-
-        <details class="narrative-disclosure planner-history-archive">
+        <details class="narrative-disclosure planner-history-archive" id="plannerArchive">
           <summary>
-            <span class="disclosure-summary-copy"><small>HISTORICAL · ORIGINAL SFT STUDY</small><strong>展开原始调参、规模曲线与初版训练方案对照</strong></span>
+            <span class="disclosure-summary-copy"><small>04 · HISTORICAL APPENDIX · ORIGINAL SFT STUDY</small><strong>按需展开原始调参、规模曲线与初版训练方案对照</strong></span>
             <span class="disclosure-summary-meta">DEV 2.4K · OFFICIAL 1K · 24 CONFIGS · 4 SCALES</span>
             <i aria-hidden="true">+</i>
           </summary>
@@ -1089,7 +1138,7 @@
             <div class="planner-history-intro">
               <span>ARCHIVED PROTOCOL · NOT THE CURRENT SYSTEM HEADLINE</span>
               <h3>原研究回答“如何选参和扩展监督规模”</h3>
-              <p>以下 99.10% 是 8B · 54K SFT 在历史 API-native 正式 1K、RAG@10 视图下的 Planner 模块端点，不与当前 Legacy-aligned 9K 的 Static Full Trace 90.37% 直接比较。</p>
+              <p>以下 99.10% 是 8B · 54K SFT 在历史 API-native 正式 1K、RAG@10 视图下的 Planner 模块端点，不与当前 aligned 9K 的 Static Full Trace 90.37% 直接比较。档案中的 Wo-RAG 指完整 100 工具目录，并非 query-only。</p>
             </div>
 
             <div class="a3-kpi-grid planner-history-kpis" role="group" aria-label="原始静态规划研究关键数字">
@@ -1331,43 +1380,18 @@
 
         <section class="planner-chapter planner-diagnostics-chapter" id="plannerDiagnostics" aria-labelledby="plannerDiagnosticsTitle">
           <div class="planner-chapter-head">
-            <span>04 · DIAGNOSTICS &amp; BOUNDARIES</span>
-            <div><h3 id="plannerDiagnosticsTitle">把失败、鲁棒性与适用边界放在同一层阅读</h3><p>摘要先暴露剩余风险；顺序扰动、组合拆分、预测案例和机制消融按需展开。</p></div>
+            <span>05 · DIAGNOSTICS &amp; BOUNDARIES</span>
+            <div><h3 id="plannerDiagnosticsTitle">当前结果仍受检索、复杂度与闭集设定约束</h3><p>先暴露当前链路的剩余风险；组合拆分、预测案例和机制消融作为辅助证据按需展开，其余旁支实验仅保留在详细报告中。</p></div>
           </div>
 
         <div class="diagnostic-summary planning-diagnostic-summary" role="group" aria-label="Planner 结果与剩余边界摘要">
-          <article><span>ORIGINAL RAG@10 ENDPOINT</span><strong>9 / 1,000</strong><p>原 8B 54K SFT 有 9 条 SetEM / TraceEM 失败。</p></article>
-          <article><span>ORIGINAL WO-RAG ENDPOINT</span><strong>26 / 1,000</strong><p>原完整 100 工具目录视图有 26 条失败。</p></article>
-          <article><span>INITIAL DPO VERDICT</span><strong>NOT SELECTED</strong><p>仅指旧 5K DPO 对照；DPO-v2 另作顺序鲁棒端点。</p></article>
-          <article><span>SEQUENCE SEEN</span><strong>82.1%</strong><p>正式目标序列在 54K SFT 中 seen，不能表述为开放世界泛化。</p></article>
+          <article><span>CURRENT RETRIEVAL CEILING</span><strong>102 / 6,000</strong><p>Legacy Top10 未覆盖全部 Gold，Planner 无法补回候选外工具。</p></article>
+          <article><span>CURRENT LEGACY TRACE</span><strong>85.62%</strong><p>跨风格 SFT 显著修复回退，但仍低于 API-native 1K 的 99.70%。</p></article>
+          <article><span>SIX-TOOL LEGACY TRACE</span><strong>71.67%</strong><p>当前 8B 在六工具组合上仍明显弱于单工具请求。</p></article>
+          <article><span>HISTORICAL SEQUENCE SEEN</span><strong>82.1%</strong><p>旧正式 1K 的目标序列在 54K SFT 中 seen，不能表述为开放世界泛化。</p></article>
         </div>
 
         <div class="planner-evidence-library" role="group" aria-label="Planner 深度诊断证据">
-        <details class="narrative-disclosure planner-robustness-disclosure">
-          <summary>
-            <span class="disclosure-summary-copy"><small>EARLIER ORDER DIAGNOSTICS</small><strong>展开原正式 1K 候选扰动与 API 顺序反事实</strong></span>
-            <span class="disclosure-summary-meta">FORMAL 1K · 176 PAIRED QUERIES</span>
-            <i aria-hidden="true">+</i>
-          </summary>
-          <div class="disclosure-body">
-            <div class="a3-robustness-heading">
-              <div><p class="eyebrow">EARLIER ORDER DIAGNOSTICS</p><h3>顺序不是集合的附属</h3></div>
-              <p>这是 DPO-v2 之前的两项独立诊断：一项改变候选展示顺序，另一项只改变用户明确要求的业务步骤顺序。</p>
-            </div>
-            <div class="a3-robustness-grid">
-              <article class="a3-robustness-card">
-                <header><span>4B CONTROL SFT · FORMAL 1K</span><h3>候选展示顺序扰动</h3><p>候选集合不变，仅 reverse 或 hash shuffle。</p></header>
-                <div id="a3CandidateOrderChart"></div>
-              </article>
-              <article class="a3-robustness-card">
-                <header><span>176 PAIRED QUERIES</span><h3>API 顺序反事实</h3><p>主指标：一对中的两条都得到正确 TraceEM。</p></header>
-                <div id="a3CounterfactualChart"></div>
-              </article>
-            </div>
-            <p class="a3-robustness-note">在这组旧协议中，初版 DPO 的 pair-both TraceEM：4B 从 90.34% 升至 92.05%，8B 从 92.05% 升至 92.61%。该结果只描述原 API-native 对照；最新 DPO-v2 的 sealed 三顺序结果见上方，二者不能合并。</p>
-          </div>
-        </details>
-
         <details class="narrative-disclosure planner-evidence-disclosure planner-seen-disclosure">
           <summary>
             <span class="disclosure-summary-copy"><small>COMBINATION GENERALIZATION</small><strong>查看四、五工具 seen / unseen 组合拆分</strong></span>
@@ -1463,8 +1487,8 @@
         <div class="a3-boundary-grid">
           <article><strong>静态而非执行</strong><span>输出有序工具 ID，不调用 API，也不消费返回值。</span></article>
           <article><strong>固定闭集</strong><span>100 个工具均已知，不能证明新增工具或开放领域泛化。</span></article>
-          <article><strong>组合复用</strong><span>正式 1K 中 82.1% 的有序目标序列在 SFT 目标中出现过。</span></article>
-          <article><strong>强检索前提</strong><span>RAG@10 的高分建立在正式 1K 检索覆盖 100% 之上。</span></article>
+          <article><strong>协议不可混算</strong><span>API 1K、Legacy 6K、Full 9K 与 sealed 1.2K 分别回答不同问题。</span></article>
+          <article><strong>候选覆盖上限</strong><span>Legacy 6K 仍有 102 条检索漏召，静态 Planner 不能选择候选外工具。</span></article>
         </div>
         </section>
       </div>
