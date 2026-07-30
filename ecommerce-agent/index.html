@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026072902">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：Static Full Trace 90.37%，aligned 9K">
 
-  <link rel="stylesheet" href="project.css?v=26">
+  <link rel="stylesheet" href="project.css?v=27">
   <script defer src="project-data.js?v=11"></script>
   <script defer src="project.js?v=14"></script>
 </head>
@@ -915,34 +915,294 @@
         <header class="planner-intro">
           <p class="eyebrow">EXPERIMENT 03 · ORDERED-TRACE PLANNING</p>
           <div class="section-heading split-heading">
-            <h2 id="planningTitle">有序轨迹规划：从高覆盖候选集到精确工具链</h2>
-            <p>上游检索层固定后，Planner 需要在候选集合中选对工具，并按用户意图与业务依赖排出严格顺序。本章沿一条单向主线展开：先定义成功口径，再说明 SFT、跨风格修复与 DPO-v2 如何逐步改变结论，最后给出部署选择和边界。</p>
+            <h2 id="planningTitle">有序轨迹规划：从 Baseline 到最终静态端到端</h2>
+            <p>按照实验作业的原始顺序组织：0 工具轨迹基线 → 1 RAG 基线 → 2 SFT → 3 DPO → 4 最终评测。每一步只回答一个问题，并把结果放回自己的测试协议。</p>
           </div>
 
           <div class="planner-question" role="group" aria-label="静态 Planner 的输入、模型与输出">
             <div class="planner-question-copy">
-              <span>THE QUESTION</span>
-              <h3>候选找齐之后，模型能否既选对工具，又排对顺序？</h3>
-              <p>任务只输出有序工具 ID，不生成参数、不调用 API，也不消费工具返回值。</p>
+              <span>TASK CONTRACT</span>
+              <h3>给定中文请求与工具说明，输出严格有序的工具 ID 轨迹</h3>
+              <p>SetEM 判断工具集合是否完全一致；TraceEM 进一步要求顺序一致。这里仍是静态规划，不生成参数，也不真实执行工具。</p>
             </div>
             <div class="planner-trace-map">
-              <div><small>INPUT</small><strong>Query + Tool View</strong><span>当前 RAG@10 · 历史完整目录</span></div>
+              <div><small>INPUT</small><strong>Query + Tool View</strong><span>完整 100 工具或 RAG Top10</span></div>
               <i aria-hidden="true">→</i>
-              <div class="is-model"><small>PLANNER</small><strong>Qwen3-4B / 8B</strong><span>选择集合并解析依赖</span></div>
+              <div class="is-model"><small>PLANNER</small><strong>Base → SFT → DPO</strong><span>4B / 8B 逐阶段比较</span></div>
               <i aria-hidden="true">→</i>
               <div class="is-output"><small>OUTPUT</small><strong>[ A, B, C ]</strong><span>严格有序 ID 轨迹</span></div>
             </div>
           </div>
-
-          <nav class="planner-local-nav" aria-label="Planner 章节内导航">
-            <a href="#plannerContract"><span>01</span><strong>评测契约</strong><small>指标与四套协议</small></a>
-            <a href="#plannerEvidence"><span>02</span><strong>实验路线</strong><small>四个关键转折</small></a>
-            <a href="#plannerDecision"><span>03</span><strong>部署结论</strong><small>默认与条件端点</small></a>
-            <a href="#plannerArchive"><span>04</span><strong>历史附录</strong><small>调参、规模与旧对照</small></a>
-            <a href="#plannerDiagnostics"><span>05</span><strong>诊断边界</strong><small>剩余风险与限制</small></a>
-          </nav>
         </header>
 
+        <section class="planner-final-lead" id="plannerLatestUpdate" aria-labelledby="plannerFinalLeadTitle">
+          <div class="planner-final-lead-copy">
+            <span>FINAL RESULT · ALIGNED 9K</span>
+            <h3 id="plannerFinalLeadTitle"><strong>90.37%</strong> Static Full Trace</h3>
+            <p>Qwen3-8B cross-style SFT 完成 <b>8,133 / 9,000</b> 条静态完整链路，是本章最终主结果，也是固定候选顺序下的默认模型。</p>
+          </div>
+          <div class="planner-final-lead-choice" role="group" aria-label="最终 Planner 端点">
+            <div>
+              <span>DEFAULT</span>
+              <strong>8B cross-style SFT</strong>
+              <small>checkpoint-2429 · Full Trace 90.37%</small>
+            </div>
+            <div>
+              <span>ORDER MAY DRIFT</span>
+              <strong>8B DPO-v2</strong>
+              <small>checkpoint-111 · Full Trace 90.16%</small>
+            </div>
+          </div>
+          <p class="planner-final-lead-rule"><strong>先看这一项：</strong>API-native 1K 的 99.70% 是 Planner 模块分；这里的 90.37% 才是 Intent + Retrieval + Planner 在 aligned 9K 上逐样本联合统计的最终静态端到端结果。</p>
+        </section>
+
+        <div class="planner-assignment-list" role="group" aria-label="实验作业 0 到 4 的结果">
+          <section class="planner-assignment-step" id="plannerExperiment0" aria-labelledby="plannerExperiment0Title">
+            <div class="planner-step-index" aria-hidden="true"><span>EXPERIMENT</span><strong>0</strong></div>
+            <div class="planner-step-body">
+              <header class="planner-step-head">
+                <div>
+                  <span>TOOL-TRACE BASELINE</span>
+                  <h3 id="plannerExperiment0Title">未微调模型能否直接完成 100 工具有序选链？</h3>
+                </div>
+                <p>先完全按作业基线设置：向 Qwen3-4B/8B Base 提供完整工具列表，在同一冻结 API-native 1K 上输出有序轨迹。</p>
+              </header>
+              <div class="planner-step-meta" role="group" aria-label="实验 0 设置">
+                <span>API-native frozen 1K</span>
+                <span>Wo-RAG · 100 tools</span>
+                <span>Qwen3 Base · 4B / 8B</span>
+              </div>
+              <div class="planner-step-outcome">
+                <div class="planner-step-score"><span>BEST BASE TRACEEM</span><strong>54.60%</strong><small>8B · 546 / 1,000</small></div>
+                <div class="planner-step-conclusion"><span>CONCLUSION</span><p>8B 比 4B 更好，但 Base 最佳 TraceEM 仍只有 54.60%；仅靠模型原生能力不足以稳定完成 100 工具有序规划。</p></div>
+              </div>
+              <details class="narrative-disclosure planner-experiment-results">
+                <summary>
+                  <span class="disclosure-summary-copy"><small>RESULT TABLE · EXPERIMENT 0</small><strong>查看 4B / 8B 未微调基线</strong></span>
+                  <span class="disclosure-summary-meta">API-NATIVE 1K · 2 ROWS</span>
+                  <i aria-hidden="true">+</i>
+                </summary>
+                <div class="disclosure-body planner-result-body">
+                  <div class="planner-table-heading"><h4>完整 100 工具视图</h4><p>同一冻结 1K；SetEM 与 TraceEM 均为严格完全匹配。</p></div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table">
+                      <thead><tr><th scope="col">模型</th><th scope="col">视图</th><th scope="col">SetEM</th><th scope="col">TraceEM</th><th scope="col">micro-F1</th><th scope="col">严格输出率</th></tr></thead>
+                      <tbody>
+                        <tr><td>Qwen3-4B Base</td><td>Wo-RAG · 100 工具</td><td>52.30%</td><td>50.40%</td><td>84.25%</td><td>93.60%</td></tr>
+                        <tr class="result-table-final"><td>Qwen3-8B Base</td><td>Wo-RAG · 100 工具</td><td>57.40%</td><td><strong>54.60%</strong></td><td>87.31%</td><td>96.70%</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+          <section class="planner-assignment-step" id="plannerExperiment1" aria-labelledby="plannerExperiment1Title">
+            <div class="planner-step-index" aria-hidden="true"><span>EXPERIMENT</span><strong>1</strong></div>
+            <div class="planner-step-body">
+              <header class="planner-step-head">
+                <div>
+                  <span>RAG BASELINE</span>
+                  <h3 id="plannerExperiment1Title">把 100 个工具裁剪到 Top10，Base 模型会改善多少？</h3>
+                </div>
+                <p>保持模型与 API-native 1K 不变，只比较完整目录和 RAG@10。作业原文称其为“端到端 baseline”；本页明确把它记作 Query → RAG → Planner 的模块链路。</p>
+              </header>
+              <div class="planner-step-meta" role="group" aria-label="实验 1 设置">
+                <span>Same API-native 1K</span>
+                <span>Wo-RAG vs RAG@10</span>
+                <span>RAG AllHit@10 · 100%</span>
+              </div>
+              <div class="planner-step-outcome">
+                <div class="planner-step-score"><span>BEST RAG GAIN</span><strong>+4.50 pp</strong><small>8B TraceEM · 54.60% → 59.10%</small></div>
+                <div class="planner-step-conclusion"><span>CONCLUSION</span><p>候选裁剪确实减轻选择难度，但未微调模型的最高 TraceEM 仍只有 59.10%。RAG 是必要输入约束，不是 SFT 的替代品。</p></div>
+              </div>
+              <details class="narrative-disclosure planner-experiment-results">
+                <summary>
+                  <span class="disclosure-summary-copy"><small>RESULT TABLE · EXPERIMENT 1</small><strong>查看 RAG 与完整目录的同协议对照</strong></span>
+                  <span class="disclosure-summary-meta">API-NATIVE 1K · 2 ROWS</span>
+                  <i aria-hidden="true">+</i>
+                </summary>
+                <div class="disclosure-body planner-result-body">
+                  <div class="planner-table-heading"><h4>Base · RAG@10 vs Wo-RAG</h4><p>同一批 Query、同一模型；唯一变量是工具视图。</p></div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table">
+                      <thead><tr><th scope="col">模型</th><th scope="col">Wo-RAG Set / Trace</th><th scope="col">RAG@10 Set / Trace</th><th scope="col">Set 提升</th><th scope="col">Trace 提升</th></tr></thead>
+                      <tbody>
+                        <tr><td>Qwen3-4B Base</td><td>52.30% / 50.40%</td><td><strong>54.00% / 53.10%</strong></td><td>+1.70 pp</td><td>+2.70 pp</td></tr>
+                        <tr class="result-table-final"><td>Qwen3-8B Base</td><td>57.40% / 54.60%</td><td><strong>60.00% / 59.10%</strong></td><td>+2.60 pp</td><td><strong>+4.50 pp</strong></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+          <section class="planner-assignment-step" id="plannerExperiment2" aria-labelledby="plannerExperiment2Title">
+            <div class="planner-step-index" aria-hidden="true"><span>EXPERIMENT</span><strong>2</strong></div>
+            <div class="planner-step-body">
+              <header class="planner-step-head">
+                <div>
+                  <span>SUPERVISED FINE-TUNING</span>
+                  <h3 id="plannerExperiment2Title">SFT 能否建立能力，并迁移到 Legacy 表达？</h3>
+                </div>
+                <p>第一轮 API-native SFT 证明模型能学会任务，但在 Legacy 6K 合成冻结集上明显回退；随后用 77,724 条跨风格 RAG@10 数据重训，修复表达与部署等价候选协议的失配。</p>
+              </header>
+              <div class="planner-step-meta" role="group" aria-label="实验 2 设置">
+                <span>API-native 1K · capability</span>
+                <span>Legacy frozen 6K · transfer</span>
+                <span>Cross-style SFT · 77,724 rows</span>
+              </div>
+              <div class="planner-step-outcome">
+                <div class="planner-step-score"><span>8B LEGACY TRACE GAIN</span><strong>+13.43 pp</strong><small>72.18% → 85.62%</small></div>
+                <div class="planner-step-conclusion"><span>CONCLUSION</span><p>SFT 把 API-native 模块 TraceEM 提升到约 99%；真正决定部署质量的是跨风格重训，它在保持 API 99.70% 的同时显著修复 Legacy 回退。</p></div>
+              </div>
+              <details class="narrative-disclosure planner-experiment-results">
+                <summary>
+                  <span class="disclosure-summary-copy"><small>RESULT TABLES · EXPERIMENT 2</small><strong>查看 Base → SFT 与跨风格修复结果</strong></span>
+                  <span class="disclosure-summary-meta">API 1K + LEGACY 6K</span>
+                  <i aria-hidden="true">+</i>
+                </summary>
+                <div class="disclosure-body planner-result-body">
+                  <div class="planner-table-block">
+                    <div class="planner-table-heading"><h4>2A · SFT 建立静态选链能力</h4><p>API-native frozen 1K · RAG@10；Base 与 SFT 在同协议内比较。</p></div>
+                    <div class="result-table-wrap" tabindex="0">
+                      <table class="result-table result-table-compact planner-result-table">
+                        <thead><tr><th scope="col">模型</th><th scope="col">Base Set / Trace</th><th scope="col">SFT Set / Trace</th><th scope="col">Trace 提升</th></tr></thead>
+                        <tbody>
+                          <tr class="result-table-final"><td>Qwen3-4B</td><td>54.00% / 53.10%</td><td><strong>99.00% / 99.00%</strong></td><td><strong>+45.90 pp</strong></td></tr>
+                          <tr><td>Qwen3-8B</td><td>60.00% / 59.10%</td><td><strong>98.30% / 98.30%</strong></td><td>+39.20 pp</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="planner-table-block">
+                    <div class="planner-table-heading"><h4>2B · Cross-style SFT 修复部署分布</h4><p>每一列只在自己的冻结集内纵向比较；API 1K 与 Legacy 6K 不合并。</p></div>
+                    <div class="result-table-wrap" tabindex="0">
+                      <table class="result-table result-table-compact planner-result-table planner-crossstyle-table">
+                        <thead><tr><th scope="col">模型</th><th scope="col">API-native 1K Trace：原 → 跨风格</th><th scope="col">Legacy 6K Trace：原 → 跨风格</th><th scope="col">Legacy Trace 提升</th><th scope="col">正式端点</th></tr></thead>
+                        <tbody>
+                          <tr><td>Qwen3-4B</td><td>99.00% → <strong>99.80%</strong></td><td>71.22% → <strong>83.68%</strong></td><td>+12.47 pp</td><td>checkpoint-2429</td></tr>
+                          <tr class="result-table-final"><td>Qwen3-8B</td><td>98.30% → <strong>99.70%</strong></td><td>72.18% → <strong>85.62%</strong></td><td><strong>+13.43 pp</strong></td><td><strong>checkpoint-2429</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+          <section class="planner-assignment-step" id="plannerExperiment3" aria-labelledby="plannerExperiment3Title">
+            <div class="planner-step-index" aria-hidden="true"><span>EXPERIMENT</span><strong>3</strong></div>
+            <div class="planner-step-body">
+              <header class="planner-step-head">
+                <div>
+                  <span>DIRECT PREFERENCE OPTIMIZATION</span>
+                  <h3 id="plannerExperiment3Title">DPO-v2 能否降低模型对候选排列的依赖？</h3>
+                </div>
+                <p>从当前 cross-style SFT 父模型在 reverse / hash 顺序下的真实语义错误构造 2,000 对偏好；终评再保持 Top10 集合不变，比较 original、reverse、hash 三种展示顺序。</p>
+              </header>
+              <div class="planner-step-meta" role="group" aria-label="实验 3 设置">
+                <span>2,000 preference pairs</span>
+                <span>1,776 train / 224 monitor</span>
+                <span>Sealed final 1.2K × 3 orders</span>
+              </div>
+              <div class="planner-step-outcome">
+                <div class="planner-step-score"><span>8B MACRO TRACE GAIN</span><strong>+0.53 pp</strong><small>98.06% → 98.58%</small></div>
+                <div class="planner-step-conclusion"><span>CONCLUSION</span><p>DPO-v2 达成顺序鲁棒性目标，且原顺序不下降；但 8B Static Full Trace 回退 0.21 pp，所以它是顺序漂移场景的条件端点，不替代默认 SFT。</p></div>
+              </div>
+              <details class="narrative-disclosure planner-experiment-results">
+                <summary>
+                  <span class="disclosure-summary-copy"><small>RESULT TABLES · EXPERIMENT 3</small><strong>查看三顺序终评与端到端回归检查</strong></span>
+                  <span class="disclosure-summary-meta">SEALED 1.2K + ALIGNED 9K</span>
+                  <i aria-hidden="true">+</i>
+                </summary>
+                <div class="disclosure-body planner-result-body">
+                  <div class="planner-table-block">
+                    <div class="planner-table-heading"><h4>3A · Sealed candidate-order final</h4><p>候选集合固定，只改变展示顺序；这是 DPO-v2 的预注册主目标。</p></div>
+                    <div class="result-table-wrap" tabindex="0">
+                      <table class="result-table result-table-compact planner-result-table">
+                        <thead><tr><th scope="col">模型</th><th scope="col">父 SFT 三顺序平均 Set / Trace</th><th scope="col">DPO-v2 三顺序平均 Set / Trace</th><th scope="col">原顺序 Trace</th><th scope="col">最差顺序 Trace：父 → DPO</th><th scope="col">平均 Trace 提升</th></tr></thead>
+                        <tbody>
+                          <tr><td>Qwen3-4B</td><td>97.72% / 97.69%</td><td><strong>98.44% / 98.42%</strong></td><td>99.00% → 99.00%</td><td>96.08% → <strong>97.83%</strong></td><td><strong>+0.72 pp</strong></td></tr>
+                          <tr class="result-table-final"><td>Qwen3-8B</td><td>98.14% / 98.06%</td><td><strong>98.67% / 98.58%</strong></td><td>99.25% → 99.25%</td><td>97.08% → <strong>97.83%</strong></td><td><strong>+0.53 pp</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="planner-table-block">
+                    <div class="planner-table-heading"><h4>3B · Static Full 回归检查</h4><p>aligned 9K 只用于端点锁定后的部署审计，不参与 DPO-v2 选参。</p></div>
+                    <div class="result-table-wrap" tabindex="0">
+                      <table class="result-table result-table-compact planner-result-table">
+                        <thead><tr><th scope="col">模型</th><th scope="col">父 SFT Full Set / Trace</th><th scope="col">DPO-v2 Full Set / Trace</th><th scope="col">Full Trace 变化</th><th scope="col">判断</th></tr></thead>
+                        <tbody>
+                          <tr><td>Qwen3-4B</td><td>89.29% / 89.08%</td><td>89.26% / <strong>89.10%</strong></td><td>+0.02 pp</td><td>基本无损</td></tr>
+                          <tr><td>Qwen3-8B</td><td><strong>90.59% / 90.37%</strong></td><td>90.33% / 90.16%</td><td>−0.21 pp</td><td>不替代默认 SFT</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+          <section class="planner-assignment-step planner-assignment-final" id="plannerExperiment4" aria-labelledby="plannerExperiment4Title">
+            <div class="planner-step-index" aria-hidden="true"><span>EXPERIMENT</span><strong>4</strong></div>
+            <div class="planner-step-body">
+              <header class="planner-step-head">
+                <div>
+                  <span>FINAL STATIC END-TO-END</span>
+                  <h3 id="plannerExperiment4Title">哪一个端点取得最终系统最高分？</h3>
+                </div>
+                <p>在 aligned 9K 上串联冻结 Intent Gate 与 Legacy 工具规划：3K 闲聊必须正确旁路；6K 电商必须路由正确，并分别满足工具集合或有序轨迹完全一致。</p>
+              </header>
+              <div class="planner-step-meta" role="group" aria-label="实验 4 设置">
+                <span>Aligned frozen 9K</span>
+                <span>3K chat + 6K ecommerce</span>
+                <span>Per-sample joint counting</span>
+              </div>
+              <div class="planner-step-outcome">
+                <div class="planner-step-score"><span>FINAL FULL TRACE</span><strong>90.37%</strong><small>8B cross-style SFT · 8,133 / 9,000</small></div>
+                <div class="planner-step-conclusion"><span>FINAL DECISION</span><p><b>默认：</b>8B cross-style SFT checkpoint-2429。<b>条件端点：</b>只有运行时可能改变 Top10 展示顺序时，才使用 8B DPO-v2 checkpoint-111。</p></div>
+              </div>
+              <details class="narrative-disclosure planner-experiment-results planner-final-results" open>
+                <summary>
+                  <span class="disclosure-summary-copy"><small>FINAL RESULT TABLE · EXPERIMENT 4</small><strong>查看 aligned 9K 全部端到端结果</strong></span>
+                  <span class="disclosure-summary-meta">6 ENDPOINTS · SAME PROTOCOL</span>
+                  <i aria-hidden="true">+</i>
+                </summary>
+                <div class="disclosure-body planner-result-body">
+                  <div class="planner-table-heading"><h4>Static Full · Intent + Retrieval + Planner</h4><p>Full Set / Trace 均由 9,000 行联合事件直接计数，不是独立模块准确率相乘。</p></div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table planner-final-table">
+                      <thead><tr><th scope="col">模型</th><th scope="col">Planner 阶段</th><th scope="col">Full Set</th><th scope="col">Full Trace</th><th scope="col">Set / Trace 通过</th><th scope="col">结论</th></tr></thead>
+                      <tbody>
+                        <tr><td>Qwen3-4B</td><td>原 SFT</td><td>81.06%</td><td>80.77%</td><td>7,295 / 7,269</td><td>初始系统基线</td></tr>
+                        <tr><td>Qwen3-4B</td><td>cross-style SFT</td><td>89.29%</td><td>89.08%</td><td>8,036 / 8,017</td><td>固定顺序父模型</td></tr>
+                        <tr><td>Qwen3-4B</td><td>DPO-v2</td><td>89.26%</td><td>89.10%</td><td>8,033 / 8,019</td><td>资源敏感鲁棒端点</td></tr>
+                        <tr><td>Qwen3-8B</td><td>原 SFT</td><td>81.58%</td><td>81.41%</td><td>7,342 / 7,327</td><td>初始系统基线</td></tr>
+                        <tr class="result-table-final"><td>Qwen3-8B</td><td><strong>cross-style SFT</strong></td><td><strong>90.59%</strong></td><td><strong>90.37%</strong></td><td><strong>8,153 / 8,133</strong></td><td><strong>当前默认</strong></td></tr>
+                        <tr><td>Qwen3-8B</td><td>DPO-v2</td><td>90.33%</td><td>90.16%</td><td>8,130 / 8,114</td><td>顺序漂移时使用</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p class="planner-result-boundary"><strong>边界：</strong>这是 100 工具合成闭集上的静态端到端成功率；不覆盖参数生成、真实 API 返回、异常重试、状态变化或多轮执行。</p>
+                </div>
+              </details>
+            </div>
+          </section>
+        </div>
+
+        <details class="narrative-disclosure planner-full-archive" id="plannerResearchArchive">
+          <summary>
+            <span class="disclosure-summary-copy"><small>OPTIONAL APPENDIX · FULL RESEARCH ARCHIVE</small><strong>展开完整调参、规模消融、数据审计与错误诊断</strong></span>
+            <span class="disclosure-summary-meta">THE 0 → 4 STORY ABOVE IS COMPLETE</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="planner-full-archive-body">
         <section class="planner-chapter planner-contract" id="plannerContract" aria-labelledby="plannerContractTitle">
           <div class="planner-chapter-head">
             <span>01 · EVALUATION CONTRACT</span>
@@ -1040,7 +1300,7 @@
         </section>
 
         <section class="planner-chapter planner-decision-chapter" id="plannerDecision" aria-labelledby="plannerDecisionTitle">
-          <div class="planner-chapter-head" id="plannerLatestUpdate">
+          <div class="planner-chapter-head">
             <span>03 · DEPLOYMENT DECISION · 2026-07-29</span>
             <div><h3 id="plannerDecisionTitle">最终选择取决于候选顺序是否稳定</h3><p>默认目标优先保持 aligned 9K 的最高 Static Full Trace；只有运行时可能改变同一 Top10 的展示顺序，才用部分静态精度换取鲁棒性。</p></div>
           </div>
@@ -1491,6 +1751,8 @@
           <article><strong>候选覆盖上限</strong><span>Legacy 6K 仍有 102 条检索漏召，静态 Planner 不能选择候选外工具。</span></article>
         </div>
         </section>
+          </div>
+        </details>
       </div>
     </section>
 
