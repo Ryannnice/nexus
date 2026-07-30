@@ -4,24 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>100-Tool Commerce Agent — 从意图识别、工具检索到静态有序选链</title>
-  <meta name="description" content="100 个已知工具合成闭集上的一体化实验系统：当前 8B 跨风格 SFT 在对齐 9K 上取得 90.37% Static Full Trace；API-native 1K 的 99.70% 仅作为 Planner 模块指标。">
+  <meta name="description" content="100 个已知工具合成闭集上的一体化实验系统：当前 8B 混合表达监督微调模型在 9,000 条测试中取得 90.37% 的静态全链路成功率（工具链口径）；1,000 条接口式表达测试的 99.70% 仅作为规划模块指标。">
   <meta name="theme-color" content="#000000">
   <link rel="canonical" href="https://ryannnice.github.io/nexus/ecommerce-agent/">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="让复杂电商请求，先找齐工具，再排对工具链。">
-  <meta property="og:description" content="最终结果以对齐 9K 的静态端到端 Full Trace 90.37% 为主；API-native 1K 的 99.70% 仅作为 Planner 模块指标。">
+  <meta property="og:description" content="最终结果以 9,000 条测试的静态全链路成功率 90.37%（工具链口径）为主；1,000 条接口式表达测试的 99.70% 仅作为规划模块指标。">
   <meta property="og:url" content="https://ryannnice.github.io/nexus/ecommerce-agent/">
-  <meta property="og:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026072902">
+  <meta property="og:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026073001">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="100-Tool Commerce Agent：Static Full Trace 90.37%，aligned 9K">
+  <meta property="og:image:alt" content="100-Tool Commerce Agent：静态全链路成功率 90.37%，工具链口径，共 9,000 条">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="让复杂电商请求，先找齐工具，再排对工具链。">
-  <meta name="twitter:description" content="100-Tool Commerce Agent · Static end-to-end Full Trace 90.37% on the aligned 9K set">
-  <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026072902">
-  <meta name="twitter:image:alt" content="100-Tool Commerce Agent：Static Full Trace 90.37%，aligned 9K">
+  <meta name="twitter:description" content="100-Tool Commerce Agent · 9,000 条测试的静态全链路成功率为 90.37%（工具链口径）">
+  <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026073001">
+  <meta name="twitter:image:alt" content="100-Tool Commerce Agent：静态全链路成功率 90.37%，工具链口径，共 9,000 条">
 
   <link rel="stylesheet" href="project.css?v=28">
   <script defer src="project-data.js?v=11"></script>
@@ -75,7 +75,7 @@
             <div><dt>100</dt><dd>固定工具空间</dd></div>
             <div><dt>1.0000</dt><dd>Intent Gate · Accuracy · 9K</dd></div>
             <div><dt>98.30%</dt><dd>Retrieval · AllHit@10 · 6K</dd></div>
-            <div class="hero-stat-primary"><dt>90.37%</dt><dd>Static End-to-End · Full Trace · aligned 9K</dd></div>
+            <div class="hero-stat-primary"><dt>90.37%</dt><dd>静态全链路成功率 · 工具链口径 · 9,000 条</dd></div>
           </dl>
         </div>
 
@@ -142,21 +142,21 @@
           </div>
           <div class="abstract-brief-result">
             <span>CURRENT FINAL SYSTEM RESULT</span>
-            <strong>Static Full Trace · 90.37%</strong>
-            <p>当前默认模型为 Qwen3-8B 跨风格 SFT checkpoint-2429。在对齐的 9K（3K 闲聊 + 6K 电商）上，Full Trace 为 8,133 / 9,000（90.37%），Full Set 为 8,153 / 9,000（90.59%）。API-native frozen 1K 的 99.70% 只作为 Planner 模块证据；DPO-v2 是候选顺序可能漂移时的鲁棒性选项。</p>
+            <strong>静态全链路成功率 · 90.37%</strong>
+            <p>当前默认模型为 Qwen3-8B 混合表达监督微调模型（版本 2429）。在静态全链路测试集（3,000 条闲聊 + 6,000 条电商）上，工具链口径成功 8,133 / 9,000（90.37%），集合口径成功 8,153 / 9,000（90.59%）。接口式表达测试集（1,000 条）的 99.70% 只说明规划模块本身；候选顺序稳健模型仅用于候选排列可能变化的场景。</p>
           </div>
         </div>
 
         <div class="abstract-definition">
-          <div><span>MODULE METRICS</span><strong>Accuracy → AllHit@K → SetEM / TraceEM</strong></div>
-          <p>路由、检索和规划模块仍分别使用适配任务的固定集合验证，模块指标不能直接相乘。另在对齐的 Legacy 9K 上逐样本联合统计静态 Full Set / Trace；该结果不包含真实工具执行。</p>
+          <div><span>MODULE METRICS</span><strong>分类准确率 → 完整召回率 → 集合 / 工具链全对率</strong></div>
+          <p>路由、检索和规划模块分别在各自的固定测试集上验证，模块指标不能直接相乘。最终结果在 9,000 条静态全链路测试中逐样本联合统计，不包含真实工具执行。</p>
         </div>
 
         <div class="abstract-kpis" role="group" aria-label="项目摘要指标">
           <div><span>TOOL SPACE</span><strong>100</strong><small>固定工具文档 · 8 个业务域</small></div>
           <div><span>INTENT GATE</span><strong>1.0000</strong><small>Accuracy / Macro-F1 · 9K</small></div>
           <div><span>RETRIEVAL</span><strong>98.30%</strong><small>AllHit@10 · 6K</small></div>
-          <div class="abstract-kpi-primary"><span>STATIC END-TO-END</span><strong>90.37%</strong><small>8B · cross-style SFT · Full Trace · aligned 9K</small></div>
+          <div class="abstract-kpi-primary"><span>STATIC END-TO-END</span><strong>90.37%</strong><small>8B 混合表达监督微调 · 工具链口径 · 9,000 条</small></div>
         </div>
 
         <p class="phase-context-label overview-context-label">PROJECT LOGIC · FOUR DESIGN DECISIONS</p>
@@ -164,7 +164,7 @@
           <article><span>01</span><h3>按请求类型智能分流</h3><p>入口 Intent Gate 区分电商诉求与开放闲聊，把计算集中在真正需要工具的请求上。</p></article>
           <article><span>02</span><h3>以完整集合覆盖为目标</h3><p>Retrieval 基准中的单工具与最多六工具请求采用统一口径，确保任务链所需能力全部进入候选。</p></article>
           <article><span>03</span><h3>分层提升候选质量</h3><p>先用混合检索建立高覆盖候选，再以任务内 Reranker 补充 Query–Tool 交互判断。</p></article>
-          <article><span>04</span><h3>从候选集合生成有序轨迹</h3><p>Qwen3-4B/8B 在 RAG@10 或完整 100 工具视图下选择精确工具集合，并按照用户要求与依赖关系排序。</p></article>
+          <article><span>04</span><h3>从候选集合生成有序轨迹</h3><p>Qwen3-4B/8B 从 Top-10 候选或完整 100 工具目录中选择精确工具集合，并按照用户要求与依赖关系排序。</p></article>
         </div>
 
       </div>
@@ -196,12 +196,12 @@
           </article>
           <article>
             <span>STAGE 03 · STATIC PLANNER</span>
-            <strong>SetEM / TraceEM</strong>
-            <p>SetEM 要求工具集合完全一致；TraceEM 进一步要求工具及其顺序完全一致。</p>
-            <small>API-NATIVE FROZEN 1K · BOTH 99.70%</small>
+            <strong>集合 / 工具链全对率</strong>
+            <p>集合全对要求工具集合完全一致；工具链全对进一步要求工具及其顺序完全一致。</p>
+            <small>接口式表达测试集 · 1,000 条 · 均为 99.70%</small>
           </article>
         </div>
-        <p class="metric-contract-note"><strong>阅读规则：</strong>页面最终结果采用对齐 Legacy 9K 的逐样本联合统计：Static Full Trace 90.37%，Full Set 90.59%。上方三项模块结果来自不同职责和不同样本，只能作为证据链并列阅读，不能相乘。静态 Full 验证路由与选链，不覆盖参数、工具调用或失败恢复；Planner 的 API-native 1K 候选 AllHit@10 为 100.00%，与 Retrieval 6K 的 98.30% 不是同一评测集合。</p>
+        <p class="metric-contract-note"><strong>阅读规则：</strong>页面最终结果来自 9,000 条逐样本联合统计：静态全链路成功率按工具链口径为 90.37%，按集合口径为 90.59%。上方三项模块结果来自不同职责和不同样本，只能并列阅读，不能相乘。静态全链路测试验证路由与选链，不覆盖参数、真实工具调用或失败恢复；规划模块在 1,000 条接口式表达测试中的候选完整召回率为 100.00%，与检索模块 6,000 条测试的 98.30% 不是同一评测集合。</p>
 
         <div class="metric-detail-stack">
           <article class="metric-detail-module" aria-labelledby="retrievalMetricTitle">
@@ -267,10 +267,10 @@
                 <h3 id="plannerMetricTitle">集合选对，不等于轨迹排对</h3>
               </div>
               <p>Planner 既要选出精确工具集合，也要按照用户要求与工具依赖生成正确顺序；因此需要同时报告集合与轨迹指标。</p>
-              <div class="metric-detail-token"><span>PRIMARY METRICS</span><strong>SetEM / TraceEM</strong></div>
+              <div class="metric-detail-token"><span>PRIMARY METRICS</span><strong>集合 / 工具链全对率</strong></div>
             </header>
 
-            <div class="metric-detail-grid" role="group" aria-label="SetEM 与 TraceEM 的区别示例">
+            <div class="metric-detail-grid" role="group" aria-label="工具集合与有序工具链完全匹配率的区别示例">
               <div class="metric-detail-card">
                 <div class="metric-detail-card-head">
                   <span>CASE A · REFERENCE</span><strong>GOLD</strong>
@@ -297,19 +297,19 @@
                 <p class="metric-detail-verdict">集合一致；完整有序序列不一致。</p>
               </div>
 
-              <aside class="metric-detail-card metric-detail-rule" aria-label="SetEM 与 TraceEM 判定结果">
+              <aside class="metric-detail-card metric-detail-rule" aria-label="工具集合与有序工具链完全匹配率判定结果">
                 <div class="metric-detail-card-head">
                   <span>SUCCESS RULE</span><strong>TWO LEVELS</strong>
                 </div>
                 <div class="metric-detail-score-grid">
                   <div>
-                    <span>SetEM</span><strong>1</strong><small>集合完全一致</small>
+                    <span>集合全对</span><strong>1</strong><small>集合完全一致</small>
                   </div>
                   <div class="metric-score-fail">
-                    <span>TraceEM</span><strong>0</strong><small>有序序列不一致</small>
+                    <span>工具链全对</span><strong>0</strong><small>有序序列不一致</small>
                   </div>
                 </div>
-                <p class="metric-detail-definition"><strong>SetEM</strong> 检查无序工具集合；<strong>TraceEM</strong> 检查完整有序工具序列。</p>
+                <p class="metric-detail-definition"><strong>工具集合完全匹配率（SetEM）</strong>检查无序工具集合；<strong>有序工具链完全匹配率（TraceEM）</strong>检查完整有序工具序列。</p>
               </aside>
             </div>
           </article>
@@ -407,20 +407,20 @@
           <article>
             <header><span>STAGE 03</span><strong>STATIC PLANNER</strong></header>
             <h3>从候选集合生成有序轨迹</h3>
-            <p class="data-contract-purpose">嵌套 SFT 规模研究、开发集选参和正式测试严格分工；正式 1K 不参与 checkpoint 或超参数选择。</p>
+            <p class="data-contract-purpose">嵌套监督微调规模研究、开发集选参和正式测试严格分工；1,000 条正式测试不参与模型版本或超参数选择。</p>
             <dl class="data-contract-rows">
-              <div><dt>TRAIN</dt><dd><strong>9K → 77.7K</strong><span>原嵌套研究 9K–54K；跨风格正式训练 77,724 条</span></dd></div>
-              <div><dt>MODEL SELECTION</dt><dd><strong>2.4K + 1.2K</strong><span>原 SFT / DPO 对照 + DPO-v2 sealed dev</span></dd></div>
-              <div><dt>REPORTING BOUNDARY</dt><dd><strong>1K / 6K / 1.2K</strong><span>API、Legacy 与 sealed final 各自独立报告</span></dd></div>
+              <div><dt>TRAIN</dt><dd><strong>9K → 77.7K</strong><span>嵌套规模研究 9K–54K；混合表达正式训练 77,724 条</span></dd></div>
+              <div><dt>MODEL SELECTION</dt><dd><strong>2.4K + 1.2K</strong><span>早期训练对照 + 候选顺序稳健优化开发集</span></dd></div>
+              <div><dt>REPORTING BOUNDARY</dt><dd><strong>1K / 6K / 1.2K</strong><span>接口式表达、旧版合成表达与候选顺序压力测试分别报告</span></dd></div>
             </dl>
-            <footer><span>OUTPUT METRICS</span><strong>SetEM / TraceEM</strong></footer>
+            <footer><span>OUTPUT METRICS</span><strong>集合 / 工具链全对率</strong></footer>
           </article>
         </div>
 
         <div class="data-role-grid" role="group" aria-label="训练、选型与正式报告的阅读规则">
-          <article><span>01 · GRADIENT</span><strong>训练数据更新参数</strong><p>Intent 配方、Retrieval 24K、Planner SFT 与 DPO 偏好数据才进入对应模型训练。</p></article>
-          <article><span>02 · SELECT</span><strong>比较集负责选路线</strong><p>原 Planner 2.4K 与 DPO-v2 sealed dev 1.2K 分别承担选型；sealed final 只在端点锁定后评测。</p></article>
-          <article><span>03 · REPORT</span><strong>报告协议保持分开</strong><p>API-native 1K、Legacy 6K 与 sealed final 1.2K 不混算；对齐 Legacy 9K 只逐样本统计静态 Full，不代表执行成功。</p></article>
+          <article><span>01 · GRADIENT</span><strong>训练数据更新参数</strong><p>Intent 配方、Retrieval 24K、规划模型监督数据与偏好数据才进入对应模型训练。</p></article>
+          <article><span>02 · SELECT</span><strong>比较集负责选路线</strong><p>原规划开发集 2,400 条与顺序稳健开发集 1,200 条分别承担选型；顺序压力测试只在模型版本锁定后使用。</p></article>
+          <article><span>03 · REPORT</span><strong>报告协议保持分开</strong><p>接口式表达 1,000 条、旧版合成表达 6,000 条与顺序压力测试 1,200 条不混算；9,000 条静态全链路结果也不代表真实执行成功。</p></article>
         </div>
 
         <details class="narrative-disclosure data-disclosure">
@@ -444,18 +444,18 @@
                   <tbody>
                     <tr><td><strong>Tool Catalog / Corpus</strong><span>统一能力事实源</span></td><td>8 个业务域的结构化工具定义，包含能力边界与依赖</td><td>100 tools<br>100 documents</td><td>轨迹生成、BM25、向量建库、Reranker 文档侧与 Planner 候选定义</td><td>所有方案共用同一闭集能力空间；不承担模型评测</td></tr>
                     <tr><td><strong>Tool-call Traces</strong><span>上游基础轨迹</span></td><td>Catalog 能力片段、独立表达簇与场景上下文</td><td>30,000 queries<br>12K single / 18K multi<br>24K train / 6K fixed</td><td>训练侧支撑 Intent 与 Retrieval；测试侧形成检索比较集</td><td>train / test 的 Query、Trace ID、表达簇与两套 context salt 隔离</td></tr>
-                    <tr><td><strong>Intent SFT</strong><span>入口分类训练</span></td><td>Train 轨迹电商样本 + 独立闲聊模板 + 6 条边界样本</td><td>base 36,000<br>full / balanced 48,006<br>hard 12,006；各切 5% val</td><td>0.6B 使用 full；1.7B 使用 balanced；validation 选择 checkpoint</td><td>不进入 9K Intent 固定比较集</td></tr>
+                    <tr><td><strong>意图模型监督数据</strong><span>入口分类训练</span></td><td>Train 轨迹电商样本 + 独立闲聊模板 + 6 条边界样本</td><td>base 36,000<br>full / balanced 48,006<br>hard 12,006；各切 5% val</td><td>0.6B 使用 full；1.7B 使用 balanced；validation 选择模型版本</td><td>不进入 9K Intent 固定比较集</td></tr>
                     <tr><td><strong>Intent Fixed Set</strong><span>入口模块比较</span></td><td>6K 工具测试 Query + 3K 独立闲聊</td><td>9,000 queries<br>电商 : 闲聊 = 2 : 1</td><td>比较模型和训练配方；不参与梯度</td><td>输出 Accuracy / Macro-F1；不是独立真实流量 holdout</td></tr>
                     <tr><td><strong>Embedding / Reranker Train</strong><span>检索派生训练</span></td><td>24K train 轨迹 + 100 篇工具文档</td><td>24K groups<br>70,012 positive<br>96,000 explicit negative</td><td>MNRL 展开正对；Task Reranker 动态采样 1 正 + 7 负</td><td>训练入口不读取 test 派生文件</td></tr>
                     <tr><td><strong>Retrieval Fixed Set</strong><span>候选模块比较</span></td><td>6K test 轨迹 + 100 篇工具文档</td><td>3K single / 3K multi<br>multi = 1.5K seen + 1.5K unseen<br>15,196 positive · 24K negative</td><td>比较 9 个 Embedding Run、重排与融合路线；不参与梯度</td><td>输出 AllHit@K、MRR、转移分析与 Badcase；不是一次性最终 holdout</td></tr>
                     <tr><td><strong>Ranking Features</strong><span>候选排序特征</span></td><td>Train / Test 两侧固定 Top-50 预测</td><td>1.20M train rows<br>300K test rows</td><td>训练 Residual；RRF 参数仅在 24K train Query 上选择</td><td>参数冻结后在 6K fixed set 上比较</td></tr>
-                    <tr><td><strong>Planner Nested SFT</strong><span>有序轨迹训练</span></td><td>固定工具闭集中的 API 原生候选视图与 Gold Trace</td><td>9K / 18K / 36K / 54K<br>严格嵌套</td><td>训练 4B / 8B，并研究监督规模与完整目录迁移</td><td>稳定哈希前缀；与 Dev / Official Test 的规范化 Query、Trace ID 重合均为 0</td></tr>
-                    <tr><td><strong>Planner Selection Dev</strong><span>原规划模块选型</span></td><td>独立开发查询、候选与有序目标</td><td>2,400 queries</td><td>4B 21 个组合 + 8B 3 个复训确认，并选择初版 DPO beta</td><td>选型证据先冻结；不与原正式 1K 指标混算</td></tr>
-                    <tr><td><strong>Planner Official Test</strong><span>原规划正式评测</span></td><td>冻结查询、候选与有序目标</td><td>1,000 queries<br>1–5 tools 各 200</td><td>初版训练方案对照与规模曲线评测</td><td>不选择 checkpoint 或超参数；输出 SetEM / TraceEM</td></tr>
-                    <tr><td><strong>Initial DPO Preferences</strong><span>历史偏好对照</span></td><td>当前与训练早期 Planner 错误构建 chosen / rejected</td><td>5,000 pairs<br>synthetic pairs = 0</td><td>形成原 API-native 训练方案对照与顺序诊断</td><td>beta 只在原 2.4K Dev 选择；与 DPO-v2 分开解释</td></tr>
-                    <tr><td><strong>API-order Counterfactual</strong><span>业务顺序反事实</span></td><td>同工具集合、不同业务步骤顺序的成对请求</td><td>176 pairs<br>352 traces · 2–6 tools</td><td>单独检验用户顺序约束跟随能力</td><td>历史辅助证据，不等同于候选展示顺序扰动</td></tr>
-                    <tr><td><strong>Cross-style Planner SFT</strong><span>当前默认 Planner</span></td><td>部署等价 RAG@10 下合并 API-native 与 Legacy 两种训练表达</td><td>77,724 rows<br>checkpoint-2429</td><td>修复跨表达风格回退；8B 作为默认静态 Planner</td><td>API 1K 与 Legacy 6K 独立冻结报告，不跨协议合分</td></tr>
-                    <tr><td><strong>DPO-v2 + Sealed Order Final</strong><span>候选顺序鲁棒性</span></td><td>仅用当前跨风格父 SFT 的真实语义错误；只改变同一 Top10 的展示顺序</td><td>2,000 pairs<br>1,776 train / 224 monitor<br>1,200 sealed final</td><td>比较 original / reverse / fixed hash，选择鲁棒性端点</td><td>AllHit@10 99.75%；3 条漏召保留；历史冻结集只作回归审计</td></tr>
+                    <tr><td><strong>规划模型嵌套监督数据</strong><span>有序轨迹训练</span></td><td>固定工具闭集中的接口式候选视图与目标工具链</td><td>9K / 18K / 36K / 54K<br>严格嵌套</td><td>训练 4B / 8B，并研究监督规模与完整目录迁移</td><td>稳定哈希前缀；与开发集、正式测试集的规范化 Query、Trace ID 重合均为 0</td></tr>
+                    <tr><td><strong>规划模型开发集</strong><span>早期方案选型</span></td><td>独立开发查询、候选与有序目标</td><td>2,400 queries</td><td>4B 21 个组合 + 8B 3 个复训确认，并选择早期偏好优化强度</td><td>选型证据先固定；不与接口式表达正式测试的 1,000 条指标混算</td></tr>
+                    <tr><td><strong>接口式表达测试集</strong><span>规划模块正式评测</span></td><td>固定查询、候选与有序目标</td><td>1,000 queries<br>1–5 tools 各 200</td><td>早期训练方案对照与规模曲线评测</td><td>不选择模型版本或超参数；输出集合与工具链全对率</td></tr>
+                    <tr><td><strong>早期偏好数据</strong><span>历史训练对照</span></td><td>由不同训练阶段的规划错误构建偏好对</td><td>5,000 pairs<br>synthetic pairs = 0</td><td>形成早期监督微调对照与顺序诊断</td><td>偏好强度只在原 2,400 条开发集上选择；不与当前顺序稳健优化混写</td></tr>
+                    <tr><td><strong>历史顺序约束检查</strong><span>辅助能力测试</span></td><td>同工具集合、不同业务步骤顺序的成对请求</td><td>176 pairs<br>352 traces · 2–6 tools</td><td>单独检验用户顺序约束跟随能力</td><td>历史辅助证据，不等同于候选展示顺序变化</td></tr>
+                    <tr><td><strong>混合表达监督数据</strong><span>当前默认规划模型</span></td><td>Top-10 候选下合并接口式表达与旧版合成表达两种训练数据</td><td>77,724 rows<br>模型版本 2429</td><td>修复表达方式变化造成的回退；8B 作为默认静态规划模型</td><td>两套测试集独立报告，不跨协议合分</td></tr>
+                    <tr><td><strong>候选顺序稳健优化与压力测试</strong><span>候选排列稳定性</span></td><td>仅用当前混合表达监督微调模型的真实语义错误；只改变同一 Top-10 的展示顺序</td><td>2,000 pairs<br>1,776 train / 224 monitor<br>1,200 final</td><td>比较原顺序、倒序与固定规则打乱，选择顺序稳健模型</td><td>全部目标命中率@10 为 99.75%；3 条漏召保留；历史测试集只作回归审计</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -487,9 +487,9 @@
 
               <div class="planner-audit-grid" role="group" aria-label="Planner 数据审计摘要">
                 <article><strong>0</strong><span>Query / Trace overlap</span><p>四档训练集与 Dev / Official Test 的规范化 Query、Trace ID 均不重合。</p></article>
-                <article><strong>0</strong><span>Full-catalog SFT rows</span><p>训练样本不直接暴露完整 100 工具目录视图。</p></article>
+                <article><strong>0</strong><span>完整目录训练样本</span><p>训练样本不直接暴露完整 100 工具目录视图。</p></article>
                 <article><strong>100 / 100</strong><span>Tool coverage</span><p>每个训练规模都覆盖全部工具，避免小规模档缺类。</p></article>
-                <article><strong>82.1%</strong><span>Target sequence seen</span><p>Official 目标有序序列在 54K SFT 中出现过，属于闭集组合复用而非文本重合。</p></article>
+                <article><strong>82.1%</strong><span>目标工具链曾在训练中出现</span><p>正式测试的目标有序序列在 54K 监督数据中出现过，属于闭集组合复用而非文本重合。</p></article>
               </div>
               <p class="data-boundary-note"><strong>解释边界：</strong>四档训练集按稳定哈希前缀严格嵌套，数据审计 <code>strict_ok=true</code>。表达簇同序列仅命中 1 / 1,000，context-skeleton 命中为 0；但目标组合复用依然存在，所以任务应被理解为固定 100 工具的合成闭集，而不是开放世界泛化测试。</p>
             </section>
@@ -503,17 +503,17 @@
         <details class="narrative-disclosure method-disclosure">
           <summary>
             <span class="disclosure-summary-copy"><small>EXPERIMENT METHOD INDEX</small><strong>实验展开前，查看六类训练、排序与融合方法</strong></span>
-            <span class="disclosure-summary-meta">SFT · MNRL · RERANK · RRF · DPO</span>
+            <span class="disclosure-summary-meta">监督微调 · MNRL · 重排 · RRF · 偏好优化</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body">
             <div class="method-grid">
-              <article><span class="method-number">01</span><h3>LoRA SFT</h3><p>以小模型完成入口类型和电商关键词的结构化理解，形成低成本请求分流能力。</p><small>QWEN3 · RANK 16</small></article>
+              <article><span class="method-number">01</span><h3>LoRA 监督微调</h3><p>以小模型完成入口类型和电商关键词的结构化理解，形成低成本请求分流能力。</p><small>QWEN3 · RANK 16</small></article>
               <article><span class="method-number">02</span><h3>Bi-encoder + MNRL</h3><p>用 70,012 个正对学习 Query–Tool 表示；当前训练入口不直接读取显式负例文件。</p><small>70,012 POSITIVE PAIRS</small></article>
               <article><span class="method-number">03</span><h3>Task Cross-encoder</h3><p>联合编码 Query–Tool Pair，以组内正负样本学习更细粒度的候选交互关系。</p><small>24K GROUPS · 1 + 7</small></article>
               <article><span class="method-number">04</span><h3>Weighted RRF</h3><p>保留 Source 与 Task Reranker 两份名次，以训练集选定的权重和 rrf_k 生成最终排序。</p><small>SOURCE 0.6 · RRF_K 10</small></article>
-              <article><span class="method-number">05</span><h3>Toolchain SFT</h3><p>在 2.4K 开发集上搜索并冻结参数，再以 9K–54K 嵌套候选视图训练 4B/8B，检验监督规模与完整目录迁移。</p><small>21 + 3 RUNS · 4 NESTED SCALES</small></article>
-              <article><span class="method-number">06</span><h3>Preference DPO</h3><p>原 5K 对照完整保留；DPO-v2 改用 2K 对当前跨风格父模型真实语义错误，专门检验候选展示顺序鲁棒性。</p><small>DPO-V2 · 2K CURRENT-PARENT ERRORS</small></article>
+              <article><span class="method-number">05</span><h3>工具链监督微调</h3><p>在 2.4K 开发集上搜索并冻结参数，再以 9K–54K 嵌套候选视图训练 4B/8B，检验监督规模与完整目录迁移。</p><small>21 + 3 RUNS · 4 NESTED SCALES</small></article>
+              <article><span class="method-number">06</span><h3>候选顺序稳健优化</h3><p>历史 5,000 对偏好实验保留为对照；当前方案改用 2,000 对混合表达监督微调模型的真实语义错误，专门提升候选排列变化时的稳定性。</p><small>2K CURRENT-MODEL ERRORS</small></article>
             </div>
           </div>
         </details>
@@ -559,14 +559,14 @@
 
         <details class="narrative-disclosure intent-evidence-disclosure">
           <summary>
-            <span class="disclosure-summary-copy"><small>INTENT CHECKPOINT EVIDENCE</small><strong>查看 Keyword、Base、LoRA best 与 final 的完整结果</strong></span>
+            <span class="disclosure-summary-copy"><small>INTENT MODEL VERSION EVIDENCE</small><strong>查看 Keyword、Base、LoRA 最佳与最终版本的完整结果</strong></span>
             <span class="disclosure-summary-meta">7 ROWS · ACCURACY + MACRO-F1 · FIXED 9K</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body evidence-table-disclosure-body">
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table intent-evidence-table">
-                <thead><tr><th scope="col">模型</th><th scope="col">阶段</th><th scope="col">Checkpoint</th><th scope="col">Accuracy</th><th scope="col">Macro-F1</th><th scope="col">证据角色</th></tr></thead>
+                <thead><tr><th scope="col">模型</th><th scope="col">阶段</th><th scope="col">模型版本</th><th scope="col">Accuracy</th><th scope="col">Macro-F1</th><th scope="col">证据角色</th></tr></thead>
                 <tbody>
                   <tr><td>Keyword baseline</td><td>Lexical</td><td>—</td><td>50.22%</td><td>48.84%</td><td>规则起点</td></tr>
                   <tr><td>Qwen3-0.6B</td><td>Base</td><td>Base model</td><td>84.76%</td><td>83.74%</td><td>同尺寸训练前基线</td></tr>
@@ -574,11 +574,11 @@
                   <tr><td>Qwen3-0.6B</td><td>Full LoRA · final</td><td>checkpoint-2852</td><td>99.98%</td><td>99.97%</td><td>同一训练 Run 的 final 对照</td></tr>
                   <tr><td>Qwen3-1.7B</td><td>Base</td><td>Base model</td><td>90.47%</td><td>88.38%</td><td>更大基座对照</td></tr>
                   <tr><td>Qwen3-1.7B</td><td>Balanced LoRA · best</td><td>checkpoint-1600</td><td>99.88%</td><td>99.86%</td><td>同一训练 Run 的 best 对照</td></tr>
-                  <tr class="row-emphasis"><td>Qwen3-1.7B</td><td>Balanced LoRA · final</td><td>checkpoint-2852</td><td>99.96%</td><td>99.95%</td><td>1.7B 报告 checkpoint</td></tr>
+                  <tr class="row-emphasis"><td>Qwen3-1.7B</td><td>Balanced LoRA · final</td><td>checkpoint-2852</td><td>99.96%</td><td>99.95%</td><td>1.7B 报告版本</td></tr>
                 </tbody>
               </table>
             </div>
-            <p class="a3-details-note">选择采用 0.6B Full LoRA best：它在当前 9K 合成固定集合上同时取得最高 Accuracy 与 Macro-F1，且模型规模更小。best / final 属于同一训练 Run 的不同 checkpoint，不应误写成额外独立训练方案。</p>
+            <p class="a3-details-note">选择采用 0.6B Full LoRA 最佳版本：它在当前 9K 合成固定集合上同时取得最高 Accuracy 与 Macro-F1，且模型规模更小。best / final 是同一次训练中的不同模型版本，不应误写成额外独立训练方案。</p>
           </div>
         </details>
       </div>
@@ -683,7 +683,7 @@
               <strong class="disclosure-heading">最终路线的七个关键检查点</strong>
               <span class="disclosure-description">保留能够解释任务训练、替代分支与最终选择的 7 个检查点。</span>
             </span>
-            <span class="evidence-summary-metrics"><span>7 CHECKPOINTS</span><span>4 METRICS</span></span>
+            <span class="evidence-summary-metrics"><span>7 MODEL VERSIONS</span><span>4 METRICS</span></span>
             <span class="disclosure-action"><span>展开决策表</span><i>+</i></span>
           </summary>
 
@@ -915,88 +915,88 @@
         <header class="planner-intro">
           <p class="eyebrow">EXPERIMENT 03 · ORDERED-TRACE PLANNING</p>
           <div class="section-heading split-heading">
-            <h2 id="planningTitle">有序轨迹规划：两轮 SFT 如何决定最终模型</h2>
-            <p>Baseline 与 RAG 只负责确定起点。真正的主线是：第一次 API-native SFT 虽然取得约 99% 的模块分，却没有迁移到 Legacy 链路；cross-style SFT 修复这一落差，DPO-v2 再单独处理候选顺序鲁棒性。</p>
+            <h2 id="planningTitle">有序轨迹规划：训练结果与最终模型选择</h2>
+            <p>未微调的 8B 模型即使获得 Top-10 候选，工具链全对率仍只有 59.10%。首次监督微调将接口式表达测试提高到 98.30%，但静态全链路成功率（工具链口径）只有 81.41%；混合表达监督微调随后将其提高到 90.37%。候选顺序稳健优化仅用于候选排列可能变化的场景。</p>
           </div>
         </header>
 
         <section class="planner-final-lead" id="plannerLatestUpdate" aria-labelledby="plannerFinalLeadTitle">
           <div class="planner-final-lead-copy">
-            <span>FINAL RESULT · ALIGNED 9K</span>
-            <h3 id="plannerFinalLeadTitle"><strong>90.37%</strong> Static Full Trace</h3>
-            <p>Qwen3-8B cross-style SFT 完成 <b>8,133 / 9,000</b> 条静态完整链路，是本章最终主结果，也是固定候选顺序下的默认模型。</p>
+            <span>最终结果 · 静态全链路 9,000 条</span>
+            <h3 id="plannerFinalLeadTitle"><strong>90.37%</strong> 静态全链路成功率</h3>
+            <p>Qwen3-8B 混合表达监督微调模型按工具链口径完成 <b>8,133 / 9,000</b> 条静态完整链路，是本章最终主结果，也是候选顺序固定时的默认模型。</p>
           </div>
-          <div class="planner-final-lead-choice" role="group" aria-label="最终 Planner 端点">
+          <div class="planner-final-lead-choice" role="group" aria-label="最终规划模型选择">
             <div>
-              <span>DEFAULT</span>
-              <strong>8B cross-style SFT</strong>
-              <small>checkpoint-2429 · Full Trace 90.37%</small>
+              <span>默认模型</span>
+              <strong>8B 混合表达监督微调模型</strong>
+              <small>模型版本 2429 · 全链路 90.37%（工具链口径）</small>
             </div>
             <div>
-              <span>ORDER MAY DRIFT</span>
-              <strong>8B DPO-v2</strong>
-              <small>checkpoint-111 · Full Trace 90.16%</small>
+              <span>候选排列可能变化</span>
+              <strong>8B 候选顺序稳健模型</strong>
+              <small>模型版本 111 · 全链路 90.16%（工具链口径）</small>
             </div>
           </div>
-          <p class="planner-final-lead-rule"><strong>最终口径：</strong>API-native 1K 的约 99% 是 Planner 模块结果；90.37% 才是 Intent + Retrieval + Planner 在 aligned 9K 上逐样本联合统计的最终静态端到端结果。</p>
+          <p class="planner-final-lead-rule"><strong>最终口径：</strong>接口式表达测试集（1,000 条）的约 99% 是规划模块结果；90.37% 才是意图分流、候选检索与工具链规划在 9,000 条样本上联合统计的最终静态全链路结果。</p>
         </section>
 
         <section class="planner-compact-story" id="plannerExperiments" aria-labelledby="plannerStoryTitle">
           <header class="planner-story-head">
-            <span>EXPERIMENT EVOLUTION · COMPACT VIEW</span>
+            <span>TRAINING &amp; EVALUATION RESULTS</span>
             <div>
-              <h3 id="plannerStoryTitle">关键转折发生在第一次 SFT 之后</h3>
-              <p>前置实验合并为一个起点；两次 SFT 分开讲清；DPO 只承担顺序鲁棒性加固。下方每组结果表均可独立展开。</p>
+              <h3 id="plannerStoryTitle">主要训练与评测结果</h3>
+              <p>下方依次列出起点、两次监督微调、候选顺序稳健优化和最终全链路结果；每组结果表均可独立展开。</p>
             </div>
           </header>
 
           <ol class="planner-evolution">
             <li>
-              <small>00–01 · CONTEXT</small>
-              <span>Base + RAG</span>
+              <small>00–01 · 起点</small>
+              <span>基础模型 + Top-10 候选</span>
               <strong>59.10%</strong>
-              <p>8B Base · RAG@10 TraceEM</p>
-              <em>候选裁剪有帮助，但模型仍不会稳定选链。</em>
+              <p>8B · 工具链全对率</p>
+              <em>缩小候选范围有帮助，但模型仍无法稳定选对工具链。</em>
             </li>
             <li class="is-first-sft">
-              <small>02A · FIRST SFT</small>
-              <span>第一次 API-native SFT</span>
+              <small>02A · 首次监督微调</small>
+              <span>只用接口式表达训练</span>
               <strong>98.30%</strong>
-              <p>8B · API-native 1K TraceEM</p>
-              <em>同一端点的 aligned 9K Full Trace 只有 81.41%。</em>
+              <p>接口式表达 1,000 条 · 工具链全对率</p>
+              <em>同一模型的静态全链路成功率（工具链口径）只有 81.41%。</em>
             </li>
             <li class="is-selected">
-              <small>02B · DISTRIBUTION REPAIR</small>
-              <span>第二次 cross-style SFT</span>
+              <small>02B · 两种表达联合训练</small>
+              <span>混合表达监督微调</span>
               <strong>90.37%</strong>
-              <p>8B · aligned 9K Full Trace</p>
-              <em>Legacy TraceEM 由 72.18% 修复到 85.62%。</em>
+              <p>静态全链路成功率 · 工具链口径 · 9,000 条</p>
+              <em>旧版合成表达测试的工具链全对率由 72.18% 提高到 85.62%。</em>
             </li>
             <li class="is-conditional">
-              <small>03 · ROBUSTNESS</small>
-              <span>DPO-v2</span>
-              <strong>+0.53 pp</strong>
-              <p>8B · sealed 三顺序平均 TraceEM</p>
-              <em>Full Trace 为 90.16%，因此只做条件端点。</em>
+              <small>03 · 顺序稳定性</small>
+              <span>候选顺序稳健优化</span>
+              <strong>+0.53 个百分点</strong>
+              <p>8B · 三种候选顺序的平均工具链全对率</p>
+              <em>静态全链路成功率（工具链口径）为 90.16%，因此不替代默认模型。</em>
             </li>
           </ol>
 
           <div class="planner-story-disclosures">
             <details class="narrative-disclosure planner-story-results" id="plannerExperiment0">
               <summary>
-                <span class="disclosure-summary-copy"><small>BASELINE + FIRST SFT</small><strong>Base → RAG → 第一次正式 SFT，以及首次 9K 复测</strong></span>
-                <span class="disclosure-summary-meta">API 1K · LEGACY 6K · FULL 9K</span>
+                <span class="disclosure-summary-copy"><small>起点与首次监督微调</small><strong>基础模型 → Top-10 候选 → 首次监督微调，以及首次全链路复测</strong></span>
+                <span class="disclosure-summary-meta">接口式表达 1K · 旧版表达 6K · 全链路 9K</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
                 <div class="planner-table-block">
                   <div class="planner-table-heading">
-                    <h4>第一次 SFT 建立了模块能力</h4>
-                    <p>前三列属于同一 API-native frozen 1K；54K 调参端点是同协议补充实验，但不是后续 Legacy / 9K 主线使用的 checkpoint。</p>
+                    <h4>首次监督微调显著提高规划模块准确率</h4>
+                    <p>前三列都来自同一套接口式表达测试集（1,000 条）。54K 补充实验使用相同测试协议，但对应另一模型版本，不参与后续全链路比较。</p>
                   </div>
                   <div class="result-table-wrap" tabindex="0">
                     <table class="result-table result-table-compact planner-result-table planner-first-sft-table">
-                      <thead><tr><th scope="col">模型</th><th scope="col">Base / 100 工具 Set / Trace</th><th scope="col">Base / RAG@10 Set / Trace</th><th scope="col">第一次正式 SFT / RAG@10 Set / Trace</th><th scope="col">54K 调参 SFT / RAG@10 Set / Trace</th></tr></thead>
+                      <thead><tr><th scope="col">模型</th><th scope="col">未微调 / 100 工具<br>集合 / 工具链全对率</th><th scope="col">未微调 / Top-10 候选<br>集合 / 工具链全对率</th><th scope="col">首次监督微调 / Top-10 候选<br>集合 / 工具链全对率</th><th scope="col">54K 补充微调 / Top-10 候选<br>集合 / 工具链全对率</th></tr></thead>
                       <tbody>
                         <tr><td>Qwen3-4B</td><td>52.30% / 50.40%</td><td>54.00% / 53.10%</td><td><strong>99.00% / 99.00%</strong></td><td>98.60% / 98.60%</td></tr>
                         <tr class="result-table-final"><td>Qwen3-8B</td><td>57.40% / 54.60%</td><td>60.00% / 59.10%</td><td><strong>98.30% / 98.30%</strong></td><td>99.10% / 99.10%</td></tr>
@@ -1006,40 +1006,40 @@
                 </div>
                 <div class="planner-table-block">
                   <div class="planner-table-heading">
-                    <h4>但同一第一次 SFT 没有迁移到 Legacy 链路</h4>
-                    <p>这里固定使用原正式 API-only SFT，不使用上表的 54K 补充 checkpoint。</p>
+                    <h4>但换一种合成表达方式后明显下降</h4>
+                    <p>这里固定使用首次正式微调模型，即只用接口式表达训练的版本；不使用上表的 54K 补充模型。</p>
                   </div>
                   <div class="result-table-wrap" tabindex="0">
                     <table class="result-table result-table-compact planner-result-table">
-                      <thead><tr><th scope="col">模型</th><th scope="col">API-native 1K Set / Trace</th><th scope="col">Legacy frozen 6K Set / Trace</th><th scope="col">Aligned 9K Full Set / Trace</th><th scope="col">Full Set / Trace 通过</th></tr></thead>
+                      <thead><tr><th scope="col">模型</th><th scope="col">接口式表达 1K<br>集合 / 工具链全对率</th><th scope="col">旧版合成表达 6K<br>集合 / 工具链全对率</th><th scope="col">静态全链路 9K<br>集合 / 工具链口径成功率</th><th scope="col">集合 / 工具链<br>通过数</th></tr></thead>
                       <tbody>
-                        <tr><td>Qwen3-4B 第一次 SFT</td><td>99.00% / 99.00%</td><td>71.65% / 71.22%</td><td>81.06% / 80.77%</td><td>7,295 / 7,269</td></tr>
-                        <tr class="result-table-final"><td>Qwen3-8B 第一次 SFT</td><td>98.30% / 98.30%</td><td>72.43% / 72.18%</td><td><strong>81.58% / 81.41%</strong></td><td>7,342 / 7,327</td></tr>
+                        <tr><td>Qwen3-4B 首次监督微调</td><td>99.00% / 99.00%</td><td>71.65% / 71.22%</td><td>81.06% / 80.77%</td><td>7,295 / 7,269</td></tr>
+                        <tr class="result-table-final"><td>Qwen3-8B 首次监督微调</td><td>98.30% / 98.30%</td><td>72.43% / 72.18%</td><td><strong>81.58% / 81.41%</strong></td><td>7,342 / 7,327</td></tr>
                       </tbody>
                     </table>
                   </div>
-                  <p class="planner-result-boundary"><strong>这解释了“之前只有八十多”：</strong>约 99% 来自 API-native 1K 的 Planner 模块评测；80.77% / 81.41% 才是第一次 SFT 在 aligned 9K 上的 Static Full Trace。</p>
+                  <p class="planner-result-boundary"><strong>口径区别：</strong>约 99% 来自 1,000 条接口式表达的规划模块评测；80.77% / 81.41% 才是首次监督微调模型在 9,000 条测试中的静态全链路成功率（工具链口径）。</p>
                 </div>
               </div>
             </details>
 
             <details class="narrative-disclosure planner-story-results" id="plannerExperiment2">
               <summary>
-                <span class="disclosure-summary-copy"><small>SECOND SFT · DISTRIBUTION REPAIR</small><strong>Cross-style SFT：Legacy Trace 72.18% → 85.62%，Full Trace 81.41% → 90.37%</strong></span>
-                <span class="disclosure-summary-meta">77,724 ROWS · CHECKPOINT-2429</span>
+                <span class="disclosure-summary-copy"><small>混合表达监督微调</small><strong>旧版表达工具链全对率 72.18% → 85.62%，全链路成功率 81.41% → 90.37%</strong></span>
+                <span class="disclosure-summary-meta">77,724 条 · 模型版本 2429</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
                 <div class="planner-table-heading">
-                  <h4>第二次 SFT 修复表达与候选协议失配</h4>
-                  <p>API 1K、Legacy 6K 与 aligned 9K 分别计分；箭头只表示同一冻结协议内的端点替换。</p>
+                  <h4>混合两种表达重新训练后，全链路结果提高</h4>
+                  <p>接口式表达、旧版合成表达与静态全链路三套测试分别计分；箭头只比较同一测试集上的两个模型。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table planner-crossstyle-table">
-                    <thead><tr><th scope="col">模型</th><th scope="col">Cross-style API 1K Set / Trace</th><th scope="col">Legacy 6K：第一次 → Cross-style Set / Trace</th><th scope="col">Full 9K：第一次 → Cross-style Set / Trace</th><th scope="col">正式端点</th></tr></thead>
+                    <thead><tr><th scope="col">模型</th><th scope="col">接口式表达 1K<br>集合 / 工具链全对率</th><th scope="col">旧版表达 6K：首次 → 混合表达<br>集合 / 工具链全对率</th><th scope="col">全链路 9K：首次 → 混合表达<br>集合 / 工具链口径成功率</th><th scope="col">模型版本</th></tr></thead>
                     <tbody>
-                      <tr><td>Qwen3-4B</td><td>99.80% / 99.80%</td><td>71.65% / 71.22% → <strong>84.00% / 83.68%</strong></td><td>81.06% / 80.77% → <strong>89.29% / 89.08%</strong></td><td>checkpoint-2429</td></tr>
-                      <tr class="result-table-final"><td>Qwen3-8B</td><td>99.70% / 99.70%</td><td>72.43% / 72.18% → <strong>85.95% / 85.62%</strong></td><td>81.58% / 81.41% → <strong>90.59% / 90.37%</strong></td><td><strong>checkpoint-2429</strong></td></tr>
+                      <tr><td>Qwen3-4B</td><td>99.80% / 99.80%</td><td>71.65% / 71.22% → <strong>84.00% / 83.68%</strong></td><td>81.06% / 80.77% → <strong>89.29% / 89.08%</strong></td><td>2429</td></tr>
+                      <tr class="result-table-final"><td>Qwen3-8B</td><td>99.70% / 99.70%</td><td>72.43% / 72.18% → <strong>85.95% / 85.62%</strong></td><td>81.58% / 81.41% → <strong>90.59% / 90.37%</strong></td><td><strong>2429</strong></td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -1048,50 +1048,50 @@
 
             <details class="narrative-disclosure planner-story-results" id="plannerExperiment3">
               <summary>
-                <span class="disclosure-summary-copy"><small>DPO · TWO ITERATIONS</small><strong>初版没有稳定提升主指标；DPO-v2 只成功增强候选顺序鲁棒性</strong></span>
-                <span class="disclosure-summary-meta">2K PAIRS · SEALED 1.2K × 3</span>
+                <span class="disclosure-summary-copy"><small>候选顺序稳健优化</small><strong>三种候选排列下更稳定，但不替代默认模型</strong></span>
+                <span class="disclosure-summary-meta">2,000 对偏好 · 同一 1,200 条 × 3 种排列</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
-                <p class="planner-dpo-context"><strong>为什么需要 v2：</strong>第一次 DPO 在原正式 API 1K 的 RAG@10 TraceEM 上，4B 为 99.00% → 98.90%，8B 为 98.30% → 98.40%，没有形成一致收益；后续 cross-style DPO-v1 又在 Legacy 上明显回退。v2 因此只使用当前父 SFT 的真实错误，并采用更保守的学习率。</p>
+                <p class="planner-dpo-context">早期偏好优化没有稳定改善主指标，其中一次还使旧版表达测试明显回退。当前方案只使用混合表达监督微调模型的真实错误，并采用更保守的学习率，目标是降低模型对候选排列的敏感性。</p>
                 <div class="planner-table-heading">
-                  <h4>DPO-v2 sealed candidate-order final</h4>
-                  <p>同一 1,200 条 Query 分别按 original、reverse、hash 展示；不是 3,600 条独立 Query。</p>
+                  <h4>候选顺序压力测试</h4>
+                  <p>同一 1,200 条 Query 分别按原顺序、倒序和固定规则打乱展示；不是 3,600 条独立 Query。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table">
-                    <thead><tr><th scope="col">模型</th><th scope="col">父 SFT 三顺序平均 Set / Trace</th><th scope="col">DPO-v2 三顺序平均 Set / Trace</th><th scope="col">原顺序 Trace</th><th scope="col">最差顺序 Trace：父 → DPO</th><th scope="col">平均 Trace 提升</th></tr></thead>
+                    <thead><tr><th scope="col">模型</th><th scope="col">优化前：三顺序平均<br>集合 / 工具链全对率</th><th scope="col">顺序稳健模型：三顺序平均<br>集合 / 工具链全对率</th><th scope="col">原顺序<br>工具链全对率</th><th scope="col">最差顺序：优化前 → 优化后<br>工具链全对率</th><th scope="col">平均工具链<br>提升</th></tr></thead>
                     <tbody>
-                      <tr><td>Qwen3-4B</td><td>97.72% / 97.69%</td><td><strong>98.44% / 98.42%</strong></td><td>99.00% → 99.00%</td><td>96.08% → <strong>97.83%</strong></td><td><strong>+0.72 pp</strong></td></tr>
-                      <tr class="result-table-final"><td>Qwen3-8B</td><td>98.14% / 98.06%</td><td><strong>98.67% / 98.58%</strong></td><td>99.25% → 99.25%</td><td>97.08% → <strong>97.83%</strong></td><td><strong>+0.53 pp</strong></td></tr>
+                      <tr><td>Qwen3-4B</td><td>97.72% / 97.69%</td><td><strong>98.44% / 98.42%</strong></td><td>99.00% → 99.00%</td><td>96.08% → <strong>97.83%</strong></td><td><strong>+0.72 个百分点</strong></td></tr>
+                      <tr class="result-table-final"><td>Qwen3-8B</td><td>98.14% / 98.06%</td><td><strong>98.67% / 98.58%</strong></td><td>99.25% → 99.25%</td><td>97.08% → <strong>97.83%</strong></td><td><strong>+0.53 个百分点</strong></td></tr>
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>部署判断：</strong>DPO-v2 的 8B Static Full Trace 为 90.16%，比父 SFT 的 90.37% 低 0.21 pp；因此它不替代默认模型。</p>
+                <p class="planner-result-boundary"><strong>部署判断：</strong>8B 顺序稳健模型的静态全链路成功率（工具链口径）为 90.16%，比优化前模型的 90.37% 低 0.21 个百分点；因此它不替代默认模型。</p>
               </div>
             </details>
 
             <details class="narrative-disclosure planner-story-results planner-final-results" id="plannerExperiment4" open>
               <summary>
-                <span class="disclosure-summary-copy"><small>FINAL STATIC END-TO-END</small><strong>Aligned 9K 全部端点：最终选择 8B cross-style SFT</strong></span>
-                <span class="disclosure-summary-meta">3K CHAT + 6K ECOMMERCE</span>
+                <span class="disclosure-summary-copy"><small>最终静态全链路结果</small><strong>9,000 条测试：最终选择 8B 混合表达监督微调模型</strong></span>
+                <span class="disclosure-summary-meta">3,000 条闲聊 + 6,000 条电商</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
                 <div class="planner-table-heading">
-                  <h4>Static Full · Intent + Retrieval + Planner</h4>
-                  <p>Full Set / Trace 均由 9,000 行联合事件直接计数，不是独立模块准确率相乘。</p>
+                  <h4>意图分流 + 候选检索 + 工具链规划</h4>
+                  <p>集合与工具链两种口径的全链路成功率均由 9,000 条联合事件直接计数，不是独立模块准确率相乘。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table planner-final-table">
-                    <thead><tr><th scope="col">模型</th><th scope="col">Planner 阶段</th><th scope="col">Full Set</th><th scope="col">Full Trace</th><th scope="col">Set / Trace 通过</th><th scope="col">结论</th></tr></thead>
+                    <thead><tr><th scope="col">模型</th><th scope="col">规划模型训练阶段</th><th scope="col">全链路成功率<br>集合口径</th><th scope="col">全链路成功率<br>工具链口径</th><th scope="col">集合 / 工具链通过数</th><th scope="col">结论</th></tr></thead>
                     <tbody>
-                      <tr><td>Qwen3-4B</td><td>第一次 SFT</td><td>81.06%</td><td>80.77%</td><td>7,295 / 7,269</td><td>初始系统基线</td></tr>
-                      <tr><td>Qwen3-4B</td><td>cross-style SFT</td><td>89.29%</td><td>89.08%</td><td>8,036 / 8,017</td><td>固定顺序父模型</td></tr>
-                      <tr><td>Qwen3-4B</td><td>DPO-v2</td><td>89.26%</td><td>89.10%</td><td>8,033 / 8,019</td><td>资源敏感鲁棒端点</td></tr>
-                      <tr><td>Qwen3-8B</td><td>第一次 SFT</td><td>81.58%</td><td>81.41%</td><td>7,342 / 7,327</td><td>初始系统基线</td></tr>
-                      <tr class="result-table-final"><td>Qwen3-8B</td><td><strong>cross-style SFT</strong></td><td><strong>90.59%</strong></td><td><strong>90.37%</strong></td><td><strong>8,153 / 8,133</strong></td><td><strong>当前默认</strong></td></tr>
-                      <tr><td>Qwen3-8B</td><td>DPO-v2</td><td>90.33%</td><td>90.16%</td><td>8,130 / 8,114</td><td>顺序漂移时使用</td></tr>
+                      <tr><td>Qwen3-4B</td><td>首次监督微调</td><td>81.06%</td><td>80.77%</td><td>7,295 / 7,269</td><td>初始系统基线</td></tr>
+                      <tr><td>Qwen3-4B</td><td>混合表达监督微调</td><td>89.29%</td><td>89.08%</td><td>8,036 / 8,017</td><td>候选顺序固定时使用</td></tr>
+                      <tr><td>Qwen3-4B</td><td>候选顺序稳健优化</td><td>89.26%</td><td>89.10%</td><td>8,033 / 8,019</td><td>资源受限且候选顺序会变化时使用</td></tr>
+                      <tr><td>Qwen3-8B</td><td>首次监督微调</td><td>81.58%</td><td>81.41%</td><td>7,342 / 7,327</td><td>初始系统基线</td></tr>
+                      <tr class="result-table-final"><td>Qwen3-8B</td><td><strong>混合表达监督微调</strong></td><td><strong>90.59%</strong></td><td><strong>90.37%</strong></td><td><strong>8,153 / 8,133</strong></td><td><strong>当前默认</strong></td></tr>
+                      <tr><td>Qwen3-8B</td><td>候选顺序稳健优化</td><td>90.33%</td><td>90.16%</td><td>8,130 / 8,114</td><td>候选顺序会变化时使用</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -1109,12 +1109,12 @@
           </summary>
           <div class="disclosure-body">
             <div class="planner-appendix-grid">
-              <article><strong>API-native 1K</strong><span>Planner 模块能力；Base、第一次 SFT 与 54K 调参 SFT在此比较。</span></article>
-              <article><strong>Legacy frozen 6K</strong><span>另一种合成表达分布；检验第一次 SFT 与 cross-style SFT。</span></article>
-              <article><strong>Aligned 9K</strong><span>3K 闲聊 + 6K 电商；最终 Static Full 口径。</span></article>
-              <article><strong>Sealed 1.2K × 3</strong><span>同一 Query 的三种候选顺序；只检验 DPO-v2 鲁棒性。</span></article>
+              <article><strong>接口式表达测试集（1,000 条）</strong><span>只衡量规划模块；用于比较未微调模型、首次监督微调与 54K 补充实验。</span></article>
+              <article><strong>旧版合成表达测试集（6,000 条）</strong><span>使用另一种合成表达方式，并非线上数据；用于检验表达方式变化后的稳定性。</span></article>
+              <article><strong>静态全链路测试集（9,000 条）</strong><span>3,000 条闲聊 + 6,000 条电商；用于报告最终结果。</span></article>
+              <article><strong>候选顺序压力测试（1,200 条 × 3）</strong><span>同一批 Query 使用三种候选排列；只检验候选顺序稳健模型。</span></article>
             </div>
-            <p class="planner-appendix-note"><strong>54K 调参 SFT：</strong>8B 在 API-native 1K 上取得 99.10% Set / Trace，但它是独立 checkpoint，没有对应的 Legacy 6K 或 aligned 9K 主线结果，因此不与 72.18% 或 90.37% 串成连续增益。</p>
+            <p class="planner-appendix-note"><strong>54K 补充监督微调：</strong>8B 在接口式表达测试集上取得 99.10% 的集合与工具链全对率，但它是独立模型版本，没有对应的旧版表达或静态全链路结果，因此不与 72.18% 或 90.37% 串成连续增益。</p>
             <p class="planner-appendix-note"><strong>能力边界：</strong>所有结果均来自固定 100 工具合成闭集上的静态选链；不覆盖新工具、参数生成、真实 API observation、异常恢复或多轮状态。</p>
           </div>
         </details>
@@ -1125,7 +1125,7 @@
         <p class="eyebrow">PROJECT OUTCOME · FINAL SYSTEM &amp; BOUNDARY</p>
         <div class="section-heading split-heading">
           <h2 id="limitsTitle">完整系统结论、适用边界与下一步</h2>
-          <p>当前证据支持一条完整但静态的系统链路：在固定 100 工具合成闭集中完成入口分流、高覆盖候选检索与有序工具轨迹规划。跨风格 SFT 修复了主要表达分布回退，DPO-v2 进一步提升候选展示顺序鲁棒性；真实请求、开放工具集合和执行级闭环仍未覆盖。</p>
+          <p>当前证据支持一条完整但静态的系统链路：在固定 100 工具合成闭集中完成入口分流、高覆盖候选检索与有序工具轨迹规划。混合表达监督微调修复了表达方式变化造成的主要回退，候选顺序稳健优化进一步降低模型对候选排列的敏感性；真实请求、开放工具集合和执行级闭环仍未覆盖。</p>
         </div>
 
         <section class="final-system-overview" id="system" aria-labelledby="systemTitle">
@@ -1134,14 +1134,14 @@
               <span>FINAL SYSTEM OVERVIEW · THREE MODULES / FIVE STEPS</span>
               <h3 id="systemTitle">实验选择汇成的最终静态工具链</h3>
             </div>
-            <p>这里只保留当前默认配置，并以对齐 9K 的 Static Full Trace 90.37% 作为最终结果。DPO-v2 是候选顺序可能漂移时的可选鲁棒端点，不与默认固定顺序链路混写。</p>
+            <p>这里只保留当前默认配置，并以 9,000 条测试的静态全链路成功率 90.37%（工具链口径）作为最终结果。候选顺序稳健模型仅在候选排列可能变化时使用，不替代默认模型。</p>
           </header>
 
           <ol class="route-phases final-route-phases">
             <li><span>01 · MODULE 01</span><strong>请求分流</strong><small>0.6B Full LoRA</small></li>
             <li><span>02 · MODULE 02</span><strong>混合召回</strong><small>Embedding + BM25</small></li>
             <li><span>03 · MODULE 02</span><strong>重排与融合</strong><small>Task Reranker + RRF</small></li>
-            <li><span>04 · MODULE 03</span><strong>精确选择工具</strong><small>8B · cross-style SFT</small></li>
+            <li><span>04 · MODULE 03</span><strong>精确选择工具</strong><small>8B · 混合表达监督微调</small></li>
             <li><span>05 · MODULE 03</span><strong>生成有序轨迹</strong><small>Tool ID Trace</small></li>
           </ol>
 
@@ -1218,37 +1218,37 @@
             <div class="planner-map">
               <div class="planner-inputs">
                 <div><small>REQUEST CONTEXT</small><strong>E-commerce Query</strong><span>保留用户要求与顺序约束</span></div>
-                <div class="planner-input-selected"><small>RAG@10</small><strong>Top-10 Tool Set</strong><span>API 1K AllHit 100% · Legacy 6K 98.30%</span></div>
+                <div class="planner-input-selected"><small>TOP-10 候选</small><strong>Top-10 Tool Set</strong><span>接口式表达 1K 完整召回 100% · 旧版表达 6K 98.30%</span></div>
               </div>
               <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
               <div class="planner-model">
                 <small>SELECTED STATIC PLANNER</small>
-                <strong>Qwen3-8B · cross-style SFT</strong>
-                <span>checkpoint-2429 · 固定候选顺序默认端点</span>
+                <strong>Qwen3-8B · 混合表达监督微调</strong>
+                <span>模型版本 2429 · 候选顺序固定时的默认模型</span>
               </div>
               <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
               <div class="planner-output">
                 <small>ORDERED OUTPUT</small>
                 <strong>Tool ID Trace</strong>
-                <span>SetEM · TraceEM · 严格 JSON 输出</span>
+                <span>集合全对率 · 工具链全对率 · 严格 JSON 输出</span>
               </div>
             </div>
             <p class="planner-boundary">最终系统在此停止：输出静态有序工具 ID，不执行真实 API，也不评测参数、返回值、失败恢复或多轮状态。</p>
           </article>
         </section>
 
-        <p class="phase-context-label final-results-label">FINAL RESULT · ALIGNED 9K STATIC END-TO-END</p>
+        <p class="phase-context-label final-results-label">最终结果 · 静态全链路测试集 9,000 条</p>
         <div class="system-outcome-grid" role="group" aria-label="主要模块证据与静态端到端最终结果">
           <article><span>01 · INTENT</span><h3>0.6B Full LoRA</h3><strong>100.00%</strong><p>Accuracy / Macro-F1 · 9K 合成固定集合</p><small>OUTPUT · E-commerce Query</small></article>
           <article><span>02 · RETRIEVAL</span><h3>Source + Task Reranker RRF</h3><strong>98.30%</strong><p>AllHit@10 · 6K 固定项目基准</p><small>OUTPUT · Top-10 Tool Set</small></article>
-          <article class="is-selected"><span>FINAL · STATIC END-TO-END</span><h3>8B · cross-style SFT</h3><strong>90.37%</strong><p>Full Trace · aligned 9K · 8,133 / 9,000</p><small>FULL SET 90.59% · API 1K PLANNER 99.70%</small></article>
+          <article class="is-selected"><span>最终静态全链路</span><h3>8B · 混合表达监督微调</h3><strong>90.37%</strong><p>成功率（工具链口径）· 8,133 / 9,000</p><small>集合口径 90.59% · 规划模块 99.70%</small></article>
         </div>
-        <p class="system-outcome-note"><strong>最终口径：</strong>当前默认模型在对齐 Legacy 9K 上逐样本得到 Static Full Trace 90.3667%（8,133 / 9,000）与 Full Set 90.5889%（8,153 / 9,000）。前两张卡是不同固定基准上的模块证据，不能与最终结果相乘；Static Full 是静态联合判定，不是工具真实执行成功率。</p>
+        <p class="system-outcome-note"><strong>最终口径：</strong>当前默认模型在 9,000 条测试中逐样本得到静态全链路成功率 90.3667%（工具链口径，8,133 / 9,000）与 90.5889%（集合口径，8,153 / 9,000）。前两张卡是不同固定测试集上的模块证据，不能与最终结果相乘；全链路结果是离线静态联合判定，不是工具真实执行成功率。</p>
 
         <div class="verified-limitations" role="group" aria-label="已核实的适用边界">
           <article><strong>合成闭集</strong><span>目录固定为 100 项，Query 来自合成流程；不能直接外推到开放世界或真实流量。</span></article>
-          <article><strong>协议独立</strong><span>Intent、Retrieval、API 1K、Legacy 6K 与 sealed 1.2K 承担不同角色；只在对齐的 Legacy 9K 上报告静态 Full。</span></article>
-          <article><strong>组合复用</strong><span>原 Planner 正式 1K 有 82.1% 有序目标序列在当轮 SFT 中 seen，高分仍受固定组合空间影响。</span></article>
+          <article><strong>协议独立</strong><span>意图、检索、接口式表达 1K、旧版合成表达 6K 与候选顺序压力测试 1.2K 承担不同角色；最终结果只来自静态全链路 9K。</span></article>
+          <article><strong>组合复用</strong><span>原规划正式测试的 1,000 条中，有 82.1% 的目标工具链曾在当轮监督数据中出现，高分仍受固定组合空间影响。</span></article>
           <article><strong>执行边界</strong><span>静态顺序已经评测，但参数、真实调用、返回值、失败恢复与多轮状态均未实现。</span></article>
           <article><strong>规模方差</strong><span>9K–54K 每档只训练一个固定种子，非单调差异可能包含优化随机性，不能推出“数据越多必然越好”。</span></article>
           <article><strong>索引未对比</strong><span>FAISS IndexFlatIP 适配 100 项目录，但项目没有向量数据库横向基准。</span></article>
@@ -1258,10 +1258,10 @@
           <span>01</span><div><h3>当前成果</h3><p>完整系统的各个组件已经形成可串联、可追溯的项目资产。</p></div>
         </div>
         <div class="limit-grid">
-          <article><span>已完成 · 01</span><h3>能力与数据底座</h3><p>100 工具 Catalog、30K 路由与检索基础轨迹，以及 9K–54K 严格嵌套的 Planner API 原生 SFT 数据均已沉淀。</p></article>
+          <article><span>已完成 · 01</span><h3>能力与数据底座</h3><p>100 工具 Catalog、30K 路由与检索基础轨迹，以及 9K–54K 严格嵌套的接口式规划监督数据均已沉淀。</p></article>
           <article><span>已完成 · 02</span><h3>入口与候选检索</h3><p>LoRA Intent Gate、微调 Retriever、Task Reranker 和双路 RRF 已串成稳定的上游候选生成链路。</p></article>
-          <article><span>已完成 · 03</span><h3>静态有序选链</h3><p>当前 8B 跨风格 SFT 在对齐 9K 上取得 Static Full Set / Trace 90.59% / 90.37%；API-native 1K 的 99.70% 保留为 Planner 模块结果。</p></article>
-          <article><span>已沉淀 · 04</span><h3>鲁棒性证据链</h3><p>DPO-v2 以 2K 当前父模型错误训练，在新 sealed final 上提升三顺序平均与最差顺序 TraceEM，审计和文件哈希均可追溯。</p></article>
+          <article><span>已完成 · 03</span><h3>静态有序选链</h3><p>当前 8B 混合表达监督微调模型在 9,000 条测试中取得静态全链路成功率 90.59% / 90.37%（集合 / 工具链口径）；接口式表达 1,000 条的 99.70% 保留为规划模块结果。</p></article>
+          <article><span>已沉淀 · 04</span><h3>候选顺序稳定性</h3><p>候选顺序稳健模型使用 2,000 对混合表达监督微调模型的真实错误训练，在三种候选排列下提高平均与最差工具链全对率，审计和文件哈希均可追溯。</p></article>
         </div>
 
         <div class="roadmap">
@@ -1290,9 +1290,9 @@
         </aside>
 
         <div class="evidence-grid">
-          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/06_Assignment3_100%E5%B7%A5%E5%85%B7%E5%AE%9E%E9%AA%8C%E6%80%BB%E6%8A%A5%E5%91%8A.md" target="_blank" rel="noopener noreferrer"><span>PLANNING REPORT</span><h3>有序轨迹规划总报告</h3><p>原实验、跨风格 SFT、DPO-v2、候选顺序压力测试与静态 Full 的统一口径。</p><b>规划实验源报告</b></a>
-          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_crossstyle_rag10/dpo_v2/final_summary.json" target="_blank" rel="noopener noreferrer"><span>LATEST STRUCTURED EVIDENCE</span><h3>DPO-v2 可追溯汇总</h3><p>偏好数据、训练选型、sealed 三顺序终评、历史回归审计与 checkpoint。</p><b>dpo_v2/final_summary.json</b></a>
-          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_100tool_api/sft_ablation/results_summary.json" target="_blank" rel="noopener noreferrer"><span>MACHINE-READABLE RESULTS</span><h3>SFT 消融结构化汇总</h3><p>参数选择证据、16 个规模评测单元、checkpoint、预测与指标哈希。</p><b>results_summary.json</b></a>
+          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/06_Assignment3_100%E5%B7%A5%E5%85%B7%E5%AE%9E%E9%AA%8C%E6%80%BB%E6%8A%A5%E5%91%8A.md" target="_blank" rel="noopener noreferrer"><span>PLANNING REPORT</span><h3>有序轨迹规划总报告</h3><p>首次监督微调、混合表达监督微调、候选顺序压力测试与静态全链路结果的统一口径。</p><b>规划实验源报告</b></a>
+          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_crossstyle_rag10/dpo_v2/final_summary.json" target="_blank" rel="noopener noreferrer"><span>LATEST STRUCTURED EVIDENCE</span><h3>候选顺序稳健优化汇总</h3><p>偏好数据、训练选型、三种候选排列的压力测试、历史回归审计与模型版本。</p><b>dpo_v2/final_summary.json</b></a>
+          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_100tool_api/sft_ablation/results_summary.json" target="_blank" rel="noopener noreferrer"><span>MACHINE-READABLE RESULTS</span><h3>监督微调消融汇总</h3><p>参数选择证据、16 个规模评测单元、模型版本、预测与指标哈希。</p><b>results_summary.json</b></a>
         </div>
 
         <details class="narrative-disclosure evidence-index-disclosure">
@@ -1341,7 +1341,7 @@ python3 \
         <div class="provenance">
           <div><span>PROJECT SNAPSHOT</span><strong>2026-07-29</strong></div>
           <div><span>CATALOG VERSION</span><strong>100 tools · 2026-07-06</strong></div>
-          <div><span>RESULT INPUT</span><strong>6K Retrieval + 1K API + 6K Legacy + 1.2K Sealed</strong></div>
+          <div><span>RESULT INPUT</span><strong>检索 6K + 接口表达 1K + 旧版表达 6K + 顺序压力测试 1.2K</strong></div>
           <div><span>EVALUATION SETTING</span><strong>Module-specific synthetic closed sets</strong></div>
         </div>
       </div>
