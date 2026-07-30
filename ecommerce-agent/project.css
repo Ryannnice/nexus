@@ -7560,6 +7560,11 @@ details table td {
   line-height: 1.15;
 }
 
+.efficiency-summary .environment-missing-value {
+  color: var(--body);
+  font-size: 19px;
+}
+
 .efficiency-summary small {
   display: block;
   margin-top: 9px;
@@ -7651,7 +7656,125 @@ details table td {
   color: var(--ink);
 }
 
-.efficiency-disclosure + .verified-limitations {
+.efficiency-boundary code {
+  padding: 2px 5px;
+  border: 1px solid var(--hairline);
+  background: var(--surface-soft);
+  font-family: var(--font);
+  font-size: .92em;
+}
+
+.experiment-environment-disclosure {
+  margin-top: 32px;
+}
+
+.environment-record-boundary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 18px;
+  border: 1px solid var(--hairline);
+  background: var(--hairline);
+}
+
+.environment-record-boundary p {
+  margin: 0;
+  padding: 16px;
+  background: var(--canvas);
+  color: var(--body);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.environment-record-boundary strong {
+  color: var(--ink);
+}
+
+.system-environment-index {
+  display: grid;
+  grid-template-columns: minmax(250px, .8fr) minmax(0, 1.8fr);
+  gap: 24px 32px;
+  margin-top: 30px;
+  padding: 26px;
+  border-top: 4px solid var(--ink);
+  background: var(--canvas);
+}
+
+.system-environment-index-copy > span,
+.system-environment-index nav a > span {
+  color: var(--primary-text);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .45px;
+}
+
+.system-environment-index-copy h3 {
+  margin-top: 7px;
+  font-size: 21px;
+  line-height: 1.25;
+}
+
+.system-environment-index-copy p {
+  margin-top: 10px;
+  color: var(--mute);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.system-environment-index nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid var(--hairline);
+  background: var(--hairline);
+}
+
+.system-environment-index nav a {
+  min-width: 0;
+  padding: 16px;
+  background: var(--surface-soft);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background .16s ease, color .16s ease;
+}
+
+.system-environment-index nav a:hover,
+.system-environment-index nav a:focus-visible {
+  background: var(--ink);
+  color: var(--canvas);
+}
+
+.system-environment-index nav a strong,
+.system-environment-index nav a small {
+  display: block;
+}
+
+.system-environment-index nav a strong {
+  margin-top: 13px;
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.system-environment-index nav a small {
+  margin-top: 7px;
+  color: var(--mute);
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.system-environment-index nav a:hover span,
+.system-environment-index nav a:focus-visible span,
+.system-environment-index nav a:hover small,
+.system-environment-index nav a:focus-visible small {
+  color: inherit;
+}
+
+.system-environment-index > .efficiency-boundary {
+  grid-column: 1 / -1;
+  margin-top: 0;
+}
+
+.system-environment-index + .verified-limitations {
   margin-top: 24px;
 }
 
@@ -7662,6 +7785,11 @@ details table td {
 
   .efficiency-summary article {
     min-height: 150px;
+  }
+
+  .environment-record-boundary,
+  .system-environment-index {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -7690,7 +7818,21 @@ details table td {
 
   .efficiency-summary,
   .efficiency-table-heading,
-  .efficiency-boundary {
+  .efficiency-boundary,
+  .environment-record-boundary {
     margin-inline: 16px;
+  }
+
+  .system-environment-index {
+    gap: 18px;
+    padding: 22px 16px;
+  }
+
+  .system-environment-index nav {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .system-environment-index > .efficiency-boundary {
+    margin-inline: 0;
   }
 }

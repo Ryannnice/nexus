@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026073001">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：静态全链路成功率 90.37%，工具链口径，共 9,000 条">
 
-  <link rel="stylesheet" href="project.css?v=29">
+  <link rel="stylesheet" href="project.css?v=30">
   <script defer src="project-data.js?v=12"></script>
   <script defer src="project.js?v=15"></script>
 </head>
@@ -581,6 +581,57 @@
             <p class="a3-details-note">意图模块横评中，0.6B LoRA 的最佳验证版本在当前 9K 合成固定集合上同时取得最高 Accuracy 与 Macro-F1，且模型规模更小。“最佳验证版本”和“训练结束版本”来自同一次训练，不是两种独立训练方案。该 100% 是模块结果；当前 90.37% 的结构化全链路评分固定使用 1.7B 路由预测，因此两者分开报告。</p>
           </div>
         </details>
+
+        <details class="narrative-disclosure efficiency-disclosure experiment-environment-disclosure" id="intentEnvironment">
+          <summary>
+            <span class="disclosure-summary-copy"><small>实验环境与耗时</small><strong>查看意图分流的训练配置、评测批量与缺失记录</strong></span>
+            <span class="disclosure-summary-meta">2 次 LoRA 训练 · 完整运行 19 分 39 秒 / 29 分 05 秒</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="disclosure-body efficiency-body">
+            <div class="efficiency-summary" role="group" aria-label="意图分流实验环境摘要">
+              <article><span>训练数据</span><strong>45,606 条</strong><small>验证集 2,400 条；两个模型使用同一样本全集，1.7B 采用类别均衡排列版本</small></article>
+              <article><span>0.6B 完整训练</span><strong>19 分 39 秒</strong><small>2 轮 · 2,852 步；模块横评最优取训练步 2000</small></article>
+              <article><span>1.7B 完整训练</span><strong>29 分 05 秒</strong><small>2 轮 · 2,852 步；全链路统计采用训练结束版本</small></article>
+              <article><span>真实生成式延迟</span><strong class="environment-missing-value">未计时</strong><small>现有评估耗时属于教师强制损失评估，不能当作部署延迟</small></article>
+            </div>
+
+            <section class="efficiency-table-block" aria-labelledby="intentTrainingEnvironmentTitle">
+              <div class="efficiency-table-heading">
+                <div><span>01 · 训练</span><h3 id="intentTrainingEnvironmentTitle">两次 LoRA 训练使用同一套核心参数</h3></div>
+                <p>训练产物能确认单进程运行，但没有保存 GPU 型号或可解释的峰值显存。</p>
+              </div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table efficiency-table">
+                  <thead><tr><th scope="col">模型与数据</th><th scope="col">共同配置</th><th scope="col">训练记录</th><th scope="col">计算资源记录</th></tr></thead>
+                  <tbody>
+                    <tr class="result-table-final"><td><strong>Qwen3-0.6B</strong><small>完整训练集 45,606 条</small></td><td>BF16 · 单设备批量 32 · 梯度累积 1 · 学习率 1e-4 · 余弦调度 · LoRA r16 / α32 / dropout 0.05 · 最大长度 512 · 梯度检查点</td><td><strong>19 分 39 秒</strong><small>完整运行 1,178.6364 秒 · 2 轮 · 2,852 步；采用版本为训练步 2000，该版本的单独到达时间未记录</small></td><td>单进程；GPU 型号、物理卡号与峰值显存未记录</td></tr>
+                    <tr><td><strong>Qwen3-1.7B</strong><small>同一样本全集的类别均衡排列版本 · 45,606 条</small></td><td>BF16 · 单设备批量 32 · 梯度累积 1 · 学习率 1e-4 · 余弦调度 · LoRA r16 / α32 / dropout 0.05 · 最大长度 512 · 梯度检查点</td><td><strong>29 分 05 秒</strong><small>完整运行 1,745.0433 秒 · 2 轮 · 2,852 步</small></td><td>单进程；GPU 型号、物理卡号与峰值显存未记录</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="efficiency-table-block" aria-labelledby="intentInferenceEnvironmentTitle">
+              <div class="efficiency-table-heading">
+                <div><span>02 · 评测</span><h3 id="intentInferenceEnvironmentTitle">同一 9,000 条固定集合上的推理设置</h3></div>
+                <p>规则、未微调模型与微调模型使用同一固定集合；神经模型的逐条延迟、吞吐和显存没有写入评测产物。</p>
+              </div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table efficiency-table">
+                  <thead><tr><th scope="col">评测对象</th><th scope="col">批量与执行方式</th><th scope="col">耗时记录</th><th scope="col">硬件与边界</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>关键词规则</strong></td><td>9,000 条固定集合 · 无神经模型训练或生成</td><td><span class="efficiency-missing">未记录</span></td><td>CPU 型号、线程数和规则执行耗时未记录</td></tr>
+                    <tr><td><strong>Qwen3-0.6B</strong><small>未微调与 LoRA 版本</small></td><td>批量 64 · 每条样本使用独立上下文</td><td><span class="efficiency-missing">真实生成式延迟未记录</span></td><td>GPU 型号、吞吐与峰值显存未记录</td></tr>
+                    <tr><td><strong>Qwen3-1.7B</strong><small>未微调与 LoRA 版本</small></td><td>批量 48 · 每条样本使用独立上下文</td><td><span class="efficiency-missing">真实生成式延迟未记录</span></td><td>GPU 型号、吞吐与峰值显存未记录</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <p class="efficiency-boundary"><strong>记录边界：</strong>日志中的 <code>memory(GiB)</code> 字段未注明统计对象与口径，因此不作为峰值显存展示；0.6B 的 100% 是该模块固定集合上的横评结果，而当前 90.37% 静态全链路统计仍使用 1.7B 路由预测。</p>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -816,6 +867,107 @@
             </section>
 
             <p class="full-results-note">表格保留项目介绍所需的主要已跑配置；K=7/8/9 连续曲线、低价值重复候选深度及推理框架诊断仍保留在检索与向量训练报告中。</p>
+          </div>
+        </details>
+
+        <details class="narrative-disclosure efficiency-disclosure experiment-environment-disclosure" id="retrievalEnvironment">
+          <summary>
+            <span class="disclosure-summary-copy"><small>实验环境与耗时</small><strong>查看公开基线、9 次向量训练、重排与最终检索路径的运行记录</strong></span>
+            <span class="disclosure-summary-meta">9 次向量训练 · 最长 10 分 18 秒 · 最终检索稳态均值 140.6ms / 条</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="disclosure-body efficiency-body">
+            <div class="efficiency-summary" role="group" aria-label="候选检索实验环境摘要">
+              <article><span>共同评测协议</span><strong>100 工具 · 6K</strong><small>3,000 条单工具 + 3,000 条多工具；公开基线与任务内方案使用同一固定项目基准</small></article>
+              <article><span>向量训练</span><strong>9 次完整运行</strong><small>70,012 个正对 · BF16 · 最大长度 256；最长一轮为 10 分 18 秒</small></article>
+              <article><span>任务内重排训练</span><strong class="environment-missing-value">耗时未记录</strong><small>完整训练配置可核实；GPU 型号、卡数与峰值显存未保存</small></article>
+              <article><span>最终检索路径</span><strong>均值 140.6ms</strong><small>1,200 条离线整批重算的稳态均值，不是单请求 p50</small></article>
+            </div>
+
+            <section class="efficiency-table-block" aria-labelledby="retrievalPublicEnvironmentTitle">
+              <div class="efficiency-table-heading">
+                <div><span>01 · 公开模型基线</span><h3 id="retrievalPublicEnvironmentTitle">向量检索与通用重排的离线计时</h3></div>
+                <p>向量编码与重排延迟均为批内均摊；索引构建包含模型加载和 100 条工具文档编码。公开基线没有保存 GPU 型号、卡数或峰值显存。</p>
+              </div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table efficiency-table retrieval-public-efficiency-table">
+                  <thead><tr><th scope="col">类型</th><th scope="col">模型 / 设置</th><th scope="col">加载或构建</th><th scope="col">离线推理计时</th><th scope="col">执行边界</th></tr></thead>
+                  <tbody>
+                    <tr><td>词面检索</td><td><strong>BM25</strong><small>备用分词器</small></td><td>—</td><td><strong>p50 1.586ms · p95 4.459ms</strong></td><td>单条查询计时；CPU 型号与线程数未记录</td></tr>
+                    <tr><td>向量检索</td><td><strong>bge-base</strong><small>批量 64</small></td><td>索引构建 6.1610 秒</td><td>编码均值 0.7292ms / 条；FAISS p50 0.0150ms · p95 0.0159ms</td><td>BF16 编码；批内均摊</td></tr>
+                    <tr><td>向量检索</td><td><strong>bge-large</strong><small>批量 64</small></td><td>索引构建 6.2456 秒</td><td>编码均值 2.0356ms / 条；FAISS p50 0.0168ms · p95 0.0179ms</td><td>BF16 编码；批内均摊</td></tr>
+                    <tr><td>向量检索</td><td><strong>Qwen3-Embedding-0.6B</strong><small>批量 64</small></td><td>索引构建 7.6973 秒</td><td>编码均值 2.2964ms / 条；FAISS p50 0.0158ms · p95 0.0167ms</td><td>BF16 编码；批内均摊</td></tr>
+                    <tr class="table-divider"><td>通用重排</td><td><strong>bge-reranker-base</strong><small>N=20 · 6,000 条</small></td><td>5.7550 秒</td><td>p50 14.8817ms · p95 17.7625ms</td><td>FP16；批内均摊</td></tr>
+                    <tr><td>通用重排</td><td><strong>bge-reranker-large</strong><small>N=20 · 6,000 条</small></td><td>5.7761 秒</td><td>p50 33.8580ms · p95 37.1013ms</td><td>FP16；批内均摊</td></tr>
+                    <tr><td>通用重排</td><td><strong>bge-reranker-v2-m3</strong><small>N=20 · 6,000 条</small></td><td>5.3290 秒</td><td>p50 32.4880ms · p95 36.9846ms</td><td>FP16；批内均摊</td></tr>
+                    <tr><td>通用重排</td><td><strong>Jina v2 Base Multilingual</strong><small>N=20 · 6,000 条</small></td><td>5.8391 秒</td><td>p50 13.8825ms · p95 16.3661ms</td><td>FP16；批内均摊</td></tr>
+                    <tr><td>通用重排</td><td><strong>Qwen3-Reranker-0.6B</strong><small>N=20 · 6,000 条</small></td><td>10.2432 秒</td><td>p50 119.0920ms · p95 137.8053ms</td><td>Sentence Transformers；批内均摊</td></tr>
+                    <tr><td>公开分支补测</td><td><strong>Qwen3-Reranker-0.6B</strong><small>N=50 · 6,000 条 · 批量 64</small></td><td>10.3087 秒</td><td>p50 119.0949ms · p95 141.9109ms</td><td>最大长度 512；批内均摊</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="efficiency-table-block" aria-labelledby="embeddingTrainingEnvironmentTitle">
+              <div class="efficiency-table-heading">
+                <div><span>02 · 任务内向量训练</span><h3 id="embeddingTrainingEnvironmentTitle">9 次完整运行及对应推理计时</h3></div>
+                <p>共同配置：全参数多负例对比学习（MNRL）、BF16、梯度累积 1、warmup 0.05、最大长度 256、固定种子；bge 批量 64，Qwen3-Embedding 批量 32。GPU 具体型号、数量与峰值显存未记录。</p>
+              </div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table efficiency-table embedding-efficiency-table">
+                  <thead><tr><th scope="col">模型</th><th scope="col">训练设置</th><th scope="col">外层总耗时 / 训练器耗时</th><th scope="col">6K 推理：编码均值 / FAISS p50 · p95</th></tr></thead>
+                  <tbody>
+                    <tr><td>bge-base</td><td>0.25 轮 · lr2e-5 · 批量 64</td><td><strong>50.77 / 39.71 秒</strong></td><td>0.7311ms / 0.0139 · 0.0151ms</td></tr>
+                    <tr><td>bge-base</td><td>0.5 轮 · lr2e-5 · 批量 64</td><td><strong>1 分 45 秒 / 1 分 34 秒</strong></td><td>0.7283ms / 0.0152 · 0.0163ms</td></tr>
+                    <tr><td>bge-base</td><td>1 轮 · lr1e-5 · 批量 64</td><td><strong>7 分 19 秒 / 7 分 08 秒</strong></td><td>0.7279ms / 0.0151 · 0.0161ms</td></tr>
+                    <tr><td>bge-base</td><td>1 轮 · lr2e-5 · 批量 64</td><td><strong>7 分 18 秒 / 7 分 07 秒</strong></td><td>0.7242ms / 0.0152 · 0.0163ms</td></tr>
+                    <tr><td>bge-base</td><td>1 轮 · lr3e-5 · 批量 64</td><td><strong>7 分 23 秒 / 7 分 12 秒</strong></td><td>0.7277ms / 0.0149 · 0.0159ms</td></tr>
+                    <tr><td>bge-base</td><td>1.5 轮 · lr2e-5 · 批量 64</td><td><strong>9 分 25 秒 / 9 分 14 秒</strong></td><td>0.7280ms / 0.0150 · 0.0161ms</td></tr>
+                    <tr><td>bge-large</td><td>0.5 轮 · lr2e-5 · 批量 64</td><td><strong>2 分 57 秒 / 2 分 45 秒</strong></td><td>2.0697ms / 0.0172 · 0.0185ms</td></tr>
+                    <tr class="result-table-final"><td>bge-large</td><td><strong>1 轮 · lr2e-5 · 批量 64</strong></td><td><strong>10 分 18 秒 / 10 分 06 秒</strong></td><td>2.0685ms / 0.0172 · 0.0189ms</td></tr>
+                    <tr><td>Qwen3-Embedding-0.6B</td><td>0.5 轮 · lr2e-5 · 批量 32</td><td><strong>5 分 18 秒 / 5 分 03 秒</strong></td><td>2.3308ms / 0.0170 · 0.0180ms</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="efficiency-table-block" aria-labelledby="retrievalTrainedEnvironmentTitle">
+              <div class="efficiency-table-heading">
+                <div><span>03 · 重排与融合</span><h3 id="retrievalTrainedEnvironmentTitle">任务内重排、轻量校准与两次排名融合</h3></div>
+                <p>只有任务内重排进行神经网络训练；轻量校准使用 CPU 逻辑回归，两次排名融合都是无梯度网格选择。</p>
+              </div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table efficiency-table">
+                  <thead><tr><th scope="col">阶段</th><th scope="col">配置</th><th scope="col">训练 / 选择耗时</th><th scope="col">独立推理记录与资源边界</th></tr></thead>
+                  <tbody>
+                    <tr class="result-table-final"><td><strong>任务内重排模型</strong></td><td>bge-reranker-base · 全参数组内交叉熵 · 1 轮 / 1,500 步 · 批量 16 · 每组 1 正 7 负 · lr6e-5 · FP16 · 查询 / 文档最大长度 128 / 384</td><td><span class="efficiency-missing">训练耗时未记录</span></td><td>6K / Top-50：加载 4.4198 秒；p50 13.9619ms · p95 16.9088ms。推理批量、GPU 型号、卡数和峰值显存未记录</td></tr>
+                    <tr><td><strong>轻量残差校准</strong></td><td>scikit-learn 逻辑回归 · 14 个特征 · class_weight=balanced · C=1 · max_iter=300 · n_jobs=4；120 万训练行 / 30 万测试行</td><td><span class="efficiency-missing">CPU 训练耗时未记录</span></td><td>CPU 型号、线程实际占用与推理耗时未记录</td></tr>
+                    <tr><td><strong>第一阶段加权 RRF</strong></td><td>向量排名 + BM25 排名；训练集网格选择权重与 rrf_k</td><td><span class="efficiency-missing">搜索耗时未记录</span></td><td>无梯度；CPU 环境与融合耗时未单独保存</td></tr>
+                    <tr><td><strong>最终加权 RRF</strong></td><td>第一阶段排名 + 任务内重排名次；训练集选择第一阶段权重 0.6、rrf_k=10</td><td><span class="efficiency-missing">搜索耗时未记录</span></td><td>无梯度；独立最终路径中，第一阶段融合均值 0.0594ms / 条，最终融合均值 0.0569ms / 条</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="efficiency-table-block" aria-labelledby="retrievalFinalPathTitle">
+              <div class="efficiency-table-heading">
+                <div><span>04 · 最终检索路径</span><h3 id="retrievalFinalPathTitle">1,200 条封存压力测试的离线整批重算记录</h3></div>
+                <p>同一批请求依次运行 BM25、微调向量模型、第一阶段融合、任务内重排与最终融合；关闭未微调诊断支路。</p>
+              </div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table efficiency-table">
+                  <thead><tr><th scope="col">组件</th><th scope="col">加载耗时</th><th scope="col">稳态计时</th><th scope="col">口径</th></tr></thead>
+                  <tbody>
+                    <tr><td>BM25</td><td>—</td><td>p50 1.5005ms · p95 2.8671ms</td><td>单条查询计时</td></tr>
+                    <tr><td>微调向量模型 + FAISS</td><td>13.9348 秒</td><td>编码均值 5.6257ms / 条；搜索 p50 0.0226ms · p95 0.0281ms</td><td>编码为批内均摊</td></tr>
+                    <tr><td>任务内重排</td><td>4.1654 秒</td><td>p50 131.9883ms · p95 168.3337ms</td><td>批内均摊</td></tr>
+                    <tr class="result-table-final"><td><strong>完整候选检索</strong></td><td>上述模型加载另计</td><td><strong>稳态均值 140.5559ms / 条</strong><small>1,200 条含加载总耗时 186.7672 秒</small></td><td>整批离线重算只记录均值，没有完整路径 p50 / p95；不含意图分流与工具链规划</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <p class="efficiency-boundary"><strong>硬件记录边界：</strong>本章实验产物没有保存逐次运行的 GPU 型号、卡数或峰值显存。项目后期记录的 RTX 5880 主机快照不能反向证明这些较早运行使用了同一硬件，因此不在本章回填。</p>
           </div>
         </details>
 
@@ -1101,6 +1253,108 @@
           </div>
         </section>
 
+        <details class="narrative-disclosure efficiency-disclosure experiment-environment-disclosure" id="plannerEnvironment">
+          <summary>
+            <span class="disclosure-summary-copy"><small>实验环境与耗时</small><strong>查看首次监督微调、规模实验、混合表达训练、顺序稳健训练与推理效率</strong></span>
+            <span class="disclosure-summary-meta">每次训练 1–4 GPU · 默认 8B 训练 4 小时 58 分 · 规划 p50 270.6ms</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="disclosure-body efficiency-body">
+            <div class="efficiency-summary" role="group" aria-label="工具链规划实验环境摘要">
+              <article><span>首次 8B 监督微调</span><strong>50 分 17 秒</strong><small>4 GPU · 1 轮 · 1,688 步；4B 完整两轮训练为 1 小时 00 分 02 秒</small></article>
+              <article><span>默认 8B 规划模型</span><strong>4 小时 58 分</strong><small>混合表达监督微调 · 2 GPU · 77,724 条 · 1 轮 · 2,429 步</small></article>
+              <article><span>8B 顺序稳健训练</span><strong>19 分 07 秒</strong><small>2 GPU · 2,000 对总计 / 1,776 对训练 · 1 轮 · 111 步；最终采用 lr1e-6 版本</small></article>
+              <article><span>默认 8B 规划推理</span><strong>p50 270.6ms</strong><small>6K 离线评测 · 批量 16 · 批内均摊；p95 317.8ms</small></article>
+            </div>
+
+            <section class="efficiency-table-block" aria-labelledby="plannerSftEnvironmentTitle">
+              <div class="efficiency-table-heading">
+                <div><span>01 · 主要监督微调</span><h3 id="plannerSftEnvironmentTitle">首次训练与混合表达训练</h3></div>
+                <p>每次训练使用的 GPU 数量来自对应运行产物；GPU 型号和物理卡号没有与单次运行绑定。</p>
+              </div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table efficiency-table planner-training-efficiency-table">
+                  <thead><tr><th scope="col">阶段</th><th scope="col">模型</th><th scope="col">训练配置</th><th scope="col">步数与耗时</th><th scope="col">资源记录</th></tr></thead>
+                  <tbody>
+                    <tr><td rowspan="2"><strong>首次监督微调</strong><small>接口式表达训练</small></td><td>Qwen3-4B</td><td>BF16 · 单设备批量 8 · 梯度累积 1 · 全局批量 32 · lr5e-5 · LoRA r16 / α32 / dropout 0.05 · 最大长度 2048</td><td><strong>3,376 步 · 1 小时 00 分 02 秒</strong><small>完整配置为 2 轮；页面采用训练步 1688 的第 1 轮版本，其单独到达时间未记录</small></td><td>4 GPU；型号与逐卡显存未记录</td></tr>
+                    <tr><td>Qwen3-8B</td><td>BF16 · 单设备批量 4 · 梯度累积 2 · 全局批量 32 · lr5e-5 · LoRA r16 / α32 / dropout 0.05 · 最大长度 2048</td><td><strong>1,688 步 · 50 分 17 秒</strong><small>1 轮</small></td><td>4 GPU；型号与逐卡显存未记录</td></tr>
+                    <tr class="table-divider"><td rowspan="2"><strong>混合表达监督微调</strong><small>77,724 条</small></td><td>Qwen3-4B</td><td>BF16 · 单设备批量 16 · 梯度累积 1 · 全局批量 32 · 1 轮 · lr5e-5 · LoRA r16 / α32 / dropout 0.05 · 最大长度 1024</td><td><strong>2,429 步 · 3 小时 39 分 44 秒</strong></td><td>2 GPU；型号与逐卡显存未记录</td></tr>
+                    <tr class="result-table-final"><td>Qwen3-8B</td><td>BF16 · 单设备批量 16 · 梯度累积 1 · 全局批量 32 · 1 轮 · lr5e-5 · LoRA r16 / α32 / dropout 0.05 · 最大长度 1024</td><td><strong>2,429 步 · 4 小时 58 分 02 秒</strong></td><td>2 GPU；型号与逐卡显存未记录</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="efficiency-table-block" aria-labelledby="plannerScaleEnvironmentTitle">
+              <div class="efficiency-table-heading">
+                <div><span>02 · 数据规模与参数搜索</span><h3 id="plannerScaleEnvironmentTitle">9K–54K 补充训练的实际耗时</h3></div>
+                <p>共同配置：1 GPU、BF16、全局批量 32、3 轮、lr5e-5、LoRA r32 / α64 / dropout 0.05、最大长度 2048；4B 为批量 8 × 累积 4，8B 为批量 4 × 累积 8。</p>
+              </div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table efficiency-table planner-scale-efficiency-table">
+                  <thead><tr><th scope="col">训练量</th><th scope="col">训练步数</th><th scope="col">4B 实际耗时</th><th scope="col">8B 实际耗时</th><th scope="col">复现边界</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>9K</strong></td><td>846</td><td>55 分 03 秒</td><td>1 小时 31 分 42 秒</td><td rowspan="4">每个规模只保留一个固定种子的正式运行；此外 4B 完成 21 个 9K 参数组合，8B 完成 3 个 9K 确认运行。各组合结果保留在源报告中，不能把单次耗时外推为完整搜索总成本。</td></tr>
+                    <tr><td><strong>18K</strong></td><td>1,689</td><td>1 小时 49 分 45 秒</td><td>3 小时 03 分 03 秒</td></tr>
+                    <tr><td><strong>36K</strong></td><td>3,375</td><td>4 小时 00 分 51 秒</td><td>6 小时 25 分 48 秒</td></tr>
+                    <tr><td><strong>54K</strong></td><td>5,064</td><td>6 小时 01 分 32 秒</td><td>10 小时 10 分 02 秒</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="efficiency-table-block" aria-labelledby="plannerPreferenceEnvironmentTitle">
+              <div class="efficiency-table-heading">
+                <div><span>03 · 偏好训练</span><h3 id="plannerPreferenceEnvironmentTitle">未采用的早期方案与当前顺序稳健方案</h3></div>
+                <p>早期方案保留为失败对照；当前方案只使用混合表达监督微调模型的真实错误，页面不把两者合并成连续增益。</p>
+              </div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table efficiency-table planner-preference-efficiency-table">
+                  <thead><tr><th scope="col">实验角色</th><th scope="col">模型 / 网格</th><th scope="col">共同训练配置</th><th scope="col">每次运行耗时</th><th scope="col">结果用途</th></tr></thead>
+                  <tbody>
+                    <tr><td rowspan="2"><strong>早期跨表达偏好训练</strong><small>5,000 对总计 · 4,499 对训练 / 501 对监控 · 未采用</small></td><td>Qwen3-4B · β=0.05 / 0.10</td><td>2 GPU · BF16 · 全局批量 16 · 1 轮 · lr5e-6 · LoRA r16 / α32 / dropout 0.05 · 最大长度 768；单设备批量 2 · 累积 4</td><td>31 分 34 秒 / 31 分 33 秒</td><td rowspan="2">用于说明后续为何改用当前模型的真实错误并降低学习率，不参与最终选型</td></tr>
+                    <tr><td>Qwen3-8B · β=0.05 / 0.10</td><td>2 GPU · BF16 · 全局批量 16 · 1 轮 · lr5e-6 · LoRA r16 / α32 / dropout 0.05 · 最大长度 768；单设备批量 1 · 累积 8</td><td>48 分 30 秒 / 48 分 29 秒</td></tr>
+                    <tr class="table-divider"><td rowspan="2"><strong>候选顺序稳健训练</strong><small>2,000 对总计 · 1,776 对训练 / 224 对监控 · 采用 lr1e-6</small></td><td>Qwen3-4B · lr5e-7 / 1e-6</td><td>2 GPU · BF16 · 全局批量 16 · 1 轮 · β=0.1 · LoRA r16 / α32 / dropout 0.05 · 最大长度 768；单设备批量 2 · 累积 4</td><td>12 分 38 秒 / <strong>12 分 36 秒</strong></td><td>采用 lr1e-6、训练步 111 的版本</td></tr>
+                    <tr class="result-table-final"><td>Qwen3-8B · lr5e-7 / 1e-6</td><td>2 GPU · BF16 · 全局批量 16 · 1 轮 · β=0.1 · LoRA r16 / α32 / dropout 0.05 · 最大长度 768；单设备批量 1 · 累积 8</td><td>19 分 11 秒 / <strong>19 分 07 秒</strong></td><td>采用 lr1e-6、训练步 111 的版本</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="efficiency-table-block" aria-labelledby="plannerInferenceEnvironmentTitle">
+              <div class="efficiency-table-heading">
+                <div><span>04 · 规划推理</span><h3 id="plannerInferenceEnvironmentTitle">各主要模型版本的离线生成效率</h3></div>
+                <p>共同设置：BF16、SDPA、贪心生成、最多生成 128 个 token、无预热。延迟为批次墙钟时间除以批量的均摊值，不是在线单请求延迟。</p>
+              </div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table efficiency-table planner-inference-efficiency-table">
+                  <thead><tr><th scope="col">模型阶段</th><th scope="col">测试协议</th><th scope="col">批量</th><th scope="col">p50 / p95</th><th scope="col">输出吞吐</th><th scope="col">峰值显存：已分配 / 已保留</th></tr></thead>
+                  <tbody>
+                    <tr><td>未微调 4B · Top-10</td><td>接口式表达 1K</td><td>16</td><td>110.8 / 154.1ms</td><td>179.10 token/s</td><td>9.54 / 14.87 GiB</td></tr>
+                    <tr><td>未微调 8B · Top-10</td><td>接口式表达 1K</td><td>8</td><td>187.7 / 269.0ms</td><td>105.83 token/s</td><td>16.38 / 20.13 GiB</td></tr>
+                    <tr><td>未微调 4B · 完整 100 工具</td><td>接口式表达 1K</td><td>8</td><td>528.7 / 1334.2ms</td><td>34.67 token/s</td><td>12.55 / 23.81 GiB</td></tr>
+                    <tr><td>未微调 8B · 完整 100 工具</td><td>接口式表达 1K</td><td>4</td><td>835.5 / 1078.8ms</td><td>23.16 token/s</td><td>18.07 / 22.72 GiB</td></tr>
+                    <tr class="table-divider"><td>首次监督微调 4B · Top-10</td><td>接口式表达 1K</td><td>16</td><td>130.0 / 177.9ms</td><td>137.70 token/s</td><td>各分片 10.10–10.27 / 13.19–15.66 GiB</td></tr>
+                    <tr><td>首次监督微调 8B · Top-10</td><td>接口式表达 1K</td><td>8</td><td>213.0 / 319.6ms</td><td>80.29 token/s</td><td>各分片 16.92–16.94 / 20.29–21.02 GiB</td></tr>
+                    <tr><td>54K 补充微调 4B</td><td>接口式表达 1K</td><td>16</td><td>134.1 / 178.8ms</td><td>134.30 token/s</td><td>10.40 / 17.34 GiB</td></tr>
+                    <tr><td>54K 补充微调 8B</td><td>接口式表达 1K</td><td>8</td><td>221.8 / 319.3ms</td><td>79.82 token/s</td><td>17.14 / 22.33 GiB</td></tr>
+                    <tr><td>混合表达监督微调 4B</td><td>跨表达测试 6K</td><td>16</td><td>229.7 / 361.9ms</td><td>73.92 token/s</td><td>10.29 / 13.41 GiB</td></tr>
+                    <tr class="result-table-final"><td><strong>混合表达监督微调 8B</strong></td><td>跨表达测试 6K</td><td>16</td><td><strong>270.6 / 317.8ms</strong></td><td>71.88 token/s</td><td>18.48 / 28.28 GiB</td></tr>
+                    <tr><td>顺序稳健 4B</td><td>压力测试原顺序 1.2K</td><td>16</td><td>193.8 / 262.9ms</td><td>103.29 token/s</td><td>10.39 / 15.94 GiB</td></tr>
+                    <tr><td>顺序稳健 8B</td><td>压力测试原顺序 1.2K</td><td>8</td><td>340.3 / 462.5ms</td><td>60.17 token/s</td><td>17.01 / 21.08 GiB</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <div class="environment-record-boundary">
+              <p><strong>软件快照：</strong>项目环境清单的一次快照记录 Python 3.10.20、PyTorch 2.8.0+cu128、Transformers 4.53.2、MS-SWIFT 4.3.2、PEFT 0.14.0、TRL 0.18.2；这些版本没有与每次运行逐一绑定。</p>
+              <p><strong>硬件快照：</strong>项目环境清单记录过 8 × NVIDIA RTX 5880 Ada Generation（49,140 MiB / 卡，驱动 570.124.06）；这是主机级快照，不是每次训练所用物理卡型号的证明。上表仅按各运行产物报告 1 / 2 / 4 GPU。</p>
+              <p><strong>完整链路：</strong>意图分流、候选检索、工具链规划和真实工具执行尚未在同一请求分布与并发设置下联合压测，因此没有完整请求链路的 p50、p95、吞吐或峰值显存。</p>
+            </div>
+          </div>
+        </details>
+
         <details class="narrative-disclosure planner-compact-appendix" id="plannerResearchArchive">
           <summary>
             <span class="disclosure-summary-copy"><small>补充材料</small><strong>口径说明、54K 补充实验与能力边界</strong></span>
@@ -1245,65 +1499,19 @@
         </div>
         <p class="system-outcome-note"><strong>最终口径：</strong>冻结 1.7B 路由预测与 8B 混合表达监督微调规划模型在 9,000 条测试中逐样本得到静态全链路成功率 90.3667%（工具链口径，8,133 / 9,000）与 90.5889%（集合口径，8,153 / 9,000）。前两张卡是模块选择证据，不能与最终结果相乘；0.6B 的模块结果也不代表它已用于这组全链路统计。该结果是离线静态联合判定，不是工具真实执行成功率。</p>
 
-        <details class="narrative-disclosure efficiency-disclosure" id="efficiency">
-          <summary>
-            <span class="disclosure-summary-copy"><small>训练资源与推理效率</small><strong>查看硬件、训练耗时、分阶段推理耗时与尚未记录的项目</strong></span>
-            <span class="disclosure-summary-meta">8B 训练 4 小时 58 分 · 检索均值 140.6ms · 规划 p50 270.6ms</span>
-            <i aria-hidden="true">+</i>
-          </summary>
-          <div class="disclosure-body efficiency-body">
-            <div class="efficiency-summary" role="group" aria-label="训练资源与推理效率摘要">
-              <article><span>规划实验环境清单</span><strong>8 × RTX 5880 Ada</strong><small>49,140 MiB / 卡；正式 8B 训练记录为双 GPU，未逐次绑定物理卡号</small></article>
-              <article><span>采用的 8B 规划模型</span><strong>4 小时 58 分 02 秒</strong><small>77,724 条 · 1 轮 · 2,429 步 · 双 GPU</small></article>
-              <article><span>候选顺序稳健优化</span><strong>19 分 07 秒</strong><small>8B · 1,776 对 · 1 轮 · 111 步 · 双 GPU</small></article>
-              <article><span>规划生成</span><strong>p50 270.6ms</strong><small>6K 离线评测 · batch 16 · 单 GPU · 批内均摊每条耗时</small></article>
-            </div>
-
-            <section class="efficiency-table-block" aria-labelledby="trainingEfficiencyTitle">
-              <div class="efficiency-table-heading">
-                <div><span>01 · 训练</span><h3 id="trainingEfficiencyTitle">模块横评最优与全链路冻结方案的训练记录</h3></div>
-                <p>只列运行产物能够直接核实的值；未写入产物的硬件或显存不作估算。</p>
-              </div>
-              <div class="result-table-wrap" tabindex="0">
-                <table class="result-table efficiency-table">
-                  <thead>
-                    <tr><th scope="col">阶段</th><th scope="col">采用方案与主要配置</th><th scope="col">训练耗时</th><th scope="col">GPU / 显存记录</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td><strong>意图分流<br>模块横评最优</strong></td><td>Qwen3-0.6B LoRA · 45,606 条 · 2 轮 · 批量 32 · 学习率 1e-4 · 秩 16</td><td><strong>19 分 39 秒</strong><small>完整运行 1,178.6364 秒 · 2,852 步；横评最优版本取训练步 2000</small></td><td>单进程；GPU 型号与峰值显存未记录</td></tr>
-                    <tr><td><strong>意图分流<br>全链路冻结</strong></td><td>Qwen3-1.7B LoRA · 均衡训练集 45,606 条 · 2 轮 · 批量 32 · 学习率 1e-4 · 秩 16</td><td><strong>29 分 05 秒</strong><small>1,745.0433 秒 · 2,852 步</small></td><td>单进程；GPU 型号与峰值显存未记录</td></tr>
-                    <tr><td><strong>向量模型</strong></td><td>bge-large · MNRL · 70,012 个正对 · 批量 64 · 学习率 2e-5 · BF16</td><td><strong>10 分 18 秒</strong><small>外层总计 617.8202 秒；训练器 605.8035 秒</small></td><td>GPU 型号、数量与峰值显存未记录</td></tr>
-                    <tr><td><strong>任务内重排</strong></td><td>bge-reranker-base · 全参数训练 · 1 轮 · 1,500 步 · 批量 16 · FP16</td><td><span class="efficiency-missing">未记录</span></td><td>GPU 型号、数量与峰值显存未记录</td></tr>
-                    <tr class="result-table-final"><td><strong>默认工具链规划</strong></td><td>Qwen3-8B LoRA · 77,724 条 · 1 轮 · 全局批量 32 · 学习率 5e-5 · 秩 16</td><td><strong>4 小时 58 分 02 秒</strong><small>17,882.2166 秒 · 2,429 步</small></td><td>双 GPU；规划实验环境记录为 RTX 5880 Ada 48 GB / 卡</td></tr>
-                    <tr><td><strong>候选顺序稳健优化</strong></td><td>Qwen3-8B 偏好优化 · 1,776 对 · 1 轮 · 全局批量 16 · 学习率 1e-6 · β 0.1</td><td><strong>19 分 07 秒</strong><small>1,146.7821 秒 · 111 步</small></td><td>双 GPU；单次训练的物理卡号与峰值显存未单列</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </section>
-
-            <section class="efficiency-table-block" aria-labelledby="inferenceEfficiencyTitle">
-              <div class="efficiency-table-heading">
-                <div><span>02 · 推理</span><h3 id="inferenceEfficiencyTitle">分阶段计时与测量边界</h3></div>
-                <p>下列数字来自不同评测协议，只能分别阅读，不能相加为整体端到端延迟。</p>
-              </div>
-              <div class="result-table-wrap" tabindex="0">
-                <table class="result-table efficiency-table efficiency-inference-table">
-                  <thead>
-                    <tr><th scope="col">阶段</th><th scope="col">测量设置</th><th scope="col">耗时 / 吞吐</th><th scope="col">显存与边界</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td><strong>意图分流</strong></td><td>模块横评最优的 0.6B 与全链路冻结的 1.7B</td><td><span class="efficiency-missing">真实生成式推理未计时</span></td><td>现有评估耗时是教师强制损失评估，不能当作部署延迟</td></tr>
-                    <tr><td><strong>部署路径候选检索</strong></td><td>1,200 条封存压力测试；BM25、微调向量编码、两次融合与任务内重排在线重算；关闭未微调诊断支路</td><td><strong>稳态均值 140.6ms / 条</strong><small>其中重排 p50 132.0ms / p95 168.3ms；BM25 p50 1.5ms；向量编码均值 5.6ms</small></td><td>向量模型加载 13.93 秒、重排模型加载 4.17 秒另计；不含意图分流与工具链规划；本次计时未单列 GPU 型号与峰值显存</td></tr>
-                    <tr class="result-table-final"><td><strong>默认 8B 工具链规划</strong></td><td>6,000 条跨表达测试 · 批量 16 · 贪心生成 · 最多生成 128 个 token · 单 GPU</td><td><strong>p50 270.6ms · p95 317.8ms</strong><small>批内均摊均值 224.1ms / 条 · 该批量协议总吞吐为每秒 71.88 个输出 token</small></td><td>峰值已分配 18.48 GiB、已保留 28.28 GiB；模型加载 12.02 秒另计；未预热</td></tr>
-                    <tr><td><strong>完整请求链路</strong></td><td>意图分流 → 候选检索 → 工具链规划</td><td><span class="efficiency-missing">尚未统一压测</span></td><td>没有同一请求分布下的整体 p50 / p95，也不包含真实工具执行</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </section>
-
-            <p class="efficiency-boundary"><strong>如何阅读：</strong>“90.37%”是静态全链路成功率，不是速度；“140.6ms”和“270.6ms”分别来自候选检索与规划生成的不同离线协议。页面保留缺失项，是为了避免把教师强制评估、不同批量设置或未定义的日志字段包装成端到端性能。</p>
+        <div class="system-environment-index" aria-labelledby="systemEnvironmentIndexTitle">
+          <div class="system-environment-index-copy">
+            <span>实验环境索引</span>
+            <h3 id="systemEnvironmentIndexTitle">训练资源与离线推理效率已放回各实验章节</h3>
+            <p>正文结论不再重复堆放环境表；展开对应章节即可查看全部已记录配置、耗时、显存和缺失项。</p>
           </div>
-        </details>
+          <nav aria-label="各实验环境与耗时">
+            <a href="#intentEnvironment"><span>实验 01</span><strong>意图分流</strong><small>2 次 LoRA 训练 · 评测批量 · 延迟缺口</small></a>
+            <a href="#retrievalEnvironment"><span>实验 02</span><strong>候选检索</strong><small>公开基线 · 9 次向量训练 · 最终路径计时</small></a>
+            <a href="#plannerEnvironment"><span>实验 03</span><strong>工具链规划</strong><small>监督微调 · 规模实验 · 顺序稳健训练 · 推理显存</small></a>
+          </nav>
+          <p class="efficiency-boundary"><strong>统一性能边界：</strong>目前没有在同一请求分布和并发设置下测量“意图分流 → 候选检索 → 工具链规划”的完整链路 p50、p95、吞吐或峰值显存，也没有计入真实工具执行。各章节的离线数字来自不同协议，不能直接相加。</p>
+        </div>
 
         <div class="verified-limitations" role="group" aria-label="已核实的适用边界">
           <article><strong>合成闭集</strong><span>目录固定为 100 项，请求来自合成流程；不能直接外推到开放世界或真实流量。</span></article>
