@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026073001">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：静态全链路成功率 90.37%，工具链口径，共 9,000 条">
 
-  <link rel="stylesheet" href="project.css?v=34">
+  <link rel="stylesheet" href="project.css?v=35">
   <script defer src="project-data.js?v=13"></script>
   <script defer src="project.js?v=17"></script>
 </head>
@@ -1476,53 +1476,46 @@
       </div>
     </section>
 
-    <section class="section" id="evidence" aria-labelledby="evidenceTitle">
+    <section class="section evidence-section" aria-labelledby="evidenceTitle">
       <div class="wrap">
-        <p class="eyebrow">工程证据 · 复现</p>
-        <div class="section-heading split-heading">
-          <h2 id="evidenceTitle">工程资产与复现</h2>
-          <p>源报告、结构化结果与复现入口如下。</p>
-        </div>
-
-        <aside class="evidence-access-note" aria-label="证据仓库访问说明">
-          <strong>访问说明</strong>
-          <span>以下链接位于受限 GitHub 仓库，需相应权限。</span>
-        </aside>
-
-        <div class="evidence-grid">
-          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/06_Assignment3_100%E5%B7%A5%E5%85%B7%E5%AE%9E%E9%AA%8C%E6%80%BB%E6%8A%A5%E5%91%8A.md" target="_blank" rel="noopener noreferrer"><span>规划实验报告</span><h3>有序轨迹规划总报告</h3><p>监督微调、偏好优化、候选顺序压力测试、候选深度复核与静态全链路结果的统一口径。</p><b>规划实验源报告</b></a>
-          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_crossstyle_rag10/dpo_v2/final_summary.json" target="_blank" rel="noopener noreferrer"><span>结构化结果证据</span><h3>候选顺序稳健优化汇总</h3><p>偏好数据、训练选型、三种候选排列的压力测试、历史回归审计与模型版本。</p><b>结构化汇总 JSON</b></a>
-          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_100tool_api/sft_ablation/results_summary.json" target="_blank" rel="noopener noreferrer"><span>结构化结果证据</span><h3>监督微调消融汇总</h3><p>参数选择证据、16 个规模评测单元、模型版本、预测与指标哈希。</p><b>results_summary.json</b></a>
-        </div>
-
-        <details class="narrative-disclosure evidence-index-disclosure">
+        <details class="narrative-disclosure evidence-section-disclosure" id="evidence">
           <summary>
-            <span class="disclosure-summary-copy"><small>完整证据索引</small><strong>查看其余项目报告</strong></span>
-            <span class="disclosure-summary-meta">6 份补充报告</span>
+            <span class="disclosure-summary-copy"><small>工程证据 · 复现</small><strong id="evidenceTitle" role="heading" aria-level="2">工程资产与复现</strong></span>
+            <span class="disclosure-summary-meta">9 项证据 · 4 条 CPU 校验命令</span>
             <i aria-hidden="true">+</i>
           </summary>
-          <div class="disclosure-body">
-            <div class="evidence-grid evidence-grid-secondary">
-              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/README.md" target="_blank" rel="noopener noreferrer"><span>项目地图</span><h3>项目概览</h3><p>任务边界、主要指标与运行入口。</p><b>PROJECT/README.md</b></a>
-              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/01_%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB.md" target="_blank" rel="noopener noreferrer"><span>模型报告</span><h3>意图识别</h3><p>意图数据构成、LoRA 训练版本与指标。</p><b>reports/01_意图识别.md</b></a>
-              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/02_%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA.md" target="_blank" rel="noopener noreferrer"><span>基线报告</span><h3>检索增强</h3><p>BM25、公开向量模型、混合召回与重排模型。</p><b>reports/02_检索增强.md</b></a>
-              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/03_%E5%90%91%E9%87%8F%E8%AE%AD%E7%BB%83.md" target="_blank" rel="noopener noreferrer"><span>训练报告</span><h3>任务内训练</h3><p>向量模型、显式负例消融、任务内重排、融合、推理效率与案例。</p><b>reports/03_向量训练.md</b></a>
-              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/04_%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8E%E8%AE%AD%E7%BB%83%E7%94%A8%E6%95%B0%E8%AF%B4%E6%98%8E.md" target="_blank" rel="noopener noreferrer"><span>数据地图</span><h3>数据与实验总表</h3><p>训练输入、评测口径与运行产物。</p><b>reports/04_数据集与训练用数说明.md</b></a>
-              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/05_%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E6%80%BB%E8%A7%88.md" target="_blank" rel="noopener noreferrer"><span>方法说明</span><h3>训练算法总览</h3><p>LoRA、MNRL、交叉编码重排、残差校准与 RRF。</p><b>reports/05_训练算法总览.md</b></a>
-            </div>
-          </div>
-        </details>
+          <div class="disclosure-body evidence-section-body">
+            <aside class="evidence-access-note" aria-label="证据仓库访问说明">
+              <strong>访问说明</strong>
+              <span>以下链接位于受限 GitHub 仓库，需相应权限。</span>
+              <a class="btn btn-outline" href="https://github.com/Ryannnice/Agent" target="_blank" rel="noopener noreferrer">项目仓库 ↗</a>
+            </aside>
 
-        <div class="reproduce-block">
-          <div class="reproduce-copy">
-            <p class="eyebrow">复现入口</p>
-            <h3>数据构建与校验</h3>
-            <p>以下 CPU 命令校验目录、生成轨迹并审计数据；GPU 实验入口见仓库。</p>
-            <a class="btn btn-outline" href="https://github.com/Ryannnice/Agent" target="_blank" rel="noopener noreferrer" title="该仓库当前需要 GitHub 访问权限">查看项目仓库 ↗</a>
-          </div>
-          <div class="command-panel">
-            <div class="command-head"><span>TERMINAL · $PROJECT_ROOT</span><button id="copyCommands" type="button">复制命令</button></div>
-            <pre id="reproCommands" tabindex="0"><code>cd "$PROJECT_ROOT"
+            <div class="evidence-group-heading"><strong>核心结果</strong><span>3 项</span></div>
+            <div class="evidence-grid evidence-grid-primary">
+              <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/06_Assignment3_100%E5%B7%A5%E5%85%B7%E5%AE%9E%E9%AA%8C%E6%80%BB%E6%8A%A5%E5%91%8A.md" target="_blank" rel="noopener noreferrer"><span>规划实验报告</span><h3>有序轨迹规划总报告</h3><b>规划实验源报告</b></a>
+              <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_crossstyle_rag10/dpo_v2/final_summary.json" target="_blank" rel="noopener noreferrer"><span>结构化结果</span><h3>候选顺序稳健优化</h3><b>final_summary.json</b></a>
+              <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_100tool_api/sft_ablation/results_summary.json" target="_blank" rel="noopener noreferrer"><span>结构化结果</span><h3>监督微调消融</h3><b>results_summary.json</b></a>
+            </div>
+
+            <div class="evidence-group-heading evidence-group-heading-secondary"><strong>补充报告</strong><span>6 项</span></div>
+            <div class="evidence-grid evidence-grid-secondary">
+              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/README.md" target="_blank" rel="noopener noreferrer"><span>项目地图</span><h3>项目概览</h3><b>PROJECT/README.md</b></a>
+              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/01_%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB.md" target="_blank" rel="noopener noreferrer"><span>模型报告</span><h3>意图识别</h3><b>reports/01_意图识别.md</b></a>
+              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/02_%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA.md" target="_blank" rel="noopener noreferrer"><span>基线报告</span><h3>检索增强</h3><b>reports/02_检索增强.md</b></a>
+              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/03_%E5%90%91%E9%87%8F%E8%AE%AD%E7%BB%83.md" target="_blank" rel="noopener noreferrer"><span>训练报告</span><h3>任务内训练</h3><b>reports/03_向量训练.md</b></a>
+              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/04_%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8E%E8%AE%AD%E7%BB%83%E7%94%A8%E6%95%B0%E8%AF%B4%E6%98%8E.md" target="_blank" rel="noopener noreferrer"><span>数据地图</span><h3>数据与实验总表</h3><b>reports/04_数据集与训练用数说明.md</b></a>
+              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/05_%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E6%80%BB%E8%A7%88.md" target="_blank" rel="noopener noreferrer"><span>方法说明</span><h3>训练算法总览</h3><b>reports/05_训练算法总览.md</b></a>
+            </div>
+
+            <div class="reproduce-block">
+              <div class="reproduce-copy">
+                <h3>CPU 数据构建与校验</h3>
+                <p>校验工具目录、生成轨迹并审计数据；GPU 实验入口见项目仓库。</p>
+              </div>
+              <div class="command-panel">
+                <div class="command-head"><span>TERMINAL · $PROJECT_ROOT</span><button id="copyCommands" type="button">复制命令</button></div>
+                <pre id="reproCommands" tabindex="0"><code>cd "$PROJECT_ROOT"
 python3 \
   PROJECT/scripts/catalog/validate_tool_catalog.py
 python3 \
@@ -1534,16 +1527,16 @@ python3 \
 python3 \
   PROJECT/scripts/dataset/audit_datasets.py \
   --strict-min-test-per-tool 30</code></pre>
-            <p class="copy-status" id="copyStatus" aria-live="polite"></p>
-          </div>
-        </div>
+                <p class="copy-status" id="copyStatus" aria-live="polite"></p>
+              </div>
+            </div>
 
-        <div class="provenance">
-          <div><span>项目快照</span><strong>2026-07-31</strong></div>
-          <div><span>工具目录版本</span><strong>100 个工具 · 2026-07-06</strong></div>
-          <div><span>结果输入</span><strong>模块：检索 6K、规划 1K / 6K、顺序压力 1.2K；最终：全链路 9K</strong></div>
-          <div><span>评测设置</span><strong>按模块划分的合成闭集</strong></div>
-        </div>
+            <div class="provenance">
+              <div><span>项目快照</span><strong>2026-07-31</strong></div>
+              <div><span>工具目录版本</span><strong>100 个工具 · 2026-07-06</strong></div>
+            </div>
+          </div>
+        </details>
       </div>
     </section>
 
