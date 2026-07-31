@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>100-Tool Commerce Agent — 从意图识别、工具检索到静态有序选链</title>
-  <meta name="description" content="100 个已知工具合成闭集上的一体化实验系统：冻结 1.7B 路由与 8B 混合表达监督微调规划模型在 9,000 条测试中取得 90.37% 的静态全链路成功率（工具链口径）；1,000 条接口式表达测试的 99.70% 仅作为规划模块指标。">
+  <meta name="description" content="固定 100 工具合成闭集上的一体化实验系统，在 9,000 条测试中取得 90.37% 的静态全链路成功率。">
   <meta name="theme-color" content="#000000">
   <link rel="canonical" href="https://ryannnice.github.io/nexus/ecommerce-agent/">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="让复杂电商请求，先找齐工具，再排对工具链。">
-  <meta property="og:description" content="最终结果以 9,000 条测试的静态全链路成功率 90.37%（工具链口径）为主；1,000 条接口式表达测试的 99.70% 仅作为规划模块指标。">
+  <meta property="og:description" content="固定 100 工具合成闭集上的一体化实验系统，在 9,000 条测试中取得 90.37% 的静态全链路成功率。">
   <meta property="og:url" content="https://ryannnice.github.io/nexus/ecommerce-agent/">
   <meta property="og:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026073001">
   <meta property="og:image:width" content="1200">
@@ -59,12 +59,7 @@
         <div class="hero-copy">
           <p class="hero-eyebrow"><span class="corner-square" aria-hidden="true"></span>100-TOOL COMMERCE AGENT · INTEGRATED SYSTEM STUDY</p>
           <h1 id="heroTitle">让复杂电商请求，<br><span>先找齐工具，再排对工具链。</span></h1>
-          <p class="hero-lead">面向 100 个已知工具的一体化离线研究：先判断请求是否需要工具，再检索并重排候选，最后输出所需工具及其调用顺序。</p>
-
-          <div class="scope-badge">
-            <span class="scope-dot" aria-hidden="true"></span>
-            <div><strong>完整系统链路</strong><span>意图分流 → 候选检索 → 有序工具链</span></div>
-          </div>
+          <p class="hero-lead">面向固定 100 工具的离线系统：意图分流、候选检索与有序工具链规划。</p>
 
           <div class="hero-actions">
             <a class="btn btn-primary" href="#abstract">查看项目摘要 <span aria-hidden="true">↓</span></a>
@@ -73,7 +68,7 @@
 
           <dl class="hero-stats">
             <div><dt>100</dt><dd>固定工具空间</dd></div>
-            <div><dt>1.0000</dt><dd>意图分流模块最优准确率 · 0.6B · 9K</dd></div>
+            <div><dt>100.00%</dt><dd>意图分流模块最优准确率 · 0.6B · 9K</dd></div>
             <div><dt>98.30%</dt><dd>候选检索 AllHit@10 · 6K</dd></div>
             <div class="hero-stat-primary"><dt>90.37%</dt><dd>静态全链路成功率 · 工具链口径 · 9,000 条</dd></div>
           </dl>
@@ -121,52 +116,20 @@
       </div>
     </section>
 
-    <aside class="scope-strip" aria-label="项目概览">
-      <div class="wrap scope-strip-inner" role="group" aria-label="项目概览横向列表" tabindex="0">
-        <strong>项目快照</strong>
-        <span>意图分流</span>
-        <span>混合检索</span>
-        <span>静态工具链规划</span>
-        <span>100 个工具 · 8 个业务域</span>
-        <span>更新于 2026-07-31</span>
-      </div>
-    </aside>
-
     <section class="section decision-abstract" id="abstract" aria-labelledby="abstractTitle">
       <div class="wrap">
         <p class="eyebrow">项目概览</p>
         <div class="abstract-brief">
           <div>
-            <h2 id="abstractTitle">一条连续的三阶段实验路线</h2>
-            <p>本项目围绕同一份 100 工具目录构建一条连续系统链路：先判断请求是否进入工具系统；再由 BM25、任务内微调向量模型、任务内重排模型与 RRF 生成高覆盖候选集；最后由 Qwen3-4B/8B 从候选视图或完整目录中输出有序工具 ID。</p>
+            <h2 id="abstractTitle">三阶段实验路线</h2>
+            <p>围绕固定 100 工具，依次完成意图分流、候选检索与有序工具链规划。</p>
           </div>
           <div class="abstract-brief-result">
-            <span>当前最终系统结果</span>
+            <span>最终结果</span>
             <strong>静态全链路成功率 · 90.37%</strong>
-            <p>工具链规划采用 Qwen3-8B 混合表达监督微调模型（版本 2429），全链路统计固定使用 Qwen3-1.7B 路由预测。在静态全链路测试集（3,000 条闲聊 + 6,000 条电商）上，工具链口径成功 8,133 / 9,000（90.37%），集合口径成功 8,153 / 9,000（90.59%）。接口式表达测试集（1,000 条）的 99.70% 只说明规划模块本身；候选顺序稳健模型仅用于候选排列可能变化的场景。</p>
+            <p>冻结 1.7B 路由与 8B 混合表达规划模型后，9,000 条测试中有 8,133 条工具链完全正确。</p>
           </div>
         </div>
-
-        <div class="abstract-definition">
-          <div><span>三个模块的指标</span><strong>分类准确率 → 完整召回率 → 集合 / 工具链全对率</strong></div>
-          <p>路由、检索和规划使用不同输出与计分协议；部分测试共享同一批基础请求，但模块指标仍不能直接相乘。最终结果在 9,000 条静态全链路测试中逐样本联合统计，并固定使用 1.7B 路由预测；0.6B 的 100% 是单独的模块选择结果。</p>
-        </div>
-
-        <div class="abstract-kpis" role="group" aria-label="项目摘要指标">
-          <div><span>工具空间</span><strong>100</strong><small>固定工具文档 · 8 个业务域</small></div>
-          <div><span>意图分流模块</span><strong>1.0000</strong><small>0.6B 模块最优 · Accuracy / Macro-F1 · 9K</small></div>
-          <div><span>候选检索</span><strong>98.30%</strong><small>AllHit@10 · 6K</small></div>
-          <div class="abstract-kpi-primary"><span>静态全链路</span><strong>90.37%</strong><small>8B 混合表达监督微调 · 工具链口径 · 9,000 条</small></div>
-        </div>
-
-        <p class="phase-context-label overview-context-label">系统设计 · 四项关键决定</p>
-        <div class="principle-grid" role="group" aria-label="项目端到端设计原则">
-          <article><span>01</span><h3>按请求类型智能分流</h3><p>入口模型区分电商诉求与开放闲聊，把计算集中在真正需要工具的请求上。</p></article>
-          <article><span>02</span><h3>以完整集合覆盖为目标</h3><p>候选检索测试中的单工具与最多六工具请求采用统一口径，确保任务链所需能力全部进入候选。</p></article>
-          <article><span>03</span><h3>分层提升候选质量</h3><p>先用混合检索建立高覆盖候选，再以任务内重排模型补充请求与工具之间的交互判断。</p></article>
-          <article><span>04</span><h3>从候选集合生成有序轨迹</h3><p>Qwen3-4B/8B 从 Top-10 候选或完整 100 工具目录中选择精确工具集合，并按照用户要求与依赖关系排序。</p></article>
-        </div>
-
       </div>
     </section>
 
@@ -177,7 +140,7 @@
         <p class="eyebrow">基础 01 · 任务</p>
         <div class="section-heading split-heading">
           <h2 id="problemTitle">任务定义与成功口径</h2>
-          <p>真实电商请求常把订单、物流、优惠与售后组合在同一句话中。本项目沿“先分流、再找齐、后排序”的路径推进：从识别电商请求，到覆盖全部必要工具，再生成符合业务依赖的静态有序工具链。</p>
+          <p>目标是识别需要工具的请求、找齐必要工具，并输出正确的调用顺序。</p>
         </div>
 
         <p class="phase-context-label">模块评测口径 · 分流 → 找齐 → 排序</p>
@@ -198,12 +161,19 @@
             <span>阶段 03 · 工具链规划</span>
             <strong>集合 / 工具链全对率</strong>
             <p>集合全对要求工具集合完全一致；工具链全对进一步要求工具及其顺序完全一致。</p>
-            <small>接口式表达测试集 · 1,000 条 · 均为 99.70%</small>
+            <small>接口式表达测试集 · 1,000 条</small>
           </article>
         </div>
-        <p class="metric-contract-note"><strong>阅读规则：</strong>页面最终结果来自 9,000 条逐样本联合统计：静态全链路成功率按工具链口径为 90.37%，按集合口径为 90.59%。该联合统计使用冻结的 1.7B 路由预测；0.6B 的 100% 是意图模块选择结果，尚未另行生成结构化全链路评分文件。上方三项模块结果承担不同职责、采用不同计分事件；部分样本共享基础请求，也只能并列阅读，不能相乘。静态全链路测试验证路由、候选检索与选链，不覆盖参数、真实工具调用或失败恢复；规划模块在 1,000 条接口式表达测试中的候选完整召回率为 100.00%，与检索模块 6,000 条测试的 98.30% 不是同一评测协议。</p>
+        <p class="metric-contract-note">三项模块指标独立计分；项目最终结果以 9,000 条逐样本全链路统计为准。</p>
 
-        <div class="metric-detail-stack">
+        <details class="narrative-disclosure metric-definition-disclosure">
+          <summary>
+            <span class="disclosure-summary-copy"><small>指标示例</small><strong>AllHit@K 与集合 / 工具链全对率</strong></span>
+            <span class="disclosure-summary-meta">2 组判定示例</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="disclosure-body">
+          <div class="metric-detail-stack">
           <article class="metric-detail-module" aria-labelledby="retrievalMetricTitle">
             <header class="metric-detail-header">
               <div class="metric-detail-title">
@@ -313,7 +283,9 @@
               </aside>
             </div>
           </article>
-        </div>
+          </div>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -322,7 +294,7 @@
         <p class="eyebrow">基础 02 · 工具目录</p>
         <div class="section-heading split-heading">
           <h2 id="toolspaceTitle">100 工具能力底座</h2>
-          <p>结构化工具目录是项目统一的能力事实源：100 个工具覆盖八个业务域，并记录名称、描述、操作类型、负向边界、易混关系与依赖，统一服务数据生成、检索建库和模型训练。</p>
+          <p>100 个工具覆盖 8 个业务域，统一供数据生成、候选检索与工具链规划使用。</p>
         </div>
 
         <div class="domain-summary" id="domainSummary" role="group" aria-label="八个业务域工具数量"></div>
@@ -361,13 +333,7 @@
         <p class="eyebrow">实验 01 · 意图分流</p>
         <div class="section-heading split-heading">
           <h2 id="intentTitle">先判断请求是否需要进入工具系统</h2>
-          <p>第一阶段只回答一个问题：当前请求是需要工具处理的电商请求，还是应直接响应的开放闲聊。运行时只使用类型判断控制路由，模型同时生成的关键词不参与后续检索排序。</p>
-        </div>
-
-        <div class="experiment-question">
-          <span>实验问题</span>
-          <strong>能否用更小的模型稳定完成入口分流？</strong>
-          <p>在同一 9K 合成固定集合上比较关键词规则、未微调模型与 LoRA 方案；选择依据是 Accuracy / Macro-F1、模型规模和运行职责，而不是把该集合结果外推到真实流量。</p>
+          <p>区分电商请求与开放闲聊；只有电商请求进入候选检索。</p>
         </div>
 
         <div class="experiment-steps" role="group" aria-label="意图分流实验进程">
@@ -377,21 +343,7 @@
           <article><span>04 · 模型规模对照</span><strong>1.7B LoRA（均衡训练集）</strong><small>99.96%</small></article>
         </div>
 
-        <div class="intent-result-block">
-          <div class="intent-copy">
-            <p class="eyebrow result-subsection-label">结果与选择</p>
-            <h3>模块横评中，0.6B 结果更高且模型更小</h3>
-            <p>关键词规则为 50.22%；LoRA 后 0.6B 与 1.7B 分别达到 100.00% 和 99.96%。0.6B 以更小规模取得该固定集合最佳结果，因此记为意图分流模块横评最优版本。</p>
-            <div class="intent-callout"><strong>1.0000</strong><span>Qwen3-0.6B LoRA（完整训练集）<br>Accuracy / Macro-F1 · 9K</span></div>
-          </div>
-          <div class="intent-chart" id="intentChart"></div>
-        </div>
-
-        <div class="stage-conclusion">
-          <article><span>模块横评</span><strong>Qwen3-0.6B LoRA 最优</strong><p>在该模块固定集合上，0.6B 结果更高且模型更小；现有 90.37% 仍使用冻结的 1.7B，替换前需要补做全链路复测。</p></article>
-          <article><span>适用边界</span><strong>100% 不等于真实流量零错误</strong><p>真实口语、跨领域边界和分布漂移仍需独立验证。</p></article>
-          <article class="stage-handoff"><span>交给下一阶段</span><strong>电商请求 → 候选检索</strong><p>电商类传递原始请求；闲聊类直接旁路工具系统。</p></article>
-        </div>
+        <p class="metric-contract-note"><strong>采用说明：</strong>0.6B LoRA 是模块横评最优版本；当前 9K 全链路仍使用 1.7B 路由。</p>
 
         <details class="narrative-disclosure intent-evidence-disclosure">
           <summary>
@@ -414,7 +366,7 @@
                 </tbody>
               </table>
             </div>
-            <p class="a3-details-note">意图模块横评中，0.6B LoRA 的最佳验证版本在当前 9K 合成固定集合上同时取得最高 Accuracy 与 Macro-F1，且模型规模更小。“最佳验证版本”和“训练结束版本”来自同一次训练，不是两种独立训练方案。该 100% 是模块结果；当前 90.37% 的结构化全链路评分固定使用 1.7B 路由预测，因此两者分开报告。</p>
+            <p class="a3-details-note">0.6B LoRA 训练步 2000 为模块最优；当前全链路固定使用 1.7B 训练结束版本。</p>
           </div>
         </details>
 
@@ -439,7 +391,7 @@
                   </tbody>
                 </table>
               </div>
-              <p class="data-boundary-note"><strong>划分边界：</strong>上游电商轨迹的训练 / 测试划分中，归一化请求、轨迹 ID 与表达簇精确重合均为 0；闲聊来自独立样本。当前 100% 只说明固定合成集合上的模块表现，90.37% 静态全链路统计仍使用冻结的 1.7B 路由预测。</p>
+              <p class="data-boundary-note"><strong>划分边界：</strong>训练与测试的归一化请求、轨迹 ID 和表达簇精确重合均为 0；闲聊样本独立构建。</p>
             </section>
 
             <div class="efficiency-summary" role="group" aria-label="意图分流实验环境摘要">
@@ -492,7 +444,7 @@
               <p><strong>硬件记录：</strong>六个神经版本各使用单张 NVIDIA GeForce RTX 3090 24GB，驱动 570.124.04；关键词规则使用 Montage Jintide C6230R 单线程。该记录只绑定本表推理，不反向证明两次历史训练的显卡型号。</p>
               <p><strong>计时口径：</strong>神经模型的生成 p50 / p95、样本吞吐和输出 token 吞吐均来自 9,000 条完整集合；不含 prompt 构建与分词，且为批内均摊。0.6B 与 1.7B 的批量分别为 64 和 48，关键词规则又使用单线程 CPU，因此三者不构成同批量、同硬件的公平速度排名。</p>
             </div>
-            <p class="efficiency-boundary"><strong>记录边界：</strong>历史训练日志中的 <code>memory(GiB)</code> 字段未注明统计对象与口径，因此不采用；表内显存来自推理效率记录的 CUDA 已分配 / 已保留峰值。效率记录只用于计时与资源比较，不改写页面采用的冻结准确率；0.6B 的 100% 是该模块固定集合上的横评结果，而当前 90.37% 静态全链路统计仍使用 1.7B 路由预测。</p>
+            <p class="efficiency-boundary"><strong>记录边界：</strong>历史 <code>memory(GiB)</code> 字段口径不明，因此只采用推理记录中的 CUDA 峰值。</p>
           </div>
         </details>
       </div>
@@ -503,35 +455,14 @@
         <p class="eyebrow">实验 02 · 候选检索</p>
         <div class="section-heading split-heading">
           <h2 id="resultsTitle">候选检索：基线、任务内训练与最终方案</h2>
-          <p>意图分流放行电商请求后，候选检索必须让一条请求的全部必要工具同时进入 Top-K。本阶段先测公开模型，再进行任务内训练与排序融合，最终确定候选生成方案。</p>
-        </div>
-
-        <div class="experiment-paths" role="group" aria-label="候选检索的两条实验路线">
-          <article>
-            <header><span>路线 A · 公开模型基线</span><strong>公开模型能达到什么结果？</strong></header>
-            <ol>
-              <li><small>未微调 bge-large</small><b>47.63%</b></li>
-              <li><small>向量 + BM25 RRF · N=20</small><b>63.67%</b></li>
-              <li class="path-stop"><small>公开 Qwen3 重排模型 · N=50</small><b>78.37%</b></li>
-            </ol>
-            <p>公开分支最高为 78.37%，只作为参考路线，不作为任务内向量模型训练的输入。</p>
-          </article>
-          <article class="is-primary">
-            <header><span>路线 B · 任务内训练</span><strong>任务内训练带来什么？</strong></header>
-            <ol>
-              <li><small>任务内微调 bge-large</small><b>95.75%</b></li>
-              <li><small>向量 + BM25 初排融合</small><b>95.95%</b></li>
-              <li class="path-selected"><small>初排 + 任务内重排的 RRF 融合</small><b>98.30%</b></li>
-            </ol>
-            <p>任务内表示学习贡献主要增益；最终保留第一阶段排序与任务内重排的两份互补名次。</p>
-          </article>
+          <p>目标是让一条请求的全部必要工具同时进入 Top-K。</p>
         </div>
 
         <div class="result-command-center">
           <article class="result-verdict">
             <p class="eyebrow">候选检索 · 最终采用方案</p>
-            <h3>检索层采用第一阶段排序与<br>任务内重排的加权 RRF 融合。</h3>
-            <p>向量与 BM25 的融合结果提供初始排序，任务内重排模型补充请求与工具之间的交互评分。训练侧网格搜索确定第一阶段排序权重为 <code>0.6</code>、<code>rrf_k=10</code>，参数固定后在 6K 项目基准上达到 AllHit@10 98.30%。</p>
+            <h3>第一阶段排序与<br>任务内重排名次融合</h3>
+            <p>在 6K 固定集合上，AllHit@10 达到 98.30%。</p>
             <div class="result-verdict-tags">
               <span>第一阶段权重 0.6</span>
               <span>RRF 平滑常数 10</span>
@@ -556,7 +487,6 @@
 
         <div class="result-explorer-head">
           <div><span class="result-subsection-label">02 · 检索路线比较</span><h3>按实验问题查看代表结果</h3></div>
-          <p>两条视图分别回答“公开模型基线达到什么水平”和“任务内训练带来什么变化”；候选源或深度不一致的结果不解释为统一排行榜。</p>
         </div>
 
         <div class="metric-switch" id="metricSwitch" role="group" aria-label="切换检索指标">
@@ -579,9 +509,7 @@
 
 
         <div class="result-footnotes">
-          <p><span>01</span>AllHit@6 与 AllHit@10 分别要求全部目标工具进入前 6 / 前 10；本节以 AllHit@10 为候选检索模块的主指标。</p>
-          <p><span>02</span>AllHit@30 观察深候选覆盖；MRR 只看最靠前目标工具的倒数名次，不能替代完整集合指标。</p>
-          <p><span>03</span>多工具请求的主要判断依据是 AllHit；不同候选源与深度只在对应实验问题内比较。</p>
+          <p><span>口径</span>AllHit@10 要求全部目标工具进入前 10；其余指标用于辅助分析。</p>
         </div>
 
         <details class="evidence-disclosure">
@@ -626,7 +554,7 @@
           <div class="disclosure-body">
             <div class="result-table-head">
               <div><p class="eyebrow">显式负例 MNRL</p><h3>什么样的负例真正有帮助？</h3></div>
-              <p>固定 bge-large、1 轮、lr2e-5、单次批量 8、梯度累积 8 和 FP16，只改变每个正对进入 MNRL 分母的错误工具样本。实验交接记录显示 4 次运行均使用单张 Tesla V100 32GB；推理为 6,000 条、批量 64 的离线均摊。</p>
+            <p>固定 bge-large、1 轮、lr2e-5、单次批量 8、梯度累积 8 与 FP16，仅改变显式负例；单张 V100 32GB。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact">
@@ -639,14 +567,14 @@
                 </tbody>
               </table>
             </div>
-            <p class="efficiency-boundary"><strong>结果判断：</strong>在完全相同的训练设置下，跨领域、新增无关负例相对无显式负例对照提高 3.15 个百分点。其 97.20% 比当前融合链所用向量模型的单路结果高 1.45 个百分点，但这项跨设置差值同时包含精度与对比学习单次批量的变化，不能全部归因于负例。该 6K 是项目内固定比较集，不是新的独立终评集；模型尚未进入融合链和全链路复评，因此最终检索结果 98.30% 与静态全链路主结果均保持不变。</p>
+            <p class="efficiency-boundary"><strong>结论：</strong>最佳单路向量为 97.20%，较同设置对照提高 3.15 个百分点；尚未接入融合链或完成全链路复评。</p>
           </div>
         </details>
 
         <details class="full-results narrative-disclosure retrieval-run-disclosure">
           <summary>
             <span class="disclosure-summary-copy"><small>04 · 完整实验记录</small><strong>查看公开基线、训练版本与重排融合的完整结果</strong></span>
-            <span class="disclosure-summary-meta">43 条结果记录 · 6 组实验</span>
+            <span class="disclosure-summary-meta">39 条结果记录 · 5 组实验</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="full-results-body">
@@ -749,22 +677,7 @@
               </div>
             </section>
 
-            <section class="full-results-group" aria-labelledby="explicitNegativeRunsTitle">
-              <div class="full-results-group-head"><span>06</span><div><h4 id="explicitNegativeRunsTitle">显式负例 MNRL 补充实验</h4><p>同一单次批量与优化器有效批量下，比较 0 / 2 / 4 个类型化显式负例。</p></div></div>
-              <div class="result-table-wrap" tabindex="0">
-                <table class="result-table result-table-compact">
-                  <thead><tr><th scope="col">配置</th><th scope="col">显式负例 / 正对</th><th scope="col">AllHit@6</th><th scope="col">AllHit@10</th><th scope="col">AllHit@30</th><th scope="col">MRR</th></tr></thead>
-                  <tbody>
-                    <tr><td>批量 8 无显式负例对照</td><td>0</td><td>82.53%</td><td>94.05%</td><td>99.37%</td><td>96.14%</td></tr>
-                    <tr><td>同领域、部分替代负例</td><td>2</td><td>88.20%</td><td>96.35%</td><td>99.72%</td><td>96.70%</td></tr>
-                    <tr class="result-table-final"><td>跨领域、新增无关负例</td><td>2</td><td>88.70%</td><td><strong>97.20%</strong></td><td>99.52%</td><td><strong>96.74%</strong></td></tr>
-                    <tr><td>同时加入全部显式负例</td><td>4</td><td>88.45%</td><td>96.72%</td><td>99.68%</td><td>96.45%</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </section>
-
-            <p class="full-results-note">表格保留项目介绍所需的主要已跑配置；AllHit@7 / @8 / @9 连续曲线、低价值重复候选深度及推理框架诊断仍保留在检索与向量训练报告中。显式负例的 4 次运行是单路向量消融，不与尚未复评的融合链结果混算。</p>
+            <p class="full-results-note">显式负例的 4 次运行见上方独立折叠表；其余连续曲线与诊断保留在源报告中。</p>
           </div>
         </details>
 
@@ -918,41 +831,12 @@
       </div>
     </section>
 
-    <section class="section experiment-insight" id="insight" aria-labelledby="insightTitle">
-      <div class="wrap">
-        <p class="eyebrow">实验 02 · 最终路线依据</p>
-        <div class="insight-heading">
-          <h2 id="insightTitle">最终选择来自两类排序信号的互补</h2>
-          <p>主要增益来自任务内表示学习；轻量残差校准把第一阶段排序从 95.95% 提高到 96.30%，表明组合两路信号能够带来增益，但仍未达到最终 RRF 的 98.30%。最佳方案保留初排与重排的互补名次。</p>
-        </div>
-        <div class="insight-chart" id="insightChart"></div>
-        <div class="finding-grid">
-          <article><span>01 · 表示学习</span><h3>任务内表示学习贡献主要增益</h3><p>bge-large 从未微调的 47.63% 提升至微调后的 95.75%，说明任务内能力边界学习贡献了本阶段的主要增益。</p></article>
-          <article><span>02 · 信号互补</span><h3>两种排序信号各有优势</h3><p>第一阶段排序保持全局候选稳定性，任务内重排强化候选对之间的细粒度语义比较。</p></article>
-          <article><span>03 · 方案选择</span><h3>名次融合形成最佳短名单</h3><p>最终 RRF 在保留第一阶段排序优势的同时吸收重排增益；相对任务内向量单路，恢复了 163 条 Top-10 失败请求。</p></article>
-        </div>
-        <div class="insight-conclusion">
-          <div><span>第一阶段排序</span><strong>Top-50 候选与初排名次</strong></div>
-          <div class="conclusion-plus">+</div>
-          <div><span>任务内重排</span><strong>请求与工具的交互名次</strong></div>
-          <div class="conclusion-equals">=</div>
-          <div class="conclusion-final"><span>加权 RRF</span><strong>98.30% AllHit@10</strong></div>
-        </div>
-      </div>
-    </section>
-
     <section class="section" id="analysis" aria-labelledby="analysisTitle">
       <div class="wrap">
         <p class="eyebrow">实验 02 · 剩余错误诊断</p>
         <div class="section-heading split-heading">
-          <h2 id="analysisTitle">最终检索方案的剩余错误</h2>
-          <p>本节仍以 AllHit@10 为候选检索模块的主指标；更紧的 AllHit@6 只用于定位前缀排序问题。两个口径在本节明确分开，诊断数字不替代模块报告指标。</p>
-        </div>
-
-        <div class="diagnostic-summary" role="group" aria-label="候选检索剩余误差摘要">
-          <article><span>主指标</span><strong>102 / 6,000</strong><p>最终系统在 AllHit@10 下仍有 102 条请求未完整覆盖。</p></article>
-          <article><span>Top-6 诊断</span><strong>458 / 560</strong><p>其中 458 条的全部漏召目标位于第 7–10 名；多数问题来自前缀排序。</p></article>
-          <article><span>初排候选覆盖</span><strong>554 / 560</strong><p>其中 554 条的全部目标已进入第一阶段 Top-50；另有 6 条仍存在深候选缺失。</p></article>
+          <h2 id="analysisTitle">还剩哪些检索错误？</h2>
+          <p>最终方案在 6K 中仍有 102 条请求未完整覆盖；Top-6 诊断与案例收在下方。</p>
         </div>
 
         <details class="narrative-disclosure diagnostics-disclosure">
@@ -976,13 +860,13 @@
           <article class="rank-band-card">
             <header><div><span>漏召目标名次</span><h3>主要漏召目标落在第 7–10 名</h3></div></header>
             <div class="rank-band-list" id="rankBandList"></div>
-            <p class="rank-band-note">以 AllHit@6 下的 560 条未完整覆盖请求为分析单位；458 条的全部漏召工具都在第 7–10 位。这里用更紧凑的 Top-6 定位前缀排序空间；候选检索模块的报告指标仍为 AllHit@10。</p>
+            <p class="rank-band-note">Top-6 仅用于定位前缀排序问题；模块主指标仍为 AllHit@10。</p>
           </article>
         </div>
 
         <div class="case-section">
           <div class="case-section-head">
-            <div><p class="eyebrow">案例分析</p><h3>用原始记录与压缩展示案例理解排序边界</h3></div>
+            <div><p class="eyebrow">案例分析</p><h3>典型排序错误</h3></div>
             <div class="case-tabs" id="caseTabs" role="tablist" aria-label="选择固定测试案例"></div>
           </div>
           <article class="case-viewer" id="caseViewer" aria-live="polite"></article>
@@ -991,8 +875,8 @@
         <div class="competition-section">
           <div class="competition-copy">
             <p class="eyebrow">竞争关系</p>
-            <h3>高频竞争关系沉淀为下一轮数据线索</h3>
-            <p>左侧是未进入 Top-6 的目标工具，右侧是前缀中的高频竞争工具。测试错误案例只用于归纳错误类型；困难负例必须从训练集或新增数据构造，并在独立验证集上选参。</p>
+            <h3>高频工具竞争</h3>
+            <p>测试错误只用于归因；困难负例从训练数据构造，并在独立验证集选参。</p>
           </div>
           <div class="competition-table-wrap" tabindex="0">
             <table class="competition-table">
@@ -1012,7 +896,7 @@
         <p class="eyebrow">实验 03 · 工具链规划</p>
           <div class="section-heading split-heading">
             <h2 id="planningTitle">工具链规划：训练结果与最终模型选择</h2>
-            <p>未微调的 8B 模型即使获得 Top-10 候选，工具链全对率仍只有 59.10%。首次监督微调将接口式表达测试提高到 98.30%，但静态全链路成功率（工具链口径）只有 81.41%；混合表达监督微调随后将其提高到 90.37%。直接扩到 Top-20 后全链路降至 89.49%，因此默认仍用 Top-10；候选顺序稳健优化只用于候选排列可能变化的场景。</p>
+            <p>比较基础模型、首次与混合表达监督微调，以及候选数量和排列稳定性。</p>
           </div>
         </header>
 
@@ -1020,13 +904,13 @@
           <div class="planner-final-lead-copy">
             <span>最终结果 · 静态全链路 9,000 条</span>
             <h3 id="plannerFinalLeadTitle"><strong>90.37%</strong> 静态全链路成功率</h3>
-            <p>冻结 1.7B 路由预测与 Qwen3-8B 混合表达监督微调规划模型联合后，按工具链口径完成 <b>8,133 / 9,000</b> 条静态完整链路。该结果是本章最终主结果，8B 规划模型也是候选顺序固定时的默认选择。</p>
+            <p>冻结 1.7B 路由与 8B 混合表达监督微调规划模型后，工具链口径通过 <b>8,133 / 9,000</b> 条。</p>
           </div>
           <div class="planner-final-lead-choice" role="group" aria-label="最终规划模型选择">
             <div>
               <span>默认模型</span>
               <strong>8B 混合表达监督微调模型</strong>
-              <small>模型版本 2429 · 全链路 90.37%（工具链口径）</small>
+              <small>模型版本 2429 · 当前默认</small>
             </div>
             <div>
               <span>候选排列可能变化</span>
@@ -1034,7 +918,6 @@
               <small>模型版本 111 · 全链路 90.16%（工具链口径）</small>
             </div>
           </div>
-          <p class="planner-final-lead-rule"><strong>最终口径：</strong>接口式表达测试集（1,000 条）的约 99% 是规划模块结果；90.37% 才是冻结 1.7B 路由预测、候选检索与工具链规划在 9,000 条样本上联合统计的最终静态全链路结果。</p>
         </section>
 
         <section class="planner-compact-story" id="plannerExperiments" aria-labelledby="plannerStoryTitle">
@@ -1042,7 +925,6 @@
             <span>训练与评测结果</span>
             <div>
               <h3 id="plannerStoryTitle">主要训练与评测结果</h3>
-              <p>下方依次列出起点、两次监督微调、候选数量检验、候选顺序稳健优化和最终全链路结果；每组结果表均可独立展开。</p>
             </div>
           </header>
 
@@ -1051,36 +933,36 @@
               <small>00–01 · 起点</small>
               <span>基础模型 + Top-10 候选</span>
               <strong>59.10%</strong>
-              <p>8B · 工具链全对率</p>
+              <p>接口式表达 1K · 8B 工具链全对率</p>
               <em>缩小候选范围有帮助，但模型仍无法稳定选对工具链。</em>
             </li>
             <li class="is-first-sft">
               <small>02A · 首次监督微调</small>
               <span>只用接口式表达训练</span>
-              <strong>98.30%</strong>
-              <p>接口式表达 1,000 条 · 工具链全对率</p>
-              <em>同一模型的静态全链路成功率（工具链口径）只有 81.41%。</em>
+              <strong>81.41%</strong>
+              <p>静态全链路工具链成功率 · 9K</p>
+              <em>接口式表达模块测试为 98.30%。</em>
             </li>
             <li class="is-selected">
               <small>02B · 两种表达联合训练</small>
               <span>混合表达监督微调</span>
               <strong>90.37%</strong>
               <p>静态全链路成功率 · 工具链口径 · 9,000 条</p>
-              <em>跨表达测试的工具链全对率由 72.18% 提高到 85.62%。</em>
+              <em>跨表达测试提高到 85.62%。</em>
             </li>
             <li>
               <small>03 · 候选数量</small>
               <span>Top-10 → Top-20</span>
-              <strong>90.37% → 89.49%</strong>
-              <p>8B · 静态全链路工具链成功率</p>
-              <em>当前按 Top-10 训练的模型在新增候选下下降，回退主要集中于较长工具链；默认继续使用 Top-10。</em>
+              <strong>89.49%</strong>
+              <p>Top-20 · 静态全链路工具链成功率</p>
+              <em>低于默认方案，继续使用 Top-10。</em>
             </li>
             <li class="is-conditional">
               <small>04 · 顺序稳定性</small>
               <span>候选顺序稳健优化</span>
-              <strong>+0.53 个百分点</strong>
-              <p>8B · 三种候选顺序的平均工具链全对率</p>
-              <em>静态全链路成功率（工具链口径）为 90.16%，因此不替代默认模型。</em>
+              <strong>90.16%</strong>
+              <p>静态全链路工具链成功率 · 9K</p>
+              <em>三种排列平均提高 0.53 个百分点，仅作备选。</em>
             </li>
           </ol>
 
@@ -1121,7 +1003,6 @@
                       </tbody>
                     </table>
                   </div>
-                  <p class="planner-result-boundary"><strong>口径区别：</strong>约 99% 来自 1,000 条接口式表达的规划模块评测；80.77% / 81.41% 才是首次监督微调模型在 9,000 条测试中的静态全链路成功率（工具链口径）。</p>
                 </div>
               </div>
             </details>
@@ -1135,7 +1016,6 @@
               <div class="disclosure-body planner-result-body">
                 <div class="planner-table-heading">
                   <h4>混合表达监督微调的模块与全链路结果</h4>
-                  <p>接口式表达、跨表达测试与静态全链路三套测试分别计分；箭头只比较同一测试集上的两个模型。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table planner-crossstyle-table">
@@ -1156,11 +1036,10 @@
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
-                <p class="planner-dpo-context">固定同一套完整检索排序与 4B / 8B 混合表达监督微调模型，只截取前 K 个候选。本实验不更新模型参数；先在独立开发集完整比较四档，再将预先锁定的 Top-20 与既有 Top-10 在冻结集上比较。</p>
+                <p class="planner-dpo-context">固定检索排序与规划模型，仅改变输入候选数 K；模型参数不变。</p>
                 <div class="planner-table-block">
                   <div class="planner-table-heading">
                     <h4>开发集：Top-20 是较省输入的近最优候选</h4>
-                    <p>当两模型平均工具链结果和检索上界与最佳值都相差不超过 0.2 个百分点时，选择输入最短的 K；该规则在查看 Top-20 最终检查结果之前锁定。</p>
                   </div>
                   <div class="result-table-wrap" tabindex="0">
                     <table class="result-table result-table-compact planner-result-table">
@@ -1173,13 +1052,13 @@
                       </tbody>
                     </table>
                   </div>
-                  <p class="planner-result-boundary">Top-20 相对 Top-30 的两模型平均工具链全对率只低 0.1458 个百分点，但平均输入长度少 26.65%，因此成为进入冻结检查的候选方案。</p>
+                  <p class="planner-result-boundary">Top-20 比 Top-30 低 0.15 个百分点，输入 token 少 26.65%。</p>
                 </div>
 
                 <div class="planner-table-block">
                   <div class="planner-table-heading">
                     <h4>候选数量与生成成本</h4>
-                    <p>2,400 条开发集；BF16、贪心生成、最多 128 token、无预热。延迟为批次墙钟时间除以批量的离线均摊值，同一模型内跨 K 可比。</p>
+                    <p>单张 V100；延迟为离线批内均摊，仅比较同一模型的不同 K。</p>
                   </div>
                   <div class="result-table-wrap" tabindex="0">
                     <table class="result-table result-table-compact planner-result-table">
@@ -1196,13 +1075,11 @@
                       </tbody>
                     </table>
                   </div>
-                  <p class="planner-result-boundary">本表来自单张 Tesla V100 的候选数量专项运行，每次只暴露 1 个 CUDA 设备，显存为分片进程峰值。只允许在同一模型内比较不同 K；4B 与 8B 使用不同批量，也不能与下方硬件型号未保存的历史规划推理延迟横向比较。</p>
                 </div>
 
                 <div class="planner-table-block">
                   <div class="planner-table-heading">
                     <h4>冻结结果：更多召回没有转化为更高全链路成功率</h4>
-                    <p>冻结 6,000 条只测试已锁定的 Top-20 候选；全链路继续使用同一份 1.7B 意图分流预测。</p>
                   </div>
                   <div class="result-table-wrap" tabindex="0">
                     <table class="result-table result-table-compact planner-result-table planner-final-table">
@@ -1215,23 +1092,23 @@
                       </tbody>
                     </table>
                   </div>
-                  <p class="planner-result-boundary"><strong>部署判断：</strong>Top-20 少漏召 85 条，但 4B / 8B 的冻结工具链全对率分别下降 1.5333 / 1.3167 个百分点，8B 静态全链路工具链成功率下降 0.8778 个百分点。因此默认方案继续使用 Top-10，90.37% 的主结果不变。</p>
+                  <p class="planner-result-boundary">Top-20 多命中 85 条，但 8B 全链路下降 0.88 个百分点，故保留 Top-10。</p>
                 </div>
-                <p class="planner-result-boundary"><strong>解释边界：</strong>这些规划模型按 Top-10 训练，本实验只在推理时扩大候选前缀。因此结论是“当前模型不宜直接扩大候选”，不是“重新按 Top-20 或混合 K 训练也一定更差”。</p>
+                <p class="planner-result-boundary">模型按 Top-10 训练；本结果不代表重新按 Top-20 训练后的上限。</p>
               </div>
             </details>
 
             <details class="narrative-disclosure planner-story-results" id="plannerExperiment3">
               <summary>
-                <span class="disclosure-summary-copy"><small>候选顺序稳健优化</small><strong>三种候选排列下更稳定，但不替代默认模型</strong></span>
+                <span class="disclosure-summary-copy"><small>候选顺序稳健优化</small><strong>三种排列平均工具链全对率：98.06% → 98.58%</strong></span>
                 <span class="disclosure-summary-meta">2,000 对偏好 · 同一 1,200 条 × 3 种排列</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
-                <p class="planner-dpo-context">早期偏好优化没有稳定改善主指标，其中一次还使跨表达测试明显回退。当前方案只使用混合表达监督微调模型的真实错误，并采用更保守的学习率，目标是降低模型对候选排列的敏感性。</p>
+                <p class="planner-dpo-context">使用当前规划模型的真实错误训练，降低模型对候选排列的敏感性。</p>
                 <div class="planner-table-heading">
                   <h4>候选顺序压力测试</h4>
-                  <p>同一 1,200 条请求分别按原顺序、倒序和固定规则打乱展示；不是 3,600 条独立请求。</p>
+                  <p>同一 1,200 条请求采用三种候选排列。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table">
@@ -1242,11 +1119,11 @@
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>部署判断：</strong>8B 顺序稳健模型的静态全链路成功率（工具链口径）为 90.16%，比优化前模型的 90.37% 低 0.21 个百分点；因此它不替代默认模型。</p>
+                <p class="planner-result-boundary">全链路为 90.16%，未替代默认模型。</p>
               </div>
             </details>
 
-            <details class="narrative-disclosure planner-story-results planner-final-results" id="plannerExperiment4" open>
+            <details class="narrative-disclosure planner-story-results planner-final-results" id="plannerExperiment4">
               <summary>
                 <span class="disclosure-summary-copy"><small>最终静态全链路结果</small><strong>9,000 条测试：最终选择 8B 混合表达监督微调模型</strong></span>
                 <span class="disclosure-summary-meta">3,000 条闲聊 + 6,000 条电商</span>
@@ -1255,7 +1132,7 @@
               <div class="disclosure-body planner-result-body">
                 <div class="planner-table-heading">
                   <h4>意图分流 + 候选检索 + 工具链规划</h4>
-                  <p>集合与工具链两种口径均由 9,000 条联合事件直接计数，并固定使用 1.7B 路由预测，不是独立模块准确率相乘。</p>
+                  <p>9,000 条样本逐条联合计分。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table planner-final-table">
@@ -1270,7 +1147,7 @@
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>边界：</strong>这是 100 工具合成闭集上的静态全链路成功率，路由侧固定为 Qwen3-1.7B LoRA（均衡训练集）的预测；不覆盖参数生成、真实 API 返回、异常重试、状态变化或多轮执行。</p>
+                <p class="planner-result-boundary">边界：100 工具合成闭集，不含参数生成与真实调用。</p>
               </div>
             </details>
           </div>
@@ -1439,7 +1316,7 @@
         <p class="eyebrow">项目结论 · 最终系统与边界</p>
         <div class="section-heading split-heading">
           <h2 id="limitsTitle">完整系统结论、适用边界与下一步</h2>
-          <p>当前证据支持一条完整但静态的系统链路：在固定 100 工具合成闭集中完成入口分流、高覆盖候选检索与有序工具轨迹规划。显式负例把单路向量 AllHit@10 提高到 97.20%，但尚未进入最终融合链；候选数量检验则表明当前规划模型不能只靠扩大候选换取更高全链路结果。混合表达监督微调与候选顺序稳健优化的作用仍分别是表达适应和排列稳定性。</p>
+          <p>最终系统由意图分流、候选检索和工具链规划组成，评测止于静态有序工具 ID。</p>
         </div>
 
         <section class="final-system-overview" id="system" aria-labelledby="systemTitle">
@@ -1448,7 +1325,7 @@
               <span>最终系统 · 三个模块 / 五个步骤</span>
               <h3 id="systemTitle">最终系统配置与静态工具链</h3>
             </div>
-            <p>这里展示 90.37% 实际评测所用的冻结链路：1.7B 路由预测、原批量 64 向量模型所在的最终候选检索链与 8B 混合表达监督微调规划。显式负例最佳模型只有单路向量结果，尚未替换这条链。0.6B 虽是意图模块横评最优，但 90.37% 链路仍使用 1.7B，替换前需重新做 9K 联合评测；Top-20 又将 8B 全链路工具链成功率降至 89.49%，因此没有采用。</p>
+            <p>采用 1.7B 路由、融合检索 Top-10 与 8B 混合表达监督微调规划模型。</p>
           </header>
 
           <ol class="route-phases final-route-phases">
@@ -1459,105 +1336,15 @@
             <li><span>05 · 模块 03</span><strong>生成有序轨迹</strong><small>有序工具 ID</small></li>
           </ol>
 
-          <article class="pipeline-lane intent-lane">
-            <header>
-              <div><span>模块 01 · 意图分流</span><h3>入口意图分流</h3></div>
-              <p>全链路评测冻结配置 · 步骤 01</p>
-            </header>
-            <div class="pipeline-row pipeline-row-intent">
-              <div class="pipeline-node node-input"><small>输入</small><strong>用户请求</strong><span>复合电商诉求或开放闲聊</span></div>
-              <div class="pipeline-arrow" aria-hidden="true">→</div>
-              <div class="pipeline-node node-primary"><small>全链路评测冻结路由</small><strong>Qwen3-1.7B LoRA</strong><span>均衡训练集 · 路由准确率 99.9556% · 闲聊正确 2,996 / 3,000</span></div>
-              <div class="pipeline-arrow" aria-hidden="true">→</div>
-              <div class="pipeline-node node-output"><small>阶段输出</small><strong>结构化分流</strong><span>电商请求进入检索 · 闲聊直接响应</span></div>
-            </div>
-          </article>
-
-          <div class="integration-bridge"><span>电商类原始请求进入候选检索</span></div>
-
-          <article class="pipeline-lane retrieval-lane">
-            <header>
-              <div><span>模块 02 · 候选检索</span><h3>完整工具集合检索</h3></div>
-              <p>采用配置 · 步骤 02–03</p>
-            </header>
-            <div class="retrieval-map-v2">
-              <div class="pipeline-node node-input retrieval-query"><small>输入</small><strong>电商请求</strong><span>单工具 / 多工具请求</span></div>
-              <div class="pipeline-arrow" aria-hidden="true">→</div>
-
-              <div class="retrieval-stage recall-stage">
-                <div class="stage-label"><span>步骤 02 · 召回</span><strong>并行召回</strong></div>
-                <div class="retriever-stack">
-                  <div class="mini-node"><small>词面检索</small><strong>BM25</strong><span>补充词面信号</span></div>
-                  <div class="mini-node mini-node-primary"><small>语义检索</small><strong>任务内微调向量模型</strong><span>bge-large · MNRL</span></div>
-                </div>
-                <div class="stage-merge" aria-hidden="true">↓</div>
-                <div class="source-node"><small>第一阶段排序</small><strong>加权 RRF</strong><span>Top-50 · 向量权重 0.95</span></div>
-              </div>
-
-              <div class="pipeline-arrow" aria-hidden="true">→</div>
-
-              <div class="retrieval-stage rerank-stage">
-                <div class="stage-label"><span>步骤 03A · 评分</span><strong>候选交互评分</strong></div>
-                <div class="stage-model"><small>Top-50 候选</small><strong>任务内重排模型</strong><span>任务内微调 bge-reranker-base</span></div>
-                <div class="rank-output"><span>输出重排名次</span></div>
-              </div>
-
-              <div class="pipeline-arrow" aria-hidden="true">→</div>
-
-              <div class="retrieval-stage fusion-stage">
-                <div class="stage-label"><span>步骤 03B · 融合</span><strong>双路排序融合</strong></div>
-                <div class="fusion-inputs">
-                  <span><i></i>第一阶段名次 · 0.6</span>
-                  <span><i></i>任务内重排名次 · 0.4</span>
-                </div>
-                <div class="stage-model stage-model-final"><small>最终 RRF</small><strong>互补名次融合</strong><span>平滑常数 10</span></div>
-              </div>
-
-              <div class="pipeline-arrow" aria-hidden="true">→</div>
-              <div class="pipeline-node node-output retrieval-output"><small>交给下一阶段</small><strong>Top-10 工具集合</strong><span>完整必要工具集合交给静态工具链规划</span></div>
-
-              <div class="source-bypass" role="group" aria-label="第一阶段排名同时进入最终融合">
-                <span>保留第一阶段名次</span><i></i><strong>同步进入最终 RRF</strong>
-              </div>
-            </div>
-          </article>
-
-          <div class="integration-bridge integration-bridge-planner"><span>原始请求与 Top-10 候选共同进入静态规划</span></div>
-
-          <article class="pipeline-lane planner-lane">
-            <header>
-              <div><span>模块 03 · 工具链规划</span><h3>精确工具集合与有序轨迹生成</h3></div>
-              <p>采用配置 · 步骤 04–05</p>
-            </header>
-            <div class="planner-map">
-              <div class="planner-inputs">
-                <div><small>请求上下文</small><strong>电商请求</strong><span>保留用户要求与顺序约束</span></div>
-                <div class="planner-input-selected"><small>Top-10 候选</small><strong>Top-10 工具集合</strong><span>接口式表达 1K 完整召回 100% · 跨表达测试 6K 98.30%</span></div>
-              </div>
-              <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
-              <div class="planner-model">
-                <small>采用的静态规划模型</small>
-                <strong>Qwen3-8B · 混合表达监督微调</strong>
-                <span>模型版本 2429 · 候选顺序固定时的默认模型</span>
-              </div>
-              <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
-              <div class="planner-output">
-                <small>有序输出</small>
-                <strong>有序工具 ID</strong>
-                <span>集合全对率 · 工具链全对率 · 严格 JSON 输出</span>
-              </div>
-            </div>
-            <p class="planner-boundary">最终系统在此停止：输出静态有序工具 ID，不执行真实 API，也不评测参数、返回值、失败恢复或多轮状态。</p>
-          </article>
+          <p class="planner-boundary">输出止于静态有序工具 ID，不含参数生成与真实工具调用。</p>
         </section>
 
         <p class="phase-context-label final-results-label">最终结果 · 静态全链路测试集 9,000 条</p>
         <div class="system-outcome-grid" role="group" aria-label="主要模块证据与静态端到端最终结果">
-          <article><span>模块单测 · 意图分流</span><h3>0.6B LoRA · 完整训练集</h3><strong>100.00%</strong><p>Accuracy / Macro-F1 · 9K 合成固定集合</p><small>模块横评最优，不是 90.37% 链路所用路由</small></article>
+          <article><span>模块单测 · 意图分流</span><h3>0.6B LoRA · 模块横评</h3><strong>100.00%</strong><p>Accuracy / Macro-F1 · 9K</p></article>
           <article><span>模块单测 · 候选检索</span><h3>初排 + 任务内重排的 RRF 融合</h3><strong>98.30%</strong><p>AllHit@10 · 6K 固定项目基准</p><small>输出 · Top-10 工具集合</small></article>
-          <article class="is-selected"><span>最终结果 · 静态全链路</span><h3>冻结 1.7B 路由 + 8B 工具链规划</h3><strong>90.37%</strong><p>成功率（工具链口径）· 8,133 / 9,000</p><small>集合口径 90.59% · 规划模块 99.70%</small></article>
+          <article class="is-selected"><span>最终结果 · 静态全链路</span><h3>冻结 1.7B 路由 + 8B 工具链规划</h3><strong>90.37%</strong><p>成功率（工具链口径）· 8,133 / 9,000</p><small>集合口径 90.59%</small></article>
         </div>
-        <p class="system-outcome-note"><strong>最终口径：</strong>冻结 1.7B 路由预测与 8B 混合表达监督微调规划模型在 9,000 条测试中逐样本得到静态全链路成功率 90.3667%（工具链口径，8,133 / 9,000）与 90.5889%（集合口径，8,153 / 9,000）。前两张卡是模块选择证据，不能与最终结果相乘；0.6B 的模块结果也不代表它已用于这组全链路统计。该结果是离线静态联合判定，不是工具真实执行成功率。</p>
 
         <details class="narrative-disclosure data-disclosure system-data-disclosure" id="systemDataLedger">
           <summary>
@@ -1569,7 +1356,7 @@
             <section class="data-evidence-section" aria-labelledby="dataLedgerTitle">
               <div class="data-evidence-heading">
                 <div><p>项目级索引</p><h3 id="dataLedgerTitle">从工具目录到静态全链路的完整数据台账</h3></div>
-                <span>详细协议与隔离审计已放回对应实验；这里仅汇总全项目资产。同一数字不代表同一协议，模块指标也不能直接相乘。</span>
+                <span>详细协议与隔离审计见各实验章节。</span>
               </div>
               <div class="data-table-wrap" tabindex="0">
                 <table class="data-table project-data-ledger">
@@ -1593,12 +1380,18 @@
                   </tbody>
                 </table>
               </div>
-              <p class="data-boundary-note"><strong>统一边界：</strong>这些数据都来自固定 100 工具的合成闭集。部分协议共享基础请求或目标轨迹，但预测对象与计分事件不同；文本、轨迹与表达簇的训练 / 测试隔离已审计，规划目标组合仍有复用。现有证据支持离线静态选型，不覆盖真实流量、开放工具目录、参数生成、实际调用或失败恢复。</p>
             </section>
           </div>
         </details>
 
-        <div class="system-environment-index" aria-labelledby="systemEnvironmentIndexTitle">
+        <details class="narrative-disclosure system-environment-disclosure">
+          <summary>
+            <span class="disclosure-summary-copy"><small>实验记录索引</small><strong>查看三个实验的数据、资源与离线推理记录</strong></span>
+            <span class="disclosure-summary-meta">意图分流 · 候选检索 · 工具链规划</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="disclosure-body">
+          <div class="system-environment-index" aria-labelledby="systemEnvironmentIndexTitle">
           <div class="system-environment-index-copy">
             <span>实验记录索引</span>
             <h3 id="systemEnvironmentIndexTitle">数据、训练资源与离线推理记录已放回各实验章节</h3>
@@ -1610,29 +1403,21 @@
             <a href="#plannerEnvironment"><span>实验 03</span><strong>工具链规划</strong><small>训练 GPU 数 · 生成 p50 / p95 · 吞吐与峰值显存</small></a>
           </nav>
           <p class="efficiency-boundary"><strong>统一性能边界：</strong>目前没有在同一请求分布和并发设置下测量“意图分流 → 候选检索 → 工具链规划”的完整链路 p50、p95、吞吐或峰值显存，也没有计入真实工具执行。各章节的离线数字来自不同协议，不能直接相加。</p>
-        </div>
+          </div>
+          </div>
+        </details>
 
         <div class="verified-limitations" role="group" aria-label="已核实的适用边界">
-          <article><strong>合成闭集</strong><span>目录固定为 100 项，请求来自合成流程；不能直接外推到开放世界或真实流量。</span></article>
-          <article><strong>协议独立</strong><span>意图、检索、接口式表达 1K、跨表达测试 6K 与候选顺序压力测试 1.2K 承担不同角色；最终结果只来自静态全链路 9K。</span></article>
-          <article><strong>组合复用</strong><span>原规划正式测试的 1,000 条中，有 82.1% 的目标工具链曾在当轮监督数据中出现，高分仍受固定组合空间影响。</span></article>
-          <article><strong>执行边界</strong><span>静态顺序已经评测，但参数、真实调用、返回值、失败恢复与多轮状态均未实现。</span></article>
-          <article><strong>规模方差</strong><span>9K–54K 每档只训练一个固定种子，非单调差异可能包含优化随机性，不能推出“数据越多必然越好”。</span></article>
-          <article><strong>索引未对比</strong><span>FAISS IndexFlatIP 适配 100 项目录，但项目没有向量数据库横向基准。</span></article>
-        </div>
-
-        <div class="status-block-heading">
-          <span>01</span><div><h3>当前成果</h3><p>完整系统的各个组件已经形成可串联、可追溯的项目资产。</p></div>
-        </div>
-        <div class="limit-grid">
-          <article><span>已完成 · 01</span><h3>能力与数据底座</h3><p>100 工具目录、30K 路由与检索基础轨迹，以及 9K–54K 严格嵌套的接口式规划监督数据均已沉淀。</p></article>
-          <article><span>已完成 · 02</span><h3>入口与候选检索</h3><p>LoRA 意图分流、微调向量模型、任务内重排和双路 RRF 已串成候选生成链路；显式负例单路消融进一步达到 97.20% AllHit@10。</p></article>
-          <article><span>已完成 · 03</span><h3>静态有序选链</h3><p>冻结 1.7B 路由与 8B 混合表达监督微调规划模型采用 Top-10，在 9,000 条测试中取得 90.59% / 90.37%；Top-20 将工具链口径结果降至 89.49%，因此没有采用。</p></article>
-          <article><span>已沉淀 · 04</span><h3>候选顺序稳定性</h3><p>候选顺序稳健模型使用 2,000 对混合表达监督微调模型的真实错误训练，在三种候选排列下提高平均与最差工具链全对率，审计和文件哈希均可追溯。</p></article>
+          <article><strong>合成闭集</strong><span>固定 100 工具，不能直接外推到真实流量。</span></article>
+          <article><strong>协议独立</strong><span>模块测试与 9K 全链路采用不同协议。</span></article>
+          <article><strong>组合复用</strong><span>规划测试中 82.1% 的目标工具链曾在监督数据出现。</span></article>
+          <article><strong>执行边界</strong><span>未评测参数、真实调用、失败恢复与多轮状态。</span></article>
+          <article><strong>规模方差</strong><span>9K–54K 各档仅一个固定种子。</span></article>
+          <article><strong>索引未对比</strong><span>未进行向量数据库横向基准。</span></article>
         </div>
 
         <div class="roadmap">
-          <div class="roadmap-title"><span>02 · 后续规划</span><h3>下一轮按准确性、速度与业务覆盖推进</h3></div>
+          <div class="roadmap-title"><span>后续规划</span><h3>下一轮优化方向</h3></div>
           <ol>
             <li><span>01 · 准确性</span><strong>真实表达与多种子复测</strong><small>引入匿名真实请求和口语噪声，并量化训练随机性</small></li>
             <li><span>02 · 速度</span><strong>统一端到端性能压测</strong><small>同一请求协议测 p50 / p95、吞吐、冷启动与各阶段显存</small></li>
@@ -1648,12 +1433,12 @@
         <p class="eyebrow">工程证据 · 复现</p>
         <div class="section-heading split-heading">
           <h2 id="evidenceTitle">工程资产与复现</h2>
-          <p>工具目录、数据脚本、训练入口、预测文件和专题报告共同构成项目资产。关键结果可以回到对应运行产物，数据构建与主要实验也保留了可重复执行的入口。</p>
+          <p>源报告、结构化结果与复现入口如下。</p>
         </div>
 
         <aside class="evidence-access-note" aria-label="证据仓库访问说明">
           <strong>访问说明</strong>
-          <span>以下报告与结构化产物位于受限 GitHub 仓库；访问链接前需要登录并拥有仓库权限。</span>
+          <span>以下链接位于受限 GitHub 仓库，需相应权限。</span>
         </aside>
 
         <div class="evidence-grid">
@@ -1664,7 +1449,7 @@
 
         <details class="narrative-disclosure evidence-index-disclosure">
           <summary>
-            <span class="disclosure-summary-copy"><small>完整证据索引</small><strong>查看项目地图、意图分流、候选检索、训练与数据专题报告</strong></span>
+            <span class="disclosure-summary-copy"><small>完整证据索引</small><strong>查看其余项目报告</strong></span>
             <span class="disclosure-summary-meta">6 份补充报告</span>
             <i aria-hidden="true">+</i>
           </summary>
@@ -1683,8 +1468,8 @@
         <div class="reproduce-block">
           <div class="reproduce-copy">
             <p class="eyebrow">复现入口</p>
-            <h3>从工具目录到数据资产，<br>保留可重复运行的构建入口</h3>
-            <p>下列命令覆盖 CPU 可运行的工具目录校验、轨迹生成和数据检查；向量建库、模型训练与完整评测可沿仓库中的 GPU 脚本继续执行。</p>
+            <h3>数据构建与校验</h3>
+            <p>以下 CPU 命令校验目录、生成轨迹并审计数据；GPU 实验入口见仓库。</p>
             <a class="btn btn-outline" href="https://github.com/Ryannnice/Agent" target="_blank" rel="noopener noreferrer" title="该仓库当前需要 GitHub 访问权限">查看项目仓库 ↗</a>
           </div>
           <div class="command-panel">
@@ -1708,7 +1493,7 @@ python3 \
         <div class="provenance">
           <div><span>项目快照</span><strong>2026-07-31</strong></div>
           <div><span>工具目录版本</span><strong>100 个工具 · 2026-07-06</strong></div>
-          <div><span>结果输入</span><strong>模块测试：检索 6K + 接口表达 1K + 跨表达 6K + 顺序压力 1.2K；最终结果：静态全链路 9K</strong></div>
+          <div><span>结果输入</span><strong>模块：检索 6K、规划 1K / 6K、顺序压力 1.2K；最终：全链路 9K</strong></div>
           <div><span>评测设置</span><strong>按模块划分的合成闭集</strong></div>
         </div>
       </div>
@@ -1716,7 +1501,7 @@ python3 \
 
     <section class="cta-strip">
       <div class="wrap cta-strip-inner">
-        <div><p>100-TOOL COMMERCE AGENT</p><h2>从意图分流、候选检索到静态有序选链，一套系统形成完整证据链。</h2></div>
+        <div><p>100-TOOL COMMERCE AGENT</p><h2>从分流、检索到有序选链。</h2></div>
         <a class="btn btn-primary" href="#top">回到项目概览 ↑</a>
       </div>
     </section>
@@ -1726,7 +1511,7 @@ python3 \
     <div class="wrap footer-grid">
       <div class="footer-brand-block">
         <a class="project-brand" href="#top"><span class="brand-grid" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>TOOLSET<span class="brand-slash">/</span>100</span></a>
-        <p>面向多意图电商请求的入口分流、完整工具集合检索与静态有序工具链选择项目。</p>
+        <p>电商工具分流、检索与静态选链项目。</p>
       </div>
       <div class="footer-links"><strong>项目</strong><a href="#abstract">项目概览</a><a href="#problem">任务与评测</a><a href="#toolspace">工具能力底座</a></div>
       <div class="footer-links"><strong>实验</strong><a href="#intent">意图分流</a><a href="#results">候选检索</a><a href="#planning">工具链规划</a></div>
