@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026073001">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：静态全链路成功率 90.37%，工具链口径，共 9,000 条">
 
-  <link rel="stylesheet" href="project.css?v=31">
+  <link rel="stylesheet" href="project.css?v=32">
   <script defer src="project-data.js?v=12"></script>
   <script defer src="project.js?v=16"></script>
 </head>
@@ -465,10 +465,11 @@
             </section>
 
             <div class="efficiency-summary" role="group" aria-label="意图分流实验环境摘要">
+              <article><span>项目主机快照</span><strong>8 × RTX 5880</strong><small>49,140 MiB / 卡 · 驱动 570.124.06；属于项目环境快照，未与本实验两次运行逐一绑定</small></article>
               <article><span>训练数据</span><strong>45,606 条</strong><small>验证集 2,400 条；两个模型使用同一样本全集，1.7B 采用类别均衡排列版本</small></article>
               <article><span>0.6B 完整训练</span><strong>19 分 39 秒</strong><small>2 轮 · 2,852 步；模块横评最优取训练步 2000</small></article>
               <article><span>1.7B 完整训练</span><strong>29 分 05 秒</strong><small>2 轮 · 2,852 步；全链路统计采用训练结束版本</small></article>
-              <article><span>真实生成式延迟</span><strong class="environment-missing-value">未计时</strong><small>现有评估耗时属于教师强制损失评估，不能当作部署延迟</small></article>
+              <article><span>真实生成式延迟</span><strong class="environment-missing-value">未计时</strong><small>训练内验证前向：0.6B 7.57 秒、1.7B 11.47 秒 / 2.4K；不是生成式推理</small></article>
             </div>
 
             <section class="efficiency-table-block" aria-labelledby="intentTrainingEnvironmentTitle">
@@ -497,13 +498,18 @@
                   <thead><tr><th scope="col">评测对象</th><th scope="col">批量与执行方式</th><th scope="col">耗时记录</th><th scope="col">硬件与边界</th></tr></thead>
                   <tbody>
                     <tr><td><strong>关键词规则</strong></td><td>9,000 条固定集合 · 无神经模型训练或生成</td><td><span class="efficiency-missing">未记录</span></td><td>CPU 型号、线程数和规则执行耗时未记录</td></tr>
-                    <tr><td><strong>Qwen3-0.6B</strong><small>未微调与 LoRA 版本</small></td><td>批量 64 · 每条样本使用独立上下文</td><td><span class="efficiency-missing">真实生成式延迟未记录</span></td><td>GPU 型号、吞吐与峰值显存未记录</td></tr>
-                    <tr><td><strong>Qwen3-1.7B</strong><small>未微调与 LoRA 版本</small></td><td>批量 48 · 每条样本使用独立上下文</td><td><span class="efficiency-missing">真实生成式延迟未记录</span></td><td>GPU 型号、吞吐与峰值显存未记录</td></tr>
+                    <tr><td><strong>Qwen3-0.6B</strong><small>未微调与 LoRA 版本</small></td><td>冻结 9K 生成评测批量 64 · 每条样本使用独立上下文</td><td><span class="efficiency-missing">真实生成式延迟未记录</span><small>训练内验证前向：2,400 条 · 批量 32 · 7.5742 秒 · 316.867 样本 / 秒；不执行生成</small></td><td>运行级 GPU 型号、吞吐与峰值显存未记录</td></tr>
+                    <tr><td><strong>Qwen3-1.7B</strong><small>未微调与 LoRA 版本</small></td><td>冻结 9K 生成评测批量 48 · 每条样本使用独立上下文</td><td><span class="efficiency-missing">真实生成式延迟未记录</span><small>训练内验证前向：2,400 条 · 批量 32 · 11.4660 秒 · 209.314 样本 / 秒；不执行生成</small></td><td>运行级 GPU 型号、吞吐与峰值显存未记录</td></tr>
                   </tbody>
                 </table>
               </div>
             </section>
 
+            <div class="environment-record-boundary">
+              <p><strong>软件记录：</strong>本实验运行产物保存了 BF16、批量、训练步数和总耗时；没有把 Python、PyTorch、Transformers 等版本与两次训练逐一绑定。</p>
+              <p><strong>硬件记录：</strong>项目主机快照为 8 × NVIDIA RTX 5880 Ada Generation（49,140 MiB / 卡），但两次训练只可确认单进程，不能据此断言具体卡号或峰值显存。</p>
+              <p><strong>推理记录：</strong>训练内验证前向耗时可以复核，但 <code>predict_with_generate=false</code>；冻结 9K 的真实生成式 p50、p95、吞吐和显存均未保存。</p>
+            </div>
             <p class="efficiency-boundary"><strong>记录边界：</strong>日志中的 <code>memory(GiB)</code> 字段未注明统计对象与口径，因此不作为峰值显存展示；0.6B 的 100% 是该模块固定集合上的横评结果，而当前 90.37% 静态全链路统计仍使用 1.7B 路由预测。</p>
           </div>
         </details>
@@ -783,9 +789,10 @@
             </section>
 
             <div class="efficiency-summary" role="group" aria-label="候选检索实验环境摘要">
+              <article><span>项目主机快照</span><strong>8 × RTX 5880</strong><small>49,140 MiB / 卡 · 驱动 570.124.06；较早检索运行没有保存可与该快照绑定的 GPU 标识</small></article>
               <article><span>共同评测协议</span><strong>100 工具 · 6K</strong><small>3,000 条单工具 + 3,000 条多工具；公开基线与任务内方案使用同一固定项目基准</small></article>
               <article><span>向量训练</span><strong>9 次完整运行</strong><small>70,012 个正对 · BF16 · 最大长度 256；最长一轮为 10 分 18 秒</small></article>
-              <article><span>任务内重排训练</span><strong class="environment-missing-value">耗时未记录</strong><small>完整训练配置可核实；GPU 型号、卡数与峰值显存未保存</small></article>
+              <article><span>任务内重排推理</span><strong>p50 13.96ms</strong><small>6K / Top-50 · p95 16.91ms · 批内均摊；训练耗时与运行级 GPU 型号未记录</small></article>
               <article><span>最终检索路径</span><strong>均值 140.6ms</strong><small>1,200 条离线整批重算的稳态均值，不是单请求 p50</small></article>
             </div>
 
@@ -872,7 +879,12 @@
               </div>
             </section>
 
-            <p class="efficiency-boundary"><strong>硬件记录边界：</strong>本章实验产物没有保存逐次运行的 GPU 型号、卡数或峰值显存。项目后期记录的 RTX 5880 主机快照不能反向证明这些较早运行使用了同一硬件，因此不在本章回填。</p>
+            <div class="environment-record-boundary">
+              <p><strong>软件记录：</strong>公开模型、向量训练与最终路径来自不同离线脚本；精度、批量和组件计时可复核，但软件版本没有与每次运行逐一绑定。</p>
+              <p><strong>硬件记录：</strong>项目主机快照为 8 × NVIDIA RTX 5880 Ada Generation（49,140 MiB / 卡）；较早检索产物没有保存 GPU 型号、卡数或峰值显存，不能反向绑定。</p>
+              <p><strong>推理记录：</strong>组件 p50 / p95 多为批内均摊；完整候选路径只保存 1,200 条的稳态均值 140.5559ms / 条，没有整条路径 p50 / p95。</p>
+            </div>
+            <p class="efficiency-boundary"><strong>完整链路边界：</strong>上述数字只覆盖候选检索，不含意图分流、工具链规划或真实工具执行；来自不同协议的离线计时不能直接相加。</p>
           </div>
         </details>
 
@@ -1218,6 +1230,7 @@
             </section>
 
             <div class="efficiency-summary" role="group" aria-label="工具链规划实验环境摘要">
+              <article><span>GPU 运行证据</span><strong>训练 1–4 卡</strong><small>每个推理分片进程仅暴露单个可见 CUDA 设备；完整评测可能由 1、2 或 4 个分片并行，运行级型号未保存</small></article>
               <article><span>首次 8B 监督微调</span><strong>50 分 17 秒</strong><small>4 GPU · 1 轮 · 1,688 步；4B 完整两轮训练为 1 小时 00 分 02 秒</small></article>
               <article><span>默认 8B 规划模型</span><strong>4 小时 58 分</strong><small>混合表达监督微调 · 2 GPU · 77,724 条 · 1 轮 · 2,429 步</small></article>
               <article><span>8B 顺序稳健训练</span><strong>19 分 07 秒</strong><small>2 GPU · 2,000 对总计 / 1,776 对训练 · 1 轮 · 111 步；最终采用 lr1e-6 版本</small></article>
@@ -1281,11 +1294,11 @@
             <section class="efficiency-table-block" aria-labelledby="plannerInferenceEnvironmentTitle">
               <div class="efficiency-table-heading">
                 <div><span>05 · 规划推理</span><h3 id="plannerInferenceEnvironmentTitle">各主要模型版本的离线生成效率</h3></div>
-                <p>共同设置：BF16、SDPA、贪心生成、最多生成 128 个 token、无预热。延迟为批次墙钟时间除以批量的均摊值，不是在线单请求延迟。</p>
+                <p>共同设置：每个推理分片进程仅暴露单个可见 CUDA 设备，并使用 BF16、SDPA、贪心生成、最多生成 128 个 token、无预热。延迟为分片内批次墙钟时间除以批量的均摊值，不是在线单请求延迟；完整评测可能由 1、2 或 4 个分片并行，运行 manifest 未保存显卡型号。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table planner-inference-efficiency-table">
-                  <thead><tr><th scope="col">模型阶段</th><th scope="col">测试协议</th><th scope="col">批量</th><th scope="col">p50 / p95</th><th scope="col">输出吞吐</th><th scope="col">峰值显存：已分配 / 已保留</th></tr></thead>
+                  <thead><tr><th scope="col">模型阶段</th><th scope="col">测试协议</th><th scope="col">批量</th><th scope="col">p50 / p95</th><th scope="col">输出吞吐</th><th scope="col">分片进程峰值显存：已分配 / 已保留</th></tr></thead>
                   <tbody>
                     <tr><td>未微调 4B · Top-10</td><td>接口式表达 1K</td><td>16</td><td>110.8 / 154.1ms</td><td>179.10 token/s</td><td>9.54 / 14.87 GiB</td></tr>
                     <tr><td>未微调 8B · Top-10</td><td>接口式表达 1K</td><td>8</td><td>187.7 / 269.0ms</td><td>105.83 token/s</td><td>16.38 / 20.13 GiB</td></tr>
@@ -1306,8 +1319,8 @@
 
             <div class="environment-record-boundary">
               <p><strong>软件快照：</strong>项目环境清单的一次快照记录 Python 3.10.20、PyTorch 2.8.0+cu128、Transformers 4.53.2、MS-SWIFT 4.3.2、PEFT 0.14.0、TRL 0.18.2；这些版本没有与每次运行逐一绑定。</p>
-              <p><strong>硬件快照：</strong>项目环境清单记录过 8 × NVIDIA RTX 5880 Ada Generation（49,140 MiB / 卡，驱动 570.124.06）；这是主机级快照，不是每次训练所用物理卡型号的证明。上表仅按各运行产物报告 1 / 2 / 4 GPU。</p>
-              <p><strong>完整链路：</strong>意图分流、候选检索、工具链规划和真实工具执行尚未在同一请求分布与并发设置下联合压测，因此没有完整请求链路的 p50、p95、吞吐或峰值显存。</p>
+              <p><strong>硬件快照：</strong>项目环境清单记录过 8 × NVIDIA RTX 5880 Ada Generation（49,140 MiB / 卡，驱动 570.124.06）；这是主机级快照，不是每次训练所用物理卡型号的证明。训练产物只报告 1 / 2 / 4 GPU；每个推理分片进程仅暴露单个可见 CUDA 设备，完整评测可能由 1、2 或 4 个分片并行。</p>
+              <p><strong>推理边界：</strong>上表已报告生成器 p50 / p95、输出吞吐与峰值显存，但都是离线批内均摊且无预热；意图分流、候选检索、规划和真实执行尚未在同一协议下联合压测。</p>
             </div>
           </div>
         </details>
@@ -1485,9 +1498,9 @@
             <p>展开对应章节即可就近查看所用数据、比较协议、训练配置、耗时、显存和未记录项。</p>
           </div>
           <nav aria-label="各实验数据、环境与耗时">
-            <a href="#intentEnvironment"><span>实验 01</span><strong>意图分流</strong><small>监督与固定集合 · 2 次 LoRA 训练 · 延迟缺口</small></a>
-            <a href="#retrievalEnvironment"><span>实验 02</span><strong>候选检索</strong><small>训练与固定集合 · 9 次向量训练 · 最终路径计时</small></a>
-            <a href="#plannerEnvironment"><span>实验 03</span><strong>工具链规划</strong><small>多套规划数据 · 监督与顺序稳健训练 · 推理显存</small></a>
+            <a href="#intentEnvironment"><span>实验 01</span><strong>意图分流</strong><small>GPU 快照边界 · 2 次 LoRA 训练 · 生成式延迟缺口</small></a>
+            <a href="#retrievalEnvironment"><span>实验 02</span><strong>候选检索</strong><small>GPU 记录边界 · 组件 p50 / p95 · 最终路径均值</small></a>
+            <a href="#plannerEnvironment"><span>实验 03</span><strong>工具链规划</strong><small>训练 GPU 数 · 生成 p50 / p95 · 吞吐与峰值显存</small></a>
           </nav>
           <p class="efficiency-boundary"><strong>统一性能边界：</strong>目前没有在同一请求分布和并发设置下测量“意图分流 → 候选检索 → 工具链规划”的完整链路 p50、p95、吞吐或峰值显存，也没有计入真实工具执行。各章节的离线数字来自不同协议，不能直接相加。</p>
         </div>

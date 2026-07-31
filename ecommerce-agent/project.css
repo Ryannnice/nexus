@@ -7205,7 +7205,7 @@ details table td {
 
 .efficiency-summary {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 1px;
   border: 1px solid var(--hairline);
   background: var(--hairline);
@@ -7464,6 +7464,53 @@ details table td {
 
 .system-environment-index + .verified-limitations {
   margin-top: 24px;
+}
+
+/* Shared visual grammar for tables inside folded regions. */
+details :is(.data-table-wrap, .result-table-wrap, .competition-table-wrap) {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--hairline);
+  background: var(--canvas);
+}
+
+details :is(table.data-table, table.result-table, table.competition-table) {
+  width: 100%;
+  border: 0;
+  border-collapse: collapse;
+  background: var(--canvas);
+}
+
+details :is(table.data-table, table.result-table, table.competition-table) :is(th, td) {
+  padding: 13px 15px;
+  border-right: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  vertical-align: top;
+}
+
+details :is(table.data-table, table.result-table, table.competition-table) th {
+  background: var(--surface-soft);
+  color: var(--body);
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+
+details :is(table.data-table, table.result-table, table.competition-table) :is(th, td):last-child {
+  border-right: 0;
+}
+
+details :is(table.data-table, table.result-table, table.competition-table) tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+details table.data-table tbody tr:nth-child(even) td {
+  background: var(--canvas);
+}
+
+@media (max-width: 1180px) {
+  .efficiency-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 980px) {
