@@ -1336,7 +1336,96 @@
             <li><span>05 · 模块 03</span><strong>生成有序轨迹</strong><small>有序工具 ID</small></li>
           </ol>
 
-          <p class="planner-boundary">输出止于静态有序工具 ID，不含参数生成与真实工具调用。</p>
+          <article class="pipeline-lane intent-lane">
+            <header>
+              <div><span>模块 01 · 意图分流</span><h3>入口意图分流</h3></div>
+              <p>全链路评测冻结配置 · 步骤 01</p>
+            </header>
+            <div class="pipeline-row pipeline-row-intent">
+              <div class="pipeline-node node-input"><small>输入</small><strong>用户请求</strong><span>复合电商诉求或开放闲聊</span></div>
+              <div class="pipeline-arrow" aria-hidden="true">→</div>
+              <div class="pipeline-node node-primary"><small>冻结路由</small><strong>Qwen3-1.7B LoRA</strong><span>电商请求继续处理，闲聊直接响应</span></div>
+              <div class="pipeline-arrow" aria-hidden="true">→</div>
+              <div class="pipeline-node node-output"><small>阶段输出</small><strong>结构化分流</strong><span>仅电商请求进入候选检索</span></div>
+            </div>
+          </article>
+
+          <div class="integration-bridge"><span>电商请求进入候选检索</span></div>
+
+          <article class="pipeline-lane retrieval-lane">
+            <header>
+              <div><span>模块 02 · 候选检索</span><h3>完整工具集合检索</h3></div>
+              <p>采用配置 · 步骤 02–03</p>
+            </header>
+            <div class="retrieval-map-v2">
+              <div class="pipeline-node node-input retrieval-query"><small>输入</small><strong>电商请求</strong><span>单工具或多工具请求</span></div>
+              <div class="pipeline-arrow" aria-hidden="true">→</div>
+
+              <div class="retrieval-stage recall-stage">
+                <div class="stage-label"><span>步骤 02 · 召回</span><strong>并行召回</strong></div>
+                <div class="retriever-stack">
+                  <div class="mini-node"><small>词面检索</small><strong>BM25</strong><span>补充词面信号</span></div>
+                  <div class="mini-node mini-node-primary"><small>语义检索</small><strong>任务内微调向量模型</strong><span>bge-large · MNRL</span></div>
+                </div>
+                <div class="stage-merge" aria-hidden="true">↓</div>
+                <div class="source-node"><small>第一阶段排序</small><strong>加权 RRF</strong><span>Top-50 · 向量权重 0.95</span></div>
+              </div>
+
+              <div class="pipeline-arrow" aria-hidden="true">→</div>
+
+              <div class="retrieval-stage rerank-stage">
+                <div class="stage-label"><span>步骤 03A · 评分</span><strong>候选交互评分</strong></div>
+                <div class="stage-model"><small>Top-50 候选</small><strong>任务内重排模型</strong><span>任务内微调 bge-reranker-base</span></div>
+                <div class="rank-output"><span>输出重排名次</span></div>
+              </div>
+
+              <div class="pipeline-arrow" aria-hidden="true">→</div>
+
+              <div class="retrieval-stage fusion-stage">
+                <div class="stage-label"><span>步骤 03B · 融合</span><strong>双路排序融合</strong></div>
+                <div class="fusion-inputs">
+                  <span><i></i>第一阶段名次 · 0.6</span>
+                  <span><i></i>任务内重排名次 · 0.4</span>
+                </div>
+                <div class="stage-model stage-model-final"><small>最终 RRF</small><strong>互补名次融合</strong><span>平滑常数 10</span></div>
+              </div>
+
+              <div class="pipeline-arrow" aria-hidden="true">→</div>
+              <div class="pipeline-node node-output retrieval-output"><small>阶段输出</small><strong>Top-10 候选</strong><span>进入工具链规划</span></div>
+
+              <div class="source-bypass" role="group" aria-label="第一阶段排名同时进入最终融合">
+                <span>保留第一阶段名次</span><i></i><strong>同步进入最终 RRF</strong>
+              </div>
+            </div>
+          </article>
+
+          <div class="integration-bridge integration-bridge-planner"><span>原始请求与候选进入规划</span></div>
+
+          <article class="pipeline-lane planner-lane">
+            <header>
+              <div><span>模块 03 · 工具链规划</span><h3>精确工具集合与有序轨迹生成</h3></div>
+              <p>采用配置 · 步骤 04–05</p>
+            </header>
+            <div class="planner-map">
+              <div class="planner-inputs">
+                <div><small>请求上下文</small><strong>电商请求</strong><span>保留用户要求与顺序约束</span></div>
+                <div class="planner-input-selected"><small>候选检索</small><strong>Top-10 候选</strong><span>AllHit@10 · 98.30%</span></div>
+              </div>
+              <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
+              <div class="planner-model">
+                <small>采用的规划模型</small>
+                <strong>Qwen3-8B · 混合表达监督微调</strong>
+                <span>模型版本 2429</span>
+              </div>
+              <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
+              <div class="planner-output">
+                <small>有序输出</small>
+                <strong>有序工具 ID</strong>
+                <span>集合全对率 · 工具链全对率 · 严格 JSON 输出</span>
+              </div>
+            </div>
+            <p class="planner-boundary">输出止于静态有序工具 ID，不含参数生成与真实工具调用。</p>
+          </article>
         </section>
 
         <p class="phase-context-label final-results-label">最终结果 · 静态全链路测试集 9,000 条</p>
@@ -1381,29 +1470,6 @@
                 </table>
               </div>
             </section>
-          </div>
-        </details>
-
-        <details class="narrative-disclosure system-environment-disclosure">
-          <summary>
-            <span class="disclosure-summary-copy"><small>实验记录索引</small><strong>查看三个实验的数据、资源与离线推理记录</strong></span>
-            <span class="disclosure-summary-meta">意图分流 · 候选检索 · 工具链规划</span>
-            <i aria-hidden="true">+</i>
-          </summary>
-          <div class="disclosure-body">
-          <div class="system-environment-index" aria-labelledby="systemEnvironmentIndexTitle">
-          <div class="system-environment-index-copy">
-            <span>实验记录索引</span>
-            <h3 id="systemEnvironmentIndexTitle">数据、训练资源与离线推理记录已放回各实验章节</h3>
-            <p>展开对应章节即可就近查看所用数据、比较协议、训练配置、耗时、显存和未记录项。</p>
-          </div>
-          <nav aria-label="各实验数据、环境与耗时">
-            <a href="#intentEnvironment"><span>实验 01</span><strong>意图分流</strong><small>单卡 RTX 3090 · p50 / p95 · 吞吐与峰值显存</small></a>
-            <a href="#retrievalEnvironment"><span>实验 02</span><strong>候选检索</strong><small>GPU 记录边界 · 组件 p50 / p95 · 最终路径均值</small></a>
-            <a href="#plannerEnvironment"><span>实验 03</span><strong>工具链规划</strong><small>训练 GPU 数 · 生成 p50 / p95 · 吞吐与峰值显存</small></a>
-          </nav>
-          <p class="efficiency-boundary"><strong>统一性能边界：</strong>目前没有在同一请求分布和并发设置下测量“意图分流 → 候选检索 → 工具链规划”的完整链路 p50、p95、吞吐或峰值显存，也没有计入真实工具执行。各章节的离线数字来自不同协议，不能直接相加。</p>
-          </div>
           </div>
         </details>
 
