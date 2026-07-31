@@ -1337,12 +1337,12 @@ window.PROJECT_DATA = {
           "a6": 0.3823
         },
         {
-          "label": "任务内微调 bge-large",
-          "short": "向量模型微调",
+          "label": "任务内 MNRL 微调 bge-large-zh-v1.5（无显式负样本）",
+          "short": "当前向量模型",
           "a10": 0.9575,
           "a30": 0.9972,
           "mrr": 0.9668,
-          "note": "任务内表示学习",
+          "note": "当前系统 Embedding",
           "a6": 0.858
         },
         {
@@ -1355,7 +1355,7 @@ window.PROJECT_DATA = {
           "a6": 0.8578
         },
         {
-          "label": "初排 + 任务内重排",
+          "label": "初排 + 任务内微调 bge-reranker-base",
           "short": "最终链路",
           "a10": 0.983,
           "a30": 0.998667,
@@ -1379,13 +1379,13 @@ window.PROJECT_DATA = {
         "note": "通用交互信号与任务边界未对齐"
       },
       {
-        "label": "任务内重排模型单路",
+        "label": "任务内微调 bge-reranker-base 单路",
         "value": 0.945,
         "tone": "trained",
         "note": "任务内训练后形成有效补充"
       },
       {
-        "label": "初排 + 任务内重排的 RRF 融合",
+        "label": "初排 + bge-reranker-base 的 RRF 融合",
         "value": 0.983,
         "tone": "final",
         "note": "两路排序形成最佳互补"
