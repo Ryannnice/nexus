@@ -23,9 +23,9 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026073001">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：静态全链路成功率 90.37%，工具链口径，共 9,000 条">
 
-  <link rel="stylesheet" href="project.css?v=33">
-  <script defer src="project-data.js?v=12"></script>
-  <script defer src="project.js?v=16"></script>
+  <link rel="stylesheet" href="project.css?v=34">
+  <script defer src="project-data.js?v=13"></script>
+  <script defer src="project.js?v=17"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">跳到主要内容</a>
@@ -684,7 +684,7 @@
         <details class="narrative-disclosure data-disclosure efficiency-disclosure experiment-environment-disclosure" id="retrievalEnvironment">
           <summary>
             <span class="disclosure-summary-copy"><small>实验数据、协议与环境</small><strong>查看候选检索的数据划分、隔离审计与运行记录</strong></span>
-            <span class="disclosure-summary-meta">24K 训练 · 6K 方案比较 · 13 次向量训练 · 检索均值 140.6ms / 条</span>
+            <span class="disclosure-summary-meta">24K 训练 · 6K 测试 · 13 次向量训练</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body efficiency-body">
@@ -710,27 +710,16 @@
 
             <section class="data-evidence-section" aria-labelledby="upstreamAuditTitle">
               <div class="data-evidence-heading">
-                <div><p>01B · 划分审计</p><h3 id="upstreamAuditTitle">训练与测试的表达隔离</h3></div>
-                <span>先检查显式重合，再检查上下文骨架是否足以“猜中”工具；该审计也覆盖意图分流使用的上游电商轨迹。</span>
+                <div><p>01B · 划分审计</p><h3 id="upstreamAuditTitle">训练与测试隔离检查</h3></div>
+                <span>显式重合为 0；场景骨架虽有复用，但不足以预测目标工具组合。</span>
               </div>
-              <div class="audit-grid" id="auditGrid"></div>
-              <div class="context-audit">
-                <div class="context-copy">
-                  <p class="eyebrow">上下文控制</p>
-                  <h3>场景可以复用，能力答案不能靠骨架推出</h3>
-                  <p>商品、城市、预算等通用场景会自然复用，但同骨架精确工具序列重合仅 1.97%；只依赖场景骨架的匹配器 AllHit@10 为 2.92%，说明工具能力语义仍是主要信号。</p>
-                </div>
-                <div class="context-metrics" id="contextMetrics"></div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table retrieval-audit-table">
+                  <thead><tr><th scope="col">检查项</th><th scope="col">结果</th><th scope="col">说明</th></tr></thead>
+                  <tbody id="auditGrid"></tbody>
+                </table>
               </div>
             </section>
-
-            <div class="efficiency-summary" role="group" aria-label="候选检索实验环境摘要">
-              <article><span>新增实验交接记录</span><strong>1 × V100</strong><small>32GB；4 次运行含 1 个无负例对照与 3 种负例方案。较早检索运行仍没有可绑定的 GPU 型号</small></article>
-              <article><span>共同评测协议</span><strong>100 工具 · 6K</strong><small>3,000 条单工具 + 3,000 条多工具；公开基线与任务内方案使用同一固定项目基准</small></article>
-              <article><span>向量训练</span><strong>13 次完整运行</strong><small>原有 9 次 + 显式负例 4 次；最长一轮为 1 小时 33 分 36 秒</small></article>
-              <article><span>任务内重排推理</span><strong>p50 13.96ms</strong><small>6K / Top-50 · p95 16.91ms · 批内均摊；训练耗时与运行级 GPU 型号未记录</small></article>
-              <article><span>最终检索路径</span><strong>均值 140.6ms</strong><small>1,200 条离线整批重算的稳态均值，不是单请求 p50</small></article>
-            </div>
 
             <section class="efficiency-table-block" aria-labelledby="retrievalPublicEnvironmentTitle">
               <div class="efficiency-table-heading">
@@ -786,16 +775,16 @@
             <section class="efficiency-table-block" aria-labelledby="retrievalTrainedEnvironmentTitle">
               <div class="efficiency-table-heading">
                 <div><span>04 · 重排与融合</span><h3 id="retrievalTrainedEnvironmentTitle">任务内重排、轻量校准与两次排名融合</h3></div>
-                <p>只有任务内重排进行神经网络训练；轻量校准使用 CPU 逻辑回归，两次排名融合都是无梯度网格选择。</p>
+                <p>只有任务内重排进行神经网络训练；轻量校准使用 CPU 逻辑回归，两次排名融合都是无梯度网格选择。CPU 后处理效率按完整 6K、1 次预热、5 次重复的中位运行记录，输出 Top-10 与既有产物逐条一致。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table">
                   <thead><tr><th scope="col">阶段</th><th scope="col">配置</th><th scope="col">训练 / 选择耗时</th><th scope="col">独立推理记录与资源边界</th></tr></thead>
                   <tbody>
                     <tr class="result-table-final"><td><strong>任务内重排模型</strong></td><td>bge-reranker-base · 全参数组内交叉熵 · 1 轮 / 1,500 步 · 批量 16 · 每组 1 正 7 负 · lr6e-5 · FP16 · 查询 / 文档最大长度 128 / 384</td><td><span class="efficiency-missing">训练耗时未记录</span></td><td>6K / Top-50：加载 4.4198 秒；p50 13.9619ms · p95 16.9088ms。推理批量、GPU 型号、卡数和峰值显存未记录</td></tr>
-                    <tr><td><strong>轻量残差校准</strong></td><td>scikit-learn 逻辑回归 · 14 个特征 · class_weight=balanced · C=1 · max_iter=300 · n_jobs=4；120 万训练行 / 30 万测试行</td><td><span class="efficiency-missing">CPU 训练耗时未记录</span></td><td>6K / Top-50 单进程 CPU：特征构建 2.2258ms、模型评分 0.0036ms、重排 0.0496ms；总计 <strong>2.2791ms / 条 · 438.78 条 / 秒</strong><small>Montage Jintide C6230R</small></td></tr>
-                    <tr><td><strong>第一阶段加权 RRF</strong></td><td>向量排名 + BM25 排名；训练集网格选择权重与 RRF 平滑常数</td><td><span class="efficiency-missing">搜索耗时未记录</span></td><td>无梯度；独立最终路径中，第一阶段融合均值 <strong>0.0594ms / 条</strong></td></tr>
-                    <tr><td><strong>最终加权 RRF</strong></td><td>第一阶段排名 + 任务内重排名次；训练集选择第一阶段权重 0.6、RRF 平滑常数 10</td><td><span class="efficiency-missing">搜索耗时未记录</span></td><td>无梯度；独立最终路径中，第一阶段融合均值 0.0594ms / 条，最终融合均值 0.0569ms / 条</td></tr>
+                    <tr><td><strong>轻量残差校准</strong></td><td>scikit-learn 逻辑回归 · 14 个特征 · class_weight=balanced · C=1 · max_iter=300 · n_jobs=4；120 万训练行 / 30 万测试行</td><td><span class="efficiency-missing">CPU 训练耗时未记录</span></td><td>6K / Top-50 单进程 CPU：特征构建 1.8907ms、模型评分 0.0036ms、重排 0.0512ms；完整路径 <strong>1.9363ms / 条 · 516.44 条 / 秒</strong><small>Montage Jintide C6230R</small></td></tr>
+                    <tr><td><strong>第一阶段加权 RRF</strong></td><td>向量排名 + BM25 排名；训练集网格选择权重与 RRF 平滑常数</td><td><span class="efficiency-missing">搜索耗时未记录</span></td><td>6K 单进程 CPU：<strong>0.0605ms / 条 · 16,535.31 条 / 秒</strong></td></tr>
+                    <tr><td><strong>最终加权 RRF</strong></td><td>第一阶段排名 + 任务内重排名次；训练集选择第一阶段权重 0.6、RRF 平滑常数 10</td><td><span class="efficiency-missing">搜索耗时未记录</span></td><td>6K 单进程 CPU：<strong>0.0710ms / 条 · 14,081.61 条 / 秒</strong></td></tr>
                   </tbody>
                 </table>
               </div>
@@ -804,25 +793,27 @@
             <section class="efficiency-table-block" aria-labelledby="retrievalFinalPathTitle">
               <div class="efficiency-table-heading">
                 <div><span>05 · 最终检索路径</span><h3 id="retrievalFinalPathTitle">1,200 条封存压力测试的离线整批重算记录</h3></div>
-                <p>同一批请求依次运行 BM25、微调向量模型、第一阶段融合、任务内重排与最终融合；关闭未微调诊断支路。</p>
+                <p>同一批请求依次运行 BM25、微调向量模型、第一阶段融合、任务内重排与最终融合；关闭未微调诊断支路，预热 1 个批次后按查询批量 64、重排 pair 批量 256 计时。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table">
                   <thead><tr><th scope="col">组件</th><th scope="col">加载耗时</th><th scope="col">稳态计时</th><th scope="col">口径</th></tr></thead>
                   <tbody>
-                    <tr><td>BM25</td><td>—</td><td>p50 1.5005ms · p95 2.8671ms</td><td>单条查询计时</td></tr>
-                    <tr><td>微调向量模型 + FAISS</td><td>13.9348 秒</td><td>编码均值 5.6257ms / 条；搜索 p50 0.0226ms · p95 0.0281ms</td><td>编码为批内均摊</td></tr>
-                    <tr><td>任务内重排</td><td>4.1654 秒</td><td>p50 131.9883ms · p95 168.3337ms</td><td>批内均摊</td></tr>
-                    <tr class="result-table-final"><td><strong>完整候选检索</strong></td><td>上述模型加载另计</td><td><strong>稳态均值 140.5559ms / 条</strong><small>1,200 条含加载总耗时 186.7672 秒</small></td><td>整批离线重算只记录均值，没有完整路径 p50 / p95；不含意图分流与工具链规划</td></tr>
+                    <tr><td>BM25</td><td>—</td><td>p50 1.6722ms · p95 2.8999ms</td><td>Jieba；查询批内均摊</td></tr>
+                    <tr><td>微调向量模型 + FAISS</td><td>1.5396 秒</td><td>p50 7.0818ms · p95 9.7400ms</td><td>编码与搜索合计；查询批内均摊</td></tr>
+                    <tr><td>第一阶段加权 RRF</td><td>—</td><td>p50 0.0680ms · p95 0.0828ms</td><td>向量 + BM25；查询批内均摊</td></tr>
+                    <tr><td>任务内重排</td><td>1.2570 秒</td><td>p50 129.4345ms · p95 164.7206ms</td><td>Top-50；pair 批量 256</td></tr>
+                    <tr><td>最终加权 RRF</td><td>—</td><td>p50 0.0664ms · p95 0.0685ms</td><td>source + 任务内重排；查询批内均摊</td></tr>
+                    <tr class="result-table-final"><td><strong>完整候选检索</strong></td><td>模型加载另计</td><td><strong>均值 138.1171ms · p50 139.1970ms · p95 177.5430ms</strong><small>吞吐 7.2399 条 / 秒</small></td><td>单张 RTX 3090；峰值显存 5.28 / 16.07 GiB（allocated / reserved）；Top-10 与既有固定产物 100% 一致</td></tr>
                   </tbody>
                 </table>
               </div>
             </section>
 
             <div class="environment-record-boundary">
-              <p><strong>软件记录：</strong>公开模型、向量训练与最终路径来自不同离线脚本；精度、批量和组件计时可复核，但软件版本没有与每次运行逐一绑定。</p>
-              <p><strong>硬件记录：</strong>显式负例补充实验的 4 次运行包含 1 个无负例对照与 3 种负例方案；实验交接记录均为单张 Tesla V100 32GB，但 manifest / metrics 没有写入 GPU 型号，峰值显存也未独立采样。较早检索产物同样没有保存 GPU 型号、卡数或峰值显存；项目的 8 × RTX 5880 主机快照不能反向绑定到这些运行。</p>
-              <p><strong>推理记录：</strong>神经组件 p50 / p95 多为批内均摊；轻量校准与 RRF 为离线 CPU 整批均值。完整候选路径只保存 1,200 条的稳态均值 140.5559ms / 条，没有整条路径 p50 / p95。</p>
+              <p><strong>软件记录：</strong>完整候选路径使用 Python 3.10.20、PyTorch 2.8.0+cu128、Transformers 4.53.2、Sentence Transformers 5.6.0 与 FAISS 1.14.3；较早公开模型和向量训练运行没有逐次绑定完整软件版本。</p>
+              <p><strong>硬件记录：</strong>完整候选路径使用单张 NVIDIA GeForce RTX 3090 24GB 与 Montage Jintide C6230R。显式负例实验的 4 次运行使用单张 Tesla V100 32GB；其余较早检索产物没有保存可绑定的 GPU 型号或峰值显存。</p>
+              <p><strong>推理记录：</strong>神经组件 p50 / p95 为离线批内均摊；轻量校准与独立 RRF 表为 CPU 整批均值。完整候选路径的 p50 / p95 来自同一条依次执行五个阶段的固定路径，模型加载另计。</p>
             </div>
             <p class="efficiency-boundary"><strong>完整链路边界：</strong>上述数字只覆盖候选检索，不含意图分流、工具链规划或真实工具执行；来自不同协议的离线计时不能直接相加。</p>
           </div>
@@ -1315,7 +1306,7 @@
       <div class="wrap">
         <p class="eyebrow">项目结论 · 最终系统与边界</p>
         <div class="section-heading split-heading">
-          <h2 id="limitsTitle">完整系统结论、适用边界与下一步</h2>
+          <h2 id="limitsTitle">完整系统结论与下一步</h2>
           <p>最终系统由意图分流、候选检索和工具链规划组成，评测止于静态有序工具 ID。</p>
         </div>
 
@@ -1473,15 +1464,6 @@
           </div>
         </details>
 
-        <div class="verified-limitations" role="group" aria-label="已核实的适用边界">
-          <article><strong>合成闭集</strong><span>固定 100 工具，不能直接外推到真实流量。</span></article>
-          <article><strong>协议独立</strong><span>模块测试与 9K 全链路采用不同协议。</span></article>
-          <article><strong>组合复用</strong><span>规划测试中 82.1% 的目标工具链曾在监督数据出现。</span></article>
-          <article><strong>执行边界</strong><span>未评测参数、真实调用、失败恢复与多轮状态。</span></article>
-          <article><strong>规模方差</strong><span>9K–54K 各档仅一个固定种子。</span></article>
-          <article><strong>索引未对比</strong><span>未进行向量数据库横向基准。</span></article>
-        </div>
-
         <div class="roadmap">
           <div class="roadmap-title"><span>后续规划</span><h3>下一轮优化方向</h3></div>
           <ol>
@@ -1508,7 +1490,7 @@
         </aside>
 
         <div class="evidence-grid">
-          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/06_Assignment3_100%E5%B7%A5%E5%85%B7%E5%AE%9E%E9%AA%8C%E6%80%BB%E6%8A%A5%E5%91%8A.md" target="_blank" rel="noopener noreferrer"><span>规划实验报告</span><h3>有序轨迹规划总报告</h3><p>首次监督微调、混合表达监督微调、候选顺序压力测试与静态全链路结果的统一口径。</p><b>规划实验源报告</b></a>
+          <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/06_Assignment3_100%E5%B7%A5%E5%85%B7%E5%AE%9E%E9%AA%8C%E6%80%BB%E6%8A%A5%E5%91%8A.md" target="_blank" rel="noopener noreferrer"><span>规划实验报告</span><h3>有序轨迹规划总报告</h3><p>监督微调、偏好优化、候选顺序压力测试、候选深度复核与静态全链路结果的统一口径。</p><b>规划实验源报告</b></a>
           <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_crossstyle_rag10/dpo_v2/final_summary.json" target="_blank" rel="noopener noreferrer"><span>结构化结果证据</span><h3>候选顺序稳健优化汇总</h3><p>偏好数据、训练选型、三种候选排列的压力测试、历史回归审计与模型版本。</p><b>结构化汇总 JSON</b></a>
           <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_100tool_api/sft_ablation/results_summary.json" target="_blank" rel="noopener noreferrer"><span>结构化结果证据</span><h3>监督微调消融汇总</h3><p>参数选择证据、16 个规模评测单元、模型版本、预测与指标哈希。</p><b>results_summary.json</b></a>
         </div>
@@ -1524,7 +1506,7 @@
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/README.md" target="_blank" rel="noopener noreferrer"><span>项目地图</span><h3>项目概览</h3><p>任务边界、主要指标与运行入口。</p><b>PROJECT/README.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/01_%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB.md" target="_blank" rel="noopener noreferrer"><span>模型报告</span><h3>意图识别</h3><p>意图数据构成、LoRA 训练版本与指标。</p><b>reports/01_意图识别.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/02_%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA.md" target="_blank" rel="noopener noreferrer"><span>基线报告</span><h3>检索增强</h3><p>BM25、公开向量模型、混合召回与重排模型。</p><b>reports/02_检索增强.md</b></a>
-              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/03_%E5%90%91%E9%87%8F%E8%AE%AD%E7%BB%83.md" target="_blank" rel="noopener noreferrer"><span>训练报告</span><h3>任务内训练</h3><p>向量模型、任务内重排、融合与案例。</p><b>reports/03_向量训练.md</b></a>
+              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/03_%E5%90%91%E9%87%8F%E8%AE%AD%E7%BB%83.md" target="_blank" rel="noopener noreferrer"><span>训练报告</span><h3>任务内训练</h3><p>向量模型、显式负例消融、任务内重排、融合、推理效率与案例。</p><b>reports/03_向量训练.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/04_%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8E%E8%AE%AD%E7%BB%83%E7%94%A8%E6%95%B0%E8%AF%B4%E6%98%8E.md" target="_blank" rel="noopener noreferrer"><span>数据地图</span><h3>数据与实验总表</h3><p>训练输入、评测口径与运行产物。</p><b>reports/04_数据集与训练用数说明.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/05_%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%E6%80%BB%E8%A7%88.md" target="_blank" rel="noopener noreferrer"><span>方法说明</span><h3>训练算法总览</h3><p>LoRA、MNRL、交叉编码重排、残差校准与 RRF。</p><b>reports/05_训练算法总览.md</b></a>
             </div>

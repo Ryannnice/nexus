@@ -248,16 +248,13 @@
 
   function renderAudit() {
     var grid = $('#auditGrid');
-    var context = $('#contextMetrics');
     if (grid) {
-      grid.innerHTML = data.audit.map(function (item) {
-        return '<article class="audit-card"><strong>' + escapeHtml(item.value) + '</strong><span>' + escapeHtml(item.label) + '</span><small>' + escapeHtml(item.detail) + '</small></article>';
-      }).join('');
-    }
-    if (context) {
-      context.innerHTML = data.contextAudit.map(function (item) {
-        return '<div class="context-row"><strong>' + percent(item.value, item.value < .1 ? 2 : 1) + '</strong><div><span>' + escapeHtml(item.label) + '</span><small>' + escapeHtml(item.interpretation) + '</small></div></div>';
-      }).join('');
+      var directChecks = data.audit.slice(0, 4);
+      var allClear = directChecks.every(function (item) { return item.value === '0'; });
+      var context = data.contextAudit;
+      grid.innerHTML =
+        '<tr><td><strong>显式泄漏检查</strong></td><td><strong>' + directChecks.length + ' 项均为 ' + (allClear ? '0' : '非 0') + '</strong><small>严格审计' + (allClear ? '通过' : '未通过') + '</small></td><td>归一化请求、Trace ID、工具目录触发词和表达簇</td></tr>' +
+        '<tr><td><strong>上下文复用检查</strong></td><td><strong>' + escapeHtml(percent(context[0].value, 1)) + ' 骨架复用</strong><small>' + escapeHtml(percent(context[1].value, 2)) + ' 同骨架工具链 · ' + escapeHtml(percent(context[2].value, 2)) + ' 仅上下文 AllHit@10</small></td><td>场景可以复用，但不能靠骨架猜出目标工具组合</td></tr>';
     }
   }
 

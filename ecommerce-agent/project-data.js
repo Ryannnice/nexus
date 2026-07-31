@@ -1,7 +1,7 @@
-/* Generated from /renyuanliu/Agent/PROJECT artifacts through 2026-07-29. */
+/* Generated from /renyuanliu/Agent/PROJECT artifacts through 2026-07-31. */
 window.PROJECT_DATA = {
   "snapshot": {
-    "date": "2026-07-29",
+    "date": "2026-07-31",
     "label": "INTEGRATED SYSTEM SNAPSHOT",
     "catalogVersion": "2026-07-06",
     "scope": "100 个已知工具的意图分流、候选检索与静态有序选链一体化离线评测",

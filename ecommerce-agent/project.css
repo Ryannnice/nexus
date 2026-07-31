@@ -803,6 +803,18 @@ code, pre { font-family: var(--font); }
   background: var(--surface-soft);
 }
 
+.result-table.retrieval-audit-table {
+  min-width: 680px;
+  table-layout: fixed;
+}
+
+.retrieval-audit-table th:nth-child(1) { width: 34%; }
+.retrieval-audit-table th:nth-child(2) { width: 18%; }
+.retrieval-audit-table th:nth-child(3) { width: 48%; }
+.retrieval-audit-table td { text-align: left; font-size: 12px; line-height: 1.5; }
+.retrieval-audit-table td:nth-child(2) strong { color: var(--primary-text); font-size: 14px; }
+.retrieval-audit-table td small { margin-top: 5px; font-size: 9px; line-height: 1.45; }
+
 .governance-note { display: grid; grid-template-columns: 150px 1fr; gap: 24px; margin-top: 24px; padding: 22px 24px; border: 1px solid var(--hairline); background: var(--canvas); }
 .governance-note strong { color: var(--primary-text); font-size: 13px; }
 .governance-note p { color: var(--body); font-size: 12px; line-height: 1.7; }
