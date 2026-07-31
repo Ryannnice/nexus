@@ -356,28 +356,6 @@
       </div>
     </section>
 
-    <aside class="method-index-section" aria-label="实验方法索引">
-      <div class="wrap">
-        <details class="narrative-disclosure method-disclosure">
-          <summary>
-            <span class="disclosure-summary-copy"><small>实验方法索引</small><strong>查看六类训练、排序与融合方法</strong></span>
-            <span class="disclosure-summary-meta">监督微调 · MNRL · 重排 · RRF · 偏好优化</span>
-            <i aria-hidden="true">+</i>
-          </summary>
-          <div class="disclosure-body">
-            <div class="method-grid">
-              <article><span class="method-number">01</span><h3>LoRA 监督微调</h3><p>以小模型完成入口类型和电商关键词的结构化理解，形成低成本请求分流能力。</p><small>QWEN3 · RANK 16</small></article>
-              <article><span class="method-number">02</span><h3>双编码器 + MNRL</h3><p>主线使用 70,012 个正对与批内负例；补充实验再把训练侧类型化负例加入同一 MNRL 分母。</p><small>70,012 个正对</small></article>
-              <article><span class="method-number">03</span><h3>交叉编码重排</h3><p>联合编码请求与工具，以组内正负样本学习更细粒度的候选交互关系。</p><small>24K 组 · 1 正 + 7 负</small></article>
-              <article><span class="method-number">04</span><h3>加权 RRF 排名融合</h3><p>保留第一阶段排序与任务内重排的两份名次，以训练集选定的权重和 RRF 平滑常数生成最终排序。</p><small>第一阶段权重 0.6 · RRF 平滑常数 10</small></article>
-              <article><span class="method-number">05</span><h3>工具链监督微调</h3><p>在 2.4K 开发集上搜索并冻结参数，再以 9K–54K 嵌套候选视图训练 4B/8B，检验监督规模与完整目录迁移。</p><small>24 组训练 · 4 档嵌套规模</small></article>
-              <article><span class="method-number">06</span><h3>候选顺序稳健优化</h3><p>历史 5,000 对偏好实验保留为对照；当前方案改用 2,000 对混合表达监督微调模型的真实语义错误，专门提升候选排列变化时的稳定性。</p><small>2,000 对当前模型真实错误</small></article>
-            </div>
-          </div>
-        </details>
-      </div>
-    </aside>
-
     <section class="section experiment-section" id="intent" aria-labelledby="intentTitle">
       <div class="wrap">
         <p class="eyebrow">实验 01 · 意图分流</p>
