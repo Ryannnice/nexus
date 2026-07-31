@@ -23,9 +23,9 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026073001">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：静态全链路成功率 90.37%，工具链口径，共 9,000 条">
 
-  <link rel="stylesheet" href="project.css?v=35">
+  <link rel="stylesheet" href="project.css?v=36">
   <script defer src="project-data.js?v=13"></script>
-  <script defer src="project.js?v=17"></script>
+  <script defer src="project.js?v=18"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">跳到主要内容</a>
@@ -883,13 +883,11 @@
 
     <section class="section planning-section" id="planning" aria-labelledby="planningTitle">
       <div class="wrap">
-        <header class="planner-intro">
         <p class="eyebrow">实验 03 · 工具链规划</p>
-          <div class="section-heading split-heading">
-            <h2 id="planningTitle">工具链规划：训练结果与最终模型选择</h2>
-            <p>比较基础模型、首次与混合表达监督微调，以及候选数量和排列稳定性。</p>
-          </div>
-        </header>
+        <div class="section-heading split-heading">
+          <h2 id="planningTitle">工具链规划：从监督微调到最终全链路选型</h2>
+          <p>先解决工具选择与排序，再以 9,000 条静态全链路结果确定默认模型；候选数量实验与顺序稳健训练用于复核是否需要替换默认方案。</p>
+        </div>
 
         <section class="planner-final-lead" id="plannerLatestUpdate" aria-labelledby="plannerFinalLeadTitle">
           <div class="planner-final-lead-copy">
@@ -898,232 +896,38 @@
             <p>冻结 1.7B 路由与 8B 混合表达监督微调规划模型后，工具链口径通过 <b>8,133 / 9,000</b> 条。</p>
           </div>
           <div class="planner-final-lead-choice" role="group" aria-label="最终规划模型选择">
-            <div>
+            <div class="is-selected">
               <span>默认模型</span>
               <strong>8B 混合表达监督微调模型</strong>
               <small>模型版本 2429 · 当前默认</small>
-            </div>
-            <div>
-              <span>候选排列可能变化</span>
-              <strong>8B 候选顺序稳健模型</strong>
-              <small>模型版本 111 · 全链路 90.16%（工具链口径）</small>
             </div>
           </div>
         </section>
 
         <section class="planner-compact-story" id="plannerExperiments" aria-labelledby="plannerStoryTitle">
-          <header class="planner-story-head">
-            <span>训练与评测结果</span>
-            <div>
-              <h3 id="plannerStoryTitle">主要训练与评测结果</h3>
-            </div>
-          </header>
+          <div class="result-explorer-head">
+            <div><span class="result-subsection-label">01 · 选型路径</span><h3 id="plannerStoryTitle">默认模型选型与两项配置复核</h3></div>
+            <p>阶段卡片统一使用 8B 模型的 9,000 条静态全链路工具链口径。</p>
+          </div>
 
-          <ol class="planner-evolution">
-            <li>
-              <small>00–01 · 起点</small>
-              <span>基础模型 + Top-10 候选</span>
-              <strong>59.10%</strong>
-              <p>接口式表达 1K · 8B 工具链全对率</p>
-              <em>缩小候选范围有帮助，但模型仍无法稳定选对工具链。</em>
-            </li>
-            <li class="is-first-sft">
-              <small>02A · 首次监督微调</small>
-              <span>只用接口式表达训练</span>
-              <strong>81.41%</strong>
-              <p>静态全链路工具链成功率 · 9K</p>
-              <em>接口式表达模块测试为 98.30%。</em>
-            </li>
-            <li class="is-selected">
-              <small>02B · 两种表达联合训练</small>
-              <span>混合表达监督微调</span>
-              <strong>90.37%</strong>
-              <p>静态全链路成功率 · 工具链口径 · 9,000 条</p>
-              <em>跨表达测试提高到 85.62%。</em>
-            </li>
-            <li>
-              <small>03 · 候选数量</small>
-              <span>Top-10 → Top-20</span>
-              <strong>89.49%</strong>
-              <p>Top-20 · 静态全链路工具链成功率</p>
-              <em>低于默认方案，继续使用 Top-10。</em>
-            </li>
-            <li class="is-conditional">
-              <small>04 · 顺序稳定性</small>
-              <span>候选顺序稳健优化</span>
-              <strong>90.16%</strong>
-              <p>静态全链路工具链成功率 · 9K</p>
-              <em>三种排列平均提高 0.53 个百分点，仅作备选。</em>
-            </li>
-          </ol>
+          <div class="experiment-steps" role="group" aria-label="工具链规划模型选型路径">
+            <article><span>01 · 首次监督微调</span><strong>接口式表达训练</strong><small>全链路 81.41%</small></article>
+            <article class="is-selected"><span>02 · 默认模型</span><strong>混合表达监督微调</strong><small>全链路 90.37%</small></article>
+            <article><span>03 · 候选数量复核</span><strong>继续使用 Top-10</strong><small>Top-20 全链路 89.49%</small></article>
+            <article><span>04 · 顺序稳定性复核</span><strong>保留条件备选</strong><small>稳健模型全链路 90.16%</small></article>
+          </div>
 
           <div class="planner-story-disclosures">
-            <details class="narrative-disclosure planner-story-results" id="plannerExperiment0">
-              <summary>
-                <span class="disclosure-summary-copy"><small>起点与首次监督微调</small><strong>基础模型 → Top-10 候选 → 首次监督微调，以及首次全链路复测</strong></span>
-                <span class="disclosure-summary-meta">接口式表达 1K · 跨表达测试 6K · 全链路 9K</span>
-                <i aria-hidden="true">+</i>
-              </summary>
-              <div class="disclosure-body planner-result-body">
-                <div class="planner-table-block">
-                  <div class="planner-table-heading">
-                    <h4>首次监督微调显著提高规划模块准确率</h4>
-                    <p>前三列都来自同一套接口式表达测试集（1,000 条）。54K 补充实验使用相同测试协议，但对应另一模型版本，不参与后续全链路比较。</p>
-                  </div>
-                  <div class="result-table-wrap" tabindex="0">
-                    <table class="result-table result-table-compact planner-result-table planner-first-sft-table">
-                      <thead><tr><th scope="col">模型</th><th scope="col">未微调 / 100 工具<br>集合 / 工具链全对率</th><th scope="col">未微调 / Top-10 候选<br>集合 / 工具链全对率</th><th scope="col">首次监督微调 / Top-10 候选<br>集合 / 工具链全对率</th><th scope="col">54K 补充微调 / Top-10 候选<br>集合 / 工具链全对率</th></tr></thead>
-                      <tbody>
-                        <tr><td>Qwen3-4B</td><td>52.30% / 50.40%</td><td>54.00% / 53.10%</td><td><strong>99.00% / 99.00%</strong></td><td>98.60% / 98.60%</td></tr>
-                        <tr class="result-table-final"><td>Qwen3-8B</td><td>57.40% / 54.60%</td><td>60.00% / 59.10%</td><td><strong>98.30% / 98.30%</strong></td><td>99.10% / 99.10%</td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="planner-table-block">
-                  <div class="planner-table-heading">
-                    <h4>跨表达方式测试暴露出明显下降</h4>
-                    <p>这里固定使用首次正式微调模型，即只用接口式表达训练的版本；不使用上表的 54K 补充模型。</p>
-                  </div>
-                  <div class="result-table-wrap" tabindex="0">
-                    <table class="result-table result-table-compact planner-result-table">
-                      <thead><tr><th scope="col">模型</th><th scope="col">接口式表达 1K<br>集合 / 工具链全对率</th><th scope="col">跨表达测试 6K<br>集合 / 工具链全对率</th><th scope="col">静态全链路 9K<br>集合 / 工具链口径成功率</th><th scope="col">集合 / 工具链<br>通过数</th></tr></thead>
-                      <tbody>
-                        <tr><td>Qwen3-4B 首次监督微调</td><td>99.00% / 99.00%</td><td>71.65% / 71.22%</td><td>81.06% / 80.77%</td><td>7,295 / 7,269</td></tr>
-                        <tr class="result-table-final"><td>Qwen3-8B 首次监督微调</td><td>98.30% / 98.30%</td><td>72.43% / 72.18%</td><td><strong>81.58% / 81.41%</strong></td><td>7,342 / 7,327</td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </details>
-
-            <details class="narrative-disclosure planner-story-results" id="plannerExperiment2">
-              <summary>
-                <span class="disclosure-summary-copy"><small>混合表达监督微调</small><strong>跨表达测试工具链全对率 72.18% → 85.62%，全链路成功率 81.41% → 90.37%</strong></span>
-                <span class="disclosure-summary-meta">77,724 条 · 模型版本 2429</span>
-                <i aria-hidden="true">+</i>
-              </summary>
-              <div class="disclosure-body planner-result-body">
-                <div class="planner-table-heading">
-                  <h4>混合表达监督微调的模块与全链路结果</h4>
-                </div>
-                <div class="result-table-wrap" tabindex="0">
-                  <table class="result-table result-table-compact planner-result-table planner-crossstyle-table">
-                    <thead><tr><th scope="col">模型</th><th scope="col">接口式表达 1K<br>集合 / 工具链全对率</th><th scope="col">跨表达测试 6K：首次 → 混合表达<br>集合 / 工具链全对率</th><th scope="col">全链路 9K：首次 → 混合表达<br>集合 / 工具链口径成功率</th><th scope="col">模型版本</th></tr></thead>
-                    <tbody>
-                      <tr><td>Qwen3-4B</td><td>99.80% / 99.80%</td><td>71.65% / 71.22% → <strong>84.00% / 83.68%</strong></td><td>81.06% / 80.77% → <strong>89.29% / 89.08%</strong></td><td>2429</td></tr>
-                      <tr class="result-table-final"><td>Qwen3-8B</td><td>99.70% / 99.70%</td><td>72.43% / 72.18% → <strong>85.95% / 85.62%</strong></td><td>81.58% / 81.41% → <strong>90.59% / 90.37%</strong></td><td><strong>2429</strong></td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </details>
-
-            <details class="narrative-disclosure planner-story-results" id="plannerCandidateDepth">
-              <summary>
-                <span class="disclosure-summary-copy"><small>候选数量检验</small><strong>召回提高以后，为什么最终工具链反而下降？</strong></span>
-                <span class="disclosure-summary-meta">K=5 / 10 / 20 / 30 · 开发 2.4K · 电商检查 6K · 全链路 9K</span>
-                <i aria-hidden="true">+</i>
-              </summary>
-              <div class="disclosure-body planner-result-body">
-                <p class="planner-dpo-context">固定检索排序与规划模型，仅改变输入候选数 K；模型参数不变。</p>
-                <div class="planner-table-block">
-                  <div class="planner-table-heading">
-                    <h4>开发集：Top-20 是较省输入的近最优候选</h4>
-                  </div>
-                  <div class="result-table-wrap" tabindex="0">
-                    <table class="result-table result-table-compact planner-result-table">
-                      <thead><tr><th scope="col">候选数 K</th><th scope="col">AllHit@K</th><th scope="col">平均输入 token</th><th scope="col">4B 工具链全对率</th><th scope="col">8B 工具链全对率</th></tr></thead>
-                      <tbody>
-                        <tr><td>5</td><td>81.9583%</td><td>328.8</td><td>81.7500%</td><td>81.8333%</td></tr>
-                        <tr><td>10</td><td>95.0000%</td><td>462.0</td><td>94.4167%</td><td>94.4583%</td></tr>
-                        <tr class="result-table-final"><td><strong>20</strong></td><td><strong>99.0000%</strong></td><td><strong>727.0</strong></td><td><strong>98.0000%</strong></td><td><strong>98.0833%</strong></td></tr>
-                        <tr><td>30</td><td>99.1250%</td><td>991.1</td><td>98.1667%</td><td>98.2083%</td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <p class="planner-result-boundary">Top-20 比 Top-30 低 0.15 个百分点，输入 token 少 26.65%。</p>
-                </div>
-
-                <div class="planner-table-block">
-                  <div class="planner-table-heading">
-                    <h4>候选数量与生成成本</h4>
-                    <p>单张 V100；延迟为离线批内均摊，仅比较同一模型的不同 K。</p>
-                  </div>
-                  <div class="result-table-wrap" tabindex="0">
-                    <table class="result-table result-table-compact planner-result-table">
-                      <thead><tr><th scope="col">模型</th><th scope="col">规划输入候选数 K</th><th scope="col">批量</th><th scope="col">生成均值</th><th scope="col">p50 / p95</th><th scope="col">输出吞吐</th><th scope="col">分片进程峰值显存：已分配 / 已保留</th></tr></thead>
-                      <tbody>
-                        <tr><td rowspan="4">Qwen3-4B</td><td>5</td><td>16</td><td>576.4ms</td><td>517.1 / 947.4ms</td><td>26.32 token/s</td><td>10.52 / 19.03 GiB</td></tr>
-                        <tr><td>10</td><td>16</td><td>718.1ms</td><td>632.5 / 1118.3ms</td><td>21.74 token/s</td><td>11.77 / 24.58 GiB</td></tr>
-                        <tr class="result-table-final"><td>20</td><td>16</td><td>1011.4ms</td><td>918.7 / 1449.9ms</td><td>15.50 token/s</td><td>14.62 / 31.21 GiB</td></tr>
-                        <tr><td>30</td><td>16</td><td>1333.2ms</td><td>1228.0 / 1831.8ms</td><td>11.76 token/s</td><td>17.86 / 31.14 GiB</td></tr>
-                        <tr class="table-divider"><td rowspan="4">Qwen3-8B</td><td>5</td><td>4</td><td>1657.6ms</td><td>1356.3 / 2897.4ms</td><td>9.05 token/s</td><td>16.17 / 18.55 GiB</td></tr>
-                        <tr><td>10</td><td>4</td><td>1917.5ms</td><td>1583.2 / 3280.6ms</td><td>8.13 token/s</td><td>16.47 / 20.24 GiB</td></tr>
-                        <tr class="result-table-final"><td>20</td><td>4</td><td>2385.6ms</td><td>2032.2 / 3833.9ms</td><td>6.57 token/s</td><td>17.20 / 25.42 GiB</td></tr>
-                        <tr><td>30</td><td>4</td><td>2871.3ms</td><td>2514.1 / 4348.1ms</td><td>5.46 token/s</td><td>18.01 / 31.10 GiB</td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div class="planner-table-block">
-                  <div class="planner-table-heading">
-                    <h4>冻结结果：更多召回没有转化为更高全链路成功率</h4>
-                  </div>
-                  <div class="result-table-wrap" tabindex="0">
-                    <table class="result-table result-table-compact planner-result-table planner-final-table">
-                      <thead><tr><th scope="col">模型</th><th scope="col">K</th><th scope="col">AllHit@K</th><th scope="col">电商集合 / 工具链全对率</th><th scope="col">9K 全链路集合 / 工具链成功率</th></tr></thead>
-                      <tbody>
-                        <tr><td rowspan="2">Qwen3-4B</td><td><strong>10 · 默认</strong></td><td>98.3000%</td><td><strong>84.0000% / 83.6833%</strong></td><td><strong>89.2889% / 89.0778%</strong></td></tr>
-                        <tr><td>20</td><td>99.7167%</td><td>82.3167% / 82.1500%</td><td>88.1667% / 88.0556%</td></tr>
-                        <tr class="table-divider"><td rowspan="2">Qwen3-8B</td><td><strong>10 · 默认</strong></td><td>98.3000%</td><td><strong>85.9500% / 85.6167%</strong></td><td><strong>90.5889% / 90.3667%</strong></td></tr>
-                        <tr><td>20</td><td>99.7167%</td><td>84.5000% / 84.3000%</td><td>89.6222% / 89.4889%</td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <p class="planner-result-boundary">Top-20 多命中 85 条，但 8B 全链路下降 0.88 个百分点，故保留 Top-10。</p>
-                </div>
-                <p class="planner-result-boundary">模型按 Top-10 训练；本结果不代表重新按 Top-20 训练后的上限。</p>
-              </div>
-            </details>
-
-            <details class="narrative-disclosure planner-story-results" id="plannerExperiment3">
-              <summary>
-                <span class="disclosure-summary-copy"><small>候选顺序稳健优化</small><strong>三种排列平均工具链全对率：98.06% → 98.58%</strong></span>
-                <span class="disclosure-summary-meta">2,000 对偏好 · 同一 1,200 条 × 3 种排列</span>
-                <i aria-hidden="true">+</i>
-              </summary>
-              <div class="disclosure-body planner-result-body">
-                <p class="planner-dpo-context">使用当前规划模型的真实错误训练，降低模型对候选排列的敏感性。</p>
-                <div class="planner-table-heading">
-                  <h4>候选顺序压力测试</h4>
-                  <p>同一 1,200 条请求采用三种候选排列。</p>
-                </div>
-                <div class="result-table-wrap" tabindex="0">
-                  <table class="result-table result-table-compact planner-result-table">
-                    <thead><tr><th scope="col">模型</th><th scope="col">优化前：三顺序平均<br>集合 / 工具链全对率</th><th scope="col">顺序稳健模型：三顺序平均<br>集合 / 工具链全对率</th><th scope="col">原顺序<br>工具链全对率</th><th scope="col">最差顺序：优化前 → 优化后<br>工具链全对率</th><th scope="col">平均工具链<br>提升</th></tr></thead>
-                    <tbody>
-                      <tr><td>Qwen3-4B</td><td>97.72% / 97.69%</td><td><strong>98.44% / 98.42%</strong></td><td>99.00% → 99.00%</td><td>96.08% → <strong>97.83%</strong></td><td><strong>+0.72 个百分点</strong></td></tr>
-                      <tr class="result-table-final"><td>Qwen3-8B</td><td>98.14% / 98.06%</td><td><strong>98.67% / 98.58%</strong></td><td>99.25% → 99.25%</td><td>97.08% → <strong>97.83%</strong></td><td><strong>+0.53 个百分点</strong></td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p class="planner-result-boundary">全链路为 90.16%，未替代默认模型。</p>
-              </div>
-            </details>
-
             <details class="narrative-disclosure planner-story-results planner-final-results" id="plannerExperiment4">
               <summary>
-                <span class="disclosure-summary-copy"><small>最终静态全链路结果</small><strong>9,000 条测试：最终选择 8B 混合表达监督微调模型</strong></span>
-                <span class="disclosure-summary-meta">3,000 条闲聊 + 6,000 条电商</span>
+                <span class="disclosure-summary-copy"><small>最终静态全链路结果</small><strong>8B 混合表达监督微调模型达到 90.37%，作为当前默认</strong></span>
+                <span class="disclosure-summary-meta">9,000 条 · 6 个模型版本 · 工具链口径</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
                 <div class="planner-table-heading">
                   <h4>意图分流 + 候选检索 + 工具链规划</h4>
-                  <p>9,000 条样本逐条联合计分。</p>
+                  <p>3,000 条闲聊与 6,000 条电商请求逐条联合计分。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table planner-final-table">
@@ -1141,19 +945,139 @@
                 <p class="planner-result-boundary">边界：100 工具合成闭集，不含参数生成与真实调用。</p>
               </div>
             </details>
+
+            <details class="narrative-disclosure planner-story-results" id="plannerExperiment0">
+              <summary>
+                <span class="disclosure-summary-copy"><small>监督微调演进</small><strong>首次训练全链路 81.41%，混合表达训练提升至 90.37%</strong></span>
+                <span class="disclosure-summary-meta">模块 1K · 跨表达 6K · 全链路 9K</span>
+                <i aria-hidden="true">+</i>
+              </summary>
+              <div class="disclosure-body planner-result-body">
+                <div class="planner-table-block">
+                  <div class="planner-table-heading">
+                    <h4>基础模型与首次监督微调</h4>
+                    <p>同一套 1,000 条接口式表达模块测试；这里不包含意图分流与候选检索成败。</p>
+                  </div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table">
+                      <thead><tr><th scope="col">模型</th><th scope="col">未微调 / 100 工具<br>集合 / 工具链全对率</th><th scope="col">未微调 / Top-10 候选<br>集合 / 工具链全对率</th><th scope="col">首次监督微调 / Top-10 候选<br>集合 / 工具链全对率</th></tr></thead>
+                      <tbody>
+                        <tr><td>Qwen3-4B</td><td>52.30% / 50.40%</td><td>54.00% / 53.10%</td><td><strong>99.00% / 99.00%</strong></td></tr>
+                        <tr><td>Qwen3-8B</td><td>57.40% / 54.60%</td><td>60.00% / 59.10%</td><td><strong>98.30% / 98.30%</strong></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="planner-table-block">
+                  <div class="planner-table-heading">
+                    <h4>跨表达方式测试暴露出明显下降</h4>
+                    <p>固定使用只在接口式表达上训练的首次监督微调模型。</p>
+                  </div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table">
+                      <thead><tr><th scope="col">模型</th><th scope="col">接口式表达 1K<br>集合 / 工具链全对率</th><th scope="col">跨表达测试 6K<br>集合 / 工具链全对率</th><th scope="col">静态全链路 9K<br>集合 / 工具链口径成功率</th><th scope="col">集合 / 工具链<br>通过数</th></tr></thead>
+                      <tbody>
+                        <tr><td>Qwen3-4B 首次监督微调</td><td>99.00% / 99.00%</td><td>71.65% / 71.22%</td><td>81.06% / 80.77%</td><td>7,295 / 7,269</td></tr>
+                        <tr class="result-table-final"><td>Qwen3-8B 首次监督微调</td><td>98.30% / 98.30%</td><td>72.43% / 72.18%</td><td><strong>81.58% / 81.41%</strong></td><td>7,342 / 7,327</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="planner-table-block" id="plannerExperiment2">
+                  <div class="planner-table-heading">
+                    <h4>混合表达监督微调确定默认模型</h4>
+                    <p>77,724 条混合表达监督数据；跨表达工具链全对率由 72.18% 提高到 85.62%。</p>
+                  </div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table planner-crossstyle-table">
+                      <thead><tr><th scope="col">模型</th><th scope="col">接口式表达 1K<br>集合 / 工具链全对率</th><th scope="col">跨表达测试 6K：首次 → 混合表达<br>集合 / 工具链全对率</th><th scope="col">全链路 9K：首次 → 混合表达<br>集合 / 工具链口径成功率</th><th scope="col">模型版本</th></tr></thead>
+                      <tbody>
+                        <tr><td>Qwen3-4B</td><td>99.80% / 99.80%</td><td>71.65% / 71.22% → <strong>84.00% / 83.68%</strong></td><td>81.06% / 80.77% → <strong>89.29% / 89.08%</strong></td><td>2429</td></tr>
+                        <tr class="result-table-final"><td>Qwen3-8B</td><td>99.70% / 99.70%</td><td>72.43% / 72.18% → <strong>85.95% / 85.62%</strong></td><td>81.58% / 81.41% → <strong>90.59% / 90.37%</strong></td><td><strong>2429</strong></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <details class="narrative-disclosure planner-story-results" id="plannerCandidateDepth">
+              <summary>
+                <span class="disclosure-summary-copy"><small>候选数量与顺序稳定性复核</small><strong>两项方案的 9K 全链路均未超过 90.37%，默认方案不变</strong></span>
+                <span class="disclosure-summary-meta">保留 Top-10 · 顺序稳健模型仅作条件备选</span>
+                <i aria-hidden="true">+</i>
+              </summary>
+              <div class="disclosure-body planner-result-body">
+                <p class="planner-dpo-context">固定检索排序与规划模型，仅改变输入候选数 K；开发集先提名 Top-20，再用冻结结果复核。</p>
+                <div class="planner-table-block">
+                  <div class="planner-table-heading">
+                    <h4>开发集：Top-20 是较省输入的近最优候选</h4>
+                  </div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table">
+                      <thead><tr><th scope="col">候选数 K</th><th scope="col">AllHit@K</th><th scope="col">平均输入 token</th><th scope="col">4B 工具链全对率</th><th scope="col">8B 工具链全对率</th></tr></thead>
+                      <tbody>
+                        <tr><td>5</td><td>81.96%</td><td>328.8</td><td>81.75%</td><td>81.83%</td></tr>
+                        <tr><td>10</td><td>95.00%</td><td>462.0</td><td>94.42%</td><td>94.46%</td></tr>
+                        <tr class="row-emphasis"><td><strong>20 · 进入冻结复核</strong></td><td><strong>99.00%</strong></td><td><strong>727.0</strong></td><td><strong>98.00%</strong></td><td><strong>98.08%</strong></td></tr>
+                        <tr><td>30</td><td>99.13%</td><td>991.1</td><td>98.17%</td><td>98.21%</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p class="planner-result-boundary">Top-20 的两个模型平均比 Top-30 低 0.15 个百分点，输入 token 少 26.65%。</p>
+                </div>
+
+                <div class="planner-table-block">
+                  <div class="planner-table-heading">
+                    <h4>冻结结果：更多召回没有转化为更高全链路成功率</h4>
+                  </div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table planner-final-table">
+                      <thead><tr><th scope="col">模型</th><th scope="col">K</th><th scope="col">AllHit@K</th><th scope="col">电商集合 / 工具链全对率</th><th scope="col">9K 全链路集合 / 工具链成功率</th></tr></thead>
+                      <tbody>
+                        <tr class="row-emphasis"><td rowspan="2">Qwen3-4B</td><td><strong>10 · 默认</strong></td><td>98.30%</td><td><strong>84.00% / 83.68%</strong></td><td><strong>89.29% / 89.08%</strong></td></tr>
+                        <tr><td>20</td><td>99.72%</td><td>82.32% / 82.15%</td><td>88.17% / 88.06%</td></tr>
+                        <tr class="table-divider result-table-final"><td rowspan="2">Qwen3-8B</td><td><strong>10 · 默认</strong></td><td>98.30%</td><td><strong>85.95% / 85.62%</strong></td><td><strong>90.59% / 90.37%</strong></td></tr>
+                        <tr><td>20</td><td>99.72%</td><td>84.50% / 84.30%</td><td>89.62% / 89.49%</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p class="planner-result-boundary">Top-20 多命中 85 条，但 8B 全链路下降 0.88 个百分点，故保留 Top-10；本实验只扩大推理输入，没有重新训练模型。</p>
+                </div>
+                <div class="planner-table-block" id="plannerExperiment3">
+                  <p class="planner-dpo-context">使用当前规划模型的真实错误训练；下表是候选排列压力测试，不是 9,000 条全链路结果。</p>
+                  <div class="planner-table-heading">
+                    <h4>顺序稳定性提高，但不替代默认模型</h4>
+                    <p>同一 1,200 条封存请求采用三种候选排列。</p>
+                  </div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table">
+                      <thead><tr><th scope="col">模型</th><th scope="col">优化前：三顺序平均<br>集合 / 工具链全对率</th><th scope="col">顺序稳健模型：三顺序平均<br>集合 / 工具链全对率</th><th scope="col">原顺序<br>工具链全对率</th><th scope="col">最差顺序：优化前 → 优化后<br>工具链全对率</th><th scope="col">平均工具链<br>提升</th></tr></thead>
+                      <tbody>
+                        <tr><td>Qwen3-4B</td><td>97.72% / 97.69%</td><td><strong>98.44% / 98.42%</strong></td><td>99.00% → 99.00%</td><td>96.08% → <strong>97.83%</strong></td><td><strong>+0.72 个百分点</strong></td></tr>
+                        <tr><td>Qwen3-8B</td><td>98.14% / 98.06%</td><td><strong>98.67% / 98.58%</strong></td><td>99.25% → 99.25%</td><td>97.08% → <strong>97.83%</strong></td><td><strong>+0.53 个百分点</strong></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p class="planner-result-boundary">8B 顺序稳健模型全链路为 90.16%，低于默认模型的 90.37%，仅在候选排列可能变化时使用。</p>
+                </div>
+              </div>
+            </details>
+
           </div>
         </section>
 
         <details class="narrative-disclosure data-disclosure efficiency-disclosure experiment-environment-disclosure" id="plannerEnvironment">
           <summary>
             <span class="disclosure-summary-copy"><small>实验数据、协议与环境</small><strong>查看工具链规划的数据职责、评测口径与运行记录</strong></span>
-            <span class="disclosure-summary-meta">监督训练 · 模型选择 · 分开报告 · 每次训练 1–4 GPU</span>
+            <span class="disclosure-summary-meta">训练：2 GPU · 4 小时 58 分 ｜ 6K 推理：p50 270.6ms</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body efficiency-body">
             <section class="data-evidence-section experiment-data-section" aria-labelledby="plannerTrainingDataTitle">
               <div class="data-evidence-heading">
-                <div><p>01A · 训练与选型数据</p><h3 id="plannerTrainingDataTitle">训练数据更新参数，开发数据只负责选择方案</h3></div>
+                <div><p>01 · 训练与选型数据</p><h3 id="plannerTrainingDataTitle">训练集更新参数，开发集只用于选型</h3></div>
                 <span>9K–54K 嵌套监督与 77,724 条混合表达监督是两套不同训练，不是连续扩容；偏好数据也只服务各自对应的训练阶段。</span>
               </div>
               <div class="data-table-wrap" tabindex="0">
@@ -1173,7 +1097,7 @@
 
             <section class="data-evidence-section" aria-labelledby="plannerReportDataTitle">
               <div class="data-evidence-heading">
-                <div><p>01B · 报告数据</p><h3 id="plannerReportDataTitle">五套报告协议分别回答不同问题</h3></div>
+                <div><p>02 · 独立评测协议</p><h3 id="plannerReportDataTitle">五套结果分别回答不同问题</h3></div>
                 <span>接口式表达、跨表达、候选数量、候选顺序压力测试与静态全链路不能合并计分；正文中的每个结果只对应本行注明的协议。</span>
               </div>
               <div class="data-table-wrap" tabindex="0">
@@ -1192,29 +1116,26 @@
 
             <section class="data-evidence-section" aria-labelledby="plannerAuditTitle">
               <div class="data-evidence-heading">
-                <div><p>01C · 数据审计</p><h3 id="plannerAuditTitle">文本隔离成立，但闭集组合仍会复用</h3></div>
+                <div><p>03 · 数据审计</p><h3 id="plannerAuditTitle">请求与轨迹无重合，闭集组合仍会复用</h3></div>
                 <span>“没有请求或轨迹泄漏”和“目标工具链从未出现”是两件事；本项目验证前者，并如实保留后者的闭集边界。</span>
               </div>
-              <div class="planner-audit-grid" role="group" aria-label="工具链规划数据审计摘要">
-                <article><strong>0</strong><span>请求 / 轨迹重合</span><p>嵌套训练集与开发集、正式测试集的规范化请求和轨迹 ID 均不重合。</p></article>
-                <article><strong>0</strong><span>完整目录训练样本</span><p>训练样本不直接暴露完整 100 工具目录视图。</p></article>
-                <article><strong>100 / 100</strong><span>工具覆盖</span><p>每个嵌套训练规模都覆盖全部工具，避免小规模档缺类。</p></article>
-                <article><strong>82.1%</strong><span>目标工具链曾在训练中出现</span><p>接口式表达测试的目标有序序列在 54K 监督数据中出现过，属于闭集组合复用。</p></article>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table retrieval-audit-table">
+                  <thead><tr><th scope="col">检查项</th><th scope="col">结果</th><th scope="col">说明</th></tr></thead>
+                  <tbody>
+                    <tr><td>请求 / 轨迹重合</td><td><strong>0</strong></td><td>嵌套训练集与开发集、正式测试集的规范化请求和轨迹 ID 均不重合。</td></tr>
+                    <tr><td>完整目录训练样本</td><td><strong>0</strong></td><td>训练样本不直接暴露完整 100 工具目录视图。</td></tr>
+                    <tr><td>工具覆盖</td><td><strong>100 / 100</strong></td><td>每个嵌套训练规模都覆盖全部工具，避免小规模档缺类。</td></tr>
+                    <tr><td>目标工具链曾在训练中出现</td><td><strong>82.1%</strong></td><td>接口式表达测试的目标有序序列在 54K 监督数据中出现过，属于闭集组合复用。</td></tr>
+                  </tbody>
+                </table>
               </div>
-              <p class="data-boundary-note"><strong>解释边界：</strong>数据审计 <code>strict_ok=true</code>；表达簇同序列仅命中 1 / 1,000，上下文骨架同序列为 0。54K 补充微调的 8B 在接口式表达测试上达到 99.10%，但该版本没有对应的跨表达测试或静态全链路结果，不能与 72.18% 或 90.37% 串成连续增益。全部结果都应理解为固定 100 工具合成闭集中的静态选链。</p>
+              <p class="data-boundary-note"><strong>审计结论：</strong><code>strict_ok=true</code>；表达簇同序列命中 1 / 1,000，上下文骨架同序列为 0。82.1% 只表示固定工具目录中的组合复用。</p>
             </section>
-
-            <div class="efficiency-summary" role="group" aria-label="工具链规划实验环境摘要">
-              <article><span>GPU 运行证据</span><strong>训练 1–4 卡</strong><small>每个推理分片仅暴露单个 CUDA 设备；候选数量实验记录为单张 V100，其余推理运行未保存型号</small></article>
-              <article><span>首次 8B 监督微调</span><strong>50 分 17 秒</strong><small>4 GPU · 1 轮 · 1,688 步；4B 完整两轮训练为 1 小时 00 分 02 秒</small></article>
-              <article><span>默认 8B 规划模型</span><strong>4 小时 58 分</strong><small>混合表达监督微调 · 2 GPU · 77,724 条 · 1 轮 · 2,429 步</small></article>
-              <article><span>8B 顺序稳健训练</span><strong>19 分 07 秒</strong><small>2 GPU · 2,000 对总计 / 1,776 对训练 · 1 轮 · 111 步；最终采用 lr1e-6 版本</small></article>
-              <article><span>默认 8B 规划推理</span><strong>p50 270.6ms</strong><small>6K 离线评测 · 批量 16 · 批内均摊；p95 317.8ms</small></article>
-            </div>
 
             <section class="efficiency-table-block" aria-labelledby="plannerSftEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>02 · 主要监督微调</span><h3 id="plannerSftEnvironmentTitle">首次训练与混合表达训练</h3></div>
+                <div><span>04 · 主要监督微调</span><h3 id="plannerSftEnvironmentTitle">首次训练与混合表达训练</h3></div>
                 <p>每次训练使用的 GPU 数量来自对应运行产物；GPU 型号和物理卡号没有与单次运行绑定。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -1232,17 +1153,17 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerScaleEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>03 · 数据规模与参数搜索</span><h3 id="plannerScaleEnvironmentTitle">9K–54K 补充训练的实际耗时</h3></div>
-                <p>共同配置：1 GPU、BF16、全局批量 32、3 轮、lr5e-5、LoRA r32 / α64 / dropout 0.05、最大长度 2048；4B 为批量 8 × 累积 4，8B 为批量 4 × 累积 8。</p>
+                <div><span>05 · 补充规模研究</span><h3 id="plannerScaleEnvironmentTitle">9K–54K 的接口式模块结果与训练耗时</h3></div>
+                <p>准确率来自接口式表达 1K 模块测试。共同配置：1 GPU、BF16、全局批量 32、3 轮、lr5e-5、LoRA r32 / α64 / dropout 0.05、最大长度 2048；4B / 8B 分别为批量 8 × 累积 4 / 批量 4 × 累积 8。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table planner-scale-efficiency-table">
-                  <thead><tr><th scope="col">训练量</th><th scope="col">训练步数</th><th scope="col">4B 实际耗时</th><th scope="col">8B 实际耗时</th><th scope="col">复现边界</th></tr></thead>
+                  <thead><tr><th scope="col">训练量</th><th scope="col">训练步数</th><th scope="col">4B 耗时 / 模块工具链全对率<br>100 工具 / Top-10</th><th scope="col">8B 耗时 / 模块工具链全对率<br>100 工具 / Top-10</th><th scope="col">复现边界</th></tr></thead>
                   <tbody>
-                    <tr><td><strong>9K</strong></td><td>846</td><td>55 分 03 秒</td><td>1 小时 31 分 42 秒</td><td rowspan="4">每个规模只保留一个固定种子的正式运行；此外 4B 完成 21 个 9K 参数组合，8B 完成 3 个 9K 确认运行。各组合结果保留在源报告中，不能把单次耗时外推为完整搜索总成本。</td></tr>
-                    <tr><td><strong>18K</strong></td><td>1,689</td><td>1 小时 49 分 45 秒</td><td>3 小时 03 分 03 秒</td></tr>
-                    <tr><td><strong>36K</strong></td><td>3,375</td><td>4 小时 00 分 51 秒</td><td>6 小时 25 分 48 秒</td></tr>
-                    <tr><td><strong>54K</strong></td><td>5,064</td><td>6 小时 01 分 32 秒</td><td>10 小时 10 分 02 秒</td></tr>
+                    <tr><td><strong>9K</strong></td><td>846</td><td><strong>55 分 03 秒</strong><small>93.00% / 98.60%</small></td><td><strong>1 小时 31 分 42 秒</strong><small>95.60% / 98.60%</small></td><td rowspan="4">每个规模只保留一个固定种子的正式运行；此外 4B 完成 21 个 9K 参数组合，8B 完成 3 个 9K 确认运行。各组合结果保留在源报告中，不能把单次耗时外推为完整搜索总成本。</td></tr>
+                    <tr><td><strong>18K</strong></td><td>1,689</td><td><strong>1 小时 49 分 45 秒</strong><small>91.60% / 97.70%</small></td><td><strong>3 小时 03 分 03 秒</strong><small>95.10% / 99.00%</small></td></tr>
+                    <tr><td><strong>36K</strong></td><td>3,375</td><td><strong>4 小时 00 分 51 秒</strong><small>91.20% / 99.20%</small></td><td><strong>6 小时 25 分 48 秒</strong><small>95.70% / 98.20%</small></td></tr>
+                    <tr><td><strong>54K</strong></td><td>5,064</td><td><strong>6 小时 01 分 32 秒</strong><small>96.20% / 98.60%</small></td><td><strong>10 小时 10 分 02 秒</strong><small>97.40% / 99.10%</small></td></tr>
                   </tbody>
                 </table>
               </div>
@@ -1250,7 +1171,7 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerPreferenceEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>04 · 偏好训练</span><h3 id="plannerPreferenceEnvironmentTitle">未采用的早期方案与当前顺序稳健方案</h3></div>
+                <div><span>06 · 偏好训练</span><h3 id="plannerPreferenceEnvironmentTitle">未采用的早期方案与当前顺序稳健方案</h3></div>
                 <p>早期方案保留为失败对照；当前方案只使用混合表达监督微调模型的真实错误，页面不把两者合并成连续增益。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -1266,9 +1187,31 @@
               </div>
             </section>
 
+            <section class="efficiency-table-block" aria-labelledby="plannerCandidateEfficiencyTitle">
+              <div class="efficiency-table-heading">
+                <div><span>07 · 候选数量推理</span><h3 id="plannerCandidateEfficiencyTitle">候选越多，生成成本越高</h3></div>
+                <p>单张 V100；延迟为离线批内均摊，只用于比较同一模型的不同候选数 K。</p>
+              </div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table efficiency-table planner-candidate-efficiency-table">
+                  <thead><tr><th scope="col">模型</th><th scope="col">候选数 K</th><th scope="col">批量</th><th scope="col">生成均值</th><th scope="col">p50 / p95</th><th scope="col">输出吞吐</th><th scope="col">峰值显存：已分配 / 已保留</th></tr></thead>
+                  <tbody>
+                    <tr><td rowspan="4">混合表达监督微调 4B</td><td>5</td><td>16</td><td>576.4ms</td><td>517.1 / 947.4ms</td><td>26.32 token/s</td><td>10.52 / 19.03 GiB</td></tr>
+                    <tr><td>10</td><td>16</td><td>718.1ms</td><td>632.5 / 1118.3ms</td><td>21.74 token/s</td><td>11.77 / 24.58 GiB</td></tr>
+                    <tr><td>20</td><td>16</td><td>1011.4ms</td><td>918.7 / 1449.9ms</td><td>15.50 token/s</td><td>14.62 / 31.21 GiB</td></tr>
+                    <tr><td>30</td><td>16</td><td>1333.2ms</td><td>1228.0 / 1831.8ms</td><td>11.76 token/s</td><td>17.86 / 31.14 GiB</td></tr>
+                    <tr class="table-divider"><td rowspan="4">混合表达监督微调 8B</td><td>5</td><td>4</td><td>1657.6ms</td><td>1356.3 / 2897.4ms</td><td>9.05 token/s</td><td>16.17 / 18.55 GiB</td></tr>
+                    <tr><td>10</td><td>4</td><td>1917.5ms</td><td>1583.2 / 3280.6ms</td><td>8.13 token/s</td><td>16.47 / 20.24 GiB</td></tr>
+                    <tr><td>20</td><td>4</td><td>2385.6ms</td><td>2032.2 / 3833.9ms</td><td>6.57 token/s</td><td>17.20 / 25.42 GiB</td></tr>
+                    <tr><td>30</td><td>4</td><td>2871.3ms</td><td>2514.1 / 4348.1ms</td><td>5.46 token/s</td><td>18.01 / 31.10 GiB</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
             <section class="efficiency-table-block" aria-labelledby="plannerInferenceEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>05 · 规划推理</span><h3 id="plannerInferenceEnvironmentTitle">各主要模型版本的离线生成效率</h3></div>
+                <div><span>08 · 规划模型推理</span><h3 id="plannerInferenceEnvironmentTitle">各主要模型版本的离线生成效率</h3></div>
                 <p>共同设置：每个推理分片进程仅暴露单个可见 CUDA 设备，并使用 BF16、SDPA、贪心生成、最多生成 128 个 token、无预热。延迟为分片内批次墙钟时间除以批量的均摊值，不是在线单请求延迟；完整评测可能由 1、2 或 4 个分片并行，运行 manifest 未保存显卡型号。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">

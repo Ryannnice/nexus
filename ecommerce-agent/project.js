@@ -766,9 +766,16 @@
       }
       if (!target) return;
       var disclosure = target.closest('details');
+      var revealed = false;
       while (disclosure) {
+        if (!disclosure.open) revealed = true;
         disclosure.open = true;
         disclosure = disclosure.parentElement && disclosure.parentElement.closest('details');
+      }
+      if (revealed) {
+        window.requestAnimationFrame(function () {
+          target.scrollIntoView({ block: 'start' });
+        });
       }
     }
 

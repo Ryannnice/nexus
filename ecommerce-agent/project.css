@@ -747,42 +747,6 @@ code, pre { font-family: var(--font); }
 .context-row span { display: block; font-size: 12px; font-weight: 700; line-height: 1.4; }
 .context-row small { display: block; margin-top: 4px; color: var(--body); font-size: 10px; line-height: 1.45; }
 
-.planner-audit-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
-  border: 1px solid var(--hairline);
-  background: var(--hairline);
-}
-
-.planner-audit-grid article {
-  min-width: 0;
-  min-height: 178px;
-  padding: 22px;
-  background: var(--canvas);
-}
-
-.planner-audit-grid strong {
-  color: var(--primary-text);
-  font-size: 29px;
-  line-height: 1;
-}
-
-.planner-audit-grid span {
-  display: block;
-  margin-top: 18px;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-.planner-audit-grid p {
-  margin-top: 8px;
-  color: var(--body);
-  font-size: 11px;
-  line-height: 1.6;
-}
-
 .data-boundary-note {
   margin-top: 16px;
   padding: 18px 20px;
@@ -1899,7 +1863,6 @@ main .evidence-section { padding-block: 48px; }
   .domain-summary article:nth-child(n+5) { border-bottom: 0; }
   .tool-atlas { grid-template-columns: repeat(6,minmax(0,1fr)); }
   .audit-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .planner-audit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 900px) {
@@ -2046,8 +2009,6 @@ main .evidence-section { padding-block: 48px; }
   .context-audit { padding: 22px; }
   .context-row { grid-template-columns: 75px 1fr; }
   .context-row strong { font-size: 21px; }
-  .planner-audit-grid { grid-template-columns: 1fr; }
-  .planner-audit-grid article { min-height: 0; }
   .governance-note { grid-template-columns: 1fr; gap: 8px; }
   .experiment-journey { grid-template-columns: 1fr; }
   .experiment-journey article:nth-child(n) { min-height: 205px; border-right: 0; border-bottom: 1px solid var(--hairline); }
@@ -6708,15 +6669,11 @@ details table td {
   }
 }
 
-/* Ordered-trace planning · compact experiment evolution */
-.planner-intro .section-heading {
-  margin-bottom: 0;
-}
-
+/* Ordered-trace planning */
 .planner-final-lead {
   display: grid;
   grid-template-columns: minmax(0, 1.34fr) minmax(300px, .66fr);
-  margin-top: 30px;
+  margin-top: 0;
   border: 1px solid var(--ink);
   background: var(--ink);
   color: var(--on-dark);
@@ -6765,7 +6722,7 @@ details table td {
 
 .planner-final-lead-choice {
   display: grid;
-  grid-template-rows: repeat(2, minmax(0, 1fr));
+  grid-template-rows: minmax(0, 1fr);
   border-left: 1px solid var(--hairline-strong);
 }
 
@@ -6776,10 +6733,6 @@ details table td {
   justify-content: center;
   padding: 28px;
   background: var(--surface-elevated);
-}
-
-.planner-final-lead-choice > div + div {
-  border-top: 1px solid var(--hairline-strong);
 }
 
 .planner-final-lead-choice strong {
@@ -6794,6 +6747,16 @@ details table td {
   color: var(--on-dark-mute);
   font-size: 10px;
   line-height: 1.5;
+}
+
+#planning .planner-final-lead-choice > .is-selected {
+  background: var(--primary);
+}
+
+#planning .planner-final-lead-choice > .is-selected span,
+#planning .planner-final-lead-choice > .is-selected strong,
+#planning .planner-final-lead-choice > .is-selected small {
+  color: var(--ink);
 }
 
 .planner-final-lead-rule {
@@ -6811,138 +6774,7 @@ details table td {
 }
 
 .planner-compact-story {
-  margin-top: 68px;
   scroll-margin-top: calc(var(--nav-h) + 18px);
-}
-
-.planner-story-head {
-  display: grid;
-  grid-template-columns: minmax(200px, .42fr) minmax(0, 1.58fr);
-  gap: 36px;
-  align-items: start;
-  margin-bottom: 20px;
-  padding-top: 18px;
-  border-top: 4px solid var(--ink);
-}
-
-.planner-story-head > span {
-  padding-top: 6px;
-  color: var(--primary-text);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .55px;
-}
-
-.planner-story-head h3 {
-  font-size: 29px;
-  line-height: 1.25;
-}
-
-.planning-section .planner-story-head p {
-  max-width: 760px;
-  margin-top: 8px;
-  color: var(--body);
-  font-size: 13px;
-}
-
-.planner-evolution {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 1px;
-  margin: 0;
-  padding: 1px;
-  background: var(--hairline);
-  list-style: none;
-}
-
-.planner-evolution li {
-  display: flex;
-  min-width: 0;
-  min-height: 205px;
-  flex-direction: column;
-  padding: 20px;
-  border-top: 4px solid var(--ink);
-  background: var(--canvas);
-}
-
-.planner-evolution li.is-first-sft {
-  border-top-color: #777;
-  background: var(--surface-soft);
-}
-
-.planner-evolution li.is-selected {
-  border-top-color: var(--primary-text);
-  background: var(--primary);
-}
-
-.planner-evolution li.is-conditional {
-  border-top-color: var(--primary);
-  background: var(--ink);
-  color: var(--on-dark);
-}
-
-.planner-evolution small {
-  color: var(--mute);
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: .45px;
-}
-
-.planner-evolution .is-selected small {
-  color: rgba(0, 0, 0, .65);
-}
-
-.planner-evolution .is-conditional small {
-  color: var(--primary);
-}
-
-.planner-evolution span {
-  margin-top: 17px;
-  font-size: 13px;
-  font-weight: 800;
-  line-height: 1.35;
-}
-
-.planner-evolution strong {
-  margin-top: 12px;
-  font-size: 29px;
-  letter-spacing: -1px;
-  line-height: 1;
-}
-
-.planning-section .planner-evolution p {
-  margin-top: 7px;
-  color: var(--body);
-  font-size: 10px;
-  font-weight: 700;
-}
-
-.planning-section .planner-evolution .is-selected p {
-  color: rgba(0, 0, 0, .72);
-}
-
-.planning-section .planner-evolution .is-conditional p {
-  color: var(--on-dark-mute);
-}
-
-.planner-evolution em {
-  margin-top: auto;
-  padding-top: 12px;
-  border-top: 1px solid var(--hairline);
-  color: var(--mute);
-  font-size: 10px;
-  font-style: normal;
-  line-height: 1.55;
-}
-
-.planner-evolution .is-selected em {
-  border-top-color: rgba(0, 0, 0, .25);
-  color: rgba(0, 0, 0, .7);
-}
-
-.planner-evolution .is-conditional em {
-  border-top-color: var(--hairline-strong);
-  color: var(--on-dark-mute);
 }
 
 .planner-story-disclosures {
@@ -6976,6 +6808,11 @@ details table td {
   border-top: 1px solid var(--hairline);
 }
 
+#plannerExperiment2,
+#plannerExperiment3 {
+  scroll-margin-top: calc(var(--nav-h) + 18px);
+}
+
 .planner-table-heading {
   display: flex;
   align-items: flex-end;
@@ -7000,7 +6837,6 @@ details table td {
   min-width: 840px;
 }
 
-.planner-first-sft-table,
 .planner-crossstyle-table,
 .planner-final-table {
   min-width: 980px;
@@ -7031,40 +6867,16 @@ details table td {
   margin-bottom: 0;
 }
 
-@media (max-width: 1080px) {
-  .planner-evolution {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .planner-evolution li {
-    min-height: 185px;
-  }
-}
-
 @media (max-width: 900px) {
   .planner-final-lead {
     grid-template-columns: minmax(0, 1fr);
   }
 
   .planner-final-lead-choice {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto;
     border-top: 1px solid var(--hairline-strong);
     border-left: 0;
-  }
-
-  .planner-final-lead-choice > div + div {
-    border-top: 0;
-    border-left: 1px solid var(--hairline-strong);
-  }
-
-  .planner-story-head {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 7px;
-  }
-
-  .planner-story-head > span {
-    padding-top: 0;
   }
 
   .planner-table-heading {
@@ -7093,8 +6905,7 @@ details table td {
     letter-spacing: -2px;
   }
 
-  .planner-final-lead-choice,
-  .planner-evolution {
+  .planner-final-lead-choice {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -7102,25 +6913,8 @@ details table td {
     padding: 22px;
   }
 
-  .planner-final-lead-choice > div + div {
-    border-top: 1px solid var(--hairline-strong);
-    border-left: 0;
-  }
-
   .planner-final-lead-rule {
     padding: 14px 16px;
-  }
-
-  .planner-compact-story {
-    margin-top: 54px;
-  }
-
-  .planner-story-head h3 {
-    font-size: 23px;
-  }
-
-  .planner-evolution li {
-    min-height: 0;
   }
 
   .planner-story-results > summary {
@@ -7259,6 +7053,31 @@ details table td {
   color: var(--ink);
   font-size: 11px;
 }
+
+#plannerEnvironment .planner-training-efficiency-table,
+#plannerEnvironment .planner-preference-efficiency-table {
+  min-width: 1180px;
+}
+
+#plannerEnvironment .planner-scale-efficiency-table,
+#plannerEnvironment .planner-inference-efficiency-table {
+  min-width: 1080px;
+}
+
+#plannerEnvironment .planner-candidate-efficiency-table {
+  min-width: 980px;
+}
+
+#plannerEnvironment .planner-training-efficiency-table th:nth-child(1) { width: 170px; }
+#plannerEnvironment .planner-training-efficiency-table th:nth-child(2) { width: 110px; }
+#plannerEnvironment .planner-scale-efficiency-table th:nth-child(1) { width: 90px; }
+#plannerEnvironment .planner-scale-efficiency-table th:nth-child(2) { width: 100px; }
+#plannerEnvironment .planner-preference-efficiency-table th:nth-child(1) { width: 210px; }
+#plannerEnvironment .planner-preference-efficiency-table th:nth-child(2) { width: 170px; }
+#plannerEnvironment .planner-candidate-efficiency-table th:nth-child(1) { width: 160px; }
+#plannerEnvironment .planner-candidate-efficiency-table th:nth-child(2) { width: 80px; }
+#plannerEnvironment .planner-inference-efficiency-table th:nth-child(1) { width: 220px; }
+#plannerEnvironment .planner-inference-efficiency-table th:nth-child(2) { width: 180px; }
 
 .efficiency-missing {
   display: inline-block;
