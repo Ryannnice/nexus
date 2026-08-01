@@ -142,7 +142,7 @@
           { detail: '无需进入工具检索', state: '旁路' },
           { detail: '无需生成工具短名单', state: '旁路' }
         );
-        footnote.innerHTML = '意图分流固定集合回放 · <strong>' + escapeHtml(trace.id) + '</strong>';
+        footnote.innerHTML = '意图分流固定集合案例 · <strong>' + escapeHtml(trace.id) + '</strong>';
       } else {
         var gold = new Set(trace.gold);
         var recalled = trace.prediction.reduce(function (items, toolId, rank) {
@@ -158,7 +158,7 @@
           { detail: 'BM25 + 负样本训练向量模型', state: '前 40' },
           { detail: 'bge-reranker-v2-m3 + RRF', state: '前 10' }
         );
-        footnote.innerHTML = '固定检索集回放 · <strong>' + escapeHtml(trace.id) + '</strong>';
+        footnote.innerHTML = '固定检索集案例 · <strong>' + escapeHtml(trace.id) + '</strong>';
       }
 
       renderDots();
@@ -258,43 +258,6 @@
     }
   }
 
-  var activeMetric = 'a10';
-
-  function renderRetrievalCharts(metric) {
-    activeMetric = metric;
-    renderRetrievalTrack($('#genericChart'), data.metrics.retrieval.generic, metric, false);
-    renderRetrievalTrack($('#trainedChart'), data.metrics.retrieval.trained, metric, true);
-  }
-
-  function renderRetrievalTrack(root, rows, metric, trained) {
-    if (!root) return;
-    root.innerHTML = rows.map(function (row, index) {
-      var value = row[metric];
-      var isFinal = trained && index === rows.length - 1;
-      var width = value === null ? 0 : Math.max(0, Math.min(100, value * 100));
-      return '<div class="chart-row' + (isFinal ? ' is-final' : '') + '">' +
-        '<div class="chart-row-head"><strong>' + escapeHtml(row.short) + '</strong><span>' + escapeHtml(row.note) + '</span></div>' +
-        '<div class="chart-track"><div class="chart-fill" style="--bar-width:' + width.toFixed(3) + '%"></div></div>' +
-        '<div class="chart-value">' + percent(value, 2) + '</div>' +
-      '</div>';
-    }).join('');
-  }
-
-  function setupMetricSwitch() {
-    var root = $('#metricSwitch');
-    if (!root) return;
-    root.addEventListener('click', function (event) {
-      var button = event.target.closest('button[data-metric]');
-      if (!button) return;
-      $$('button', root).forEach(function (item) {
-        var active = item === button;
-        item.classList.toggle('active', active);
-        item.setAttribute('aria-pressed', active ? 'true' : 'false');
-      });
-      renderRetrievalCharts(button.getAttribute('data-metric'));
-    });
-  }
-
   function renderIntent() {
     var root = $('#intentChart');
     if (!root) return;
@@ -308,107 +271,6 @@
           '<em>' + percent(row.f1, 2) + '</em>' +
         '</div>';
       }).join('');
-  }
-
-  function renderInsight() {
-    var root = $('#insightChart');
-    if (!root) return;
-    root.innerHTML = data.metrics.rerankerInsight.map(function (row) {
-      return '<div class="insight-row is-' + row.tone + '">' +
-        '<div class="insight-label"><strong>' + escapeHtml(row.label) + '</strong><small>' + escapeHtml(row.note) + '</small></div>' +
-        '<div class="insight-track"><div class="insight-fill" style="--bar-width:' + (row.value * 100).toFixed(3) + '%"></div></div>' +
-        '<div class="insight-value">' + percent(row.value, 2) + '</div>' +
-      '</div>';
-    }).join('');
-  }
-
-  function renderTransitions() {
-    var bar = $('#transitionBar');
-    var legend = $('#transitionLegend');
-    if (!bar || !legend) return;
-    var total = data.transitions.reduce(function (sum, item) { return sum + item.value; }, 0);
-    bar.innerHTML = data.transitions.map(function (item) {
-      return '<div class="transition-segment ' + item.tone + '" style="--segment-width:' + ((item.value / total) * 100).toFixed(4) + '%" title="' + escapeHtml(item.label) + ': ' + item.value + '"></div>';
-    }).join('');
-    legend.innerHTML = data.transitions.map(function (item) {
-      return '<div class="transition-key ' + item.tone + '"><i></i><div><strong>' + item.value.toLocaleString('zh-CN') + '</strong><span>' + escapeHtml(item.label) + '</span></div></div>';
-    }).join('');
-  }
-
-  function renderFailures() {
-    var root = $('#failureChart');
-    if (!root) return;
-    root.innerHTML = data.metrics.failures.map(function (row) {
-      return '<div class="failure-row">' +
-        '<span>' + row.tools + ' 工具</span>' +
-        '<div class="failure-bars">' +
-          '<div class="failure-track" title="向量单路 ' + percent(row.embedding, 2) + '"><div class="failure-fill" style="--bar-width:' + (row.embedding * 100).toFixed(3) + '%"></div></div>' +
-          '<div class="failure-track final" title="最终检索链路 ' + percent(row.final, 2) + '"><div class="failure-fill" style="--bar-width:' + (row.final * 100).toFixed(3) + '%"></div></div>' +
-        '</div>' +
-        '<strong>' + percent(row.final, 2) + '</strong>' +
-      '</div>';
-    }).join('') + '<div class="failure-legend"><span><i></i>向量单路</span><span><i></i>最终检索链路</span></div>';
-
-    var ranks = $('#rankBandList');
-    if (ranks) {
-      var max = Math.max.apply(null, data.rankBands.map(function (row) { return row.value; }));
-      ranks.innerHTML = data.rankBands.map(function (row) {
-        return '<div class="rank-band-row"><span>' + escapeHtml(row.label) + '</span><div class="rank-band-track"><div class="rank-band-fill" style="--bar-width:' + ((row.value / max) * 100).toFixed(3) + '%"></div></div><strong>' + row.value + '</strong></div>';
-      }).join('');
-    }
-  }
-
-  function renderCases() {
-    var tabs = $('#caseTabs');
-    if (!tabs) return;
-    tabs.innerHTML = data.cases.map(function (item, index) {
-      return '<button type="button" role="tab" id="case-tab-' + index + '" aria-controls="caseViewer" aria-selected="' + (index === 0 ? 'true' : 'false') + '" tabindex="' + (index === 0 ? '0' : '-1') + '" class="' + (index === 0 ? 'active' : '') + '" data-case="' + index + '">' + escapeHtml(item.label) + '</button>';
-    }).join('');
-    tabs.addEventListener('click', function (event) {
-      var button = event.target.closest('button[data-case]');
-      if (!button) return;
-      $$('button', tabs).forEach(function (item) {
-        var active = item === button;
-        item.classList.toggle('active', active);
-        item.setAttribute('aria-selected', active ? 'true' : 'false');
-        item.tabIndex = active ? 0 : -1;
-      });
-      renderCase(Number(button.getAttribute('data-case')));
-    });
-    tabs.addEventListener('keydown', function (event) {
-      var current = event.target.closest('button[data-case]');
-      if (!current || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
-      event.preventDefault();
-      var buttons = $$('button[data-case]', tabs);
-      var currentIndex = buttons.indexOf(current);
-      var nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : event.key === 'ArrowLeft' ? (currentIndex - 1 + buttons.length) % buttons.length : (currentIndex + 1) % buttons.length;
-      buttons[nextIndex].focus();
-      buttons[nextIndex].click();
-    });
-    renderCase(0);
-  }
-
-  function renderCase(index) {
-    var root = $('#caseViewer');
-    var item = data.cases[index];
-    if (!root || !item) return;
-    var gold = new Set(item.gold);
-    var note = item.note || '全部 Gold Tools 位于前四名，严格集合覆盖成功。';
-    var displayLabel = item.displayMode === 'condensed' ? 'CONDENSED DISPLAY' : 'ORIGINAL QUERY';
-    root.setAttribute('role', 'tabpanel');
-    root.setAttribute('aria-labelledby', 'case-tab-' + index);
-    var rows = item.prediction.map(function (toolId, rank) {
-      var isGold = gold.has(toolId);
-      var outside = rank >= 6;
-      return '<div class="case-rank-row' + (isGold ? ' is-gold' : '') + (outside ? ' beyond-k' : '') + '">' +
-        '<b>' + String(rank + 1).padStart(2, '0') + '</b><span>' + escapeHtml(toolId) + '</span><em>' + (isGold ? (outside ? 'GOLD · OUTSIDE K=6' : 'GOLD') : (outside ? 'OUTSIDE K=6' : 'CANDIDATE')) + '</em></div>';
-    }).join('');
-    root.innerHTML = '<div class="case-query-panel">' +
-      '<div class="case-meta"><span>FROZEN PROJECT BENCHMARK · ' + escapeHtml(item.id) + ' · ' + displayLabel + '</span><strong>' + escapeHtml(item.label) + '</strong></div>' +
-      '<blockquote>“' + escapeHtml(item.query) + '”</blockquote>' +
-      '<p class="case-note">' + escapeHtml(note) + '</p>' +
-      '</div>' +
-      '<div class="case-ranking"><div class="case-ranking-head"><span>FINAL RANKING · TOP-6 DIAGNOSTIC</span><span>' + item.gold.length + ' GOLD TOOLS</span></div>' + rows + '</div>';
   }
 
   var activePlanningMetric = 'setEm';
@@ -633,14 +495,6 @@
       '</div>';
   }
 
-  function renderCompetition() {
-    var root = $('#competitionBody');
-    if (!root) return;
-    root.innerHTML = data.competition.map(function (row) {
-      return '<tr><td>' + escapeHtml(row.missing) + '</td><td>' + escapeHtml(row.competing) + '</td><td>' + row.count + '</td></tr>';
-    }).join('');
-  }
-
   function setupNavigation() {
     var nav = $('#siteNav');
     var toggle = $('#navToggle');
@@ -827,13 +681,7 @@
   setupHeroDemo();
   renderAtlas();
   renderAudit();
-  renderRetrievalCharts(activeMetric);
-  setupMetricSwitch();
   renderIntent();
-  renderInsight();
-  renderTransitions();
-  renderFailures();
-  renderCases();
   renderPlanningResults(activePlanningMetric);
   setupPlanningMetricSwitch();
   renderPlanningScale(activeScaleMetric);
@@ -841,7 +689,6 @@
   renderPlanningCandidateOrder();
   renderPlanningCounterfactual();
   renderPlanningCases();
-  renderCompetition();
   setupNavigation();
   setupDisclosureAnchors();
   setupCopy();
