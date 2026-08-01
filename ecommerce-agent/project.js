@@ -580,9 +580,7 @@
     }
 
     var sectionGroups = {
-      abstract: '#abstract',
-      problem: '#problem',
-      toolspace: '#problem',
+      introduction: '#introduction',
       system: '#limits',
       intent: '#intent',
       results: '#results',

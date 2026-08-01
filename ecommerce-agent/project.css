@@ -2371,6 +2371,7 @@ main .evidence-section { padding-block: 48px; }
 .abstract-brief-result > span { color: var(--primary); font-size: 7px; font-weight: 800; letter-spacing: .7px; }
 .abstract-brief-result > strong { margin-top: 14px; color: var(--primary); font-size: 24px; }
 .abstract-brief-result > p { margin-top: 10px; color: var(--on-dark-mute); font-size: 9px; line-height: 1.65; }
+.introduction-catalog-heading { margin-top: 42px; }
 
 .abstract-definition { display: grid; grid-template-columns: 180px 1fr 1fr; gap: 0; margin-bottom: 18px; border: 1px solid var(--hairline); background: var(--canvas); }
 .abstract-definition > * { padding: 16px 18px; }

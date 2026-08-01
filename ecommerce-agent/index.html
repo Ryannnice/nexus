@@ -23,9 +23,9 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026080101">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：静态全链路成功率 90.59%，工具链口径，共 9,000 条">
 
-  <link rel="stylesheet" href="project.css?v=36">
+  <link rel="stylesheet" href="project.css?v=37">
   <script defer src="project-data.js?v=16"></script>
-  <script defer src="project.js?v=21"></script>
+  <script defer src="project.js?v=22"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">跳到主要内容</a>
@@ -42,8 +42,7 @@
       </button>
 
       <nav class="nav-links" id="navLinks" aria-label="项目页导航">
-        <a href="#abstract">项目概览</a>
-        <a href="#problem">任务定义</a>
+        <a href="#introduction">项目介绍</a>
         <a href="#intent">意图分流</a>
         <a href="#results">候选检索</a>
         <a href="#planning">工具链规划</a>
@@ -62,7 +61,7 @@
           <p class="hero-lead">面向固定 100 工具的离线系统：意图分流、候选检索与有序工具链规划；主结果按同一 9K 测试集逐阶段累计。</p>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#abstract">查看项目摘要 <span aria-hidden="true">↓</span></a>
+            <a class="btn btn-primary" href="#introduction">查看项目介绍 <span aria-hidden="true">↓</span></a>
             <a class="btn btn-outline-on-dark" href="#planning">查看轨迹规划</a>
           </div>
 
@@ -116,13 +115,13 @@
       </div>
     </section>
 
-    <section class="section decision-abstract" id="abstract" aria-labelledby="abstractTitle">
+    <section class="section decision-abstract introduction-section" id="introduction" aria-labelledby="introductionTitle">
       <div class="wrap">
-        <p class="eyebrow">项目概览</p>
+        <p class="eyebrow">INTRODUCTION · 项目介绍</p>
         <div class="abstract-brief">
           <div>
-            <h2 id="abstractTitle">三阶段实验路线</h2>
-            <p>围绕固定 100 工具，依次完成意图分流、候选检索与有序工具链规划。</p>
+            <h2 id="introductionTitle">任务、工具与三阶段系统</h2>
+            <p>面向固定 100 工具，先判断请求是否需要工具，再找齐全部必要工具，最后输出正确的有序工具链。</p>
           </div>
           <div class="abstract-brief-result">
             <span>最终结果</span>
@@ -130,20 +129,8 @@
             <p>最终系统固定 1.7B 路由、完整负样本检索链与 8B 规划模型；9K 逐阶段通过数为 8,996 → 8,799 → 8,153。</p>
           </div>
         </div>
-      </div>
-    </section>
 
-
-
-    <section class="section" id="problem" aria-labelledby="problemTitle">
-      <div class="wrap">
-        <p class="eyebrow">基础 01 · 任务</p>
-        <div class="section-heading split-heading">
-          <h2 id="problemTitle">任务定义与成功口径</h2>
-          <p>目标是识别需要工具的请求、找齐必要工具，并输出正确的调用顺序。</p>
-        </div>
-
-        <p class="phase-context-label">同一 9K 累计主线 · 分流 → 找齐 → 排序</p>
+        <p class="phase-context-label">成功口径 · 同一 9K 累计主线</p>
         <div class="metric-contract-grid" role="group" aria-label="三个系统模块的成功指标">
           <article>
             <span>阶段 01 · 意图分流</span>
@@ -286,14 +273,11 @@
           </div>
           </div>
         </details>
-      </div>
-    </section>
-
-    <section class="section section-soft" id="toolspace" aria-labelledby="toolspaceTitle">
-      <div class="wrap">
-        <p class="eyebrow">基础 02 · 工具目录</p>
-        <div class="section-heading split-heading">
-          <h2 id="toolspaceTitle">100 工具能力底座</h2>
+        <div class="result-explorer-head introduction-catalog-heading">
+          <div>
+            <span>工具范围</span>
+            <h3 id="toolspaceTitle">100 工具能力底座</h3>
+          </div>
           <p>100 个工具覆盖 8 个业务域，统一供数据生成、候选检索与工具链规划使用。</p>
         </div>
 
@@ -1329,7 +1313,7 @@ python3 \
         <a class="project-brand" href="#top"><span class="brand-grid" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>TOOLSET<span class="brand-slash">/</span>100</span></a>
         <p>电商工具分流、检索与静态选链项目。</p>
       </div>
-      <div class="footer-links"><strong>项目</strong><a href="#abstract">项目概览</a><a href="#problem">任务与评测</a><a href="#toolspace">工具能力底座</a></div>
+      <div class="footer-links"><strong>项目</strong><a href="#introduction">项目介绍、任务与工具目录</a></div>
       <div class="footer-links"><strong>实验</strong><a href="#intent">意图分流</a><a href="#results">候选检索</a><a href="#planning">工具链规划</a></div>
       <div class="footer-links"><strong>成果</strong><a href="#limits">系统结论与边界</a><a href="#evidence">工程资产与复现</a><a href="https://github.com/Ryannnice/Agent" target="_blank" rel="noopener noreferrer" title="需要 GitHub 仓库访问权限">项目仓库（需权限）↗</a></div>
     </div>
