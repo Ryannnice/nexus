@@ -7356,6 +7356,21 @@ details table.result-table-compact td {
 .route-screen-table :is(th, td) { text-align: left; }
 .route-screen-table :is(th, td):nth-child(3) { text-align: right; }
 
+.retrieval-baseline-comparison-table :is(th, td):nth-child(n + 3),
+.result-table-models :is(th, td):nth-child(n + 3) {
+  text-align: right;
+}
+
+.intent-evidence-table .row-emphasis {
+  background: var(--surface-soft);
+}
+
+.intent-evidence-disclosure .result-table-wrap + .result-table-head {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--hairline);
+}
+
 .configuration-result-table {
   min-width: 1120px;
   table-layout: fixed;
