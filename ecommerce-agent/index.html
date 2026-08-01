@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026080101">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：静态全链路成功率 90.59%，工具链口径，共 9,000 条">
 
-  <link rel="stylesheet" href="project.css?v=38">
+  <link rel="stylesheet" href="project.css?v=39">
   <script defer src="project-data.js?v=17"></script>
   <script defer src="project.js?v=22"></script>
 </head>
@@ -370,47 +370,40 @@
 
         <details class="narrative-disclosure data-disclosure efficiency-disclosure experiment-environment-disclosure" id="intentEnvironment">
           <summary>
-            <span class="disclosure-summary-copy"><small>实验数据、协议与环境</small><strong>查看意图分流的训练数据、比较口径与运行记录</strong></span>
-            <span class="disclosure-summary-meta">48,006 条监督样本 · 9,000 条固定比较 · 7 种推理记录</span>
+            <span class="disclosure-summary-copy"><small>实验记录</small><strong>数据划分、训练配置与推理效率</strong></span>
+            <span class="disclosure-summary-meta">45.6K 训练 · 2.4K 验证 · 9K 测试 · 推理 1 × RTX 3090</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body efficiency-body">
             <section class="data-evidence-section experiment-data-section" aria-labelledby="intentDataTitle">
               <div class="data-evidence-heading">
-                <div><p>01 · 实验数据</p><h3 id="intentDataTitle">训练、验证与固定比较各自承担什么职责</h3></div>
-                <span>本实验只判断“电商请求 / 开放闲聊”。训练数据更新参数，验证集选择模型版本，固定集合比较规则、未微调模型与 LoRA 方案。</span>
+                <div><p>01 · 数据与协议</p><h3 id="intentDataTitle">训练、验证与测试严格分工</h3></div>
+                <span>训练集更新参数，验证集选择版本，固定测试集只报告结果。</span>
               </div>
               <div class="data-table-wrap" tabindex="0">
                 <table class="data-table experiment-data-table">
-                  <thead><tr><th scope="col">数据资产</th><th scope="col">来源与内容</th><th scope="col">规模与划分</th><th scope="col">实验角色</th><th scope="col">边界与输出</th></tr></thead>
+                  <thead><tr><th scope="col">数据</th><th scope="col">规模</th><th scope="col">用途</th><th scope="col">边界</th></tr></thead>
                   <tbody>
-                    <tr><td><strong>意图监督数据</strong><span>入口分类训练</span></td><td>训练侧电商轨迹、独立闲聊样本与 6 条边界样本；两个模型使用同一样本全集，1.7B 采用类别均衡排列版本</td><td>基础样本 36,000 条<br>困难与边界样本 12,006 条<br><strong>总计 48,006 条</strong><br>训练 45,606 / 验证 2,400</td><td>0.6B 与 1.7B 的训练集更新参数；验证集选择模型版本</td><td>训练与验证样本不进入 9,000 条固定比较集合</td></tr>
-                    <tr><td><strong>意图分流固定集合</strong><span>入口模块比较</span></td><td>6,000 条电商请求 + 3,000 条独立闲聊</td><td><strong>9,000 条</strong><br>电商 : 闲聊 = 2 : 1</td><td>比较关键词规则、未微调模型与 LoRA 版本；不参与梯度</td><td>输出分类 Accuracy / Macro-P / Macro-R / Macro-F1；关键词指标只评测 6K 电商请求。同一 9K 后续复用于静态全链路统计</td></tr>
+                    <tr><td><strong>监督训练与验证</strong><span>电商轨迹 + 独立闲聊</span></td><td><strong>45,606 / 2,400</strong><small>合计 48,006 条</small></td><td>训练 0.6B / 1.7B；验证集选择模型版本</td><td>两个模型使用同一样本全集；1.7B 采用类别均衡排列</td></tr>
+                    <tr><td><strong>意图分流测试</strong><span>入口二分类</span></td><td><strong>9,000</strong><small>6K 电商 + 3K 闲聊</small></td><td>比较规则、未微调模型与 LoRA 版本；同一集合用于 9K 静态链路计分</td><td>不参与训练或版本选择</td></tr>
+                    <tr><td><strong>关键词评测</strong><span>测试集电商子集</span></td><td><strong>6,000</strong><small>15,196 个目标标签</small></td><td>字面集合全对率与 micro-P / R / F1</td><td>不是语义评分；候选检索不使用预测关键词</td></tr>
                   </tbody>
                 </table>
               </div>
-              <p class="data-boundary-note"><strong>划分边界：</strong>训练与测试的归一化请求、轨迹 ID 和表达簇精确重合均为 0；闲聊样本独立构建。</p>
+              <p class="data-boundary-note"><strong>隔离检查：</strong>训练与测试的归一化请求、轨迹 ID 和表达簇精确重合均为 0；闲聊样本独立构建。</p>
             </section>
-
-            <div class="efficiency-summary" role="group" aria-label="意图分流实验环境摘要">
-              <article><span>推理硬件</span><strong>1 × RTX 3090</strong><small>24GB · 驱动 570.124.04；每个神经模型版本使用单个独立进程和单张卡</small></article>
-              <article><span>训练数据</span><strong>45,606 条</strong><small>验证集 2,400 条；两个模型使用同一样本全集，1.7B 采用类别均衡排列版本</small></article>
-              <article><span>0.6B 完整训练</span><strong>19 分 39 秒</strong><small>2 轮 · 2,852 步；模块横评最优取训练步 2000</small></article>
-              <article><span>1.7B 完整训练</span><strong>29 分 05 秒</strong><small>2 轮 · 2,852 步；全链路统计采用训练结束版本</small></article>
-              <article><span>默认 1.7B 路由推理</span><strong>p50 69.24ms</strong><small>p95 75.82ms · 14.41 条 / 秒 · 批量 48 的离线生成均摊</small></article>
-            </div>
 
             <section class="efficiency-table-block" aria-labelledby="intentTrainingEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>02 · 训练环境</span><h3 id="intentTrainingEnvironmentTitle">两次 LoRA 训练使用同一套核心参数</h3></div>
-                <p>训练产物能确认单进程运行，但没有保存 GPU 型号或可解释的峰值显存。</p>
+                <div><span>02 · 训练记录</span><h3 id="intentTrainingEnvironmentTitle">两次 LoRA 完整训练</h3></div>
+                <p>共同配置：BF16 · 批量 32 · 2 轮 · 学习率 1e-4 · LoRA r16 / α32 · 最大长度 512。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table">
-                  <thead><tr><th scope="col">模型与数据</th><th scope="col">共同配置</th><th scope="col">训练记录</th><th scope="col">计算资源记录</th></tr></thead>
+                  <thead><tr><th scope="col">模型与数据</th><th scope="col">报告版本</th><th scope="col">完整训练</th><th scope="col">资源记录</th></tr></thead>
                   <tbody>
-                    <tr class="result-table-final"><td><strong>Qwen3-0.6B</strong><small>完整训练集 45,606 条</small></td><td>BF16 · 单设备批量 32 · 梯度累积 1 · 学习率 1e-4 · 余弦调度 · LoRA r16 / α32 / dropout 0.05 · 最大长度 512 · 梯度检查点</td><td><strong>19 分 39 秒</strong><small>完整运行 1,178.6364 秒 · 2 轮 · 2,852 步；采用版本为训练步 2000，该版本的单独到达时间未记录</small></td><td>单进程；GPU 型号、物理卡号与峰值显存未记录</td></tr>
-                    <tr><td><strong>Qwen3-1.7B</strong><small>同一样本全集的类别均衡排列版本 · 45,606 条</small></td><td>BF16 · 单设备批量 32 · 梯度累积 1 · 学习率 1e-4 · 余弦调度 · LoRA r16 / α32 / dropout 0.05 · 最大长度 512 · 梯度检查点</td><td><strong>29 分 05 秒</strong><small>完整运行 1,745.0433 秒 · 2 轮 · 2,852 步</small></td><td>单进程；GPU 型号、物理卡号与峰值显存未记录</td></tr>
+                    <tr><td><strong>Qwen3-0.6B</strong><small>完整训练集 · 45,606 条</small></td><td>训练步 2000<small>模块横评最优</small></td><td><strong>19 分 39 秒</strong><small>2,852 步</small></td><td>单进程；训练 GPU 型号与峰值显存未记录</td></tr>
+                    <tr class="result-table-final"><td><strong>Qwen3-1.7B</strong><small>类别均衡排列 · 45,606 条</small></td><td><strong>训练步 2852</strong><small>9K 静态链路使用</small></td><td><strong>29 分 05 秒</strong><small>2,852 步</small></td><td>单进程；训练 GPU 型号与峰值显存未记录</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -418,31 +411,29 @@
 
             <section class="efficiency-table-block" aria-labelledby="intentInferenceEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>03 · 推理效率</span><h3 id="intentInferenceEnvironmentTitle">同一 9,000 条固定集合上的七种运行记录</h3></div>
-                <p>神经模型统一使用 BF16、贪心生成、最多 48 token 和 3 个不计时预热批次；延迟为 <code>model.generate</code> 的批次墙钟时间除以批量，不是在线单请求延迟。</p>
+                <div><span>03 · 离线推理</span><h3 id="intentInferenceEnvironmentTitle">同一 9K 测试集上的七组记录</h3></div>
+                <p>六个神经版本均使用 1 × RTX 3090 24GB；0.6B / 1.7B 的批量分别为 64 / 48。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table intent-inference-efficiency-table">
-                  <thead><tr><th scope="col">评测对象</th><th scope="col">模型版本 / 执行方式</th><th scope="col">批量</th><th scope="col">均摊处理耗时</th><th scope="col">p50 / p95</th><th scope="col">样本吞吐 / 输出吞吐</th><th scope="col">加载 / 峰值显存：已分配 · 已保留</th></tr></thead>
+                  <thead><tr><th scope="col">模型版本</th><th scope="col">硬件 / 批量</th><th scope="col">p50 / p95</th><th scope="col">样本吞吐</th><th scope="col">峰值显存：已分配 / 已保留</th></tr></thead>
                   <tbody>
-                    <tr><td><strong>关键词规则</strong></td><td>单线程 CPU · Montage Jintide C6230R</td><td>1</td><td>0.1144ms</td><td>0.1066 / 0.1493ms</td><td>8,727.45 条 / 秒 / —</td><td>—</td></tr>
-                    <tr><td>Qwen3-0.6B</td><td>未微调模型</td><td>64</td><td>36.92ms</td><td>37.23 / 38.35ms</td><td>27.08 条 / 秒 / 683.07 token/s</td><td>2.86 秒 / 3.65 · 4.73 GiB</td></tr>
-                    <tr class="result-table-final"><td><strong>Qwen3-0.6B</strong></td><td><strong>LoRA · 训练步 2000 · 模块横评最优</strong></td><td>64</td><td>45.66ms</td><td>45.47 / 49.05ms</td><td>21.90 条 / 秒 / 342.21 token/s</td><td>3.58 秒 / 4.04 · 5.10 GiB</td></tr>
-                    <tr><td>Qwen3-0.6B</td><td>LoRA · 训练结束版本 2852</td><td>64</td><td>45.33ms</td><td>44.83 / 54.11ms</td><td>22.06 条 / 秒 / 345.20 token/s</td><td>3.50 秒 / 4.04 · 5.10 GiB</td></tr>
-                    <tr class="table-divider"><td>Qwen3-1.7B</td><td>未微调模型</td><td>48</td><td>54.01ms</td><td>54.64 / 58.57ms</td><td>18.52 条 / 秒 / 447.31 token/s</td><td>3.88 秒 / 5.43 · 5.86 GiB</td></tr>
-                    <tr><td>Qwen3-1.7B</td><td>LoRA · 最佳验证版本 1600</td><td>48</td><td>69.62ms</td><td>69.58 / 75.51ms</td><td>14.36 条 / 秒 / 228.02 token/s</td><td>4.92 秒 / 6.09 · 6.85 GiB</td></tr>
-                    <tr class="row-emphasis"><td><strong>Qwen3-1.7B</strong></td><td><strong>LoRA · 训练结束版本 2852 · 全链路路由</strong></td><td>48</td><td><strong>69.41ms</strong></td><td><strong>69.24 / 75.82ms</strong></td><td>14.41 条 / 秒 / 227.15 token/s</td><td>4.48 秒 / 6.09 · 6.85 GiB</td></tr>
+                    <tr><td><strong>关键词规则</strong><small>单线程 CPU</small></td><td>Montage Jintide C6230R / 1</td><td>0.1066 / 0.1493ms</td><td>8,727.45 条 / 秒</td><td>—</td></tr>
+                    <tr><td>0.6B · 未微调</td><td>RTX 3090 / 64</td><td>37.23 / 38.35ms</td><td>27.08 条 / 秒</td><td>3.65 / 4.73 GiB</td></tr>
+                    <tr><td><strong>0.6B · LoRA · 训练步 2000</strong><small>模块横评最优</small></td><td>RTX 3090 / 64</td><td><strong>45.47 / 49.05ms</strong></td><td><strong>21.90 条 / 秒</strong></td><td>4.04 / 5.10 GiB</td></tr>
+                    <tr><td>0.6B · LoRA · 训练步 2852</td><td>RTX 3090 / 64</td><td>44.83 / 54.11ms</td><td>22.06 条 / 秒</td><td>4.04 / 5.10 GiB</td></tr>
+                    <tr class="table-divider"><td>1.7B · 未微调</td><td>RTX 3090 / 48</td><td>54.64 / 58.57ms</td><td>18.52 条 / 秒</td><td>5.43 / 5.86 GiB</td></tr>
+                    <tr><td>1.7B · LoRA · 训练步 1600<small>最佳验证版本</small></td><td>RTX 3090 / 48</td><td>69.58 / 75.51ms</td><td>14.36 条 / 秒</td><td>6.09 / 6.85 GiB</td></tr>
+                    <tr class="result-table-final"><td><strong>1.7B · LoRA · 训练步 2852</strong><small>9K 静态链路使用</small></td><td>RTX 3090 / 48</td><td><strong>69.24 / 75.82ms</strong></td><td>14.41 条 / 秒</td><td>6.09 / 6.85 GiB</td></tr>
                   </tbody>
                 </table>
               </div>
             </section>
 
             <div class="environment-record-boundary">
-              <p><strong>软件记录：</strong>推理效率使用 PyTorch 2.8.0+cu128、Transformers 4.53.2 与 PEFT 0.14.0；历史训练仍只绑定 BF16、批量、训练步数和总耗时，没有逐次保存完整软件快照。</p>
-              <p><strong>硬件记录：</strong>六个神经版本各使用单张 NVIDIA GeForce RTX 3090 24GB，驱动 570.124.04；关键词规则使用 Montage Jintide C6230R 单线程。该记录只绑定本表推理，不反向证明两次历史训练的显卡型号。</p>
-              <p><strong>计时口径：</strong>神经模型的生成 p50 / p95、样本吞吐和输出 token 吞吐均来自 9,000 条完整集合；不含 prompt 构建与分词，且为批内均摊。0.6B 与 1.7B 的批量分别为 64 和 48，关键词规则又使用单线程 CPU，因此三者不构成同批量、同硬件的公平速度排名。</p>
+              <p><strong>推理环境：</strong>PyTorch 2.8.0+cu128 · Transformers 4.53.2 · PEFT 0.14.0 · 驱动 570.124.04。RTX 3090 记录只绑定推理，不代表历史训练硬件。</p>
+              <p><strong>计时口径：</strong>p50 / p95 为生成阶段的批内均摊，不含 prompt 构建与分词，也不是在线单请求延迟；不同批量及 CPU 规则基线不作直接速度排名。历史显存字段口径不明，因此只保留本次推理的 CUDA 峰值。</p>
             </div>
-            <p class="efficiency-boundary"><strong>记录边界：</strong>历史 <code>memory(GiB)</code> 字段口径不明，因此只采用推理记录中的 CUDA 峰值。</p>
           </div>
         </details>
       </div>
