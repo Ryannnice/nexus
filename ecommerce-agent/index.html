@@ -824,7 +824,7 @@
         <p class="eyebrow">实验 03 · 工具链规划</p>
         <div class="section-heading split-heading">
           <h2 id="planningTitle">工具链规划：从未微调基线到 9K 最终系统</h2>
-          <p>先评测未微调 4B / 8B，再比较 RAG 与完整工具目录；随后完成监督训练，最后用固定 RAG Top-10 接入 9K 静态全链路。</p>
+          <p>先固定基础模型检验 Top-10 是否有效，再验证监督训练收益；随后在独立开发集选择候选深度，最后冻结路由、检索与规划模型并报告 9K 结果。</p>
         </div>
 
         <section class="planner-final-lead" id="plannerLatestUpdate" aria-labelledby="plannerFinalLeadTitle">
@@ -844,28 +844,28 @@
 
         <section class="planner-compact-story" id="plannerExperiments" aria-labelledby="plannerStoryTitle">
           <div class="result-explorer-head">
-            <div><span class="result-subsection-label">01 · 实验主线</span><h3 id="plannerStoryTitle">未微调基线 → RAG 对照 → 监督训练 → 9K 最终评测</h3></div>
-            <p>顺序与作业主线一致；当前只展示已完成的基线、RAG、监督训练和最终系统。</p>
+            <div><span class="result-subsection-label">规划实验主线</span><h3 id="plannerStoryTitle">训练前 RAG 对照 → 监督训练 → 候选深度选择 → 冻结后评测</h3></div>
+            <p>每一步固定上一阶段结论，只改变当前要验证的因素；开发集负责选择，9K 只负责最终报告。</p>
           </div>
 
           <div class="experiment-steps" role="group" aria-label="工具链规划模型选型路径">
-            <article><span>00 · 未微调基线</span><strong>完整 100 工具</strong><small>4B / 8B · 建立规划基线</small></article>
-            <article><span>01 · RAG 基线</span><strong>Top-10 vs 完整目录</strong><small>基础模型 4 / 4 组提升</small></article>
-            <article><span>02 · 监督训练</span><strong>首轮训练 → 联合训练</strong><small>固定 8B · 模型版本 2429</small></article>
-            <article class="is-selected"><span>最终评测</span><strong>RAG + 监督训练 + 意图分流</strong><small>8,153 / 9,000 · 90.59%</small></article>
+            <article><span>01 · 训练前 RAG 对照</span><strong>完整 100 工具 vs Top-10</strong><small>固定未微调 4B / 8B</small></article>
+            <article><span>02 · 监督训练验证</span><strong>训练前后 + RAG 前后</strong><small>确认训练与检索各自作用</small></article>
+            <article><span>03 · 候选深度选择</span><strong>K=5 / 10 / 20 / 30</strong><small>独立开发集选择 Top-10</small></article>
+            <article class="is-selected"><span>04 · 冻结后评测</span><strong>固定全链路报告 9K</strong><small>8,153 / 9,000 · 90.59%</small></article>
           </div>
 
           <div class="planner-story-disclosures">
             <details class="narrative-disclosure planner-story-results" id="plannerBaseRagResults">
               <summary>
-                <span class="disclosure-summary-copy"><small>00–01 · 未微调基线</small><strong>RAG vs 无 RAG：基础模型是否受益于 Top-10</strong></span>
-                <span class="disclosure-summary-meta">4B / 8B · 自然表达 6K + 接口表达 1K · 4 / 4 组提升</span>
+                <span class="disclosure-summary-copy"><small>01 · 训练前 RAG 对照</small><strong>固定未微调模型，只改变完整目录与 Top-10</strong></span>
+                <span class="disclosure-summary-meta">4B / 8B · 自然表达 6K + 接口表达 1K · 工具链 4 / 4 组提升</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
                 <div class="planner-table-heading">
-                  <h4>固定基础模型，只比较完整目录与检索 Top-10</h4>
-                  <p>无 RAG 一次展示完整 100 工具；RAG 按当前冻结检索顺序提供 Top-10。未微调模型、提示模板与生成方式保持一致。</p>
+                  <h4>检验缩小候选范围能否帮助未微调模型</h4>
+                  <p>固定模型、提示模板与生成方式，只改变输入：无 RAG 展示完整 100 工具，RAG 按检索顺序提供 Top-10。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table planner-final-table">
@@ -878,20 +878,21 @@
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>基础模型结论：</strong>4 / 4 组配对的工具链全对率均提高；接口表达下格式合规率下降，说明只缩小候选范围还不能替代监督训练。</p>
+                <p class="planner-result-boundary"><strong>进入下一步：</strong>Top-10 在 4 / 4 组配对中提高工具链全对率，因此保留 RAG 输入；接口表达的格式合规率仍会下降，下一步继续验证监督训练。</p>
               </div>
             </details>
 
             <details class="narrative-disclosure planner-story-results" id="plannerCurrentTrainingResults">
               <summary>
-                <span class="disclosure-summary-copy"><small>02 · 监督训练</small><strong>先验证首轮训练，再比较联合训练模型的 RAG 收益</strong></span>
-                <span class="disclosure-summary-meta">自由生成 1K · 自然表达 6K + 接口表达 1K</span>
+                <span class="disclosure-summary-copy"><small>02 · 监督训练验证</small><strong>先检验训练收益，再确认训练后仍需要 Top-10</strong></span>
+                <span class="disclosure-summary-meta">自由生成 1K · 训练前后 ｜ 6K + 1K · RAG 前后</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
+                <div class="planner-table-block">
                 <div class="planner-table-heading">
-                  <h4>固定 Top-10，比较首轮监督训练前后</h4>
-                  <p>固定同一 Top-10，在 1,000 条自由生成请求上比较训练前后；该模块测试不等于最终 9K 结果。</p>
+                  <h4>02A · 固定 Top-10，检验第一次监督训练是否有效</h4>
+                  <p>固定同一批 1,000 条自由生成请求与同一 Top-10，只改变模型权重；该表回答训练是否有效，不代表最终 9K。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table">
@@ -902,10 +903,12 @@
                     </tbody>
                   </table>
                 </div>
+                </div>
 
+                <div class="planner-table-block">
                 <div class="planner-table-heading">
-                  <h4>固定联合训练模型，比较完整目录与检索 Top-10</h4>
-                  <p>4B / 8B 均固定为模型版本 2429；只改变完整 100 工具与当前检索 Top-10 两种输入范围。</p>
+                  <h4>02B · 固定联合训练模型，检验训练后是否仍需要 RAG</h4>
+                  <p>4B / 8B 均固定为模型版本 2429，只改变完整 100 工具与当前检索 Top-10 两种输入范围。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table planner-final-table">
@@ -918,20 +921,22 @@
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>监督训练结论：</strong>Top-10 在 4 / 4 组配对中继续提高工具链全对率；固定 8B 版本 2429 随后保持权重不变进入 9K 最终评测。</p>
+                <p class="planner-result-boundary"><strong>进入下一步：</strong>监督训练显著提高规划能力，Top-10 在训练后的 4 / 4 组配对中仍继续提升工具链全对率；随后固定模型权重，只选择送入规划模型的候选数量。</p>
+                </div>
               </div>
             </details>
 
-            <details class="narrative-disclosure planner-story-results planner-final-results" id="plannerToolCountResults">
+            <details class="narrative-disclosure planner-story-results" id="plannerToolCountResults">
               <summary>
-                <span class="disclosure-summary-copy"><small>候选深度与最终评测</small><strong>先选择 Top-10，再报告 9K 全链路结果</strong></span>
-                <span class="disclosure-summary-meta">开发集 K=10 · 9K 工具链成功率 90.59%</span>
+                <span class="disclosure-summary-copy"><small>03 · 候选深度选择</small><strong>固定检索排序与 8B，只比较进入规划模型的候选数</strong></span>
+                <span class="disclosure-summary-meta">独立开发集 1.2K · K=5 / 10 / 20 / 30 · 选择 Top-10</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
+                <div class="planner-table-block">
                 <div class="planner-table-heading">
-                  <h4>固定 8B 与检索排序，选择进入规划模型的候选数</h4>
-                  <p>在独立跨表达开发集 1,200 条上，保持检索顺序并截取 K=5 / 10 / 20 / 30；先筛选覆盖上界与工具链全对率，再在绝对差不超过 0.2pp 的近优方案中选择平均输入 token 最少者。延迟为批量 4 的离线均摊值，运行记录未保存显卡型号。</p>
+                  <h4>在开发集上选择质量近优且输入更短的 K</h4>
+                  <p>固定 8B 权重、检索模型、完整排序与生成方式，只截取 K=5 / 10 / 20 / 30；在工具链全对率相差不超过 0.2pp 的方案中选择平均输入 token 更少者。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table">
@@ -944,11 +949,22 @@
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>候选深度结论：</strong>Top-10 已达到 100% 检索覆盖上界，工具链结果距最佳仅 0.0833pp，且比 Top-20 少 36.0% 的平均输入 token；选择在查看 6K、1K 与 9K 结果前已经锁定。</p>
+                <p class="planner-result-boundary"><strong>进入下一步：</strong>Top-10 已达到 100% 检索覆盖上界，工具链结果距最佳仅 0.0833pp，且比 Top-20 少 36.0% 的平均输入 token；该选择在查看 6K、1K 与 9K 结果前锁定。</p>
+                </div>
+              </div>
+            </details>
 
+            <details class="narrative-disclosure planner-story-results planner-final-results" id="plannerFinalEvaluationResults">
+              <summary>
+                <span class="disclosure-summary-copy"><small>04 · 冻结后最终评测</small><strong>固定路由、检索与候选深度，报告 9K 全链路结果</strong></span>
+                <span class="disclosure-summary-meta">4B / 8B · 8B 工具链成功 8,153 / 9,000 · 90.5889%</span>
+                <i aria-hidden="true">+</i>
+              </summary>
+              <div class="disclosure-body planner-result-body">
+                <div class="planner-table-block">
                 <div class="planner-table-heading">
-                  <h4>固定路由与检索，比较 4B / 8B 的 9K 全链路结果</h4>
-                  <p>3,000 条闲聊正确旁路即成功；6,000 条电商请求还需生成完全正确的有序工具链。</p>
+                  <h4>04A · 固定上游链路，比较 4B / 8B 最终结果</h4>
+                  <p>路由、检索排序与 Top-10 均保持冻结，只替换规划模型；3,000 条闲聊正确旁路即成功，6,000 条电商请求还需生成完全正确的有序工具链。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table">
@@ -959,10 +975,12 @@
                     </tbody>
                   </table>
                 </div>
+                </div>
 
+                <div class="planner-table-block">
                 <div class="planner-table-heading">
-                  <h4>固定 8B 后，按目标工具数比较工具链准确率</h4>
-                  <p>固定 8B 模型版本 2429 与当前检索 Top-10，按目标工具数量报告绝对结果。</p>
+                  <h4>04B · 对入选 8B 按目标工具数分层</h4>
+                  <p>该表用于解释最终结果随工具链长度的变化，不参与模型或参数选择。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table">
@@ -978,6 +996,7 @@
                   </table>
                 </div>
                 <p class="planner-result-boundary"><strong>最终结果：</strong>固定 1.7B 路由、最终检索 Top-10 与固定 8B 规划模型后，9K 静态工具链成功率为 90.5889%。</p>
+                </div>
               </div>
             </details>
           </div>
@@ -985,14 +1004,14 @@
 
         <details class="narrative-disclosure data-disclosure efficiency-disclosure experiment-environment-disclosure" id="plannerEnvironment">
           <summary>
-            <span class="disclosure-summary-copy"><small>实验数据、协议与环境</small><strong>核对规划数据职责、独立协议与运行成本</strong></span>
+            <span class="disclosure-summary-copy"><small>05 · 数据、协议与环境</small><strong>对应 01–04，核对数据职责、隔离协议与运行成本</strong></span>
             <span class="disclosure-summary-meta">训练：2 GPU · 4 小时 58 分 ｜ 6K 推理：p50 270.6ms</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body efficiency-body">
             <section class="data-evidence-section experiment-data-section" aria-labelledby="plannerTrainingDataTitle">
               <div class="data-evidence-heading">
-                <div><p>01 · 训练与选型数据</p><h3 id="plannerTrainingDataTitle">明确训练、选型与最终评测的数据边界</h3></div>
+                <div><p>05A · 训练与选型数据</p><h3 id="plannerTrainingDataTitle">明确训练、选型与最终评测的数据边界</h3></div>
                 <span>9K–54K 嵌套监督数据与 77,724 条双来源联合监督数据对应两套独立监督训练，不是连续扩容。</span>
               </div>
               <div class="data-table-wrap" tabindex="0">
@@ -1010,7 +1029,7 @@
 
             <section class="data-evidence-section" aria-labelledby="plannerReportDataTitle">
               <div class="data-evidence-heading">
-                <div><p>02 · 独立评测协议</p><h3 id="plannerReportDataTitle">五套结果分别回答不同问题</h3></div>
+                <div><p>05B · 独立评测协议</p><h3 id="plannerReportDataTitle">五套结果分别回答不同问题</h3></div>
                 <span>自由生成请求、自然表达回归、输入工具范围配对、候选数量与静态全链路不能合并计分；正文中的每个结果只对应本行注明的协议。</span>
               </div>
               <div class="data-table-wrap" tabindex="0">
@@ -1029,7 +1048,7 @@
 
             <section class="data-evidence-section" aria-labelledby="plannerAuditTitle">
               <div class="data-evidence-heading">
-                <div><p>03 · 数据审计</p><h3 id="plannerAuditTitle">请求与轨迹无重合，闭集组合仍会复用</h3></div>
+                <div><p>05C · 数据审计</p><h3 id="plannerAuditTitle">请求与轨迹无重合，闭集组合仍会复用</h3></div>
                 <span>“没有请求或轨迹泄漏”和“目标工具链从未出现”是两件事；本项目验证前者，并如实保留后者的闭集边界。</span>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -1048,7 +1067,7 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerSftEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>04 · 主要监督微调</span><h3 id="plannerSftEnvironmentTitle">记录首轮与联合监督训练的资源成本</h3></div>
+                <div><span>05D · 主要监督微调</span><h3 id="plannerSftEnvironmentTitle">记录首轮与联合监督训练的资源成本</h3></div>
                 <p>每次训练使用的 GPU 数量来自对应运行产物；GPU 型号和物理卡号没有与单次运行绑定。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -1066,7 +1085,7 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerScaleEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>05 · 补充规模研究</span><h3 id="plannerScaleEnvironmentTitle">比较 9K–54K 监督规模的质量与训练成本</h3></div>
+                <div><span>05E · 补充规模研究</span><h3 id="plannerScaleEnvironmentTitle">比较 9K–54K 监督规模的质量与训练成本</h3></div>
                 <p>准确率来自自由生成请求 1K 模块测试。共同配置：1 GPU、BF16、全局批量 32、3 轮、lr5e-5、LoRA r32 / α64 / dropout 0.05、最大长度 2048；4B / 8B 分别为批量 8 × 累积 4 / 批量 4 × 累积 8。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -1085,8 +1104,8 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerCandidateEfficiencyTitle">
               <div class="efficiency-table-heading">
-                <div><span>06 · 早期候选数量成本</span><h3 id="plannerCandidateEfficiencyTitle">补充比较 4B / 8B 的候选输入成本</h3></div>
-                <p>单张 V100 上的早期补充实验；延迟为离线批内均摊，不作为当前 Top-10 的选择数据。当前固定 8B 的正式比较见上方“候选深度与最终评测”。</p>
+                <div><span>05F · 早期候选数量成本</span><h3 id="plannerCandidateEfficiencyTitle">补充比较 4B / 8B 的候选输入成本</h3></div>
+                <p>单张 V100 上的早期补充实验；延迟为离线批内均摊，不作为当前 Top-10 的选择数据。当前固定 8B 的正式比较见上方“03 · 候选深度选择”。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table planner-candidate-efficiency-table">
@@ -1107,7 +1126,7 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerInferenceEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>07 · 规划模型推理</span><h3 id="plannerInferenceEnvironmentTitle">比较主要规划模型版本的离线生成成本</h3></div>
+                <div><span>05G · 规划模型推理</span><h3 id="plannerInferenceEnvironmentTitle">比较主要规划模型版本的离线生成成本</h3></div>
                 <p>共同设置：每个推理分片进程仅暴露单个可见 CUDA 设备，并使用 BF16、SDPA、贪心生成、最多生成 128 个 token、无预热。延迟为分片内批次墙钟时间除以批量的均摊值，不是在线单请求延迟；完整评测可能由 1、2 或 4 个分片并行，运行 manifest 未保存显卡型号。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
