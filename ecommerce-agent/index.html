@@ -558,17 +558,20 @@
           </div>
         </details>
 
-        <details class="narrative-disclosure retrieval-supplement-disclosure" id="retrievalSelection">
+        <details class="full-results narrative-disclosure retrieval-run-disclosure" id="retrievalSelection">
           <summary>
-            <span class="disclosure-summary-copy"><small>正式模型与参数选择</small><strong>从负样本训练到联合搜索，冻结最终 Top-10</strong></span>
+            <span class="disclosure-summary-copy"><small>正式训练与参数选择</small><strong>先选训练方案，再联合确定一级检索、重排模型与 Top-10</strong></span>
             <span class="disclosure-summary-meta">5 种向量方案 · 1,190 组一级参数 · 5 档深度 · 4 种重排架构</span>
             <i aria-hidden="true">+</i>
           </summary>
-          <div class="disclosure-body">
-            <div class="result-table-head">
-              <div><p class="eyebrow">开发集 · 1,200 条</p><h3>比较向量负样本方案，选定语义检索模型</h3></div>
-              <p>五种方案各运行三个随机种子并按 AllHit@10 均值选择；入选方案把每个查询—正例配对单独展开，每组比较 1 个正例和 2 个显式负例，共 3 个工具文档。</p>
+          <div class="full-results-body">
+            <div class="full-results-copy">
+              <h3>用独立开发集逐步冻结正式检索链</h3>
+              <p>先选择向量模型的负样本训练方案，再压缩一级检索路线；随后比较微调后的重排架构与负样本，最后把候选深度和两级融合参数放在同一次联合搜索中确定。</p>
             </div>
+
+            <section class="full-results-group" aria-labelledby="retrievalEmbeddingSelectionTitle">
+              <div class="full-results-group-head"><span>01</span><div><h4 id="retrievalEmbeddingSelectionTitle">比较向量负样本方案，选定向量模型</h4><p>五种方案各运行三个随机种子，以 1,200 条开发集的 AllHit@10 均值选型；入选方案每组包含 1 个正例和 2 个显式负例。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">训练方案</th><th scope="col">显式负样本 / 正对</th><th scope="col">Micro / 有效 Batch</th><th scope="col">AllHit@10 · 均值 ± 标准差</th><th scope="col">AllHit@20</th><th scope="col">AllHit@50</th><th scope="col">MRR</th><th scope="col">选择</th></tr></thead>
@@ -581,11 +584,10 @@
                 </tbody>
               </table>
             </div>
+            </section>
 
-            <div class="result-table-head">
-              <div><p class="eyebrow">开发集 · 一级检索</p><h3>筛选一级融合参数，缩小联合搜索范围</h3></div>
-              <p>先去除产生相同排名的配置，再保留覆盖率前沿，最后把少量强候选交给重排与二级融合联合选择。</p>
-            </div>
+            <section class="full-results-group" aria-labelledby="retrievalRouteScreenTitle">
+              <div class="full-results-group-head"><span>02</span><div><h4 id="retrievalRouteScreenTitle">筛选一级检索路线，保留联合搜索候选</h4><p>固定入选向量模型，搜索候选数量、向量权重与 RRF 平滑常数；去除重复排名和被全面支配的路线后，将 24 条候选交给下一级联合评估。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact route-screen-table">
                 <thead><tr><th scope="col">阶段</th><th scope="col">搜索或筛选范围</th><th scope="col">路线数</th><th scope="col">进入下一步的依据</th></tr></thead>
@@ -597,11 +599,10 @@
                 </tbody>
               </table>
             </div>
+            </section>
 
-            <div class="result-table-head">
-              <div><p class="eyebrow">开发集 · 三随机种子</p><h3>微调入围重排模型，选择架构与学习率</h3></div>
-              <p>由未微调基线确定的 4 个候选均完成任务内微调：先筛选学习率，再以三随机种子结果与一级检索、二级融合参数联合比较；最终选择依据是微调后结果。</p>
-            </div>
+            <section class="full-results-group" aria-labelledby="retrievalRerankerArchitectureTitle">
+              <div class="full-results-group-head"><span>03</span><div><h4 id="retrievalRerankerArchitectureTitle">微调入围重排模型，选择架构与学习率</h4><p>训练前基线筛出的 4 个候选全部完成任务内微调；先选择学习率，再按三随机种子开发集结果比较，模型选择以微调后表现为准。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">未微调基线入围模型</th><th scope="col">选中学习率</th><th scope="col">AllHit@6 均值</th><th scope="col">AllHit@10 均值</th><th scope="col">MRR 均值</th><th scope="col">重排候选数</th><th scope="col">估算 p50</th><th scope="col">选择</th></tr></thead>
@@ -613,11 +614,10 @@
                 </tbody>
               </table>
             </div>
+            </section>
 
-            <div class="result-table-head">
-              <div><p class="eyebrow">开发集 · 三随机种子</p><h3>比较重排负样本，确认入选模型</h3></div>
-              <p>重排训练每组固定比较 1 个正例和 7 个负例；入选方案的负例由 3 个按工具类型挑选的样本和 4 个从检索结果中挖出的难例组成。先选择负例组合，再复核其他架构；AllHit@10 持平时优先 AllHit@6。</p>
-            </div>
+            <section class="full-results-group" aria-labelledby="retrievalRerankerNegativesTitle">
+              <div class="full-results-group-head"><span>04</span><div><h4 id="retrievalRerankerNegativesTitle">固定重排架构，选择负样本组合</h4><p>每组固定为 1 个正例和 7 个负例；比较不同负样本来源，并用另一种架构复核交互。AllHit@10 持平时优先 AllHit@6。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">重排模型与负样本</th><th scope="col">AllHit@6 均值</th><th scope="col">AllHit@10 均值</th><th scope="col">MRR 均值</th><th scope="col">估算 p50</th><th scope="col">选择</th></tr></thead>
@@ -629,11 +629,10 @@
                 </tbody>
               </table>
             </div>
+            </section>
 
-            <div class="result-table-head">
-              <div><p class="eyebrow">开发集 · 三随机种子</p><h3>固定模型后选择实际重排候选数</h3></div>
-              <p>固定入选模型、负样本方案及两级融合参数，仅改变重排候选数；延迟按全 100 工具实测 p50 等比例估算。</p>
-            </div>
+            <section class="full-results-group" aria-labelledby="retrievalCandidateKTitle">
+              <div class="full-results-group-head"><span>05</span><div><h4 id="retrievalCandidateKTitle">联合比较候选深度，确定实际重排 Top-10</h4><p>固定入选模型与负样本方案，对每档候选深度分别联合选择一级路线和二级 RRF；延迟按全 100 工具实测 p50 等比例估算。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">重排候选数</th><th scope="col">AllHit@6 均值</th><th scope="col">AllHit@10 均值</th><th scope="col">AllHit@20 均值</th><th scope="col">MRR 均值</th><th scope="col">重排估算 p50</th><th scope="col">选择</th></tr></thead>
@@ -646,11 +645,10 @@
                 </tbody>
               </table>
             </div>
+            </section>
 
-            <div class="result-table-head">
-              <div><p class="eyebrow">冻结配置</p><h3>汇总入选配置，冻结最终 Top-10 检索链</h3></div>
-              <p>一级搜索 1,190 组参数后，与重排模型、重排候选数、二级来源权重和平滑常数联合选择。</p>
-            </div>
+            <section class="full-results-group" aria-labelledby="retrievalFrozenRouteTitle">
+              <div class="full-results-group-head"><span>06</span><div><h4 id="retrievalFrozenRouteTitle">汇总入选参数，冻结最终检索链</h4><p>表中只保留各阶段最终采用的模型与参数；最终输出固定为 Top-10，随后进入冻结评测，不再反向调参。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact configuration-result-table">
                 <thead><tr><th scope="col">阶段</th><th scope="col">模型或方法</th><th scope="col">训练 / 推理配置</th><th scope="col">阶段输出</th></tr></thead>
@@ -662,20 +660,24 @@
                 </tbody>
               </table>
             </div>
+            </section>
           </div>
         </details>
 
-        <details class="narrative-disclosure retrieval-supplement-disclosure" id="retrievalFinalEvaluation">
+        <details class="full-results narrative-disclosure retrieval-run-disclosure" id="retrievalFinalEvaluation">
           <summary>
-            <span class="disclosure-summary-copy"><small>冻结后评测与诊断</small><strong>验证覆盖、定位失败并测量完整检索时延</strong></span>
+            <span class="disclosure-summary-copy"><small>冻结后评测与诊断</small><strong>先验收覆盖率，再解释失败并核对完整链成本</strong></span>
             <span class="disclosure-summary-meta">开发 1.2K · 终评 1.2K · 6K + 1K 回归 · RTX 3090</span>
             <i aria-hidden="true">+</i>
           </summary>
-          <div class="disclosure-body">
-            <div class="result-table-head">
-              <div><p class="eyebrow">候选检索</p><h3>在四套数据上验证最终检索覆盖</h3></div>
-              <p>开发集只用于选参；一次性终评以 AllHit@10 为主，同时报告 AllHit@6 / @20 / @50、MRR 与完整路径时延，配置打开终评后不再调整。</p>
+          <div class="full-results-body">
+            <div class="full-results-copy">
+              <h3>冻结配置后依次验收质量、失败来源与效率</h3>
+              <p>开发集只用于选参；配置冻结后打开一次性终评，并在两套既有测试集上回归。质量验收完成后再解释自然表达失败，最后单独报告完整检索链成本。</p>
             </div>
+
+            <section class="full-results-group" aria-labelledby="retrievalFrozenQualityTitle">
+              <div class="full-results-group-head"><span>01</span><div><h4 id="retrievalFrozenQualityTitle">对照开发集，验收三套冻结评测</h4><p>一次性终评以 AllHit@10 为主，两套既有测试集用于回归；开发集只作为选型参考，终评打开后不再调整模型或参数。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">评测集</th><th scope="col">样本数</th><th scope="col">AllHit@6</th><th scope="col">AllHit@7</th><th scope="col">AllHit@8</th><th scope="col">AllHit@9</th><th scope="col">AllHit@10</th><th scope="col">AllHit@20</th><th scope="col">AllHit@50</th><th scope="col">MRR</th></tr></thead>
@@ -687,11 +689,10 @@
                 </tbody>
               </table>
             </div>
+            </section>
 
-            <div class="result-table-head">
-              <div><p class="eyebrow">自然表达 6K · 离线诊断</p><h3>定位 197 条 Top-10 覆盖失败</h3></div>
-              <p>失败定义为至少一个必要工具没有进入最终 Top-10；多余工具只有挤出必要工具时才构成覆盖失败。</p>
-            </div>
+            <section class="full-results-group" aria-labelledby="retrievalFrozenDiagnosisTitle">
+              <div class="full-results-group-head"><span>02</span><div><h4 id="retrievalFrozenDiagnosisTitle">解释自然表达 6K 的 197 条 Top-10 失败</h4><p>失败定义为至少一个必要工具没有进入最终 Top-10；这里只解释冻结结果，不再使用该测试集调参。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table retrieval-audit-table">
                 <thead><tr><th scope="col">检查项</th><th scope="col">结果</th><th scope="col">解释</th></tr></thead>
@@ -706,13 +707,12 @@
               </table>
             </div>
             <p class="efficiency-boundary"><strong>诊断结论：</strong>当前残余瓶颈是一级候选覆盖与 Top-10 截断，不是重排模型在候选池内再次排丢必要工具。该结论只解释冻结回归集，不用于继续调参；最终检索路线保持不变。</p>
+            </section>
 
-            <div class="result-table-head">
-              <div><p class="eyebrow">候选检索效率 · RTX 3090</p><h3>测量最终检索链的完整路径时延</h3></div>
-              <p>1,200 条一次性终评，模型加载另计。</p>
-            </div>
+            <section class="full-results-group" aria-labelledby="retrievalFrozenEfficiencyTitle">
+              <div class="full-results-group-head"><span>03</span><div><h4 id="retrievalFrozenEfficiencyTitle">测量最终 Top-10 检索链的完整路径成本</h4><p>在 RTX 3090 上使用 1,200 条一次性终评测量，模型加载时间另计。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
-              <table class="result-table result-table-compact efficiency-table numeric-result-table">
+              <table class="result-table result-table-compact efficiency-table retrieval-final-efficiency-table numeric-result-table">
                 <thead><tr><th scope="col">路径</th><th scope="col">吞吐</th><th scope="col">完整路径 p50</th><th scope="col">完整路径 p95</th><th scope="col">GPU 峰值显存</th><th scope="col">离线排名一致率</th></tr></thead>
                 <tbody>
                   <tr class="result-table-final"><td><strong>最终检索链</strong></td><td><strong>28.67 条 / 秒</strong></td><td><strong>34.8958ms</strong></td><td><strong>46.1339ms</strong></td><td>2.982 GiB</td><td><strong>Top-10 · 100.0000%</strong></td></tr>
@@ -721,6 +721,7 @@
             </div>
 
             <p class="efficiency-boundary"><strong>结果口径：</strong>候选检索输出固定为 Top-10；本节不包含意图分流、规划生成或真实工具执行时延。</p>
+            </section>
           </div>
         </details>
 

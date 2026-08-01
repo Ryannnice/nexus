@@ -7024,6 +7024,15 @@ details table td {
 .retrieval-current-efficiency-table th:nth-child(5) { width: 340px; }
 .retrieval-current-efficiency-table :is(th, td):nth-child(-n + 3) { text-align: left; }
 
+.retrieval-final-efficiency-table { min-width: 1060px; }
+.retrieval-final-efficiency-table th:nth-child(1) { width: 180px; }
+.retrieval-final-efficiency-table th:nth-child(2) { width: 170px; }
+.retrieval-final-efficiency-table th:nth-child(3),
+.retrieval-final-efficiency-table th:nth-child(4) { width: 180px; }
+.retrieval-final-efficiency-table th:nth-child(5) { width: 160px; }
+.retrieval-final-efficiency-table th:nth-child(6) { width: 190px; }
+.retrieval-final-efficiency-table :is(th, td):nth-child(n + 2) { text-align: right; }
+
 #plannerEnvironment .planner-training-efficiency-table { min-width: 1180px; }
 #plannerEnvironment .planner-training-efficiency-table th:nth-child(1) { width: 170px; }
 #plannerEnvironment .planner-training-efficiency-table th:nth-child(2) { width: 110px; }
