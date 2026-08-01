@@ -487,7 +487,7 @@
             </div>
 
             <section class="full-results-group" aria-labelledby="publicRetrievalTitle">
-              <div class="full-results-group-head"><span>01</span><div><h4 id="publicRetrievalTitle">未微调检索与混合召回</h4><p>4 组单路基线与 9 组固定 Top-30 融合。</p></div></div>
+              <div class="full-results-group-head"><span>01</span><div><h4 id="publicRetrievalTitle">未微调检索与混合召回</h4><p>4 组单路基线与 9 组固定 N=20 融合；按 AllHit@10 选择后续公开重排的统一候选来源。</p></div></div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table result-table-compact">
                   <thead><tr><th scope="col">类别</th><th scope="col">模型或配置</th><th scope="col">AllHit@6</th><th scope="col">AllHit@10</th><th scope="col">AllHit@30</th><th scope="col">MRR</th></tr></thead>
@@ -496,22 +496,22 @@
                     <tr><td>向量检索</td><td>未微调 BAAI/bge-base-zh-v1.5</td><td>35.83%</td><td>44.30%</td><td>71.75%</td><td>52.02%</td></tr>
                     <tr class="row-emphasis"><td>向量检索</td><td>未微调 BAAI/bge-large-zh-v1.5</td><td>38.23%</td><td>47.63%</td><td>73.47%</td><td>56.90%</td></tr>
                     <tr><td>向量检索</td><td>未微调 Qwen/Qwen3-Embedding-0.6B</td><td>30.87%</td><td>40.60%</td><td>63.77%</td><td>49.21%</td></tr>
-                    <tr class="table-divider"><td>混合检索</td><td>bge-base + BM25 · 取并集 Top-30</td><td>48.93%</td><td>57.97%</td><td>81.47%</td><td>75.73%</td></tr>
-                    <tr><td>混合检索</td><td>bge-base + BM25 · 分数加权</td><td>45.67%</td><td>54.48%</td><td>82.13%</td><td>67.10%</td></tr>
-                    <tr><td>混合检索</td><td>bge-base + BM25 · RRF Top-30</td><td>50.78%</td><td>59.38%</td><td>82.97%</td><td>74.69%</td></tr>
-                    <tr><td>混合检索</td><td>bge-large + BM25 · 取并集 Top-30</td><td>51.77%</td><td>62.32%</td><td>85.72%</td><td>74.14%</td></tr>
-                    <tr><td>混合检索</td><td>bge-large + BM25 · 分数加权</td><td>47.52%</td><td>58.20%</td><td>85.68%</td><td>68.45%</td></tr>
-                    <tr><td>混合检索</td><td>bge-large + BM25 · RRF Top-30</td><td>50.72%</td><td>59.63%</td><td>86.50%</td><td>71.10%</td></tr>
-                    <tr><td>混合检索</td><td>Qwen3 向量模型 + BM25 · 取并集 Top-30</td><td>50.48%</td><td>61.93%</td><td>86.77%</td><td>73.79%</td></tr>
-                    <tr><td>混合检索</td><td>Qwen3 向量模型 + BM25 · 分数加权</td><td>42.73%</td><td>54.72%</td><td>83.68%</td><td>63.91%</td></tr>
-                    <tr><td>混合检索</td><td>Qwen3 向量模型 + BM25 · RRF Top-30</td><td>47.25%</td><td>55.70%</td><td>87.33%</td><td>71.77%</td></tr>
+                    <tr class="table-divider"><td>混合检索</td><td>bge-base + BM25 · Union · 每路 Top-20</td><td>48.87%</td><td>57.93%</td><td>81.35%</td><td>75.52%</td></tr>
+                    <tr><td>混合检索</td><td>bge-base + BM25 · 分数加权 · 每路 Top-20</td><td>45.43%</td><td>55.58%</td><td>81.48%</td><td>65.03%</td></tr>
+                    <tr><td>混合检索</td><td>bge-base + BM25 · RRF · 每路 Top-20</td><td>50.57%</td><td>60.47%</td><td>81.37%</td><td>74.65%</td></tr>
+                    <tr><td>混合检索</td><td>bge-large + BM25 · Union · 每路 Top-20</td><td>51.73%</td><td>62.30%</td><td>85.67%</td><td>73.73%</td></tr>
+                    <tr><td>混合检索</td><td>bge-large + BM25 · 分数加权 · 每路 Top-20</td><td>46.95%</td><td>59.88%</td><td>85.75%</td><td>67.19%</td></tr>
+                    <tr class="result-table-final"><td>混合检索</td><td><strong>bge-large + BM25 · RRF · 每路 Top-20（重排候选来源）</strong></td><td>50.83%</td><td><strong>63.67%</strong></td><td>85.73%</td><td>71.19%</td></tr>
+                    <tr><td>混合检索</td><td>Qwen3 向量模型 + BM25 · Union · 每路 Top-20</td><td>50.42%</td><td>61.93%</td><td>86.78%</td><td>73.34%</td></tr>
+                    <tr><td>混合检索</td><td>Qwen3 向量模型 + BM25 · 分数加权 · 每路 Top-20</td><td>42.80%</td><td>57.40%</td><td>86.65%</td><td>61.77%</td></tr>
+                    <tr><td>混合检索</td><td>Qwen3 向量模型 + BM25 · RRF · 每路 Top-20</td><td>48.20%</td><td>62.52%</td><td>86.85%</td><td>71.65%</td></tr>
                   </tbody>
                 </table>
               </div>
             </section>
 
             <section class="full-results-group" aria-labelledby="publicRerankerTitle">
-              <div class="full-results-group-head"><span>02</span><div><h4 id="publicRerankerTitle">未微调重排模型</h4><p>固定 N=20 候选源比较 5 个公开模型；其中 4 个进入后续任务内微调，Jina 仅保留为训练前对照。</p></div></div>
+              <div class="full-results-group-head"><span>02</span><div><h4 id="publicRerankerTitle">未微调重排模型</h4><p>5 个公开模型共享 bge-large + BM25 + RRF 候选池：两路各取 Top-20，合并后最多重排 40 个；其中 4 个进入后续任务内微调，Jina 仅作训练前对照。</p></div></div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table result-table-compact result-table-models">
                   <thead><tr><th scope="col">模型</th><th scope="col">推理框架</th><th scope="col">AllHit@6</th><th scope="col">AllHit@10</th><th scope="col">AllHit@30</th><th scope="col">MRR</th></tr></thead>
@@ -527,15 +527,15 @@
             </section>
 
             <section class="full-results-group" aria-labelledby="candidateDepthTitle">
-              <div class="full-results-group-head"><span>03</span><div><h4 id="candidateDepthTitle">公开 Qwen3 重排模型的候选深度</h4><p>候选池越深，AllHit@30 越高；该表用于确定后续任务内训练的搜索范围。</p></div></div>
+              <div class="full-results-group-head"><span>03</span><div><h4 id="candidateDepthTitle">公开 Qwen3 重排模型的候选深度</h4><p>N=20 是上表五模型的统一比较口径；更深候选池仅用于观察质量与成本的取舍。</p></div></div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table result-table-compact result-table-depth">
                   <thead><tr><th scope="col">每路候选 N</th><th scope="col">平均合并候选</th><th scope="col">AllHit@6</th><th scope="col">AllHit@10</th><th scope="col">AllHit@30</th><th scope="col">MRR</th></tr></thead>
                   <tbody>
                     <tr><td>N=10</td><td>16.86</td><td>64.68%</td><td>70.58%</td><td>72.93%</td><td>88.35%</td></tr>
-                    <tr><td>N=20</td><td>32.72</td><td>67.02%</td><td>77.32%</td><td>87.65%</td><td>88.45%</td></tr>
+                    <tr class="row-emphasis"><td>N=20</td><td>32.72</td><td>67.02%</td><td>77.32%</td><td>87.65%</td><td>88.45%</td></tr>
                     <tr><td>N=30</td><td>47.14</td><td>67.28%</td><td>78.05%</td><td>91.47%</td><td>88.57%</td></tr>
-                    <tr class="row-emphasis"><td>N=50</td><td>71.17</td><td>67.48%</td><td>78.37%</td><td>92.83%</td><td>88.62%</td></tr>
+                    <tr><td>N=50</td><td>71.17</td><td>67.48%</td><td>78.37%</td><td>92.83%</td><td>88.62%</td></tr>
                   </tbody>
                 </table>
               </div>
