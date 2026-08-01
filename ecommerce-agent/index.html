@@ -59,7 +59,7 @@
         <div class="hero-copy">
           <p class="hero-eyebrow"><span class="corner-square" aria-hidden="true"></span>100-TOOL COMMERCE AGENT · INTEGRATED SYSTEM STUDY</p>
           <h1 id="heroTitle">让复杂电商请求，<br><span>先找齐工具，再排对工具链。</span></h1>
-          <p class="hero-lead">面向固定 100 工具的离线系统：意图分流、候选检索与有序工具链规划。</p>
+          <p class="hero-lead">面向固定 100 工具的离线系统：意图分流、候选检索与有序工具链规划；主结果按同一 9K 测试集逐阶段累计。</p>
 
           <div class="hero-actions">
             <a class="btn btn-primary" href="#abstract">查看项目摘要 <span aria-hidden="true">↓</span></a>
@@ -68,9 +68,9 @@
 
           <dl class="hero-stats">
             <div><dt>100</dt><dd>固定工具空间</dd></div>
-            <div><dt>100.00%</dt><dd>意图分流模块最优准确率 · 0.6B · 9K</dd></div>
-            <div><dt>96.72%</dt><dd>候选检索 AllHit@10 · 自然表达 6K</dd></div>
-            <div class="hero-stat-primary"><dt>90.59%</dt><dd>静态全链路成功率 · 工具链口径 · 9,000 条</dd></div>
+            <div><dt>99.96%</dt><dd>截至意图分流 · 8,996 / 9,000</dd></div>
+            <div><dt>97.77%</dt><dd>截至候选检索 · 8,799 / 9,000</dd></div>
+            <div class="hero-stat-primary"><dt>90.59%</dt><dd>最终有序工具链 · 8,153 / 9,000</dd></div>
           </dl>
         </div>
 
@@ -127,7 +127,7 @@
           <div class="abstract-brief-result">
             <span>最终结果</span>
             <strong>静态全链路成功率 · 90.59%</strong>
-            <p>最终系统固定 1.7B 路由、完整负样本检索链与 8B 规划模型；9,000 条测试中有 8,153 条工具链完全正确。</p>
+            <p>最终系统固定 1.7B 路由、完整负样本检索链与 8B 规划模型；9K 逐阶段通过数为 8,996 → 8,799 → 8,153。</p>
           </div>
         </div>
       </div>
@@ -143,28 +143,28 @@
           <p>目标是识别需要工具的请求、找齐必要工具，并输出正确的调用顺序。</p>
         </div>
 
-        <p class="phase-context-label">模块评测口径 · 分流 → 找齐 → 排序</p>
+        <p class="phase-context-label">同一 9K 累计主线 · 分流 → 找齐 → 排序</p>
         <div class="metric-contract-grid" role="group" aria-label="三个系统模块的成功指标">
           <article>
             <span>阶段 01 · 意图分流</span>
             <strong>Accuracy / Macro-F1</strong>
             <p>类型预测正确才算路由成功；运行时只有类型决定进入工具系统还是直接响应。</p>
-            <small>0.6B 模块最优 · 9K 固定集合 · 100.00%</small>
+            <small>最终 1.7B 路由 · 8,996 / 9,000 · 99.9556%</small>
           </article>
           <article>
             <span>阶段 02 · 候选检索</span>
             <strong>AllHit@K</strong>
             <p>一条请求的全部 Gold Tools 都进入 Top-K，候选集合才算完整覆盖。</p>
-            <small>自然表达回归集 6K · @10 96.72%</small>
+            <small>截至候选检索 · 8,799 / 9,000 · 97.7667%</small>
           </article>
           <article>
             <span>阶段 03 · 工具链规划</span>
             <strong>集合 / 工具链全对率</strong>
             <p>集合全对要求工具集合完全一致；工具链全对进一步要求工具及其顺序完全一致。</p>
-            <small>规划模块测试 · 1,000 条</small>
+            <small>最终有序工具链 · 8,153 / 9,000 · 90.5889%</small>
           </article>
         </div>
-        <p class="metric-contract-note">三项模块指标独立计分；项目最终结果以 9,000 条逐样本全链路统计为准。</p>
+        <p class="metric-contract-note">9K 累计口径中，闲聊正确旁路即成功；电商请求继续要求候选完整，并最终生成完全正确的有序工具链。</p>
 
         <details class="narrative-disclosure metric-definition-disclosure">
           <summary>
@@ -339,11 +339,11 @@
         <div class="experiment-steps" role="group" aria-label="意图分流实验进程">
           <article><span>01 · 规则基线</span><strong>关键词规则</strong><small>50.22%</small></article>
           <article><span>02 · 未微调</span><strong>0.6B / 1.7B</strong><small>84.76% / 90.47%</small></article>
-          <article class="is-selected"><span>03 · 模块横评最优</span><strong>0.6B LoRA（完整训练集）</strong><small>100.00%</small></article>
-          <article><span>04 · 模型规模对照</span><strong>1.7B LoRA（均衡训练集）</strong><small>99.96%</small></article>
+          <article><span>03 · 模块能力上限</span><strong>0.6B LoRA（完整训练集）</strong><small>9K 模块横评 · 100.00%</small></article>
+          <article class="is-selected"><span>04 · 最终系统路由</span><strong>1.7B LoRA（均衡训练集）</strong><small>8,996 / 9,000 · 99.9556%</small></article>
         </div>
 
-        <p class="metric-contract-note"><strong>采用说明：</strong>0.6B LoRA 是模块横评最优版本；当前 9K 全链路仍使用 1.7B 路由。</p>
+        <p class="metric-contract-note"><strong>采用说明：</strong>最终系统固定使用 1.7B 路由；0.6B 的 100% 仅作为模块能力上限保留在版本对照中。</p>
 
         <details class="narrative-disclosure intent-evidence-disclosure">
           <summary>
@@ -471,14 +471,14 @@
           </article>
 
           <div class="result-main-score">
-            <span>一次性终评 AllHit@10</span>
-            <strong>99.67<small>%</small></strong>
-            <p>1,200 条终评 · 完整冻结检索链</p>
-            <div><b>冻结终评</b><span>模型与参数锁定后一次评测</span></div>
+            <span>9K · 截至候选检索</span>
+            <strong>97.77<small>%</small></strong>
+            <p>8,799 / 9,000 · 累计通过</p>
+            <div><b>自然表达 6K</b><span>AllHit@10 · 96.7167%</span></div>
           </div>
 
           <ul class="result-scoreboard">
-            <li><strong>99.5556%</strong><b>Embedding 开发集均值</b><span>跨领域与新增无关负样本 · 三随机种子</span></li>
+            <li><strong>197 条</strong><b>检索阶段新增失败</b><span>9K · 8,996 → 8,799</span></li>
             <li><strong>96.7167%</strong><b>自然表达回归</b><span>6,000 条 · AllHit@10</span></li>
             <li><strong>28.67/s</strong><b>候选检索吞吐</b><span>RTX 3090 · p50 34.90ms</span></li>
             <li><strong>90.5889%</strong><b>静态全链路</b><span>固定 8B 规划模型 · 8,153 / 9,000</span></li>
@@ -806,7 +806,7 @@
           <div class="planner-final-lead-copy">
             <span>最终结果 · 静态全链路 9,000 条</span>
             <h3 id="plannerFinalLeadTitle"><strong>90.59%</strong> 静态全链路成功率</h3>
-            <p>固定 1.7B 路由、最终检索链和 8B 规划模型后，工具链口径通过 <b>8,153 / 9,000</b> 条。</p>
+            <p>固定 1.7B 路由、最终检索链和 8B 规划模型后，工具链口径通过 <b>8,153 / 9,000</b> 条；从候选完整到有序工具链新增 646 条失败，自然表达电商 6K 为 85.95%。</p>
           </div>
           <div class="planner-final-lead-choice" role="group" aria-label="最终规划模型选择">
             <div class="is-selected">
@@ -825,7 +825,7 @@
 
           <div class="experiment-steps" role="group" aria-label="工具链规划模型选型路径">
             <article><span>01 · 基础模型</span><strong>未微调 4B / 8B</strong><small>完整 100 工具与 Top-10 两种输入</small></article>
-            <article><span>02 · 首次监督微调</span><strong>自由生成请求训练</strong><small>1K 模块测试 · 8B TraceEM 98.30%</small></article>
+            <article><span>02 · 首次监督微调</span><strong>自由生成请求训练</strong><small>1K 模块测试 · 验证基本选链能力</small></article>
             <article><span>03 · 两类请求联合训练</span><strong>自由生成 + 句式组合</strong><small>8B · 模型版本 2429</small></article>
             <article class="is-selected"><span>04 · 最终系统评测</span><strong>固定 Top-10 检索链</strong><small>9K 工具链成功率 90.59%</small></article>
           </div>
@@ -1193,12 +1193,12 @@
         </section>
 
         <p class="phase-context-label final-results-label">最终结果 · 静态全链路测试集 9,000 条</p>
-        <div class="system-outcome-grid" role="group" aria-label="主要模块证据与静态端到端最终结果">
-          <article><span>模块单测 · 意图分流</span><h3>0.6B LoRA · 模块横评</h3><strong>100.00%</strong><p>Accuracy / Macro-F1 · 9K</p></article>
-          <article><span>模块评测 · 候选检索</span><h3>负样本向量检索 + 交互重排</h3><strong>99.67%</strong><p>AllHit@10 · 一次性终评 1,200 条</p><small>自然表达 6K · 96.72%</small></article>
-          <article class="is-selected"><span>最终结果 · 静态全链路</span><h3>冻结 1.7B 路由 + 最终检索链 + 冻结 8B 规划模型</h3><strong>90.59%</strong><p>成功率（工具链口径）· 8,153 / 9,000</p><small>集合口径 90.78%</small></article>
+        <div class="system-outcome-grid" role="group" aria-label="同一 9K 测试集的逐阶段累计结果">
+          <article><span>9K 累计 · 意图分流</span><h3>最终 Qwen3-1.7B LoRA 路由</h3><strong>99.96%</strong><p>8,996 / 9,000</p><small>该阶段新增失败 4 条</small></article>
+          <article><span>9K 累计 · 候选检索</span><h3>负样本向量检索 + 交互重排</h3><strong>97.77%</strong><p>8,799 / 9,000</p><small>新增失败 197 条 · 自然表达 6K AllHit@10 96.72%</small></article>
+          <article class="is-selected"><span>9K 最终 · 有序工具链</span><h3>冻结 1.7B 路由 + 最终检索链 + 冻结 8B 规划模型</h3><strong>90.59%</strong><p>8,153 / 9,000</p><small>新增失败 646 条 · 自然表达 6K 工具链全对率 85.95%</small></article>
         </div>
-        <p class="metric-contract-note"><strong>主结果口径：</strong>90.5889% 是项目最终结果；候选检索的 99.6667% 和规划模块结果用于解释各模块能力，不替代 9K 静态全链路成功率。</p>
+        <p class="metric-contract-note"><strong>主结果口径：</strong>三张卡均使用同一 9K 测试集逐阶段累计；开发集、一次性终评与接口表达高分仅用于模型选择和回归检查，完整保留在各实验折叠表中。</p>
 
         <details class="narrative-disclosure data-disclosure system-data-disclosure" id="systemDataLedger">
           <summary>
