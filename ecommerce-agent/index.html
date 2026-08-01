@@ -446,7 +446,7 @@
           <article class="result-verdict">
             <p class="eyebrow">候选检索 · 最终冻结链</p>
             <h3>负样本训练 +<br>交互重排</h3>
-            <p>bge-large-zh-v1.5 使用跨领域与新增无关负样本训练，bge-reranker-v2-m3 使用类型化负样本与检索难例训练；最终输出 Top-10。</p>
+            <p>bge-large-zh-v1.5 使用跨领域与新增无关负样本训练，bge-reranker-v2-m3 使用按工具类型挑选的负例与检索结果中的难例训练；最终输出 Top-10。</p>
             <div class="result-verdict-tags">
               <span>Embedding · bge-large-zh-v1.5</span>
               <span>Reranker · bge-reranker-v2-m3</span>
@@ -547,7 +547,7 @@
           <div class="disclosure-body">
             <div class="result-table-head">
               <div><p class="eyebrow">开发集 · 1,200 条</p><h3>向量模型的负样本方案</h3></div>
-              <p>五种训练方案各运行三个随机种子；使用 AllHit@10 均值完成选择。</p>
+              <p>五种方案各运行三个随机种子并按 AllHit@10 均值选择；入选方案把每个查询—正例配对单独展开，每组比较 1 个正例和 2 个显式负例，共 3 个工具文档。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact">
@@ -596,16 +596,16 @@
 
             <div class="result-table-head">
               <div><p class="eyebrow">开发集 · 三随机种子</p><h3>重排负样本与架构交互复核</h3></div>
-              <p>先在同一 bge-reranker-v2-m3 上选择负样本，再把入选方案用于架构第二名复核；AllHit@10 持平时优先 AllHit@6。</p>
+              <p>重排训练每组固定比较 1 个正例和 7 个负例；入选方案的负例由 3 个按工具类型挑选的样本和 4 个从检索结果中挖出的难例组成。先选择负例组合，再复核其他架构；AllHit@10 持平时优先 AllHit@6。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact">
                 <thead><tr><th scope="col">重排模型与负样本</th><th scope="col">AllHit@6 均值</th><th scope="col">AllHit@10 均值</th><th scope="col">MRR 均值</th><th scope="col">估算 p50</th><th scope="col">选择</th></tr></thead>
                 <tbody>
-                  <tr class="result-table-final"><td><strong>bge-reranker-v2-m3 · 3 个类型化负样本 + 4 个检索难例</strong></td><td><strong>98.8889%</strong></td><td><strong>100.0000%</strong></td><td>0.997639</td><td><strong>24.42ms</strong></td><td><strong>入选</strong></td></tr>
+                  <tr class="result-table-final"><td><strong>bge-reranker-v2-m3 · 3 个按工具类型挑选的负例 + 4 个检索难例</strong></td><td><strong>98.8889%</strong></td><td><strong>100.0000%</strong></td><td>0.997639</td><td><strong>24.42ms</strong></td><td><strong>入选</strong></td></tr>
                   <tr><td>bge-reranker-v2-m3 · 7 个检索难例</td><td>98.6667%</td><td>100.0000%</td><td>0.998056</td><td>24.38ms</td><td>未入选</td></tr>
-                  <tr><td>bge-reranker-v2-m3 · 4 个类型化负样本 + 3 个随机负样本</td><td>98.4722%</td><td>100.0000%</td><td>0.997778</td><td>24.34ms</td><td>未入选</td></tr>
-                  <tr class="table-divider"><td>Qwen3-Reranker-0.6B · 3 个类型化负样本 + 4 个检索难例</td><td>98.5278%</td><td>100.0000%</td><td>0.999167</td><td>76.97ms</td><td>架构交互复核</td></tr>
+                  <tr><td>bge-reranker-v2-m3 · 4 个按工具类型挑选的负例 + 3 个随机负例</td><td>98.4722%</td><td>100.0000%</td><td>0.997778</td><td>24.34ms</td><td>未入选</td></tr>
+                  <tr class="table-divider"><td>Qwen3-Reranker-0.6B · 3 个按工具类型挑选的负例 + 4 个检索难例</td><td>98.5278%</td><td>100.0000%</td><td>0.999167</td><td>76.97ms</td><td>架构交互复核</td></tr>
                 </tbody>
               </table>
             </div>
@@ -635,9 +635,9 @@
               <table class="result-table result-table-compact">
                 <thead><tr><th scope="col">阶段</th><th scope="col">模型或方法</th><th scope="col">训练 / 推理配置</th><th scope="col">阶段输出</th></tr></thead>
                 <tbody>
-                  <tr><td><span class="table-stage table-stage-trained">向量检索</span></td><td><strong>任务内微调 bge-large-zh-v1.5</strong></td><td>每个正对加入 2 个跨领域或新增无关负样本</td><td>全工具向量排序</td></tr>
+                  <tr><td><span class="table-stage table-stage-trained">向量检索</span></td><td><strong>任务内微调 bge-large-zh-v1.5</strong></td><td>每个查询—正例配对单独成组：1 正 + 2 负，共 3 个工具文档</td><td>全工具向量排序</td></tr>
                   <tr><td><span class="table-stage table-stage-trained">第一阶段融合</span></td><td><strong>向量排序 + BM25 加权 RRF</strong></td><td>各取前 40 · 向量权重 0.8 · 平滑常数 5</td><td>送入重排的 Top-10</td></tr>
-                  <tr><td><span class="table-stage table-stage-trained">候选重排</span></td><td><strong>bge-reranker-v2-m3</strong></td><td>每组 1 正 + 3 个类型化负样本 + 4 个检索难例</td><td>Top-10 重排名次</td></tr>
+                  <tr><td><span class="table-stage table-stage-trained">候选重排</span></td><td><strong>bge-reranker-v2-m3</strong></td><td>每组 1 正 + 7 负，共 8 个工具文档</td><td>Top-10 重排名次</td></tr>
                   <tr class="result-table-final"><td><span class="table-stage table-stage-final">最终融合</span></td><td><strong>第一阶段名次 + 重排名次</strong></td><td>第一阶段权重 0.3 · 重排权重 0.7 · 平滑常数 1</td><td><strong>最终 Top-10</strong><small>开发集三种子 AllHit@6 / @10：98.8889% / 100%</small></td></tr>
                 </tbody>
               </table>
@@ -700,7 +700,7 @@
                 <table class="data-table experiment-data-table">
                   <thead><tr><th scope="col">数据</th><th scope="col">规模</th><th scope="col">用途</th><th scope="col">结果或边界</th></tr></thead>
                   <tbody>
-                    <tr><td><strong>训练轨迹</strong></td><td>24,000 组 · 70,012 个正对</td><td>训练向量模型与重排模型</td><td>向量模型每个正对加入 2 个显式负样本；重排每组 1 正 + 7 负</td></tr>
+                    <tr><td><strong>训练轨迹</strong></td><td>24,000 组 · 70,012 个正对</td><td>训练向量模型与重排模型</td><td>向量训练将每个查询—正例配对展开为 1 正 + 2 负；重排每组为 1 正 + 7 负</td></tr>
                     <tr><td><strong>开发集</strong></td><td>1,200 条</td><td>模型、候选深度与两级融合选型</td><td>五种向量方案与重排候选均按三随机种子比较</td></tr>
                     <tr><td><strong>一次性终评</strong></td><td>1,200 条</td><td>冻结后的首次质量评测与效率测试</td><td>AllHit@10 99.6667%，结果打开后未继续调参</td></tr>
                     <tr><td><strong>自然表达回归</strong></td><td>6,000 条</td><td>检索与固定规划模型评测</td><td>检索 AllHit@10 96.7167%</td></tr>
@@ -1123,7 +1123,7 @@
 
               <div class="retrieval-stage rerank-stage">
                 <div class="stage-label"><span>步骤 03A · 评分</span><strong>候选交互评分</strong></div>
-                <div class="stage-model"><small>Top-10 候选</small><strong>bge-reranker-v2-m3</strong><span>3 个类型化负样本 + 4 个检索难例</span></div>
+                <div class="stage-model"><small>Top-10 候选</small><strong>bge-reranker-v2-m3</strong><span>1 正 + 7 负（3 个按类型挑选、4 个检索难例）</span></div>
                 <div class="rank-output"><span>输出重排名次</span></div>
               </div>
 
@@ -1204,7 +1204,7 @@
                     <tr><td><strong>工具调用轨迹</strong><span>意图与检索的上游样本</span></td><td>单工具与多工具电商请求及目标工具链</td><td><strong>30,000 条</strong><br>12K 单工具 / 18K 多工具<br>24K 训练 / 6K 测试</td><td>生成意图监督数据、检索训练样本与固定检索集合</td><td>请求、轨迹 ID 与表达簇按稳定规则隔离</td></tr>
                     <tr><td><strong>意图监督数据</strong><span>实验 01</span></td><td>训练侧电商轨迹、独立闲聊样本与 6 条边界样本</td><td><strong>48,006 条总计</strong><br>45,606 训练 / 2,400 验证</td><td>训练 0.6B 与 1.7B 路由模型；验证集选择模型版本</td><td>两个模型使用同一样本全集；1.7B 采用类别均衡排列</td></tr>
                     <tr><td><strong>意图分流固定集合</strong><span>实验 01</span></td><td>6K 电商请求 + 3K 独立闲聊</td><td><strong>9,000 条</strong></td><td>比较规则、未微调模型与 LoRA 版本</td><td>同一 9K 后续复用于静态全链路；是合成固定集合，不是线上留出流量</td></tr>
-                    <tr><td><strong>向量与重排训练数据</strong><span>实验 02</span></td><td>24K 训练轨迹与 100 份工具文档组成请求—工具样本</td><td>70,012 个正对<br>向量训练 140,024 次显式负样本分配<br>重排 24K 组 × 7 负</td><td>向量模型使用跨领域与新增无关负样本；重排使用 3 个类型化负样本与 4 个检索难例</td><td>负样本只来自训练划分；两类模型分别训练</td></tr>
+                    <tr><td><strong>向量与重排训练数据</strong><span>实验 02</span></td><td>24K 训练轨迹与 100 份工具文档组成请求—工具样本</td><td>70,012 个正对<br>向量：每个正对 1 正 + 2 负<br>重排：每组 1 正 + 7 负</td><td>向量负例来自跨领域与新增无关工具；重排负例包括 3 个按工具类型挑选的样本与 4 个检索难例</td><td>负样本只来自训练划分；两类模型分别训练</td></tr>
                     <tr><td><strong>候选检索开发集</strong><span>实验 02 · 模型与参数选择</span></td><td>接口式表达与简洁自然表达各 600 条；工具数 1–6 均衡</td><td><strong>1,200 条请求</strong></td><td>比较 5 种向量训练方案和 4 种重排架构，并选择候选深度与两级 RRF</td><td>模型与完整检索链在打开一次性终评前均已冻结</td></tr>
                     <tr><td><strong>自然表达回归集</strong><span>实验 02 / 03</span></td><td>3K 单工具 + 3K 多工具；多工具含已见与未见组合</td><td><strong>6,000 条请求</strong><br>15,196 个目标工具</td><td>检索与固定 4B / 8B 规划模型评测</td><td>检索 AllHit@10 96.7167%；同时构成 9K 全链路中的电商部分</td></tr>
                     <tr><td><strong>候选检索一次性终评</strong><span>实验 02 · 冻结后评测</span></td><td>独立跨表达请求，工具数 1–6 均衡</td><td><strong>1,200 条请求</strong></td><td>评测冻结整链的 AllHit@K、MRR 与候选检索效率</td><td>AllHit@10 99.6667%；结果打开后未继续调参</td></tr>
