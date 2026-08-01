@@ -476,14 +476,14 @@
 
         <details class="full-results narrative-disclosure retrieval-run-disclosure" id="retrievalBaseComparisons">
           <summary>
-            <span class="disclosure-summary-copy"><small>基础模型与公开基线</small><strong>查看未微调检索、公开重排模型与候选深度结果</strong></span>
+            <span class="disclosure-summary-copy"><small>基础模型与公开基线</small><strong>查看未微调检索、重排候选与候选深度结果</strong></span>
             <span class="disclosure-summary-meta">13 条检索基线 · 5 个重排模型 · 4 档候选深度</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="full-results-body">
             <div class="full-results-copy">
               <h3>训练前先确定基础模型与检索结构</h3>
-              <p>以下结果均来自固定 6,000 条项目基准，用于选择向量模型、重排架构和候选深度；不包含任务内微调后的最终检索链。</p>
+              <p>以下结果均来自固定 6,000 条项目基准，用于建立训练前基线，并据此确定进入任务内微调的模型候选和参数搜索范围；最终模型仍按微调后的开发集结果选择。</p>
             </div>
 
             <section class="full-results-group" aria-labelledby="publicRetrievalTitle">
@@ -511,7 +511,7 @@
             </section>
 
             <section class="full-results-group" aria-labelledby="publicRerankerTitle">
-              <div class="full-results-group-head"><span>02</span><div><h4 id="publicRerankerTitle">未微调重排模型</h4><p>固定 N=20 候选源，比较 5 个未做任务内训练的交叉编码器。</p></div></div>
+              <div class="full-results-group-head"><span>02</span><div><h4 id="publicRerankerTitle">未微调重排模型</h4><p>固定 N=20 候选源比较 5 个公开模型；其中 4 个进入后续任务内微调，Jina 仅保留为训练前对照。</p></div></div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table result-table-compact result-table-models">
                   <thead><tr><th scope="col">模型</th><th scope="col">推理框架</th><th scope="col">AllHit@6</th><th scope="col">AllHit@10</th><th scope="col">AllHit@30</th><th scope="col">MRR</th></tr></thead>
@@ -585,11 +585,11 @@
 
             <div class="result-table-head">
               <div><p class="eyebrow">开发集 · 三随机种子</p><h3>重排架构与学习率</h3></div>
-              <p>每种架构先筛选学习率，再与一级检索和二级融合参数联合比较。</p>
+              <p>由未微调基线确定的 4 个候选均完成任务内微调：先筛选学习率，再以三随机种子结果与一级检索、二级融合参数联合比较；最终选择依据是微调后结果。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact">
-                <thead><tr><th scope="col">重排模型</th><th scope="col">选中学习率</th><th scope="col">AllHit@6 均值</th><th scope="col">AllHit@10 均值</th><th scope="col">MRR 均值</th><th scope="col">重排候选数</th><th scope="col">估算 p50</th><th scope="col">选择</th></tr></thead>
+                <thead><tr><th scope="col">未微调基线入围模型</th><th scope="col">选中学习率</th><th scope="col">AllHit@6 均值</th><th scope="col">AllHit@10 均值</th><th scope="col">MRR 均值</th><th scope="col">重排候选数</th><th scope="col">估算 p50</th><th scope="col">选择</th></tr></thead>
                 <tbody>
                   <tr><td>bge-reranker-base</td><td>2e-5</td><td>97.6667%</td><td>100.0000%</td><td>0.998056</td><td>10</td><td>7.72ms</td><td>架构对照</td></tr>
                   <tr><td>bge-reranker-large</td><td>6e-5</td><td>98.2222%</td><td>99.9167%</td><td>0.998472</td><td>20</td><td>48.89ms</td><td>未入选</td></tr>
