@@ -1,7 +1,7 @@
-/* Generated from /renyuanliu/Agent/PROJECT artifacts through 2026-07-31. */
+/* Generated from /renyuanliu/Agent/PROJECT artifacts through 2026-08-01. */
 window.PROJECT_DATA = {
   "snapshot": {
-    "date": "2026-07-31",
+    "date": "2026-08-01",
     "label": "INTEGRATED SYSTEM SNAPSHOT",
     "catalogVersion": "2026-07-06",
     "scope": "100 个已知工具的意图分流、候选检索与静态有序选链一体化离线评测",
@@ -17,15 +17,15 @@ window.PROJECT_DATA = {
       ],
       "prediction": [
         "get_order_logistics",
-        "get_lost_package_process",
+        "get_notification_preferences",
         "query_delivery_fee",
         "estimate_delivery_time",
-        "confirm_order_receipt",
-        "get_user_addresses",
-        "split_shipment_plan",
+        "get_lost_package_process",
         "get_warehouse_stock_region",
-        "get_pickup_points",
-        "get_notification_preferences"
+        "confirm_order_receipt",
+        "split_shipment_plan",
+        "create_aftersale_ticket",
+        "get_pickup_points"
       ]
     },
     {
@@ -40,14 +40,14 @@ window.PROJECT_DATA = {
       "prediction": [
         "get_warehouse_stock_region",
         "get_sku_stock",
-        "get_checkout_preview",
         "split_shipment_plan",
-        "get_item_info",
-        "query_delivery_fee",
+        "get_checkout_preview",
         "get_user_addresses",
-        "get_low_stock_alert",
+        "get_item_info",
         "get_cart_summary",
-        "check_presale_status"
+        "can_merge_ship",
+        "get_low_stock_alert",
+        "query_delivery_fee"
       ]
     },
     {
@@ -61,15 +61,15 @@ window.PROJECT_DATA = {
       ],
       "prediction": [
         "create_aftersale_ticket",
-        "get_aftersale_ticket_status",
         "get_refund_status",
+        "get_aftersale_ticket_status",
+        "create_manual_service_ticket",
         "create_repair_ticket",
+        "get_quality_issue_policy",
         "upload_aftersale_evidence",
         "confirm_order_receipt",
-        "generate_risk_notice",
-        "request_reship_missing_item",
-        "get_service_queue_status",
-        "get_quality_issue_policy"
+        "escalate_to_human_service",
+        "create_refund_request"
       ]
     },
     {
@@ -83,16 +83,16 @@ window.PROJECT_DATA = {
         "summarize_item_reviews"
       ],
       "prediction": [
+        "get_item_reviews",
         "get_quality_issue_policy",
         "summarize_item_reviews",
-        "get_item_reviews",
-        "get_item_qa",
-        "compare_item_price",
-        "create_aftersale_ticket",
         "check_item_authenticity",
-        "get_complaint_channels",
         "get_price_history",
-        "get_item_info"
+        "get_complaint_channels",
+        "get_item_qa",
+        "get_aftersale_ticket_status",
+        "create_aftersale_ticket",
+        "compare_item_price"
       ]
     },
     {
@@ -106,16 +106,16 @@ window.PROJECT_DATA = {
         "compare_promotion_options"
       ],
       "prediction": [
-        "compare_promotion_options",
         "get_current_promotions",
-        "calc_discount",
+        "compare_promotion_options",
         "get_available_coupons",
+        "calc_discount",
         "get_flash_sale_status",
-        "compare_item_price",
-        "get_item_info",
-        "get_user_profile",
         "get_member_level",
-        "estimate_delivery_time"
+        "get_user_profile",
+        "compare_item_price",
+        "get_aftersale_ticket_status",
+        "get_item_info",
       ]
     },
     {
@@ -130,15 +130,15 @@ window.PROJECT_DATA = {
       ],
       "prediction": [
         "get_order_payment_status",
-        "create_payment_retry",
         "verify_payment_risk",
+        "create_payment_retry",
         "get_payment_methods",
-        "detect_abnormal_order",
         "check_account_risk",
         "get_order_detail",
         "generate_risk_notice",
-        "get_installment_plan",
-        "get_order_afterpay_status"
+        "detect_abnormal_order",
+        "confirm_order_receipt",
+        "cancel_order"
       ]
     },
     {
@@ -153,15 +153,15 @@ window.PROJECT_DATA = {
       ],
       "prediction": [
         "remove_cart_item",
-        "update_cart_quantity",
         "get_cart_summary",
+        "update_cart_quantity",
         "save_item_for_later",
         "create_cart_item",
-        "validate_checkout_items",
         "submit_order",
+        "update_default_address",
+        "validate_checkout_items",
         "get_checkout_preview",
-        "get_favorite_items",
-        "get_sku_stock"
+        "get_favorite_items"
       ]
     },
     {
@@ -175,16 +175,16 @@ window.PROJECT_DATA = {
         "update_size_profile"
       ],
       "prediction": [
-        "get_size_profile",
-        "get_user_profile",
-        "get_size_recommendation",
         "update_size_profile",
+        "get_user_profile",
+        "get_size_profile",
+        "get_size_recommendation",
         "get_item_specs",
-        "get_notification_preferences",
-        "get_favorite_items",
         "get_browsing_history",
-        "get_sku_stock",
-        "get_order_list"
+        "get_notification_preferences",
+        "update_default_address",
+        "get_low_stock_alert",
+        "get_recommendation_feed"
       ]
     },
     {
@@ -1328,67 +1328,52 @@ window.PROJECT_DATA = {
       ],
       "trained": [
         {
-          "label": "未微调 bge-large",
-          "short": "训练起点",
-          "a10": 0.4763,
-          "a30": 0.7347,
-          "mrr": 0.569,
-          "note": "通用能力起点",
-          "a6": 0.3823
+          "label": "跨领域与新增无关负样本训练的 bge-large-zh-v1.5",
+          "short": "向量模型",
+          "a10": 0.9975,
+          "a30": 1,
+          "mrr": 0.9975,
+          "note": "冻结种子 · 开发集",
+          "a6": 0.945833
         },
         {
-          "label": "任务内 MNRL 微调 bge-large-zh-v1.5（无显式负样本）",
-          "short": "当前向量模型",
-          "a10": 0.9575,
-          "a30": 0.9972,
-          "mrr": 0.9668,
-          "note": "当前系统 Embedding",
-          "a6": 0.858
+          "label": "bge-reranker-v2-m3 + 类型化负样本与检索难例",
+          "short": "联合选择",
+          "a10": 1,
+          "a30": 1,
+          "mrr": 0.997639,
+          "note": "三随机种子均值 · 开发集",
+          "a6": 0.988889
         },
         {
-          "label": "向量 + BM25 初排融合",
-          "short": "向量主导融合",
-          "a10": 0.9595,
-          "a30": 0.9975,
-          "mrr": 0.966826,
-          "note": "稳定候选源",
-          "a6": 0.8578
-        },
-        {
-          "label": "初排 + 任务内微调 bge-reranker-base",
-          "short": "最终链路",
-          "a10": 0.983,
-          "a30": 0.998667,
-          "mrr": 0.967954,
-          "note": "双路排序互补",
-          "a6": 0.9067
+          "label": "冻结完整检索链",
+          "short": "一次性终评",
+          "a10": 0.996667,
+          "a30": 1,
+          "mrr": 0.997778,
+          "note": "1,200 条 · 门槛未通过",
+          "a6": 0.984167
         }
       ]
     },
     "rerankerInsight": [
       {
-        "label": "向量 + BM25 初排融合",
-        "value": 0.9595,
+        "label": "向量模型冻结版本",
+        "value": 0.9975,
         "tone": "source",
-        "note": "稳定提供已学能力边界"
+        "note": "开发集 AllHit@10"
       },
       {
-        "label": "通用重排模型单路",
-        "value": 0.7028,
-        "tone": "danger",
-        "note": "通用交互信号与任务边界未对齐"
-      },
-      {
-        "label": "任务内微调 bge-reranker-base 单路",
-        "value": 0.945,
+        "label": "重排架构与负样本联合选择",
+        "value": 1,
         "tone": "trained",
-        "note": "任务内训练后形成有效补充"
+        "note": "三随机种子开发集均值"
       },
       {
-        "label": "初排 + bge-reranker-base 的 RRF 融合",
-        "value": 0.983,
+        "label": "完整检索链一次性终评",
+        "value": 0.996667,
         "tone": "final",
-        "note": "两路排序形成最佳互补"
+        "note": "1,200 条 · 质量门槛未通过"
       }
     ],
     "failures": [

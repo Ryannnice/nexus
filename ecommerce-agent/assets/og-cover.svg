@@ -8,9 +8,9 @@
   <line x1="64" y1="438" x2="704" y2="438" stroke="#5e5e5e"/>
   <text x="64" y="484" fill="#ffffff" font-family="Inter,Arial,sans-serif" font-size="32" font-weight="700">100</text>
   <text x="64" y="514" fill="#898989" font-family="Inter,Arial,sans-serif" font-size="14">KNOWN TOOLS</text>
-  <text x="224" y="484" fill="#ffffff" font-family="Inter,Arial,sans-serif" font-size="32" font-weight="700">98.30%</text>
-  <text x="224" y="514" fill="#898989" font-family="Inter,Arial,sans-serif" font-size="14">TOP-10 完整召回率</text>
-  <text x="454" y="484" fill="#76b900" font-family="Inter,Arial,sans-serif" font-size="32" font-weight="700">90.37%</text>
+  <text x="224" y="484" fill="#ffffff" font-family="Inter,Arial,sans-serif" font-size="32" font-weight="700">96.72%</text>
+  <text x="224" y="514" fill="#898989" font-family="Inter,Arial,sans-serif" font-size="14">自然表达 6K · TOP-10</text>
+  <text x="454" y="484" fill="#76b900" font-family="Inter,Arial,sans-serif" font-size="32" font-weight="700">90.59%</text>
   <text x="454" y="514" fill="#898989" font-family="Inter,Arial,sans-serif" font-size="14">静态全链路成功率 · 9,000 条</text>
   <rect x="64" y="554" width="270" height="32" fill="#1a1a1a" stroke="#5e5e5e"/>
   <rect x="64" y="554" width="8" height="32" fill="#76b900"/>

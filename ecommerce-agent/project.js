@@ -155,8 +155,8 @@
         renderMatrix(trace.gold);
         setPipeline(
           { detail: '电商类 · 进入工具选择', state: '通过' },
-          { detail: 'BM25 + bge-large-zh-v1.5', state: '前 50' },
-          { detail: '初排 + bge-reranker-base RRF', state: '前 10' }
+          { detail: 'BM25 + 负样本训练向量模型', state: '前 40' },
+          { detail: 'bge-reranker-v2-m3 + RRF', state: '前 10' }
         );
         footnote.innerHTML = '固定检索集回放 · <strong>' + escapeHtml(trace.id) + '</strong>';
       }
