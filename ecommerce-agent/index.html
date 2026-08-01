@@ -356,7 +356,7 @@
               <p>由已有预测离线复算，没有重新推理；分类指标覆盖完整 9,000 条，关键词指标只统计其中 6,000 条电商请求。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
-              <table class="result-table result-table-compact">
+              <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">端点</th><th scope="col">分类 Macro-P</th><th scope="col">分类 Macro-R</th><th scope="col">分类 Macro-F1</th><th scope="col">关键词集合全对率</th><th scope="col">关键词 micro-P</th><th scope="col">关键词 micro-R</th><th scope="col">关键词 micro-F1</th></tr></thead>
                 <tbody>
                   <tr><td>0.6B · 模块最优版本</td><td><strong>100.00%</strong></td><td><strong>100.00%</strong></td><td><strong>100.00%</strong></td><td>56.13%</td><td>81.01%</td><td>83.19%</td><td>82.08%</td></tr>
@@ -513,7 +513,7 @@
             <section class="full-results-group" aria-labelledby="firstStageDepthTitle">
               <div class="full-results-group-head"><span>02</span><div><h4 id="firstStageDepthTitle">选定融合方案后比较一级候选深度</h4><p>固定 bge-large + BM25，比较两路各自截取的候选数量。N=20 的 RRF AllHit@10 最高；N=30/50 提高候选池覆盖，但候选更多且未改善 RRF Top-10。</p></div></div>
               <div class="result-table-wrap" tabindex="0">
-                <table class="result-table result-table-compact">
+                <table class="result-table result-table-compact numeric-result-table">
                   <thead><tr><th scope="col">每路候选 N</th><th scope="col">候选池 AllHit</th><th scope="col">平均合并候选</th><th scope="col">Union A@10</th><th scope="col">加权 A@10</th><th scope="col">RRF A@10</th><th scope="col">RRF A@30</th><th scope="col">判断</th></tr></thead>
                   <tbody>
                     <tr><td>N=10</td><td>72.93%</td><td>16.86</td><td>62.18%</td><td>61.60%</td><td>62.97%</td><td>72.93%</td><td>候选较浅</td></tr>
@@ -544,7 +544,7 @@
             <section class="full-results-group" aria-labelledby="candidateDepthTitle">
               <div class="full-results-group-head"><span>04</span><div><h4 id="candidateDepthTitle">固定未微调最优重排模型，比较候选深度收益</h4><p>N=20 是上表五模型的统一比较口径；更深候选池仅用于观察质量与成本的取舍。</p></div></div>
               <div class="result-table-wrap" tabindex="0">
-                <table class="result-table result-table-compact result-table-depth">
+                <table class="result-table result-table-compact result-table-depth numeric-result-table">
                   <thead><tr><th scope="col">每路候选 N</th><th scope="col">平均合并候选</th><th scope="col">AllHit@6</th><th scope="col">AllHit@10</th><th scope="col">AllHit@30</th><th scope="col">MRR</th></tr></thead>
                   <tbody>
                     <tr><td>N=10</td><td>16.86</td><td>64.68%</td><td>70.58%</td><td>72.93%</td><td>88.35%</td></tr>
@@ -570,7 +570,7 @@
               <p>五种方案各运行三个随机种子并按 AllHit@10 均值选择；入选方案把每个查询—正例配对单独展开，每组比较 1 个正例和 2 个显式负例，共 3 个工具文档。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
-              <table class="result-table result-table-compact">
+              <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">训练方案</th><th scope="col">显式负样本 / 正对</th><th scope="col">Micro / 有效 Batch</th><th scope="col">AllHit@10 · 均值 ± 标准差</th><th scope="col">AllHit@20</th><th scope="col">AllHit@50</th><th scope="col">MRR</th><th scope="col">选择</th></tr></thead>
                 <tbody>
                   <tr><td>无显式负样本 · 大批量</td><td>0</td><td>64 / 64</td><td>98.7500% ± 0.1179pp</td><td>99.9167%</td><td>100.0000%</td><td>0.996782</td><td>对照</td></tr>
@@ -603,7 +603,7 @@
               <p>由未微调基线确定的 4 个候选均完成任务内微调：先筛选学习率，再以三随机种子结果与一级检索、二级融合参数联合比较；最终选择依据是微调后结果。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
-              <table class="result-table result-table-compact">
+              <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">未微调基线入围模型</th><th scope="col">选中学习率</th><th scope="col">AllHit@6 均值</th><th scope="col">AllHit@10 均值</th><th scope="col">MRR 均值</th><th scope="col">重排候选数</th><th scope="col">估算 p50</th><th scope="col">选择</th></tr></thead>
                 <tbody>
                   <tr><td>bge-reranker-base</td><td>2e-5</td><td>97.6667%</td><td>100.0000%</td><td>0.998056</td><td>10</td><td>7.72ms</td><td>架构对照</td></tr>
@@ -619,7 +619,7 @@
               <p>重排训练每组固定比较 1 个正例和 7 个负例；入选方案的负例由 3 个按工具类型挑选的样本和 4 个从检索结果中挖出的难例组成。先选择负例组合，再复核其他架构；AllHit@10 持平时优先 AllHit@6。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
-              <table class="result-table result-table-compact">
+              <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">重排模型与负样本</th><th scope="col">AllHit@6 均值</th><th scope="col">AllHit@10 均值</th><th scope="col">MRR 均值</th><th scope="col">估算 p50</th><th scope="col">选择</th></tr></thead>
                 <tbody>
                   <tr class="result-table-final"><td><strong>bge-reranker-v2-m3 · 3 个按工具类型挑选的负例 + 4 个检索难例</strong></td><td><strong>98.8889%</strong></td><td><strong>100.0000%</strong></td><td>0.997639</td><td><strong>24.42ms</strong></td><td><strong>入选</strong></td></tr>
@@ -635,7 +635,7 @@
               <p>固定入选模型、负样本方案及两级融合参数，仅改变重排候选数；延迟按全 100 工具实测 p50 等比例估算。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
-              <table class="result-table result-table-compact">
+              <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">重排候选数</th><th scope="col">AllHit@6 均值</th><th scope="col">AllHit@10 均值</th><th scope="col">AllHit@20 均值</th><th scope="col">MRR 均值</th><th scope="col">重排估算 p50</th><th scope="col">选择</th></tr></thead>
                 <tbody>
                   <tr class="result-table-final"><td><strong>Top-10</strong></td><td><strong>98.8889%</strong></td><td><strong>100.0000%</strong></td><td>100.0000%</td><td><strong>0.997639</strong></td><td><strong>24.42ms</strong></td><td><strong>入选</strong></td></tr>
@@ -677,7 +677,7 @@
               <p>开发集只用于选参；一次性终评以 AllHit@10 为主，同时报告 AllHit@6 / @20 / @50、MRR 与完整路径时延，配置打开终评后不再调整。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
-              <table class="result-table result-table-compact">
+              <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">评测集</th><th scope="col">样本数</th><th scope="col">AllHit@6</th><th scope="col">AllHit@7</th><th scope="col">AllHit@8</th><th scope="col">AllHit@9</th><th scope="col">AllHit@10</th><th scope="col">AllHit@20</th><th scope="col">AllHit@50</th><th scope="col">MRR</th></tr></thead>
                 <tbody>
                   <tr class="result-table-final"><td><strong>自然表达回归</strong><small>主检索口径</small></td><td><strong>6,000</strong></td><td>91.0667%</td><td>94.0000%</td><td>95.5000%</td><td>96.3833%</td><td><strong>96.7167%</strong></td><td>99.5000%</td><td>99.9333%</td><td>0.976245</td></tr>
@@ -712,7 +712,7 @@
               <p>1,200 条一次性终评，模型加载另计。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
-              <table class="result-table result-table-compact efficiency-table">
+              <table class="result-table result-table-compact efficiency-table numeric-result-table">
                 <thead><tr><th scope="col">路径</th><th scope="col">吞吐</th><th scope="col">完整路径 p50</th><th scope="col">完整路径 p95</th><th scope="col">GPU 峰值显存</th><th scope="col">离线排名一致率</th></tr></thead>
                 <tbody>
                   <tr class="result-table-final"><td><strong>最终检索链</strong></td><td><strong>28.67 条 / 秒</strong></td><td><strong>34.8958ms</strong></td><td><strong>46.1339ms</strong></td><td>2.982 GiB</td><td><strong>Top-10 · 100.0000%</strong></td></tr>
@@ -868,7 +868,7 @@
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table planner-final-table">
-                    <thead><tr><th scope="col">评测集</th><th scope="col">基础模型</th><th scope="col">无 RAG · 完整 100 工具<br>集合 / 工具链 / 格式合规率</th><th scope="col">RAG · 当前检索 Top-10<br>集合 / 工具链 / 格式合规率</th><th scope="col">RAG 工具链提升</th></tr></thead>
+                    <thead><tr><th scope="col">评测集</th><th scope="col">基础模型</th><th scope="col"><span class="result-column-title">无 RAG · 完整 100 工具</span><small class="result-column-metrics">集合 / 工具链 / 格式合规率</small></th><th scope="col"><span class="result-column-title">RAG · 当前检索 Top-10</span><small class="result-column-metrics">集合 / 工具链 / 格式合规率</small></th><th scope="col">RAG 工具链提升</th></tr></thead>
                     <tbody>
                       <tr><td rowspan="2"><strong>自然表达 6K</strong></td><td>未微调 4B</td><td>26.9500% / 25.2167% / 84.6833%</td><td>35.1333% / 33.5667% / 94.1833%</td><td><strong>+8.3500pp</strong></td></tr>
                       <tr><td>未微调 8B</td><td>30.7500% / 28.9333% / 92.5333%</td><td>36.0333% / 34.5167% / 94.5833%</td><td><strong>+5.5833pp</strong></td></tr>
@@ -894,7 +894,7 @@
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table">
-                    <thead><tr><th scope="col">模型</th><th scope="col">未微调 · 固定 Top-10<br>集合 / 工具链全对率</th><th scope="col">第一次监督训练 · 同一 Top-10<br>集合 / 工具链全对率</th><th scope="col">工具链提升</th></tr></thead>
+                    <thead><tr><th scope="col">模型</th><th scope="col"><span class="result-column-title">未微调 · 固定 Top-10</span><small class="result-column-metrics">集合 / 工具链全对率</small></th><th scope="col"><span class="result-column-title">第一次监督训练 · 同一 Top-10</span><small class="result-column-metrics">集合 / 工具链全对率</small></th><th scope="col">工具链提升</th></tr></thead>
                     <tbody>
                       <tr><td>Qwen3-4B</td><td>54.00% / 53.10%</td><td><strong>99.00% / 99.00%</strong></td><td><strong>+45.90pp</strong></td></tr>
                       <tr><td>Qwen3-8B</td><td>60.00% / 59.10%</td><td><strong>98.30% / 98.30%</strong></td><td><strong>+39.20pp</strong></td></tr>
@@ -908,7 +908,7 @@
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table planner-final-table">
-                    <thead><tr><th scope="col">评测集</th><th scope="col">监督训练模型</th><th scope="col">无 RAG · 完整 100 工具<br>集合 / 工具链 / 格式合规率</th><th scope="col">RAG · 当前检索 Top-10<br>集合 / 工具链 / 格式合规率</th><th scope="col">RAG 工具链提升</th></tr></thead>
+                    <thead><tr><th scope="col">评测集</th><th scope="col">监督训练模型</th><th scope="col"><span class="result-column-title">无 RAG · 完整 100 工具</span><small class="result-column-metrics">集合 / 工具链 / 格式合规率</small></th><th scope="col"><span class="result-column-title">RAG · 当前检索 Top-10</span><small class="result-column-metrics">集合 / 工具链 / 格式合规率</small></th><th scope="col">RAG 工具链提升</th></tr></thead>
                     <tbody>
                       <tr><td rowspan="2"><strong>自然表达 6K</strong></td><td>监督训练 4B</td><td>44.2500% / 44.1833% / 97.7500%</td><td>84.6500% / 84.3500% / 99.5333%</td><td><strong>+40.1667pp</strong></td></tr>
                       <tr class="result-table-final"><td><strong>监督训练 8B</strong></td><td>46.1667% / 46.0500% / 92.3667%</td><td><strong>86.2333% / 85.9500% / 99.7833%</strong></td><td><strong>+39.9000pp</strong></td></tr>
