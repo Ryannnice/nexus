@@ -1040,7 +1040,7 @@
               <span>最终完整评测链 · 三个模块 / 五个步骤</span>
               <h3 id="systemTitle">冻结配置与静态工具链</h3>
             </div>
-            <p>固定 1.7B 路由、最终检索 Top-10 与冻结 8B 规划模型；Planner 未因检索链更新而重新训练。</p>
+            <p>固定 1.7B 路由、最终检索 Top-10 与冻结 8B 规划模型；三个模块均按同一 9K 测试集逐阶段累计。</p>
           </header>
 
           <ol class="route-phases final-route-phases">
@@ -1054,7 +1054,7 @@
           <article class="pipeline-lane intent-lane">
             <header>
               <div><span>模块 01 · 意图分流</span><h3>入口意图分流</h3></div>
-              <p>全链路评测冻结配置 · 步骤 01</p>
+              <p>截至分流 · 8,996 / 9,000 · 99.9556%</p>
             </header>
             <div class="pipeline-row pipeline-row-intent">
               <div class="pipeline-node node-input"><small>输入</small><strong>用户请求</strong><span>复合电商诉求或开放闲聊</span></div>
@@ -1070,7 +1070,7 @@
           <article class="pipeline-lane retrieval-lane">
             <header>
               <div><span>模块 02 · 候选检索</span><h3>完整工具集合检索</h3></div>
-              <p>采用配置 · 步骤 02–03</p>
+              <p>截至检索 · 8,799 / 9,000 · 97.7667%</p>
             </header>
             <div class="retrieval-map-v2">
               <div class="pipeline-node node-input retrieval-query"><small>输入</small><strong>电商请求</strong><span>单工具或多工具请求</span></div>
@@ -1119,12 +1119,12 @@
           <article class="pipeline-lane planner-lane">
             <header>
               <div><span>模块 03 · 工具链规划</span><h3>精确工具集合与有序轨迹生成</h3></div>
-              <p>采用配置 · 步骤 04–05</p>
+              <p>最终结果 · 集合 8,170 / 9,000 · 90.7778% ｜ 有序工具链 8,153 / 9,000 · 90.5889%</p>
             </header>
             <div class="planner-map">
               <div class="planner-inputs">
                 <div><small>请求上下文</small><strong>电商请求</strong><span>保留用户要求与顺序约束</span></div>
-                <div class="planner-input-selected"><small>候选检索</small><strong>Top-10 候选</strong><span>终评 AllHit@10 · 99.6667%</span></div>
+                <div class="planner-input-selected"><small>候选检索</small><strong>Top-10 候选</strong><span>截至检索 · 8,799 / 9,000 · 97.7667%</span></div>
               </div>
               <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
               <div class="planner-model">
