@@ -485,64 +485,6 @@
           </ul>
         </div>
 
-        <details class="narrative-disclosure retrieval-supplement-disclosure" id="retrievalSelection">
-          <summary>
-            <span class="disclosure-summary-copy"><small>模型与参数选择</small><strong>查看向量模型、重排模型与冻结检索参数</strong></span>
-            <span class="disclosure-summary-meta">5 种向量方案 × 3 种子 · 4 种重排架构</span>
-            <i aria-hidden="true">+</i>
-          </summary>
-          <div class="disclosure-body">
-            <div class="result-table-head">
-              <div><p class="eyebrow">开发集 · 1,200 条</p><h3>向量模型的负样本方案</h3></div>
-              <p>五种训练方案各运行三个随机种子；使用 AllHit@10 均值完成选择。</p>
-            </div>
-            <div class="result-table-wrap" tabindex="0">
-              <table class="result-table result-table-compact">
-                <thead><tr><th scope="col">训练方案</th><th scope="col">显式负样本 / 正对</th><th scope="col">Micro / 有效 Batch</th><th scope="col">AllHit@10 · 均值 ± 标准差</th><th scope="col">AllHit@20</th><th scope="col">AllHit@50</th><th scope="col">MRR</th><th scope="col">选择</th></tr></thead>
-                <tbody>
-                  <tr><td>无显式负样本 · 大批量</td><td>0</td><td>64 / 64</td><td>98.7500% ± 0.1179pp</td><td>99.9167%</td><td>100.0000%</td><td>0.996782</td><td>对照</td></tr>
-                  <tr><td>无显式负样本 · 小批量</td><td>0</td><td>8 / 64</td><td>99.0000% ± 0.1361pp</td><td>99.9445%</td><td>100.0000%</td><td>0.996875</td><td>批量对照</td></tr>
-                  <tr class="result-table-final"><td><strong>跨领域与新增无关负样本</strong></td><td>2</td><td>8 / 64</td><td><strong>99.5556% ± 0.1416pp</strong></td><td><strong>100.0000%</strong></td><td><strong>100.0000%</strong></td><td><strong>0.997292</strong></td><td><strong>入选</strong></td></tr>
-                  <tr><td>同领域与部分替代负样本</td><td>2</td><td>8 / 64</td><td>99.0556% ± 0.3425pp</td><td>99.9722%</td><td>100.0000%</td><td>0.996962</td><td>种子波动较大</td></tr>
-                  <tr><td>四类负样本全部加入</td><td>4</td><td>8 / 64</td><td>99.3611% ± 0.1039pp</td><td>99.9722%</td><td>100.0000%</td><td>0.996493</td><td>未入选</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="result-table-head">
-              <div><p class="eyebrow">开发集 · 三随机种子</p><h3>重排架构与候选深度</h3></div>
-              <p>Embedding 冻结后重新比较架构、学习率、负样本和候选深度。</p>
-            </div>
-            <div class="result-table-wrap" tabindex="0">
-              <table class="result-table result-table-compact">
-                <thead><tr><th scope="col">重排模型</th><th scope="col">AllHit@6 均值</th><th scope="col">AllHit@10 均值</th><th scope="col">MRR 均值</th><th scope="col">重排候选数</th><th scope="col">估算 p50</th><th scope="col">选择</th></tr></thead>
-                <tbody>
-                  <tr><td>bge-reranker-base</td><td>97.6667%</td><td>100.0000%</td><td>0.998056</td><td>10</td><td>7.72ms</td><td>架构对照</td></tr>
-                  <tr><td>bge-reranker-large</td><td>98.2222%</td><td>99.9167%</td><td>0.998472</td><td>20</td><td>48.89ms</td><td>未入选</td></tr>
-                  <tr class="result-table-final"><td><strong>bge-reranker-v2-m3</strong></td><td><strong>98.4722%</strong></td><td><strong>100.0000%</strong></td><td>0.997778</td><td><strong>10</strong></td><td><strong>24.34ms</strong></td><td><strong>入选</strong></td></tr>
-                  <tr><td>Qwen3-Reranker-0.6B</td><td>98.3056%</td><td>100.0000%</td><td>0.999306</td><td>10</td><td>76.45ms</td><td>延迟较高</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="result-table-head">
-              <div><p class="eyebrow">冻结配置</p><h3>从请求到 Top-10 的完整检索链</h3></div>
-              <p>一级搜索 1,190 组参数后，与重排候选深度和二级融合联合选择。</p>
-            </div>
-            <div class="result-table-wrap" tabindex="0">
-              <table class="result-table result-table-compact">
-                <thead><tr><th scope="col">阶段</th><th scope="col">模型或方法</th><th scope="col">训练 / 推理配置</th><th scope="col">阶段输出</th></tr></thead>
-                <tbody>
-                  <tr><td><span class="table-stage table-stage-trained">向量检索</span></td><td><strong>任务内微调 bge-large-zh-v1.5</strong></td><td>每个正对加入 2 个跨领域或新增无关负样本</td><td>全工具向量排序</td></tr>
-                  <tr><td><span class="table-stage table-stage-trained">第一阶段融合</span></td><td><strong>向量排序 + BM25 加权 RRF</strong></td><td>各取前 40 · 向量权重 0.8 · 平滑常数 5</td><td>送入重排的 Top-10</td></tr>
-                  <tr><td><span class="table-stage table-stage-trained">候选重排</span></td><td><strong>bge-reranker-v2-m3</strong></td><td>每组 1 正 + 3 个类型化负样本 + 4 个检索难例</td><td>Top-10 重排名次</td></tr>
-                  <tr class="result-table-final"><td><span class="table-stage table-stage-final">最终融合</span></td><td><strong>第一阶段名次 + 重排名次</strong></td><td>第一阶段权重 0.3 · 重排权重 0.7 · 平滑常数 1</td><td><strong>最终 Top-10</strong><small>开发集三种子 AllHit@6 / @10：98.8889% / 100%</small></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </details>
-
         <details class="full-results narrative-disclosure retrieval-run-disclosure" id="retrievalBaseComparisons">
           <summary>
             <span class="disclosure-summary-copy"><small>基础模型与公开基线</small><strong>查看未微调检索、公开重排模型与候选深度结果</strong></span>
@@ -609,6 +551,64 @@
                 </table>
               </div>
             </section>
+          </div>
+        </details>
+
+        <details class="narrative-disclosure retrieval-supplement-disclosure" id="retrievalSelection">
+          <summary>
+            <span class="disclosure-summary-copy"><small>模型与参数选择</small><strong>查看向量模型、重排模型与冻结检索参数</strong></span>
+            <span class="disclosure-summary-meta">5 种向量方案 × 3 种子 · 4 种重排架构</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div class="disclosure-body">
+            <div class="result-table-head">
+              <div><p class="eyebrow">开发集 · 1,200 条</p><h3>向量模型的负样本方案</h3></div>
+              <p>五种训练方案各运行三个随机种子；使用 AllHit@10 均值完成选择。</p>
+            </div>
+            <div class="result-table-wrap" tabindex="0">
+              <table class="result-table result-table-compact">
+                <thead><tr><th scope="col">训练方案</th><th scope="col">显式负样本 / 正对</th><th scope="col">Micro / 有效 Batch</th><th scope="col">AllHit@10 · 均值 ± 标准差</th><th scope="col">AllHit@20</th><th scope="col">AllHit@50</th><th scope="col">MRR</th><th scope="col">选择</th></tr></thead>
+                <tbody>
+                  <tr><td>无显式负样本 · 大批量</td><td>0</td><td>64 / 64</td><td>98.7500% ± 0.1179pp</td><td>99.9167%</td><td>100.0000%</td><td>0.996782</td><td>对照</td></tr>
+                  <tr><td>无显式负样本 · 小批量</td><td>0</td><td>8 / 64</td><td>99.0000% ± 0.1361pp</td><td>99.9445%</td><td>100.0000%</td><td>0.996875</td><td>批量对照</td></tr>
+                  <tr class="result-table-final"><td><strong>跨领域与新增无关负样本</strong></td><td>2</td><td>8 / 64</td><td><strong>99.5556% ± 0.1416pp</strong></td><td><strong>100.0000%</strong></td><td><strong>100.0000%</strong></td><td><strong>0.997292</strong></td><td><strong>入选</strong></td></tr>
+                  <tr><td>同领域与部分替代负样本</td><td>2</td><td>8 / 64</td><td>99.0556% ± 0.3425pp</td><td>99.9722%</td><td>100.0000%</td><td>0.996962</td><td>种子波动较大</td></tr>
+                  <tr><td>四类负样本全部加入</td><td>4</td><td>8 / 64</td><td>99.3611% ± 0.1039pp</td><td>99.9722%</td><td>100.0000%</td><td>0.996493</td><td>未入选</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="result-table-head">
+              <div><p class="eyebrow">开发集 · 三随机种子</p><h3>重排架构与候选深度</h3></div>
+              <p>Embedding 冻结后重新比较架构、学习率、负样本和候选深度。</p>
+            </div>
+            <div class="result-table-wrap" tabindex="0">
+              <table class="result-table result-table-compact">
+                <thead><tr><th scope="col">重排模型</th><th scope="col">AllHit@6 均值</th><th scope="col">AllHit@10 均值</th><th scope="col">MRR 均值</th><th scope="col">重排候选数</th><th scope="col">估算 p50</th><th scope="col">选择</th></tr></thead>
+                <tbody>
+                  <tr><td>bge-reranker-base</td><td>97.6667%</td><td>100.0000%</td><td>0.998056</td><td>10</td><td>7.72ms</td><td>架构对照</td></tr>
+                  <tr><td>bge-reranker-large</td><td>98.2222%</td><td>99.9167%</td><td>0.998472</td><td>20</td><td>48.89ms</td><td>未入选</td></tr>
+                  <tr class="result-table-final"><td><strong>bge-reranker-v2-m3</strong></td><td><strong>98.4722%</strong></td><td><strong>100.0000%</strong></td><td>0.997778</td><td><strong>10</strong></td><td><strong>24.34ms</strong></td><td><strong>入选</strong></td></tr>
+                  <tr><td>Qwen3-Reranker-0.6B</td><td>98.3056%</td><td>100.0000%</td><td>0.999306</td><td>10</td><td>76.45ms</td><td>延迟较高</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="result-table-head">
+              <div><p class="eyebrow">冻结配置</p><h3>从请求到 Top-10 的完整检索链</h3></div>
+              <p>一级搜索 1,190 组参数后，与重排候选深度和二级融合联合选择。</p>
+            </div>
+            <div class="result-table-wrap" tabindex="0">
+              <table class="result-table result-table-compact">
+                <thead><tr><th scope="col">阶段</th><th scope="col">模型或方法</th><th scope="col">训练 / 推理配置</th><th scope="col">阶段输出</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="table-stage table-stage-trained">向量检索</span></td><td><strong>任务内微调 bge-large-zh-v1.5</strong></td><td>每个正对加入 2 个跨领域或新增无关负样本</td><td>全工具向量排序</td></tr>
+                  <tr><td><span class="table-stage table-stage-trained">第一阶段融合</span></td><td><strong>向量排序 + BM25 加权 RRF</strong></td><td>各取前 40 · 向量权重 0.8 · 平滑常数 5</td><td>送入重排的 Top-10</td></tr>
+                  <tr><td><span class="table-stage table-stage-trained">候选重排</span></td><td><strong>bge-reranker-v2-m3</strong></td><td>每组 1 正 + 3 个类型化负样本 + 4 个检索难例</td><td>Top-10 重排名次</td></tr>
+                  <tr class="result-table-final"><td><span class="table-stage table-stage-final">最终融合</span></td><td><strong>第一阶段名次 + 重排名次</strong></td><td>第一阶段权重 0.3 · 重排权重 0.7 · 平滑常数 1</td><td><strong>最终 Top-10</strong><small>开发集三种子 AllHit@6 / @10：98.8889% / 100%</small></td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </details>
 
