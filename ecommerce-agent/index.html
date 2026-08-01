@@ -381,7 +381,7 @@
                 <span>训练集更新参数，验证集选择版本，固定测试集只报告结果。</span>
               </div>
               <div class="data-table-wrap" tabindex="0">
-                <table class="data-table experiment-data-table">
+                <table class="data-table experiment-data-table data-table-four-column">
                   <thead><tr><th scope="col">数据</th><th scope="col">规模</th><th scope="col">用途</th><th scope="col">边界</th></tr></thead>
                   <tbody>
                     <tr><td><strong>监督训练与验证</strong><span>电商轨迹 + 独立闲聊</span></td><td><strong>45,606 / 2,400</strong><small>合计 48,006 条</small></td><td>训练 0.6B / 1.7B；验证集选择模型版本</td><td>两个模型使用同一样本全集；1.7B 采用类别均衡排列</td></tr>
@@ -399,7 +399,7 @@
                 <p>共同配置：BF16 · 批量 32 · 2 轮 · 学习率 1e-4 · LoRA r16 / α32 · 最大长度 512。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
-                <table class="result-table efficiency-table">
+                <table class="result-table efficiency-table intent-training-efficiency-table">
                   <thead><tr><th scope="col">模型与数据</th><th scope="col">报告版本</th><th scope="col">完整训练</th><th scope="col">资源记录</th></tr></thead>
                   <tbody>
                     <tr><td><strong>Qwen3-0.6B</strong><small>完整训练集 · 45,606 条</small></td><td>训练步 2000<small>模块横评最优</small></td><td><strong>19 分 39 秒</strong><small>2,852 步</small></td><td>单进程；训练 GPU 型号与峰值显存未记录</td></tr>
@@ -587,7 +587,7 @@
               <p>先去除产生相同排名的配置，再保留覆盖率前沿，最后把少量强候选交给重排与二级融合联合选择。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
-              <table class="result-table result-table-compact">
+              <table class="result-table result-table-compact route-screen-table">
                 <thead><tr><th scope="col">阶段</th><th scope="col">搜索或筛选范围</th><th scope="col">路线数</th><th scope="col">进入下一步的依据</th></tr></thead>
                 <tbody>
                   <tr><td><strong>完整参数网格</strong></td><td>每路候选 10 / 20 / 30 / 40 / 50 / 75 / 100 × 17 个向量权重 × 10 个 RRF 平滑常数</td><td><strong>1,190</strong></td><td>计算 AllHit@10 / @20 / @30 / @40 / @50 与 MRR</td></tr>
@@ -652,7 +652,7 @@
               <p>一级搜索 1,190 组参数后，与重排模型、重排候选数、二级来源权重和平滑常数联合选择。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
-              <table class="result-table result-table-compact">
+              <table class="result-table result-table-compact configuration-result-table">
                 <thead><tr><th scope="col">阶段</th><th scope="col">模型或方法</th><th scope="col">训练 / 推理配置</th><th scope="col">阶段输出</th></tr></thead>
                 <tbody>
                   <tr><td><span class="table-stage table-stage-trained">向量检索</span></td><td><strong>任务内微调 bge-large-zh-v1.5</strong></td><td>每个查询—正例配对单独成组：1 正 + 2 负，共 3 个工具文档<small>冻结随机种子 20260731</small></td><td>全工具向量排序</td></tr>
@@ -693,7 +693,7 @@
               <p>失败定义为至少一个必要工具没有进入最终 Top-10；多余工具只有挤出必要工具时才构成覆盖失败。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
-              <table class="result-table result-table-compact">
+              <table class="result-table retrieval-audit-table">
                 <thead><tr><th scope="col">检查项</th><th scope="col">结果</th><th scope="col">解释</th></tr></thead>
                 <tbody>
                   <tr><td>最终 Top-10 覆盖失败</td><td><strong>197 / 6,000</strong><small>3.2833%</small></td><td>5,803 条请求完整覆盖全部必要工具</td></tr>
@@ -737,7 +737,7 @@
                 <span>终评只在模型与整链参数冻结后打开。</span>
               </div>
               <div class="data-table-wrap" tabindex="0">
-                <table class="data-table experiment-data-table">
+                <table class="data-table experiment-data-table data-table-four-column">
                   <thead><tr><th scope="col">数据</th><th scope="col">规模</th><th scope="col">用途</th><th scope="col">结果或边界</th></tr></thead>
                   <tbody>
                     <tr><td><strong>训练轨迹</strong></td><td>24,000 组 · 70,012 个正对</td><td>训练向量模型与重排模型</td><td>向量训练将每个查询—正例配对展开为 1 正 + 2 负；重排每组为 1 正 + 7 负</td></tr>
@@ -781,7 +781,7 @@
                 <p>训练均为单卡；完整候选检索效率在同一张 RTX 3090 上测量。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
-                <table class="result-table efficiency-table">
+                <table class="result-table efficiency-table retrieval-current-efficiency-table">
                   <thead><tr><th scope="col">阶段</th><th scope="col">配置</th><th scope="col">硬件</th><th scope="col">训练耗时</th><th scope="col">推理或资源记录</th></tr></thead>
                   <tbody>
                     <tr><td><strong>向量模型</strong></td><td>bge-large-zh-v1.5 · 1 轮 · FP16 · 有效批量 64</td><td>1 × RTX 3090 24GB</td><td><strong>51 分 01.5 秒</strong></td><td>冻结版本开发集编码均值 5.2469ms / 条；FAISS p50 / p95 0.0233 / 0.0259ms</td></tr>
@@ -1069,16 +1069,17 @@
                 <p>准确率来自自由生成请求 1K 模块测试。共同配置：1 GPU、BF16、全局批量 32、3 轮、lr5e-5、LoRA r32 / α64 / dropout 0.05、最大长度 2048；4B / 8B 分别为批量 8 × 累积 4 / 批量 4 × 累积 8。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
-                <table class="result-table efficiency-table planner-scale-efficiency-table">
-                  <thead><tr><th scope="col">训练量</th><th scope="col">训练步数</th><th scope="col">4B 耗时 / 模块工具链全对率<br>100 工具 / Top-10</th><th scope="col">8B 耗时 / 模块工具链全对率<br>100 工具 / Top-10</th><th scope="col">复现边界</th></tr></thead>
+                <table class="result-table efficiency-table planner-scale-efficiency-table numeric-result-table">
+                  <thead><tr><th scope="col">训练量</th><th scope="col">训练步数</th><th scope="col"><span class="result-column-title">4B 耗时 / 模块工具链全对率</span><small class="result-column-metrics">完整 100 工具 / Top-10</small></th><th scope="col"><span class="result-column-title">8B 耗时 / 模块工具链全对率</span><small class="result-column-metrics">完整 100 工具 / Top-10</small></th></tr></thead>
                   <tbody>
-                    <tr><td><strong>9K</strong></td><td>846</td><td><strong>55 分 03 秒</strong><small>93.00% / 98.60%</small></td><td><strong>1 小时 31 分 42 秒</strong><small>95.60% / 98.60%</small></td><td rowspan="4">每个规模只保留一个固定种子的正式运行；此外 4B 完成 21 个 9K 参数组合，8B 完成 3 个 9K 确认运行。各组合结果保留在源报告中，不能把单次耗时外推为完整搜索总成本。</td></tr>
+                    <tr><td><strong>9K</strong></td><td>846</td><td><strong>55 分 03 秒</strong><small>93.00% / 98.60%</small></td><td><strong>1 小时 31 分 42 秒</strong><small>95.60% / 98.60%</small></td></tr>
                     <tr><td><strong>18K</strong></td><td>1,689</td><td><strong>1 小时 49 分 45 秒</strong><small>91.60% / 97.70%</small></td><td><strong>3 小时 03 分 03 秒</strong><small>95.10% / 99.00%</small></td></tr>
                     <tr><td><strong>36K</strong></td><td>3,375</td><td><strong>4 小时 00 分 51 秒</strong><small>91.20% / 99.20%</small></td><td><strong>6 小时 25 分 48 秒</strong><small>95.70% / 98.20%</small></td></tr>
                     <tr><td><strong>54K</strong></td><td>5,064</td><td><strong>6 小时 01 分 32 秒</strong><small>96.20% / 98.60%</small></td><td><strong>10 小时 10 分 02 秒</strong><small>97.40% / 99.10%</small></td></tr>
                   </tbody>
                 </table>
               </div>
+              <p class="efficiency-boundary"><strong>复现边界：</strong>每个规模只保留一个固定种子的正式运行；4B 另完成 21 个 9K 参数组合，8B 另完成 3 个 9K 确认运行。表中单次耗时不能外推为完整搜索总成本。</p>
             </section>
 
             <section class="efficiency-table-block" aria-labelledby="plannerCandidateEfficiencyTitle">

@@ -700,6 +700,10 @@ code, pre { font-family: var(--font); }
 .data-table th:nth-child(3) { width: 20%; }
 .data-table th:nth-child(4) { width: 23%; }
 .data-table th:nth-child(5) { width: 20%; }
+.data-table-four-column th:nth-child(1) { width: 22%; }
+.data-table-four-column th:nth-child(2) { width: 18%; }
+.data-table-four-column th:nth-child(3) { width: 27%; }
+.data-table-four-column th:nth-child(4) { width: 33%; }
 .data-table td { color: var(--body); font-size: 12px; line-height: 1.6; }
 .data-table tbody tr:nth-child(even) td { background: var(--surface-soft); }
 .data-table td strong { display: block; color: var(--ink); font-size: 13px; }
@@ -6976,14 +6980,7 @@ details table td {
 
 .efficiency-table {
   min-width: 1060px;
-}
-
-.efficiency-table th:first-child {
-  width: 150px;
-}
-
-.efficiency-table th:nth-child(2) {
-  width: 390px;
+  table-layout: fixed;
 }
 
 .efficiency-table td {
@@ -6998,35 +6995,69 @@ details table td {
   font-size: 9px;
 }
 
-.efficiency-table .result-table-final td:nth-child(4) {
-  color: var(--ink);
-  font-size: 11px;
-}
+.intent-training-efficiency-table { min-width: 960px; }
+.intent-training-efficiency-table th:nth-child(1) { width: 240px; }
+.intent-training-efficiency-table th:nth-child(2) { width: 190px; }
+.intent-training-efficiency-table th:nth-child(3) { width: 190px; }
+.intent-training-efficiency-table th:nth-child(4) { width: 340px; }
 
-#plannerEnvironment .planner-training-efficiency-table,
-#plannerEnvironment .planner-preference-efficiency-table {
-  min-width: 1180px;
-}
+.intent-inference-efficiency-table { min-width: 1060px; }
+.intent-inference-efficiency-table th:nth-child(1) { width: 270px; }
+.intent-inference-efficiency-table th:nth-child(2) { width: 190px; }
+.intent-inference-efficiency-table th:nth-child(3) { width: 180px; }
+.intent-inference-efficiency-table th:nth-child(4) { width: 160px; }
+.intent-inference-efficiency-table th:nth-child(5) { width: 260px; }
+.intent-inference-efficiency-table :is(th, td):nth-child(n + 3) { text-align: right; }
 
-#plannerEnvironment .planner-scale-efficiency-table,
-#plannerEnvironment .planner-inference-efficiency-table {
-  min-width: 1080px;
-}
+.retrieval-public-efficiency-table { min-width: 1180px; }
+.retrieval-public-efficiency-table th:nth-child(1) { width: 130px; }
+.retrieval-public-efficiency-table th:nth-child(2) { width: 310px; }
+.retrieval-public-efficiency-table th:nth-child(3) { width: 180px; }
+.retrieval-public-efficiency-table th:nth-child(4) { width: 340px; }
+.retrieval-public-efficiency-table th:nth-child(5) { width: 220px; }
 
-#plannerEnvironment .planner-candidate-efficiency-table {
-  min-width: 980px;
-}
+.retrieval-current-efficiency-table { min-width: 1160px; }
+.retrieval-current-efficiency-table th:nth-child(1) { width: 150px; }
+.retrieval-current-efficiency-table th:nth-child(2) { width: 310px; }
+.retrieval-current-efficiency-table th:nth-child(3) { width: 190px; }
+.retrieval-current-efficiency-table th:nth-child(4) { width: 170px; }
+.retrieval-current-efficiency-table th:nth-child(5) { width: 340px; }
+.retrieval-current-efficiency-table :is(th, td):nth-child(-n + 3) { text-align: left; }
 
+#plannerEnvironment .planner-training-efficiency-table { min-width: 1180px; }
 #plannerEnvironment .planner-training-efficiency-table th:nth-child(1) { width: 170px; }
 #plannerEnvironment .planner-training-efficiency-table th:nth-child(2) { width: 110px; }
-#plannerEnvironment .planner-scale-efficiency-table th:nth-child(1) { width: 90px; }
-#plannerEnvironment .planner-scale-efficiency-table th:nth-child(2) { width: 100px; }
-#plannerEnvironment .planner-preference-efficiency-table th:nth-child(1) { width: 210px; }
-#plannerEnvironment .planner-preference-efficiency-table th:nth-child(2) { width: 170px; }
-#plannerEnvironment .planner-candidate-efficiency-table th:nth-child(1) { width: 160px; }
-#plannerEnvironment .planner-candidate-efficiency-table th:nth-child(2) { width: 80px; }
-#plannerEnvironment .planner-inference-efficiency-table th:nth-child(1) { width: 220px; }
-#plannerEnvironment .planner-inference-efficiency-table th:nth-child(2) { width: 180px; }
+#plannerEnvironment .planner-training-efficiency-table th:nth-child(3) { width: 400px; }
+#plannerEnvironment .planner-training-efficiency-table th:nth-child(4) { width: 250px; }
+#plannerEnvironment .planner-training-efficiency-table th:nth-child(5) { width: 250px; }
+#plannerEnvironment .planner-training-efficiency-table :is(th, td) { text-align: left; }
+
+#plannerEnvironment .planner-scale-efficiency-table { min-width: 1080px; }
+#plannerEnvironment .planner-scale-efficiency-table th:nth-child(1) { width: 100px; }
+#plannerEnvironment .planner-scale-efficiency-table th:nth-child(2) { width: 110px; }
+#plannerEnvironment .planner-scale-efficiency-table th:nth-child(3),
+#plannerEnvironment .planner-scale-efficiency-table th:nth-child(4) { width: 435px; }
+
+#plannerEnvironment .planner-candidate-efficiency-table { min-width: 1080px; }
+#plannerEnvironment .planner-candidate-efficiency-table th:nth-child(1) { width: 190px; }
+#plannerEnvironment .planner-candidate-efficiency-table th:nth-child(2),
+#plannerEnvironment .planner-candidate-efficiency-table th:nth-child(3) { width: 75px; }
+#plannerEnvironment .planner-candidate-efficiency-table th:nth-child(4) { width: 145px; }
+#plannerEnvironment .planner-candidate-efficiency-table th:nth-child(5) { width: 190px; }
+#plannerEnvironment .planner-candidate-efficiency-table th:nth-child(6) { width: 150px; }
+#plannerEnvironment .planner-candidate-efficiency-table th:nth-child(7) { width: 255px; }
+#plannerEnvironment .planner-candidate-efficiency-table :is(th, td) { text-align: right; }
+#plannerEnvironment .planner-candidate-efficiency-table thead th:first-child,
+#plannerEnvironment .planner-candidate-efficiency-table tbody td:nth-last-child(7) { text-align: left; }
+
+#plannerEnvironment .planner-inference-efficiency-table { min-width: 1140px; }
+#plannerEnvironment .planner-inference-efficiency-table th:nth-child(1) { width: 250px; }
+#plannerEnvironment .planner-inference-efficiency-table th:nth-child(2) { width: 190px; }
+#plannerEnvironment .planner-inference-efficiency-table th:nth-child(3) { width: 90px; }
+#plannerEnvironment .planner-inference-efficiency-table th:nth-child(4) { width: 190px; }
+#plannerEnvironment .planner-inference-efficiency-table th:nth-child(5) { width: 160px; }
+#plannerEnvironment .planner-inference-efficiency-table th:nth-child(6) { width: 260px; }
+#plannerEnvironment .planner-inference-efficiency-table :is(th, td):nth-child(n + 3) { text-align: right; }
 
 .efficiency-missing {
   display: inline-block;
@@ -7304,6 +7335,29 @@ details table.result-table-compact td {
   white-space: nowrap;
 }
 
+.route-screen-table {
+  min-width: 1000px;
+  table-layout: fixed;
+}
+
+.route-screen-table th:nth-child(1) { width: 170px; }
+.route-screen-table th:nth-child(2) { width: 430px; }
+.route-screen-table th:nth-child(3) { width: 100px; }
+.route-screen-table th:nth-child(4) { width: 300px; }
+.route-screen-table :is(th, td) { text-align: left; }
+.route-screen-table :is(th, td):nth-child(3) { text-align: right; }
+
+.configuration-result-table {
+  min-width: 1120px;
+  table-layout: fixed;
+}
+
+.configuration-result-table th:nth-child(1) { width: 140px; }
+.configuration-result-table th:nth-child(2) { width: 260px; }
+.configuration-result-table th:nth-child(3) { width: 470px; }
+.configuration-result-table th:nth-child(4) { width: 250px; }
+.configuration-result-table :is(th, td) { text-align: left; }
+
 .planning-section .planner-result-table :is(th, td) {
   text-align: right;
 }
@@ -7329,6 +7383,8 @@ details table.result-table-compact td {
 .planning-section .planner-final-table th:nth-child(5) { width: 130px; }
 
 .planning-section .planner-final-table tbody td:nth-last-child(4) {
+  color: var(--body);
+  font-size: 12px;
   text-align: left;
 }
 
@@ -7337,5 +7393,10 @@ details table.result-table-compact td {
 }
 
 .planning-section .planner-final-table td[rowspan] {
+  vertical-align: middle;
+}
+
+#plannerEnvironment .planner-training-efficiency-table td[rowspan],
+#plannerEnvironment .planner-candidate-efficiency-table td[rowspan] {
   vertical-align: middle;
 }
