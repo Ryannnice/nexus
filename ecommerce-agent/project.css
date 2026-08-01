@@ -3671,10 +3671,6 @@ main .evidence-section { padding-block: 48px; }
   background: var(--primary);
 }
 
-.a3-counterfactual-row.is-dpo .a3-counterfactual-track i {
-  background: var(--primary-text);
-}
-
 .a3-robustness-note,
 .a3-diagnostic-note {
   color: var(--body);
@@ -5313,14 +5309,6 @@ main summary {
   margin-top: 0;
 }
 
-.dpo2-update-disclosure .a3-robustness-heading:first-child {
-  margin-top: 0;
-}
-
-.dpo2-selection-grid {
-  margin-top: 24px;
-}
-
 .planner-evidence-disclosure {
   margin-top: 18px;
 }
@@ -6847,7 +6835,6 @@ details table td {
   font-size: 11px;
 }
 
-.planner-dpo-context,
 .planner-result-boundary {
   margin-bottom: 16px;
   padding: 13px 15px;
@@ -6858,7 +6845,6 @@ details table td {
   line-height: 1.65;
 }
 
-.planner-dpo-context strong,
 .planner-result-boundary strong {
   color: var(--ink);
 }
@@ -6927,7 +6913,6 @@ details table td {
   }
 
   .planner-table-heading,
-  .planner-dpo-context,
   .planner-result-boundary {
     margin-inline: 16px;
   }

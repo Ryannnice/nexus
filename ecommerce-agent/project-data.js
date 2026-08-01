@@ -1429,54 +1429,6 @@ window.PROJECT_DATA = {
         "traceEm": 0.983,
         "microF1": 0.9963,
         "validRate": 1
-      },
-      {
-        "model": "Qwen3-4B",
-        "modelShort": "4B",
-        "stage": "Initial SFT+DPO",
-        "stageKey": "dpo",
-        "view": "Wo-RAG · 100",
-        "viewKey": "global",
-        "setEm": 0.933,
-        "traceEm": 0.932,
-        "microF1": 0.982,
-        "validRate": 1
-      },
-      {
-        "model": "Qwen3-4B",
-        "modelShort": "4B",
-        "stage": "Initial SFT+DPO",
-        "stageKey": "dpo",
-        "view": "RAG@10",
-        "viewKey": "rag",
-        "setEm": 0.989,
-        "traceEm": 0.989,
-        "microF1": 0.9973,
-        "validRate": 0.999
-      },
-      {
-        "model": "Qwen3-8B",
-        "modelShort": "8B",
-        "stage": "Initial SFT+DPO",
-        "stageKey": "dpo",
-        "view": "Wo-RAG · 100",
-        "viewKey": "global",
-        "setEm": 0.937,
-        "traceEm": 0.932,
-        "microF1": 0.9852,
-        "validRate": 0.996
-      },
-      {
-        "model": "Qwen3-8B",
-        "modelShort": "8B",
-        "stage": "Initial SFT+DPO",
-        "stageKey": "dpo",
-        "view": "RAG@10",
-        "viewKey": "rag",
-        "setEm": 0.984,
-        "traceEm": 0.984,
-        "microF1": 0.9965,
-        "validRate": 1
       }
     ],
     "scaleAblation": [
@@ -1723,22 +1675,6 @@ window.PROJECT_DATA = {
         "rowTraceEm": 0.9545,
         "pairBothTraceEm": 0.9205,
         "orderFollowing": 0.9939
-      },
-      {
-        "model": "4B",
-        "stage": "Initial SFT+DPO",
-        "stageKey": "dpo",
-        "rowTraceEm": 0.9489,
-        "pairBothTraceEm": 0.9205,
-        "orderFollowing": 1
-      },
-      {
-        "model": "8B",
-        "stage": "Initial SFT+DPO",
-        "stageKey": "dpo",
-        "rowTraceEm": 0.9574,
-        "pairBothTraceEm": 0.9261,
-        "orderFollowing": 1
       }
     ],
     "cases": [
