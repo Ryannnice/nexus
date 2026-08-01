@@ -477,7 +477,7 @@
         <details class="full-results narrative-disclosure retrieval-run-disclosure" id="retrievalBaseComparisons">
           <summary>
             <span class="disclosure-summary-copy"><small>基础模型与公开基线</small><strong>查看未微调检索、重排候选与候选深度结果</strong></span>
-            <span class="disclosure-summary-meta">13 条检索基线 · 5 个重排模型 · 4 档候选深度</span>
+            <span class="disclosure-summary-meta">13 条检索基线 · 4 档一级深度 · 5 个重排模型 · 4 档重排深度</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="full-results-body">
@@ -510,8 +510,23 @@
               </div>
             </section>
 
+            <section class="full-results-group" aria-labelledby="firstStageDepthTitle">
+              <div class="full-results-group-head"><span>02</span><div><h4 id="firstStageDepthTitle">一级融合的候选深度</h4><p>固定 bge-large + BM25，比较两路各自截取的候选数量。N=20 的 RRF AllHit@10 最高；N=30/50 提高候选池覆盖，但候选更多且未改善 RRF Top-10。</p></div></div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table result-table-compact">
+                  <thead><tr><th scope="col">每路候选 N</th><th scope="col">候选池 AllHit</th><th scope="col">平均合并候选</th><th scope="col">Union A@10</th><th scope="col">加权 A@10</th><th scope="col">RRF A@10</th><th scope="col">RRF A@30</th><th scope="col">判断</th></tr></thead>
+                  <tbody>
+                    <tr><td>N=10</td><td>72.93%</td><td>16.86</td><td>62.18%</td><td>61.60%</td><td>62.97%</td><td>72.93%</td><td>候选较浅</td></tr>
+                    <tr class="result-table-final"><td><strong>N=20</strong></td><td>87.88%</td><td>32.72</td><td>62.30%</td><td>59.88%</td><td><strong>63.67%</strong></td><td>85.73%</td><td><strong>进入公开重排比较</strong></td></tr>
+                    <tr><td>N=30</td><td>93.45%</td><td>47.14</td><td>62.32%</td><td>58.20%</td><td>59.63%</td><td>86.50%</td><td>覆盖更高，Top-10 回退</td></tr>
+                    <tr><td>N=50</td><td>97.65%</td><td>71.17</td><td>62.40%</td><td>58.68%</td><td>62.35%</td><td>82.22%</td><td>覆盖最高，成本最高</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
             <section class="full-results-group" aria-labelledby="publicRerankerTitle">
-              <div class="full-results-group-head"><span>02</span><div><h4 id="publicRerankerTitle">未微调重排模型</h4><p>5 个公开模型共享 bge-large + BM25 + RRF 候选池：两路各取 Top-20，合并后最多重排 40 个；其中 4 个进入后续任务内微调，Jina 仅作训练前对照。</p></div></div>
+              <div class="full-results-group-head"><span>03</span><div><h4 id="publicRerankerTitle">未微调重排模型</h4><p>5 个公开模型共享 bge-large + BM25 + RRF 候选池：两路各取 Top-20，合并后最多重排 40 个；其中 4 个进入后续任务内微调，Jina 仅作训练前对照。</p></div></div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table result-table-compact result-table-models">
                   <thead><tr><th scope="col">模型</th><th scope="col">推理框架</th><th scope="col">AllHit@6</th><th scope="col">AllHit@10</th><th scope="col">AllHit@30</th><th scope="col">MRR</th></tr></thead>
@@ -527,7 +542,7 @@
             </section>
 
             <section class="full-results-group" aria-labelledby="candidateDepthTitle">
-              <div class="full-results-group-head"><span>03</span><div><h4 id="candidateDepthTitle">公开 Qwen3 重排模型的候选深度</h4><p>N=20 是上表五模型的统一比较口径；更深候选池仅用于观察质量与成本的取舍。</p></div></div>
+              <div class="full-results-group-head"><span>04</span><div><h4 id="candidateDepthTitle">公开 Qwen3 重排模型的候选深度</h4><p>N=20 是上表五模型的统一比较口径；更深候选池仅用于观察质量与成本的取舍。</p></div></div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table result-table-compact result-table-depth">
                   <thead><tr><th scope="col">每路候选 N</th><th scope="col">平均合并候选</th><th scope="col">AllHit@6</th><th scope="col">AllHit@10</th><th scope="col">AllHit@30</th><th scope="col">MRR</th></tr></thead>
