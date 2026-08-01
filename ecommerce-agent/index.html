@@ -332,7 +332,7 @@
         <details class="narrative-disclosure intent-evidence-disclosure">
           <summary>
             <span class="disclosure-summary-copy"><small>意图模型版本证据</small><strong>查看规则、未微调模型及 LoRA 各版本的完整结果</strong></span>
-            <span class="disclosure-summary-meta">7 个版本 · 两项指标 · 固定 9K</span>
+            <span class="disclosure-summary-meta">7 个分类版本 · 2 个主端点关键词指标 · 固定 9K</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body evidence-table-disclosure-body">
@@ -350,7 +350,21 @@
                 </tbody>
               </table>
             </div>
-            <p class="a3-details-note">0.6B LoRA 训练步 2000 为模块最优；当前全链路固定使用 1.7B 训练结束版本。</p>
+
+            <div class="result-table-head">
+              <div><p class="eyebrow">两个主端点 · 补充指标</p><h3>分类结果与关键词输出分开评测</h3></div>
+              <p>由已有预测离线复算，没有重新推理；分类指标覆盖完整 9,000 条，关键词指标只统计其中 6,000 条电商请求。</p>
+            </div>
+            <div class="result-table-wrap" tabindex="0">
+              <table class="result-table result-table-compact">
+                <thead><tr><th scope="col">端点</th><th scope="col">分类 Macro-P</th><th scope="col">分类 Macro-R</th><th scope="col">分类 Macro-F1</th><th scope="col">关键词集合全对率</th><th scope="col">关键词 micro-P</th><th scope="col">关键词 micro-R</th><th scope="col">关键词 micro-F1</th></tr></thead>
+                <tbody>
+                  <tr><td>0.6B · 模块最优版本</td><td><strong>100.00%</strong></td><td><strong>100.00%</strong></td><td><strong>100.00%</strong></td><td>56.13%</td><td>81.01%</td><td>83.19%</td><td>82.08%</td></tr>
+                  <tr class="result-table-final"><td><strong>1.7B · 最终系统路由</strong></td><td>99.97%</td><td>99.93%</td><td>99.95%</td><td><strong>57.82%</strong></td><td><strong>81.15%</strong></td><td><strong>87.23%</strong></td><td><strong>84.08%</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="a3-details-note">关键词按 100 个工具的规范标签做字面集合匹配，不是语义等价评分；候选检索直接使用原始请求，不消费这里的预测关键词。0.6B 仍只代表模块上限，当前全链路固定使用 1.7B 训练结束版本。</p>
           </div>
         </details>
 
@@ -371,7 +385,7 @@
                   <thead><tr><th scope="col">数据资产</th><th scope="col">来源与内容</th><th scope="col">规模与划分</th><th scope="col">实验角色</th><th scope="col">边界与输出</th></tr></thead>
                   <tbody>
                     <tr><td><strong>意图监督数据</strong><span>入口分类训练</span></td><td>训练侧电商轨迹、独立闲聊样本与 6 条边界样本；两个模型使用同一样本全集，1.7B 采用类别均衡排列版本</td><td>基础样本 36,000 条<br>困难与边界样本 12,006 条<br><strong>总计 48,006 条</strong><br>训练 45,606 / 验证 2,400</td><td>0.6B 与 1.7B 的训练集更新参数；验证集选择模型版本</td><td>训练与验证样本不进入 9,000 条固定比较集合</td></tr>
-                    <tr><td><strong>意图分流固定集合</strong><span>入口模块比较</span></td><td>6,000 条电商请求 + 3,000 条独立闲聊</td><td><strong>9,000 条</strong><br>电商 : 闲聊 = 2 : 1</td><td>比较关键词规则、未微调模型与 LoRA 版本；不参与梯度</td><td>输出 Accuracy / Macro-F1；同一 9K 后续复用于静态全链路统计，不是一次性真实流量留出集</td></tr>
+                    <tr><td><strong>意图分流固定集合</strong><span>入口模块比较</span></td><td>6,000 条电商请求 + 3,000 条独立闲聊</td><td><strong>9,000 条</strong><br>电商 : 闲聊 = 2 : 1</td><td>比较关键词规则、未微调模型与 LoRA 版本；不参与梯度</td><td>输出分类 Accuracy / Macro-P / Macro-R / Macro-F1；关键词指标只评测 6K 电商请求。同一 9K 后续复用于静态全链路统计</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -647,25 +661,45 @@
 
         <details class="narrative-disclosure retrieval-supplement-disclosure" id="retrievalFinalEvaluation">
           <summary>
-            <span class="disclosure-summary-copy"><small>冻结评测与推理效率</small><strong>查看一次性终评、两套回归与完整检索路径时延</strong></span>
-            <span class="disclosure-summary-meta">1.2K 终评 · 6K + 1K 回归 · RTX 3090</span>
+            <span class="disclosure-summary-copy"><small>覆盖曲线、失败归因与推理效率</small><strong>查看四套 AllHit@6–10、自然表达 6K 失败归因与完整路径时延</strong></span>
+            <span class="disclosure-summary-meta">开发 1.2K · 终评 1.2K · 6K + 1K 回归 · RTX 3090</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body">
             <div class="result-table-head">
-              <div><p class="eyebrow">候选检索</p><h3>三套冻结评测</h3></div>
-              <p>所有结果均来自最终冻结检索链；一次性终评打开后未继续调参。</p>
+              <div><p class="eyebrow">候选检索</p><h3>最终检索链的 Top-6 至 Top-10 覆盖曲线</h3></div>
+              <p>AllHit@7 / @8 / @9 由已保存排名离线截断复算，没有重新训练或推理；开发集只用于选参，其余三套用于冻结后评测与回归。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact">
-                <thead><tr><th scope="col">评测集</th><th scope="col">样本数</th><th scope="col">AllHit@6</th><th scope="col">AllHit@10</th><th scope="col">AllHit@20</th><th scope="col">MRR</th></tr></thead>
+                <thead><tr><th scope="col">评测集</th><th scope="col">样本数</th><th scope="col">AllHit@6</th><th scope="col">AllHit@7</th><th scope="col">AllHit@8</th><th scope="col">AllHit@9</th><th scope="col">AllHit@10</th><th scope="col">AllHit@20</th><th scope="col">MRR</th></tr></thead>
                 <tbody>
-                  <tr class="result-table-final"><td><strong>一次性终评</strong></td><td>1,200</td><td>98.4167%</td><td><strong>99.6667%</strong></td><td>100.0000%</td><td>0.997778</td></tr>
-                  <tr><td>自然表达回归</td><td>6,000</td><td>91.0667%</td><td><strong>96.7167%</strong></td><td>99.5000%</td><td>0.976245</td></tr>
-                  <tr><td>接口表达回归</td><td>1,000</td><td>99.7000%</td><td><strong>100.0000%</strong></td><td>100.0000%</td><td>0.999000</td></tr>
+                  <tr class="result-table-final"><td><strong>自然表达回归</strong><small>主检索口径</small></td><td><strong>6,000</strong></td><td>91.0667%</td><td>94.0000%</td><td>95.5000%</td><td>96.3833%</td><td><strong>96.7167%</strong></td><td>99.5000%</td><td>0.976245</td></tr>
+                  <tr><td><strong>一次性终评</strong><small>冻结后打开</small></td><td>1,200</td><td>98.4167%</td><td>99.3333%</td><td>99.5000%</td><td>99.5833%</td><td><strong>99.6667%</strong></td><td>100.0000%</td><td>0.997778</td></tr>
+                  <tr><td><strong>接口表达回归</strong></td><td>1,000</td><td>99.7000%</td><td>100.0000%</td><td>100.0000%</td><td>100.0000%</td><td><strong>100.0000%</strong></td><td>100.0000%</td><td>0.999000</td></tr>
+                  <tr><td><strong>开发集</strong><small>只用于选参</small></td><td>1,200</td><td>99.1667%</td><td>99.9167%</td><td>99.9167%</td><td>100.0000%</td><td><strong>100.0000%</strong></td><td>100.0000%</td><td>0.997500</td></tr>
                 </tbody>
               </table>
             </div>
+
+            <div class="result-table-head">
+              <div><p class="eyebrow">自然表达 6K · 离线诊断</p><h3>197 条 Top-10 失败发生在哪里</h3></div>
+              <p>失败定义为至少一个必要工具没有进入最终 Top-10；多余工具只有挤出必要工具时才构成覆盖失败。</p>
+            </div>
+            <div class="result-table-wrap" tabindex="0">
+              <table class="result-table result-table-compact">
+                <thead><tr><th scope="col">检查项</th><th scope="col">结果</th><th scope="col">解释</th></tr></thead>
+                <tbody>
+                  <tr><td>最终 Top-10 覆盖失败</td><td><strong>197 / 6,000</strong><small>3.2833%</small></td><td>5,803 条请求完整覆盖全部必要工具</td></tr>
+                  <tr class="result-table-final"><td><strong>必要工具未进入一级融合 Top-10</strong></td><td><strong>197 / 197</strong></td><td>全部残余失败都发生在送入重排模型的候选截断之前</td></tr>
+                  <tr><td>候选池内被重排丢失</td><td><strong>0 / 197</strong></td><td>未观察到必要工具已全部进入候选池、最终仍覆盖失败的样本</td></tr>
+                  <tr><td>单条请求漏召数量</td><td>191 条漏 1 个<br>6 条漏 2 个</td><td>合计 203 个漏召工具实例</td></tr>
+                  <tr><td>长工具链贡献</td><td><strong>122 / 197</strong><small>61.93%</small></td><td>目标包含 5 或 6 个工具的请求贡献了多数失败</td></tr>
+                  <tr><td>相对单路向量检索</td><td>恢复 41 · 回退 30<br><strong>净增 11 条成功</strong></td><td>AllHit@10 净提升 <strong>0.1833pp</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="efficiency-boundary"><strong>诊断结论：</strong>当前残余瓶颈是一级候选覆盖与 Top-10 截断，不是重排模型在候选池内再次排丢必要工具。该结论只解释冻结回归集，不用于继续调参；最终检索路线保持不变。</p>
 
             <div class="result-table-head">
               <div><p class="eyebrow">候选检索效率 · RTX 3090</p><h3>一次性终评上的完整路径时延</h3></div>
@@ -1279,9 +1313,9 @@
             <div class="evidence-group-heading evidence-group-heading-secondary"><strong>补充报告</strong><span>7 项</span></div>
             <div class="evidence-grid evidence-grid-secondary">
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/README.md" target="_blank" rel="noopener noreferrer"><span>项目地图</span><h3>项目概览</h3><b>PROJECT/README.md</b></a>
-              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/01_%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB.md" target="_blank" rel="noopener noreferrer"><span>模型报告</span><h3>意图识别</h3><b>reports/01_意图识别.md</b></a>
+              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/01_%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB.md" target="_blank" rel="noopener noreferrer"><span>模型报告</span><h3>意图识别与关键词评测</h3><b>reports/01_意图识别.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/02_%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA.md" target="_blank" rel="noopener noreferrer"><span>基线报告</span><h3>检索增强</h3><b>reports/02_检索增强.md</b></a>
-              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/03_%E5%90%91%E9%87%8F%E8%AE%AD%E7%BB%83.md" target="_blank" rel="noopener noreferrer"><span>训练报告</span><h3>任务内训练</h3><b>reports/03_向量训练.md</b></a>
+              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/03_%E5%90%91%E9%87%8F%E8%AE%AD%E7%BB%83.md" target="_blank" rel="noopener noreferrer"><span>训练报告</span><h3>向量训练与检索诊断</h3><b>reports/03_向量训练.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/04_%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8E%E8%AE%AD%E7%BB%83%E7%94%A8%E6%95%B0%E8%AF%B4%E6%98%8E.md" target="_blank" rel="noopener noreferrer"><span>数据地图</span><h3>数据与实验总表</h3><b>reports/04_数据集与训练用数说明.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/scripts/finetune/run_current_canonical_planner_matrix.sh" target="_blank" rel="noopener noreferrer"><span>复现入口</span><h3>基础模型 / SFT × RAG 配对脚本</h3><b>run_current_canonical_planner_matrix.sh</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/canonical_base_sft_matrix_20260801/summary.json" target="_blank" rel="noopener noreferrer"><span>结构化结果</span><h3>基础模型 / SFT × RAG 配对评测</h3><b>canonical_base_sft_matrix_20260801/summary.json</b></a>
