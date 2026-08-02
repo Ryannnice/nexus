@@ -1,7 +1,7 @@
-/* Generated from /renyuanliu/Agent/PROJECT artifacts through 2026-08-01. */
+/* Generated from /renyuanliu/Agent/PROJECT artifacts through 2026-08-02. */
 window.PROJECT_DATA = {
   "snapshot": {
-    "date": "2026-08-01",
+    "date": "2026-08-02",
     "label": "INTEGRATED SYSTEM SNAPSHOT",
     "catalogVersion": "2026-07-06",
     "scope": "100 个已知工具的意图分流、候选检索与静态有序选链一体化离线评测",
@@ -17,15 +17,15 @@ window.PROJECT_DATA = {
       ],
       "prediction": [
         "get_order_logistics",
-        "get_notification_preferences",
         "query_delivery_fee",
+        "get_notification_preferences",
         "estimate_delivery_time",
         "get_lost_package_process",
         "get_warehouse_stock_region",
         "confirm_order_receipt",
         "split_shipment_plan",
         "create_aftersale_ticket",
-        "get_pickup_points"
+        "get_delivery_options"
       ]
     },
     {
@@ -44,10 +44,10 @@ window.PROJECT_DATA = {
         "get_checkout_preview",
         "get_user_addresses",
         "get_item_info",
+        "estimate_delivery_time",
         "get_cart_summary",
         "can_merge_ship",
-        "get_low_stock_alert",
-        "query_delivery_fee"
+        "get_order_logistics"
       ]
     },
     {
@@ -65,11 +65,11 @@ window.PROJECT_DATA = {
         "get_aftersale_ticket_status",
         "create_manual_service_ticket",
         "create_repair_ticket",
-        "get_quality_issue_policy",
+        "get_order_payment_status",
         "upload_aftersale_evidence",
-        "confirm_order_receipt",
-        "escalate_to_human_service",
-        "create_refund_request"
+        "get_quality_issue_policy",
+        "request_reship_missing_item",
+        "confirm_order_receipt"
       ]
     },
     {
@@ -86,13 +86,13 @@ window.PROJECT_DATA = {
         "get_item_reviews",
         "get_quality_issue_policy",
         "summarize_item_reviews",
-        "check_item_authenticity",
         "get_price_history",
+        "check_item_authenticity",
+        "get_refund_status",
         "get_complaint_channels",
-        "get_item_qa",
         "get_aftersale_ticket_status",
-        "create_aftersale_ticket",
-        "compare_item_price"
+        "confirm_order_receipt",
+        "get_item_qa"
       ]
     },
     {
@@ -110,12 +110,12 @@ window.PROJECT_DATA = {
         "compare_promotion_options",
         "get_available_coupons",
         "calc_discount",
-        "get_flash_sale_status",
         "get_member_level",
         "get_user_profile",
-        "compare_item_price",
-        "get_aftersale_ticket_status",
-        "get_item_info",
+        "get_flash_sale_status",
+        "apply_coupon",
+        "confirm_order_receipt",
+        "compare_item_price"
       ]
     },
     {
@@ -133,12 +133,12 @@ window.PROJECT_DATA = {
         "verify_payment_risk",
         "create_payment_retry",
         "get_payment_methods",
-        "check_account_risk",
         "get_order_detail",
+        "check_account_risk",
+        "get_order_afterpay_status",
         "generate_risk_notice",
-        "detect_abnormal_order",
         "confirm_order_receipt",
-        "cancel_order"
+        "detect_abnormal_order"
       ]
     },
     {
@@ -160,8 +160,8 @@ window.PROJECT_DATA = {
         "submit_order",
         "update_default_address",
         "validate_checkout_items",
-        "get_checkout_preview",
-        "get_favorite_items"
+        "get_user_addresses",
+        "get_checkout_preview"
       ]
     },
     {
@@ -176,15 +176,15 @@ window.PROJECT_DATA = {
       ],
       "prediction": [
         "update_size_profile",
-        "get_user_profile",
-        "get_size_profile",
         "get_size_recommendation",
+        "get_size_profile",
+        "get_user_profile",
         "get_item_specs",
         "get_browsing_history",
-        "get_notification_preferences",
         "update_default_address",
+        "get_price_history",
         "get_low_stock_alert",
-        "get_recommendation_feed"
+        "get_notification_preferences"
       ]
     },
     {
@@ -1353,10 +1353,10 @@ window.PROJECT_DATA = {
         "stageKey": "base",
         "view": "RAG@10",
         "viewKey": "rag",
-        "setEm": 0.54,
-        "traceEm": 0.531,
-        "microF1": 0.8738,
-        "validRate": 0.862
+        "setEm": 0.545,
+        "traceEm": 0.538,
+        "microF1": 0.8759886112,
+        "validRate": 0.87
       },
       {
         "model": "Qwen3-8B",
@@ -1377,10 +1377,10 @@ window.PROJECT_DATA = {
         "stageKey": "base",
         "view": "RAG@10",
         "viewKey": "rag",
-        "setEm": 0.6,
-        "traceEm": 0.591,
-        "microF1": 0.8845,
-        "validRate": 0.898
+        "setEm": 0.623,
+        "traceEm": 0.609,
+        "microF1": 0.8860799494,
+        "validRate": 0.892
       },
       {
         "model": "Qwen3-4B",
@@ -1389,10 +1389,10 @@ window.PROJECT_DATA = {
         "stageKey": "sft",
         "view": "Wo-RAG · 100",
         "viewKey": "global",
-        "setEm": 0.947,
-        "traceEm": 0.946,
-        "microF1": 0.9858,
-        "validRate": 0.999
+        "setEm": 0.915,
+        "traceEm": 0.915,
+        "microF1": 0.9708090075,
+        "validRate": 0.996
       },
       {
         "model": "Qwen3-4B",
@@ -1401,9 +1401,9 @@ window.PROJECT_DATA = {
         "stageKey": "sft",
         "view": "RAG@10",
         "viewKey": "rag",
-        "setEm": 0.99,
-        "traceEm": 0.99,
-        "microF1": 0.9973,
+        "setEm": 0.998,
+        "traceEm": 0.998,
+        "microF1": 0.9995000833,
         "validRate": 1
       },
       {
@@ -1413,9 +1413,9 @@ window.PROJECT_DATA = {
         "stageKey": "sft",
         "view": "Wo-RAG · 100",
         "viewKey": "global",
-        "setEm": 0.948,
-        "traceEm": 0.942,
-        "microF1": 0.9873,
+        "setEm": 0.943,
+        "traceEm": 0.943,
+        "microF1": 0.9820478723,
         "validRate": 1
       },
       {
@@ -1425,9 +1425,9 @@ window.PROJECT_DATA = {
         "stageKey": "sft",
         "view": "RAG@10",
         "viewKey": "rag",
-        "setEm": 0.983,
-        "traceEm": 0.983,
-        "microF1": 0.9963,
+        "setEm": 0.995,
+        "traceEm": 0.995,
+        "microF1": 0.9988331389,
         "validRate": 1
       }
     ],

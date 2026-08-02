@@ -7024,14 +7024,13 @@ details table td {
 .retrieval-current-efficiency-table th:nth-child(5) { width: 340px; }
 .retrieval-current-efficiency-table :is(th, td):nth-child(-n + 3) { text-align: left; }
 
-.retrieval-final-efficiency-table { min-width: 1060px; }
-.retrieval-final-efficiency-table th:nth-child(1) { width: 180px; }
-.retrieval-final-efficiency-table th:nth-child(2) { width: 170px; }
+.retrieval-final-efficiency-table { min-width: 900px; }
+.retrieval-final-efficiency-table th:nth-child(1),
+.retrieval-final-efficiency-table th:nth-child(2) { width: 140px; }
 .retrieval-final-efficiency-table th:nth-child(3),
-.retrieval-final-efficiency-table th:nth-child(4) { width: 180px; }
-.retrieval-final-efficiency-table th:nth-child(5) { width: 160px; }
-.retrieval-final-efficiency-table th:nth-child(6) { width: 190px; }
-.retrieval-final-efficiency-table :is(th, td):nth-child(n + 2) { text-align: right; }
+.retrieval-final-efficiency-table th:nth-child(4) { width: 170px; }
+.retrieval-final-efficiency-table th:nth-child(5) { width: 280px; }
+.retrieval-final-efficiency-table :is(th, td):nth-child(n + 2):nth-child(-n + 4) { text-align: right; }
 
 #plannerEnvironment .planner-training-efficiency-table { min-width: 1180px; }
 #plannerEnvironment .planner-training-efficiency-table th:nth-child(1) { width: 170px; }
@@ -7355,6 +7354,32 @@ details table.result-table-compact td {
 .route-screen-table th:nth-child(4) { width: 300px; }
 .route-screen-table :is(th, td) { text-align: left; }
 .route-screen-table :is(th, td):nth-child(3) { text-align: right; }
+
+.retrieval-depth-selection-table {
+  min-width: 1180px;
+  table-layout: fixed;
+}
+
+.retrieval-depth-selection-table th:nth-child(1),
+.retrieval-depth-selection-table th:nth-child(2) { width: 82px; }
+.retrieval-depth-selection-table th:nth-child(3) { width: 190px; }
+.retrieval-depth-selection-table th:nth-child(4) { width: 130px; }
+.retrieval-depth-selection-table th:nth-child(5) { width: 190px; }
+.retrieval-depth-selection-table th:nth-child(6) { width: 150px; }
+.retrieval-depth-selection-table th:nth-child(7) { width: 130px; }
+.retrieval-depth-selection-table th:nth-child(8) { width: 226px; }
+
+.retrieval-second-fusion-table {
+  min-width: 1040px;
+}
+
+.retrieval-second-fusion-table :is(th, td):first-child {
+  min-width: 270px;
+}
+
+.retrieval-final-efficiency-table :is(th, td):last-child {
+  text-align: left;
+}
 
 .retrieval-baseline-comparison-table :is(th, td):nth-child(n + 3),
 .result-table-models :is(th, td):nth-child(n + 3) {

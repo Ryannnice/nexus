@@ -156,7 +156,7 @@
         setPipeline(
           { detail: '电商类 · 进入工具选择', state: '通过' },
           { detail: 'BM25 + 负样本训练向量模型', state: '前 40' },
-          { detail: 'bge-reranker-v2-m3 + RRF', state: '前 10' }
+          { detail: '精排 20 + 二级 RRF', state: '输出 10' }
         );
         footnote.innerHTML = '固定检索集案例 · <strong>' + escapeHtml(trace.id) + '</strong>';
       }
