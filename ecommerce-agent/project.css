@@ -5860,8 +5860,12 @@ main summary {
   }
 
   .final-route-phases li:last-child {
-    grid-column: 1 / -1;
+    grid-column: auto;
     border-right: 0;
+    border-bottom: 0;
+  }
+
+  .final-route-phases li:nth-child(n+3) {
     border-bottom: 0;
   }
 
@@ -5954,6 +5958,11 @@ main summary {
   .final-route-phases li:nth-child(n) {
     grid-column: auto;
     border-right: 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .final-route-phases li:last-child {
+    border-bottom: 0;
   }
 
   .experiment-steps,
@@ -6995,11 +7004,13 @@ details table td {
   font-size: 9px;
 }
 
-.intent-training-efficiency-table { min-width: 960px; }
-.intent-training-efficiency-table th:nth-child(1) { width: 240px; }
-.intent-training-efficiency-table th:nth-child(2) { width: 190px; }
-.intent-training-efficiency-table th:nth-child(3) { width: 190px; }
-.intent-training-efficiency-table th:nth-child(4) { width: 340px; }
+.intent-training-efficiency-table { min-width: 1180px; }
+.intent-training-efficiency-table th:nth-child(1) { width: 220px; }
+.intent-training-efficiency-table th:nth-child(2) { width: 180px; }
+.intent-training-efficiency-table th:nth-child(3) { width: 200px; }
+.intent-training-efficiency-table th:nth-child(4) { width: 180px; }
+.intent-training-efficiency-table th:nth-child(5) { width: 400px; }
+.intent-training-efficiency-table :is(th, td):nth-child(4) { text-align: right; }
 
 .intent-inference-efficiency-table { min-width: 1060px; }
 .intent-inference-efficiency-table th:nth-child(1) { width: 270px; }
@@ -7047,11 +7058,12 @@ details table td {
 #plannerEnvironment .planner-sft-config-table th:nth-child(3) { width: 400px; }
 #plannerEnvironment .planner-sft-config-table :is(th, td) { text-align: left; }
 
-#plannerEnvironment .planner-scale-efficiency-table { min-width: 1080px; }
-#plannerEnvironment .planner-scale-efficiency-table th:nth-child(1) { width: 100px; }
+#plannerEnvironment .planner-scale-efficiency-table { min-width: 900px; }
+#plannerEnvironment .planner-scale-efficiency-table th:nth-child(1) { width: 110px; }
 #plannerEnvironment .planner-scale-efficiency-table th:nth-child(2) { width: 110px; }
-#plannerEnvironment .planner-scale-efficiency-table th:nth-child(3),
-#plannerEnvironment .planner-scale-efficiency-table th:nth-child(4) { width: 435px; }
+#plannerEnvironment .planner-scale-efficiency-table th:nth-child(3) { width: 120px; }
+#plannerEnvironment .planner-scale-efficiency-table th:nth-child(4) { width: 360px; }
+#plannerEnvironment .planner-scale-efficiency-table th:nth-child(5) { width: 200px; }
 
 #plannerEnvironment .planner-candidate-efficiency-table { min-width: 1080px; }
 #plannerEnvironment .planner-candidate-efficiency-table th:nth-child(1) { width: 190px; }
@@ -7361,6 +7373,19 @@ details table.result-table-compact td {
 .route-screen-table th:nth-child(4) { width: 300px; }
 .route-screen-table :is(th, td) { text-align: left; }
 .route-screen-table :is(th, td):nth-child(3) { text-align: right; }
+
+.first-stage-candidate-table {
+  min-width: 1180px;
+}
+
+.first-stage-candidate-table :is(th, td):first-child {
+  text-align: right;
+}
+
+.first-stage-candidate-table :is(th, td):last-child {
+  min-width: 160px;
+  text-align: left;
+}
 
 .retrieval-depth-selection-table {
   min-width: 1180px;

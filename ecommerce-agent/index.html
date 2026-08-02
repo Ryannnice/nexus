@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026080202">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：静态全链路成功率 80.28%，工具链口径，共 9,000 条">
 
-  <link rel="stylesheet" href="project.css?v=40">
+  <link rel="stylesheet" href="project.css?v=41">
   <script defer src="project-data.js?v=18"></script>
   <script defer src="project.js?v=23"></script>
 </head>
@@ -126,7 +126,7 @@
           <div class="abstract-brief-result">
             <span>最终结果</span>
             <strong>静态全链路成功率 · 80.28%</strong>
-            <p>最终系统固定 1.7B 路由、完整负样本检索链与 8B 接口表达 9K 规划模型；9K 逐阶段通过数为 8,996 → 8,838 → 7,225。</p>
+            <p>最终系统沿用现有 1.7B 路由，并固定完整负样本检索链与 8B · 9K 接口式请求监督模型；9K 逐阶段通过数为 8,996 → 8,838 → 7,225。</p>
           </div>
         </div>
 
@@ -142,7 +142,7 @@
             <span>阶段 02 · 候选检索</span>
             <strong>AllHit@K</strong>
             <p>一条请求的全部 Gold Tools 都进入 Top-K，候选集合才算完整覆盖。</p>
-            <small>截至候选检索 · 8,838 / 9,000 · 98.2000%</small>
+            <small>模块 6K · 5,842 / 6,000 · 97.3667% ｜ 9K 累计 · 8,838 / 9,000 · 98.2000%</small>
           </article>
           <article>
             <span>阶段 03 · 工具链规划</span>
@@ -151,7 +151,7 @@
             <small>最终有序工具链 · 7,225 / 9,000 · 80.2778%</small>
           </article>
         </div>
-        <p class="metric-contract-note">9K 累计口径中，闲聊正确旁路即成功；电商请求继续要求候选完整，并最终生成完全正确的有序工具链。</p>
+        <p class="metric-contract-note"><strong>模块与系统口径：</strong>检索模块只评测 6,000 条电商请求，AllHit@10 为 97.3667%；9K 累计值把 3,000 条闲聊的正确旁路一并计入，因此为 98.2000%。电商请求还需最终生成完全正确的有序工具链。</p>
 
         <details class="narrative-disclosure metric-definition-disclosure">
           <summary>
@@ -323,11 +323,11 @@
         <div class="experiment-steps" role="group" aria-label="意图分流实验进程">
           <article><span>01 · 规则基线</span><strong>关键词规则</strong><small>50.22%</small></article>
           <article><span>02 · 未微调</span><strong>0.6B / 1.7B</strong><small>84.76% / 90.47%</small></article>
-          <article><span>03 · 模块能力上限</span><strong>0.6B LoRA（完整训练集）</strong><small>9K 模块横评 · 100.00%</small></article>
-          <article class="is-selected"><span>04 · 最终系统路由</span><strong>1.7B LoRA（均衡训练集）</strong><small>8,996 / 9,000 · 99.9556%</small></article>
+          <article class="is-selected"><span>03 · 分类与成本最优</span><strong>0.6B LoRA</strong><small>9K 分类 · 100.00%</small></article>
+          <article><span>04 · 现有系统版本</span><strong>1.7B LoRA</strong><small>8,996 / 9,000 · 99.9556%</small></article>
         </div>
 
-        <p class="metric-contract-note"><strong>采用说明：</strong>最终系统端点在固定测试集汇报前已锁定为 1.7B 训练结束版本；0.6B 的 100% 来自测试集横向比较，只作为模块能力上限，不能据此反向更换端点。</p>
+        <p class="metric-contract-note"><strong>采用说明：</strong>本轮结果不支持“1.7B 分类更好”：0.6B 在固定 9K 上分类全对、推理也更轻，是意图模块的精度—成本最优。页面仍沿用既有全系统中的 1.7B 训练结束版本，二者的角色必须分开理解；若只部署入口二分类，0.6B 更合理。</p>
 
         <details class="narrative-disclosure intent-evidence-disclosure">
           <summary>
@@ -338,7 +338,7 @@
           <div class="disclosure-body evidence-table-disclosure-body">
             <div class="result-table-head">
               <div><p class="eyebrow">01A · 分类路由主指标</p><h3>比较规则、未微调与 LoRA 版本</h3></div>
-              <p>七个版本使用同一固定 9K 测试集；Accuracy 与 Macro-F1 衡量路由分类，绿色行是已冻结的系统端点。</p>
+              <p>七个版本使用同一固定 9K 测试集；Accuracy 与 Macro-F1 衡量路由分类。绿色行标记本轮分类与成本最优，现有系统使用的版本另行注明。</p>
             </div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table intent-evidence-table">
@@ -346,11 +346,11 @@
                 <tbody>
                   <tr><td>关键词规则</td><td>规则基线</td><td>—</td><td>50.22%</td><td>48.84%</td><td>规则起点</td></tr>
                   <tr><td>Qwen3-0.6B</td><td>未微调</td><td>原始模型</td><td>84.76%</td><td>83.74%</td><td>同尺寸训练前基线</td></tr>
-                  <tr class="row-emphasis"><td>Qwen3-0.6B</td><td>LoRA · 完整训练集 · 最佳验证版本</td><td>训练步 2000</td><td>100.00%</td><td>100.00%</td><td>意图模块横评最优</td></tr>
-                  <tr><td>Qwen3-0.6B</td><td>LoRA · 完整训练集 · 训练结束版本</td><td>训练步 2852</td><td>99.98%</td><td>99.97%</td><td>同一次训练的版本对照</td></tr>
+                  <tr class="result-table-final"><td><strong>Qwen3-0.6B</strong></td><td>LoRA · 同一 45.6K 样本 · 原始排列</td><td>训练步 2000</td><td><strong>100.00%</strong></td><td><strong>100.00%</strong></td><td><strong>分类与成本最优</strong></td></tr>
+                  <tr><td>Qwen3-0.6B</td><td>LoRA · 同一 45.6K 样本 · 原始排列</td><td>训练步 2852</td><td>99.98%</td><td>99.97%</td><td>同一次训练的结束版本</td></tr>
                   <tr><td>Qwen3-1.7B</td><td>未微调</td><td>原始模型</td><td>90.47%</td><td>88.38%</td><td>更大模型对照</td></tr>
-                  <tr><td>Qwen3-1.7B</td><td>LoRA · 均衡训练集 · 最佳验证版本</td><td>训练步 1600</td><td>99.88%</td><td>99.86%</td><td>同一次训练的版本对照</td></tr>
-                  <tr class="result-table-final"><td>Qwen3-1.7B</td><td>LoRA · 均衡训练集 · 训练结束版本</td><td>训练步 2852</td><td>99.96%</td><td>99.95%</td><td>最终系统路由</td></tr>
+                  <tr><td>Qwen3-1.7B</td><td>LoRA · 同一 45.6K 样本 · 类别均衡排列</td><td>训练步 1600</td><td>99.88%</td><td>99.86%</td><td>最低验证损失版本</td></tr>
+                  <tr><td>Qwen3-1.7B</td><td>LoRA · 同一 45.6K 样本 · 类别均衡排列</td><td>训练步 2852</td><td>99.96%</td><td>99.95%</td><td>现有全系统所用版本</td></tr>
                 </tbody>
               </table>
             </div>
@@ -363,12 +363,12 @@
               <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">端点</th><th scope="col">分类 Macro-P</th><th scope="col">分类 Macro-R</th><th scope="col">分类 Macro-F1</th><th scope="col">关键词集合全对率</th><th scope="col">关键词 micro-P</th><th scope="col">关键词 micro-R</th><th scope="col">关键词 micro-F1</th></tr></thead>
                 <tbody>
-                  <tr><td>0.6B · 模块最优版本</td><td><strong>100.00%</strong></td><td><strong>100.00%</strong></td><td><strong>100.00%</strong></td><td>56.13%</td><td>81.01%</td><td>83.19%</td><td>82.08%</td></tr>
-                  <tr class="result-table-final"><td><strong>1.7B · 最终系统路由</strong></td><td>99.97%</td><td>99.93%</td><td>99.95%</td><td><strong>57.82%</strong></td><td><strong>81.15%</strong></td><td><strong>87.23%</strong></td><td><strong>84.08%</strong></td></tr>
+                  <tr class="result-table-final"><td><strong>0.6B · 分类与成本最优</strong></td><td><strong>100.00%</strong></td><td><strong>100.00%</strong></td><td><strong>100.00%</strong></td><td>56.13%</td><td>81.01%</td><td>83.19%</td><td>82.08%</td></tr>
+                  <tr><td>1.7B · 现有全系统版本</td><td>99.97%</td><td>99.93%</td><td>99.95%</td><td><strong>57.82%</strong></td><td><strong>81.15%</strong></td><td><strong>87.23%</strong></td><td><strong>84.08%</strong></td></tr>
                 </tbody>
               </table>
             </div>
-            <p class="a3-details-note">关键词按 100 个工具的规范标签做字面集合匹配，不是语义等价评分；候选检索直接使用原始请求，不消费这里的预测关键词。绿色行表示冻结系统端点，灰色行只标记模块最高分。</p>
+            <p class="a3-details-note">关键词按 100 个工具的规范标签做字面集合匹配，不是语义等价评分；候选检索直接使用原始请求，不消费预测关键词。因此 1.7B 的关键词 micro-F1 较高只是输出侧差异，不是当前系统选择它的依据。</p>
           </div>
         </details>
 
@@ -382,13 +382,13 @@
             <section class="data-evidence-section experiment-data-section" aria-labelledby="intentDataTitle">
               <div class="data-evidence-heading">
                 <div><p>02A · 数据与协议</p><h3 id="intentDataTitle">明确训练、选型与最终测试的数据边界</h3></div>
-                <span>训练集更新参数，验证集选择版本，固定测试集只报告结果。</span>
+                <span>训练集更新参数，验证集记录最低损失版本，固定测试集只报告结果；现有系统使用的版本不等同于验证集最低损失版本。</span>
               </div>
               <div class="data-table-wrap" tabindex="0">
                 <table class="data-table experiment-data-table data-table-four-column">
                   <thead><tr><th scope="col">数据</th><th scope="col">规模</th><th scope="col">用途</th><th scope="col">边界</th></tr></thead>
                   <tbody>
-                    <tr><td><strong>监督训练与验证</strong><span>电商轨迹 + 独立闲聊</span></td><td><strong>45,606 / 2,400</strong><small>合计 48,006 条</small></td><td>训练 0.6B / 1.7B；验证集选择模型版本</td><td>两个模型使用同一样本全集；1.7B 采用类别均衡排列</td></tr>
+                    <tr><td><strong>监督训练与验证</strong><span>电商轨迹 + 独立闲聊</span></td><td><strong>45,606 / 2,400</strong><small>合计 48,006 条</small></td><td>训练 0.6B / 1.7B；验证集监控损失并保留检查点</td><td>两个模型使用同一样本全集，仅样本排列方式不同</td></tr>
                     <tr><td><strong>意图分流测试</strong><span>入口二分类</span></td><td><strong>9,000</strong><small>6K 电商 + 3K 闲聊</small></td><td>比较规则、未微调模型与 LoRA 版本；同一集合用于 9K 静态链路计分</td><td>不参与训练或版本选择</td></tr>
                     <tr><td><strong>关键词评测</strong><span>测试集电商子集</span></td><td><strong>6,000</strong><small>15,196 个目标标签</small></td><td>字面集合全对率与 micro-P / R / F1</td><td>不是语义评分；候选检索不使用预测关键词</td></tr>
                   </tbody>
@@ -400,17 +400,18 @@
             <section class="efficiency-table-block" aria-labelledby="intentTrainingEnvironmentTitle">
               <div class="efficiency-table-heading">
                 <div><span>02B · 训练记录</span><h3 id="intentTrainingEnvironmentTitle">比较 0.6B / 1.7B 的 LoRA 训练成本</h3></div>
-                <p>共同配置：BF16 · 批量 32 · 2 轮 · 学习率 1e-4 · LoRA r16 / α32 · 最大长度 512。</p>
+                <p>共同固定配置：BF16 · 批量 32 · 2 轮 · 学习率 1e-4 · LoRA r16 / α32 / dropout 0.05 · 最大长度 512。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table intent-training-efficiency-table">
-                  <thead><tr><th scope="col">模型与数据</th><th scope="col">报告版本</th><th scope="col">完整训练</th><th scope="col">资源记录</th></tr></thead>
+                  <thead><tr><th scope="col">模型与样本排列</th><th scope="col">最低验证损失版本</th><th scope="col">页面报告版本</th><th scope="col">完整训练</th><th scope="col">资源记录</th></tr></thead>
                   <tbody>
-                    <tr><td><strong>Qwen3-0.6B</strong><small>完整训练集 · 45,606 条</small></td><td>训练步 2000<small>模块横评最优</small></td><td><strong>19 分 39 秒</strong><small>2,852 步</small></td><td>单进程；训练 GPU 型号与峰值显存未记录</td></tr>
-                    <tr class="result-table-final"><td><strong>Qwen3-1.7B</strong><small>类别均衡排列 · 45,606 条</small></td><td><strong>训练步 2852</strong><small>9K 静态链路使用</small></td><td><strong>29 分 05 秒</strong><small>2,852 步</small></td><td>单进程；训练 GPU 型号与峰值显存未记录</td></tr>
+                    <tr class="result-table-final"><td><strong>Qwen3-0.6B</strong><small>45,606 条 · 原始排列</small></td><td>训练步 2000<small>loss 0.00038608</small></td><td><strong>训练步 2000</strong><small>分类与成本最优</small></td><td><strong>19 分 39 秒</strong><small>2,852 步</small></td><td>单进程；训练 GPU 型号与峰值显存未记录</td></tr>
+                    <tr><td><strong>Qwen3-1.7B</strong><small>45,606 条 · 类别均衡排列</small></td><td>训练步 1600<small>loss 0.00028329</small></td><td><strong>训练步 2852</strong><small>现有全系统使用</small></td><td><strong>29 分 05 秒</strong><small>2,852 步</small></td><td>单进程；训练 GPU 型号与峰值显存未记录</td></tr>
                   </tbody>
                 </table>
               </div>
+              <p class="efficiency-boundary"><strong>调参边界：</strong>意图实验没有学习率、轮数或 LoRA 参数的受控网格；这里只有同一固定配方下的两种模型规模与检查点比较，不能写成“完整超参数搜索”。</p>
             </section>
 
             <section class="efficiency-table-block" aria-labelledby="intentInferenceEnvironmentTitle">
@@ -424,11 +425,11 @@
                   <tbody>
                     <tr><td><strong>关键词规则</strong><small>单线程 CPU</small></td><td>Montage Jintide C6230R / 1</td><td>0.1066 / 0.1493ms</td><td>8,727.45 条 / 秒</td><td>—</td></tr>
                     <tr><td>0.6B · 未微调</td><td>RTX 3090 / 64</td><td>37.23 / 38.35ms</td><td>27.08 条 / 秒</td><td>3.65 / 4.73 GiB</td></tr>
-                    <tr><td><strong>0.6B · LoRA · 训练步 2000</strong><small>模块横评最优</small></td><td>RTX 3090 / 64</td><td><strong>45.47 / 49.05ms</strong></td><td><strong>21.90 条 / 秒</strong></td><td>4.04 / 5.10 GiB</td></tr>
+                    <tr class="result-table-final"><td><strong>0.6B · LoRA · 训练步 2000</strong><small>分类与成本最优</small></td><td>RTX 3090 / 64</td><td><strong>45.47 / 49.05ms</strong></td><td><strong>21.90 条 / 秒</strong></td><td>4.04 / 5.10 GiB</td></tr>
                     <tr><td>0.6B · LoRA · 训练步 2852</td><td>RTX 3090 / 64</td><td>44.83 / 54.11ms</td><td>22.06 条 / 秒</td><td>4.04 / 5.10 GiB</td></tr>
                     <tr class="table-divider"><td>1.7B · 未微调</td><td>RTX 3090 / 48</td><td>54.64 / 58.57ms</td><td>18.52 条 / 秒</td><td>5.43 / 5.86 GiB</td></tr>
                     <tr><td>1.7B · LoRA · 训练步 1600<small>最佳验证版本</small></td><td>RTX 3090 / 48</td><td>69.58 / 75.51ms</td><td>14.36 条 / 秒</td><td>6.09 / 6.85 GiB</td></tr>
-                    <tr class="result-table-final"><td><strong>1.7B · LoRA · 训练步 2852</strong><small>9K 静态链路使用</small></td><td>RTX 3090 / 48</td><td><strong>69.24 / 75.82ms</strong></td><td>14.41 条 / 秒</td><td>6.09 / 6.85 GiB</td></tr>
+                    <tr><td><strong>1.7B · LoRA · 训练步 2852</strong><small>9K 静态链路使用</small></td><td>RTX 3090 / 48</td><td>69.24 / 75.82ms</td><td>14.41 条 / 秒</td><td>6.09 / 6.85 GiB</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -475,7 +476,7 @@
             <li><strong>158 条</strong><b>检索阶段新增失败</b><span>9K · 8,996 → 8,838</span></li>
             <li><strong>97.3667%</strong><b>自然表达回归</b><span>6,000 条 · AllHit@10</span></li>
             <li><strong>47.09ms</strong><b>精排模块 p50</b><span>20 个候选 · 同硬件离线均摊</span></li>
-            <li><strong>80.2778%</strong><b>静态全链路</b><span>8B 接口表达 9K · 7,225 / 9,000</span></li>
+            <li><strong>80.2778%</strong><b>静态全链路</b><span>8B · 9K 接口式请求监督 · 7,225 / 9,000</span></li>
           </ul>
         </div>
 
@@ -566,7 +567,7 @@
         <details class="full-results narrative-disclosure retrieval-run-disclosure" id="retrievalSelection">
           <summary>
             <span class="disclosure-summary-copy"><small>02 · 训练与参数选择</small><strong>从向量配方预筛到 R20 / P10 质量—成本选型</strong></span>
-            <span class="disclosure-summary-meta">9 组向量预筛 · 5 种负样本 × 3 种子 · 1,190 组一级参数 · 14 组深度</span>
+            <span class="disclosure-summary-meta">9 组向量预筛 · 5 种负样本 × 3 种子 · 1,190 → 24 条一级路线 · 14 组深度</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="full-results-body">
@@ -576,7 +577,7 @@
             </div>
 
             <section class="full-results-group" aria-labelledby="retrievalEmbeddingTuningTitle">
-              <div class="full-results-group-head"><span>02A</span><div><h4 id="retrievalEmbeddingTuningTitle">预筛向量模型与基础训练参数</h4><p>九组 MNRL 训练比较模型、轮数与学习率；共同使用 24K 训练轨迹、无显式负样本和固定随机种子 20260707。6K 自然表达结果只用于观察参数趋势，最终向量模型由下一步独立开发集决定。</p></div></div>
+              <div class="full-results-group-head"><span>02A</span><div><h4 id="retrievalEmbeddingTuningTitle">预筛向量模型与基础训练参数</h4><p>九组 MNRL 对比训练比较模型、轮数与学习率；共同使用 24K 训练轨迹、无显式负样本和固定随机种子 20260707。6K 自然表达结果只用于观察参数趋势，最终向量模型由下一步独立开发集决定。</p></div></div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table result-table-compact numeric-result-table embedding-tuning-table">
                   <thead><tr><th scope="col">向量模型</th><th scope="col">训练设置</th><th scope="col">AllHit@6</th><th scope="col">AllHit@10</th><th scope="col">AllHit@30</th><th scope="col">MRR</th><th scope="col">训练耗时</th><th scope="col">实验作用</th></tr></thead>
@@ -625,6 +626,42 @@
                 </tbody>
               </table>
             </div>
+            <div class="result-table-head">
+              <div><p class="eyebrow">24 条联合搜索候选</p><h3>展示去重与前沿筛选后实际进入下游的全部路线</h3></div>
+              <p>每路候选数 N、向量权重与 RRF 平滑常数共同决定一级排名；24 条路线的 AllHit@20 / @30 / @40 / @50 均为 100%，因此表内只展开有区分度的 @6 / @10 与 MRR。最终路线还要与精排和规划联合评估。</p>
+            </div>
+            <div class="result-table-wrap" tabindex="0">
+              <table class="result-table result-table-compact numeric-result-table first-stage-candidate-table">
+                <thead><tr><th scope="col">#</th><th scope="col">每路候选 N</th><th scope="col">向量 / BM25 权重</th><th scope="col">RRF 平滑常数</th><th scope="col">平均并集规模</th><th scope="col">AllHit@6</th><th scope="col">AllHit@10</th><th scope="col">MRR</th><th scope="col">下游角色</th></tr></thead>
+                <tbody>
+                  <tr class="first-stage-candidate-row"><td>01</td><td>30</td><td>0.70 / 0.30</td><td>1</td><td>43.2925</td><td>95.9167%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>02</td><td>30</td><td>0.70 / 0.30</td><td>2</td><td>43.2925</td><td>96.2500%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>03</td><td>30</td><td>0.70 / 0.30</td><td>3</td><td>43.2925</td><td>96.1667%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>04</td><td>30</td><td>0.70 / 0.30</td><td>5</td><td>43.2925</td><td>96.0000%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>05</td><td>30</td><td>0.75 / 0.25</td><td>2</td><td>43.2925</td><td>95.9167%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>06</td><td>30</td><td>0.75 / 0.25</td><td>3</td><td>43.2925</td><td>96.1667%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>07</td><td>30</td><td>0.75 / 0.25</td><td>5</td><td>43.2925</td><td>96.2500%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>08</td><td>30</td><td>0.75 / 0.25</td><td>8</td><td>43.2925</td><td>96.2500%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>09</td><td>30</td><td>0.80 / 0.20</td><td>5</td><td>43.2925</td><td>96.0833%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>10</td><td>30</td><td>0.80 / 0.20</td><td>8</td><td>43.2925</td><td>96.1667%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>11</td><td>30</td><td>0.80 / 0.20</td><td>10</td><td>43.2925</td><td>96.1667%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>12</td><td>30</td><td>0.85 / 0.15</td><td>10</td><td>43.2925</td><td>95.8333%</td><td>100.0000%</td><td>0.997917</td><td>训练侧难例挖掘</td></tr>
+                  <tr class="first-stage-candidate-row table-divider"><td>13</td><td>40</td><td>0.70 / 0.30</td><td>1</td><td>56.3125</td><td>95.9167%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>14</td><td>40</td><td>0.70 / 0.30</td><td>2</td><td>56.3125</td><td>96.2500%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>15</td><td>40</td><td>0.70 / 0.30</td><td>3</td><td>56.3125</td><td>96.1667%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>16</td><td>40</td><td>0.75 / 0.25</td><td>2</td><td>56.3125</td><td>95.9167%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>17</td><td>40</td><td>0.75 / 0.25</td><td>3</td><td>56.3125</td><td>96.1667%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>18</td><td>40</td><td>0.75 / 0.25</td><td>5</td><td>56.3125</td><td>96.2500%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row result-table-final"><td><strong>19</strong></td><td><strong>40</strong></td><td><strong>0.80 / 0.20</strong></td><td><strong>5</strong></td><td><strong>56.3125</strong></td><td><strong>96.0833%</strong></td><td><strong>100.0000%</strong></td><td><strong>0.997917</strong></td><td><strong>联合评估后正式采用</strong></td></tr>
+                  <tr class="first-stage-candidate-row"><td>20</td><td>40</td><td>0.80 / 0.20</td><td>8</td><td>56.3125</td><td>96.1667%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>21</td><td>40</td><td>0.80 / 0.20</td><td>10</td><td>56.3125</td><td>96.1667%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>22</td><td>40</td><td>0.85 / 0.15</td><td>10</td><td>56.3125</td><td>95.8333%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>23</td><td>40</td><td>0.85 / 0.15</td><td>20</td><td>56.3125</td><td>95.9167%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                  <tr class="first-stage-candidate-row"><td>24</td><td>40</td><td>0.85 / 0.15</td><td>30</td><td>56.3125</td><td>95.8333%</td><td>100.0000%</td><td>0.997917</td><td>联合搜索候选</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="efficiency-boundary"><strong>阅读方式：</strong>第 12 条只用于从训练划分挖掘重排难例，不是正式路线；第 19 条在后续架构、深度与二级融合联合评估后进入最终系统。一级表中同分不代表下游工具链质量与成本也相同。</p>
             </section>
 
             <section class="full-results-group" aria-labelledby="retrievalRerankerArchitectureTitle">
@@ -684,10 +721,10 @@
             </section>
 
             <section class="full-results-group" aria-labelledby="retrievalSecondFusionTitle">
-              <div class="full-results-group-head"><span>02G</span><div><h4 id="retrievalSecondFusionTitle">固定 R20 / P10，选择二级排名融合参数</h4><p>在 2,400 条选择集上搜索 11 个第一阶段权重 × 10 个 RRF 平滑常数，共 110 组；排名去重并通过覆盖约束后保留 11 条路线，再按 6:1 加权工具链全对率选择。</p></div></div>
+              <div class="full-results-group-head"><span>02G</span><div><h4 id="retrievalSecondFusionTitle">固定 R20 / P10，选择二级排名融合参数</h4><p>在 2,400 条选择集上搜索 11 个第一阶段权重 × 10 个 RRF 平滑常数，共 110 组；排名去重并通过覆盖约束后保留 11 条路线。自然表达与接口式请求面板按 6:1 加权，以对应最终报告的 6,000 / 1,000 数据比例。</p></div></div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table result-table-compact numeric-result-table retrieval-second-fusion-table">
-                  <thead><tr><th scope="col">R20 / P10 二级参数</th><th scope="col">加权工具链全对率</th><th scope="col">自然表达风格</th><th scope="col">接口表达风格</th><th scope="col">未见工具组合</th><th scope="col">平均输入 token</th><th scope="col">判定</th></tr></thead>
+                  <thead><tr><th scope="col">R20 / P10 二级参数</th><th scope="col">加权工具链全对率</th><th scope="col">自然表达面板</th><th scope="col">接口式请求面板</th><th scope="col">未见工具组合</th><th scope="col">平均输入 token</th><th scope="col">判定</th></tr></thead>
                   <tbody>
                     <tr class="result-table-final"><td><strong>第一阶段权重 0.4 · 平滑常数 8</strong></td><td><strong>99.5714%</strong></td><td><strong>99.6667%</strong></td><td><strong>99.0000%</strong></td><td><strong>99.3355%</strong></td><td><strong>461.19</strong></td><td><strong>入选</strong></td></tr>
                     <tr><td>第一阶段权重 0.4 · 平滑常数 10</td><td>99.5714%</td><td>99.6667%</td><td>99.0000%</td><td>99.3355%</td><td>461.20</td><td>质量同分，输入略长</td></tr>
@@ -701,10 +738,12 @@
                   <tbody>
                     <tr><td><strong>深度确认 · 1,200 条</strong></td><td><strong>R20 / P10 · 98.8571%</strong></td><td>R10 / P10 · 97.9048%</td><td>9 条改善 / 4 条回退</td><td>提升 0.9524pp；预设约束全部通过</td></tr>
                     <tr class="result-table-final"><td><strong>二级融合确认 · 1,200 条</strong></td><td><strong>R20 / P10 + 0.4 / 8 · 99.5714%</strong></td><td>R30 / P20 · 99.4762%</td><td>5 条改善 / 1 条回退<small>McNemar p=0.2188</small></td><td><strong>保留近优质量下的低成本路线</strong></td></tr>
+                    <tr><td><strong>长候选压力验证 · 1,200 条</strong></td><td>R20 / P10 · 86.1667%</td><td>R30 / P10 · 86.3333%</td><td>仅差 2 / 1,200<small>p=0.8877；对照精排延迟高 50.74%</small></td><td>微小波动不足以支付成本</td></tr>
+                    <tr><td><strong>长输入压力验证 · 1,200 条</strong></td><td>R20 / P10 · 86.1667%</td><td>R50 / P50 · 84.9167%</td><td>P50 低 1.25pp<small>输入 token 为 3.29 倍</small></td><td>更长输入产生干扰</td></tr>
                   </tbody>
                 </table>
               </div>
-              <p class="efficiency-boundary"><strong>协议边界：</strong>平滑常数 8 只控制 RRF 排名衰减，不是候选数量；上表是检索候选接口自身的锁后确认，仍属于正式选参证据。后续 Planner 数据规模实验复用其中 1,200 条所做的稳定性检查仅为补充诊断，不参与 9K / 18K / 36K / 54K 选择。</p>
+              <p class="efficiency-boundary"><strong>协议边界：</strong>平滑常数 8 只控制 RRF 排名衰减，不是候选数量；上表的接口确认与压力验证均在路线锁定后运行，不再反向选参。后续 Planner 数据规模实验只接收冻结接口，不重复这组选择。</p>
             </section>
 
             <section class="full-results-group" aria-labelledby="retrievalFrozenRouteTitle">
@@ -733,18 +772,18 @@
           <div class="full-results-body">
             <div class="full-results-copy">
               <h3>冻结配置后依次验收质量、失败来源与成本</h3>
-              <p>配置锁定后打开一次性终评，并在自然表达与接口表达测试集回归；随后只做失败归因和模块成本核对，不使用测试结果反向调参。</p>
+              <p>配置锁定后打开一次性终评，并在自然表达与接口式请求测试集回归；随后只做失败归因和模块成本核对，不使用测试结果反向调参。</p>
             </div>
 
             <section class="full-results-group" aria-labelledby="retrievalFrozenQualityTitle">
-              <div class="full-results-group-head"><span>03A</span><div><h4 id="retrievalFrozenQualityTitle">验收一次性终评与两套回归测试</h4><p>自然表达 6K 是后续 9K 全链路中的电商部分；一次性终评和接口表达用于补充检验。三者均在路线冻结后计分。</p></div></div>
+              <div class="full-results-group-head"><span>03A</span><div><h4 id="retrievalFrozenQualityTitle">验收一次性终评与两套回归测试</h4><p>自然表达 6K 是后续 9K 全链路中的电商部分；一次性终评和接口式请求用于补充检验。三者均在路线冻结后计分。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">评测集</th><th scope="col">样本数</th><th scope="col">AllHit@6</th><th scope="col">AllHit@7</th><th scope="col">AllHit@8</th><th scope="col">AllHit@9</th><th scope="col">AllHit@10</th><th scope="col">AllHit@20</th><th scope="col">MRR</th></tr></thead>
                 <tbody>
                   <tr class="result-table-final"><td><strong>自然表达测试</strong><small>9K 电商部分</small></td><td><strong>6,000</strong></td><td>91.3500%</td><td>94.0500%</td><td>95.8167%</td><td>96.6667%</td><td><strong>97.3667%</strong></td><td>99.5000%</td><td>0.977048</td></tr>
                   <tr><td><strong>一次性终评</strong><small>冻结后打开</small></td><td>1,200</td><td>98.5833%</td><td>99.5000%</td><td>99.7500%</td><td>99.8333%</td><td><strong>99.8333%</strong></td><td>100.0000%</td><td>0.997778</td></tr>
-                  <tr><td><strong>接口表达测试</strong></td><td>1,000</td><td>99.6000%</td><td>99.9000%</td><td>100.0000%</td><td>100.0000%</td><td><strong>100.0000%</strong></td><td>100.0000%</td><td>0.999500</td></tr>
+                  <tr><td><strong>接口式请求测试</strong></td><td>1,000</td><td>99.6000%</td><td>99.9000%</td><td>100.0000%</td><td>100.0000%</td><td><strong>100.0000%</strong></td><td>100.0000%</td><td>0.999500</td></tr>
                 </tbody>
               </table>
             </div>
@@ -769,7 +808,7 @@
             </section>
 
             <section class="full-results-group" aria-labelledby="retrievalFrozenEfficiencyTitle">
-              <div class="full-results-group-head"><span>03C</span><div><h4 id="retrievalFrozenEfficiencyTitle">核对不同精排深度的交互评分成本</h4><p>同一硬件、同一模型下测量 Cross-encoder 对 R 个候选的离线批内均摊 p50；该表用于支持 R20 / P10 的成本选择。</p></div></div>
+              <div class="full-results-group-head"><span>03C</span><div><h4 id="retrievalFrozenEfficiencyTitle">复核不同精排深度的交互评分成本</h4><p>同一硬件、同一模型下测量 Cross-encoder 对 R 个候选的离线批内均摊 p50；路线已锁定，该表只复核 R20 / P10 相对更深精排的成本差异。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact efficiency-table retrieval-final-efficiency-table numeric-result-table">
                 <thead><tr><th scope="col">精排深度 R</th><th scope="col">规划深度 P</th><th scope="col">精排 p50</th><th scope="col">相对 R20</th><th scope="col">用途</th></tr></thead>
@@ -810,7 +849,7 @@
                     <tr><td><strong>候选长度压力验证</strong></td><td>1,200 条</td><td>路线锁定后的长候选干扰诊断</td><td>600 条单工具 + 600 条监督训练未见组合；不参与调参</td></tr>
                     <tr><td><strong>一次性终评</strong></td><td>1,200 条</td><td>冻结后的首次质量评测</td><td>AllHit@10 99.8333%，结果打开后未继续调参</td></tr>
                     <tr><td><strong>自然表达测试</strong></td><td>6,000 条</td><td>检索与固定规划模型评测</td><td>检索 AllHit@10 97.3667%</td></tr>
-                    <tr><td><strong>接口表达回归</strong></td><td>1,000 条</td><td>格式化表达下的检索与规划回归</td><td>检索 AllHit@10 100.0000%</td></tr>
+                    <tr><td><strong>接口式请求回归</strong></td><td>1,000 条</td><td>较规则表达下的检索与规划回归</td><td>检索 AllHit@10 100.0000%</td></tr>
                     <tr><td><strong>静态全链路</strong></td><td>9,000 条</td><td>固定路由、检索与规划预测后联合计分</td><td>工具链成功 7,225 条；不含真实工具执行</td></tr>
                   </tbody>
                 </table>
@@ -868,7 +907,7 @@
                   <thead><tr><th scope="col">检查项</th><th scope="col">结果</th><th scope="col">核验内容</th></tr></thead>
                   <tbody>
                     <tr><td>模型身份</td><td><strong>通过</strong></td><td>向量模型 <code>97816d9a…ec86</code>；重排模型 <code>d1ac0366…d6d</code></td></tr>
-                    <tr><td>评测行数</td><td><strong>通过</strong></td><td>一次性终评 1,200 · 自然表达 6,000 · 接口表达 1,000</td></tr>
+                    <tr><td>评测行数</td><td><strong>通过</strong></td><td>一次性终评 1,200 · 自然表达 6,000 · 接口式请求 1,000</td></tr>
                     <tr><td>实际候选数</td><td><strong>通过</strong></td><td>向量与 BM25 各取 Top-40；精排 Top-20；规划读取最终 Top-10，满足 P≤R</td></tr>
                     <tr><td>评测清单</td><td><strong>通过</strong></td><td>三套评测均保存 manifest、输入哈希与曝光记录</td></tr>
                     <tr><td>部署等价性</td><td><strong>通过</strong></td><td>最终 Top-10 排名与候选裁剪实现 100% 一致</td></tr>
@@ -889,34 +928,35 @@
         <p class="eyebrow">实验 03 · 工具链规划</p>
         <div class="section-heading split-heading">
           <h2 id="planningTitle">工具链规划：从未微调基线到 9K 最终系统</h2>
-          <p>先用未微调模型确认 Top-10 候选的作用，再以 9K 为锚点选择监督训练配方；随后固定 R20 / P10 接口，以同一配方比较 9K–54K 监督规模，并在锁定模型后完成 6K、1K 与 9K 最终评测。</p>
+          <p>先用未微调模型确认 Top-10 候选的作用，再以 9K 为锚点选择监督训练配方；随后接收实验 02 冻结的 R20 / P10 接口，以同一配方比较 9K–54K 监督规模，并在锁定模型后完成 6K、1K 与 9K 最终评测。</p>
         </div>
+        <p class="metric-contract-note"><strong>术语口径：</strong>“自然表达”指更接近日常说法的请求，是 6K 最终主测试；“接口式请求”用较规则的能力与顺序表达，用于 9K–54K 监督训练及 1K 回归；“早期独立请求 1K”只验证首次训练方向，不能与最终自然表达 6K 直接比较。涉及两种表达面板时，6:1 加权对应最终报告的 6,000 / 1,000 比例。</p>
 
         <section class="planner-final-lead" id="plannerLatestUpdate" aria-labelledby="plannerFinalLeadTitle">
           <div class="planner-final-lead-copy">
             <span>最终结果 · 静态全链路 9,000 条</span>
             <h3 id="plannerFinalLeadTitle"><strong>80.28%</strong> 静态全链路成功率</h3>
-            <p>固定 1.7B 路由、R20 / P10 检索接口和 8B 接口表达 9K 规划模型后，工具链口径通过 <b>7,225 / 9,000</b> 条；从候选完整到有序工具链新增 1,613 条失败，自然表达电商 6K 为 70.48%。</p>
+            <p>沿用现有 1.7B 路由，并固定 R20 / P10 检索接口和 8B · 9K 接口式请求监督模型后，工具链口径通过 <b>7,225 / 9,000</b> 条；从候选完整到有序工具链新增 1,613 条失败，自然表达电商 6K 为 70.48%。</p>
           </div>
           <div class="planner-final-lead-choice" role="group" aria-label="最终规划模型选择">
             <div class="is-selected">
               <span>固定规划模型</span>
-              <strong>Qwen3-8B · 接口表达 9K 监督训练</strong>
-              <small>checkpoint-846 · 在打开 6K / 1K 冻结结果前锁定</small>
+              <strong>Qwen3-8B · 9K 接口式请求监督</strong>
+              <small>checkpoint-846 · 开发选择集与组合隔离集均优于 4B 后锁定</small>
             </div>
           </div>
         </section>
 
         <section class="planner-compact-story" id="plannerExperiments" aria-labelledby="plannerStoryTitle">
           <div class="result-explorer-head">
-            <div><span class="result-subsection-label">规划实验主线</span><h3 id="plannerStoryTitle">训练前 RAG 对照 → 9K 配方调参 → 候选接口冻结 → 数据规模选择与终评</h3></div>
-            <p>01 量化 RAG 贡献；02 先验证监督训练，再在 9K 上选择学习率、轮数与 LoRA 配置；03 固定候选接口；04 以同一配方逐步放大数据并打开最终测试。</p>
+            <div><span class="result-subsection-label">规划实验主线</span><h3 id="plannerStoryTitle">训练前 RAG 对照 → 9K 配方调参 → 接收冻结候选 → 数据规模选择与终评</h3></div>
+            <p>01 量化 RAG 贡献；02 先验证监督训练，再在 9K 上选择学习率、轮数与 LoRA 配置；03 说明与实验 02 的接口交接；04 以同一配方逐步放大数据并打开最终测试。</p>
           </div>
 
           <div class="experiment-steps" role="group" aria-label="工具链规划模型选型路径">
             <article><span>01 · 训练前 RAG 对照</span><strong>完整 100 工具 vs Top-10</strong><small>固定未微调 4B / 8B</small></article>
             <article><span>02 · 训练与配方选择</span><strong>9K 锚点 · 21 + 3 个版本</strong><small>先调参，再固定配方比较数据规模</small></article>
-            <article><span>03 · 候选接口冻结</span><strong>精排 R ≥ 规划 P</strong><small>选择 R20 / P10，并完成锁后确认</small></article>
+            <article><span>03 · 候选接口交接</span><strong>实验 02 → Planner</strong><small>接收 R20 / P10，不重复选参</small></article>
             <article class="is-selected"><span>04 · 规模选择与终评</span><strong>9K → 54K，再打开冻结集</strong><small>7,225 / 9,000 · 80.28%</small></article>
           </div>
 
@@ -924,7 +964,7 @@
             <details class="narrative-disclosure planner-story-results" id="plannerBaseRagResults">
               <summary>
                 <span class="disclosure-summary-copy"><small>01 · 训练前 RAG 对照</small><strong>固定未微调模型，只改变完整目录与 Top-10</strong></span>
-                <span class="disclosure-summary-meta">4B / 8B · 自然表达 6K + 接口表达 1K · 工具链 4 / 4 组提升</span>
+                <span class="disclosure-summary-meta">4B / 8B · 自然表达 6K + 接口式请求 1K · 工具链 4 / 4 组提升</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
@@ -938,12 +978,12 @@
                     <tbody>
                       <tr><td rowspan="2"><strong>自然表达 6K</strong></td><td>未微调 4B</td><td>26.9500% / 25.2167% / 84.6833%</td><td>35.9667% / 33.9333% / 94.1833%</td><td><strong>+8.7167pp</strong></td></tr>
                       <tr><td>未微调 8B</td><td>30.7500% / 28.9333% / 92.5333%</td><td>37.3333% / 35.6667% / 94.1500%</td><td><strong>+6.7333pp</strong></td></tr>
-                      <tr class="table-divider"><td rowspan="2"><strong>接口表达 1K</strong></td><td>未微调 4B</td><td>52.3000% / 50.4000% / 93.6000%</td><td>54.5000% / 53.8000% / 87.0000%</td><td><strong>+3.4000pp</strong></td></tr>
+                      <tr class="table-divider"><td rowspan="2"><strong>接口式请求 1K</strong></td><td>未微调 4B</td><td>52.3000% / 50.4000% / 93.6000%</td><td>54.5000% / 53.8000% / 87.0000%</td><td><strong>+3.4000pp</strong></td></tr>
                       <tr><td>未微调 8B</td><td>57.4000% / 54.6000% / 96.7000%</td><td>62.3000% / 60.9000% / 89.2000%</td><td><strong>+6.3000pp</strong></td></tr>
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>本步结论：</strong>Top-10 在 4 / 4 组配对中提高工具链全对率；接口表达的格式合规率仍会下降，说明缩小候选范围不能替代监督训练。</p>
+                <p class="planner-result-boundary"><strong>本步结论：</strong>Top-10 在 4 / 4 组配对中提高工具链全对率；接口式请求的格式合规率仍会下降，说明缩小候选范围不能替代监督训练。</p>
               </div>
             </details>
 
@@ -957,7 +997,7 @@
                 <div class="planner-table-block">
                 <div class="planner-table-heading">
                   <h4>02A · 固定 Top-10，检验第一次监督训练是否有效</h4>
-                  <p>固定同一批 1,000 条自由生成请求与同一 Top-10，只改变模型权重；该表回答训练是否有效，不代表最终 9K。</p>
+                  <p>固定同一批 1,000 条早期独立请求与同一 Top-10，只改变模型权重；该表回答训练方向是否有效。该协议早于最终自然表达 6K，绝对分数不能直接横向比较。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table">
@@ -968,7 +1008,7 @@
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>验证结果：</strong>第一次监督训练已把同一 Top-10 下的工具链全对率提高到 98%–99%，因此继续在作业规定的 9K 基础数据上选择训练配方。</p>
+                <p class="planner-result-boundary"><strong>验证结果：</strong>第一次监督训练在这套早期独立协议上把工具链全对率提高到 98%–99%，因此继续在作业规定的 9K 基础数据上选择训练配方；该高分不代表最终自然表达主结果。</p>
                 </div>
 
                 <div class="planner-table-block">
@@ -1058,57 +1098,36 @@
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>证据边界：</strong>这轮完整搜索使用较早的接口表达开发集与当时的候选输入，不是当前 R20 / P10 接口下的 24 个版本重评；8B 也只确认 3 个三轮配置，没有完整比较 1 / 2 / 3 轮。因此当前结论是“在 9K 上选定统一配方，再以该配方比较 9K–54K”，不声称每个规模都分别调到了最优。</p>
+                <p class="planner-result-boundary"><strong>证据边界：</strong>这轮完整搜索使用较早的接口式请求开发集与当时的候选输入，不是当前 R20 / P10 接口下的 24 个版本重评；8B 也只确认 3 个三轮配置，没有完整比较 1 / 2 / 3 轮。因此当前结论是“在 9K 上选定统一配方，再以该配方比较 9K–54K”，不声称每个规模都分别调到了最优。</p>
                 </div>
               </div>
             </details>
 
             <details class="narrative-disclosure planner-story-results" id="plannerToolCountResults">
               <summary>
-                <span class="disclosure-summary-copy"><small>03 · 候选接口冻结</small><strong>同时比较精排 R 与规划 P，锁定 R20 / P10</strong></span>
-                <span class="disclosure-summary-meta">2.4K 选择 · 1.2K 锁后确认 · 长候选压力验证</span>
+                <span class="disclosure-summary-copy"><small>03 · 候选接口交接</small><strong>接收实验 02 冻结的 R20 / P10</strong></span>
+                <span class="disclosure-summary-meta">完整 14 组深度与锁后证据见实验 02 · 02F–02G</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
                 <div class="planner-table-block">
                 <div class="planner-table-heading">
-                  <h4>03A · 在质量近优集合中选择更小的候选接口</h4>
-                  <p>固定 8B 权重与检索模型，联合比较 R∈{10,20,30,50} 和 P∈{5,10,20,30,50}，并强制 P≤R。表中列出通过覆盖约束的关键方案；完整 14 组结果见候选检索章节。</p>
+                  <h4>03A · 明确检索与规划之间的冻结接口</h4>
+                  <p>精排深度、规划深度、质量近优带和长候选压力验证已经在实验 02 完成；本章只接收冻结结果，避免把同一选参实验重复讲述两次。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table">
-                    <thead><tr><th scope="col">精排 R / 规划 P</th><th scope="col">加权工具链全对率</th><th scope="col">距单点最高</th><th scope="col">平均输入 token</th><th scope="col">精排 p50</th><th scope="col">判定</th></tr></thead>
+                    <thead><tr><th scope="col">接口环节</th><th scope="col">冻结配置</th><th scope="col">约束或作用</th><th scope="col">交给下一步</th></tr></thead>
                     <tbody>
-                      <tr class="result-table-final"><td><strong>20 / 10</strong></td><td><strong>99.3571%</strong></td><td><strong>−0.2857pp</strong></td><td><strong>455.42</strong></td><td><strong>47.09ms</strong></td><td><strong>入选</strong></td></tr>
-                      <tr><td>20 / 20</td><td>99.5833%</td><td>−0.0596pp</td><td>720.11</td><td>47.09ms</td><td>规划输入更长</td></tr>
-                      <tr><td>30 / 10</td><td>99.5714%</td><td>−0.0715pp</td><td>455.66</td><td>70.98ms</td><td>精排成本更高</td></tr>
-                      <tr class="row-emphasis"><td>30 / 20</td><td><strong>99.6429%</strong></td><td>单点最高</td><td>721.16</td><td>70.98ms</td><td>高成本质量参照</td></tr>
-                      <tr><td>50 / 50</td><td>99.5833%</td><td>−0.0596pp</td><td>1,513.03</td><td>116.96ms</td><td>成本最高</td></tr>
+                      <tr><td><strong>一级检索</strong></td><td>BM25 / 向量各取 Top-40 · 向量权重 0.8 · 平滑常数 5</td><td>保留词面与语义互补</td><td>统一候选排名</td></tr>
+                      <tr><td><strong>交互精排</strong></td><td>bge-reranker-v2-m3 · R=20</td><td>规划可见候选必须全部经过 Cross-encoder 评分</td><td>Top-20 精排名次</td></tr>
+                      <tr><td><strong>二级融合</strong></td><td>一级权重 0.4 · 精排权重 0.6 · 平滑常数 8</td><td>融合两路互补名次</td><td>最终 Top-10</td></tr>
+                      <tr class="result-table-final"><td><strong>规划输入</strong></td><td><strong>P=10 · 保持最终检索顺序</strong></td><td><strong>P≤R</strong></td><td><strong>一次生成工具集合与顺序</strong></td></tr>
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>选择结果：</strong>R20 / P10 位于 0.5pp 近优带；相比单点最高的 R30 / P20，规划 token 少 36.84%，精排 p50 低 33.65%。增加成本缺少足够收益证据，因此固定 R20 / P10。</p>
+                <p class="planner-result-boundary"><strong>交接边界：</strong>完整 14 组 R / P 结果、110 组二级 RRF 搜索与锁后压力验证均保留在实验 02；Planner 的数据规模实验不回看 6K / 1K 测试结果重新选择接口。</p>
                 </div>
-
-                <div class="planner-table-block">
-                <div class="planner-table-heading">
-                  <h4>03B · 锁后确认接口，并检查长候选干扰</h4>
-                  <p>接口确认与压力验证均在路线锁定后运行，不反向调参。前者确认 R20 / P10 相对浅精排基准的收益；后者检验继续增加精排或规划候选是否值得。</p>
-                </div>
-                <div class="result-table-wrap" tabindex="0">
-                  <table class="result-table result-table-compact planner-result-table">
-                    <thead><tr><th scope="col">证据</th><th scope="col">入选路线</th><th scope="col">对照路线</th><th scope="col">结果</th><th scope="col">用途</th></tr></thead>
-                    <tbody>
-                      <tr class="result-table-final"><td><strong>深度锁后确认 · 1.2K</strong></td><td><strong>R20 / P10 · 98.8571%</strong></td><td>R10 / P10 · 97.9048%</td><td>+0.9524pp<small>9 条改善 / 4 条回退</small></td><td><strong>确认接口约束</strong></td></tr>
-                      <tr><td><strong>二级融合锁后确认 · 1.2K</strong></td><td>R20 / P10 + 0.4 / 8 · 99.5714%</td><td>R30 / P20 · 99.4762%</td><td>5 条改善 / 1 条回退<small>p=0.2188</small></td><td>保留近优低成本路线</td></tr>
-                      <tr><td><strong>长候选压力验证 · 1.2K</strong></td><td>R20 / P10 · 86.1667%</td><td>R30 / P10 · 86.3333%</td><td>仅差 2 / 1,200<small>p=0.8877；精排延迟高 50.74%</small></td><td>不为微小波动增加成本</td></tr>
-                      <tr><td><strong>长输入压力验证 · 1.2K</strong></td><td>R20 / P10 · 86.1667%</td><td>R50 / P50 · 84.9167%</td><td>P50 低 1.25pp<small>输入 token 为 3.29 倍</small></td><td>确认长候选会产生干扰</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p class="planner-result-boundary"><strong>冻结边界：</strong>候选接口由固定规划模型完成选型；随后训练的接口表达 9K checkpoint-846 只复用该接口，没有回看测试结果重新选择 R 或 P。</p>
-                </div>
-
               </div>
             </details>
 
@@ -1122,30 +1141,30 @@
                 <div class="planner-table-block">
                 <div class="planner-table-heading">
                   <h4>04A · 固定候选接口，比较 9K–54K 监督规模</h4>
-                  <p>先在 9K 上选定 5e-5 / 3 轮 / LoRA r32 / dropout 0.05，再让 4B / 8B 的四个严格嵌套规模共用该配方与同一 R20 / P10 接口。主指标是 2,400 条选择集上的 6:1 加权 RAG 工具链全对率；1,200 条组合隔离集用于防止只记住训练工具组合。</p>
+                  <p>先在 9K 接口式请求上选定 5e-5 / 3 轮 / LoRA r32 / dropout 0.05，再让 4B / 8B 的四个严格嵌套规模共用该配方与同一 R20 / P10 接口。主指标是 2,400 条选择集上的工具链全对率；自然表达与接口式请求面板按 6:1 加权，对应最终 6K / 1K 报告比例。1,200 条组合隔离集用于防止只记住训练工具组合。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table numeric-result-table">
                     <thead><tr><th scope="col">模型</th><th scope="col">训练量</th><th scope="col">选择集 · 无 RAG</th><th scope="col">选择集 · RAG</th><th scope="col">组合隔离 · 无 RAG</th><th scope="col">组合隔离 · RAG</th><th scope="col">判定</th></tr></thead>
                     <tbody>
-                      <tr class="result-table-final"><td><strong>4B</strong></td><td><strong>9K</strong></td><td>94.1429%</td><td><strong>98.5119%</strong></td><td>87.8333%</td><td><strong>95.6667%</strong></td><td><strong>入选</strong></td></tr>
+                      <tr class="result-table-final"><td><strong>4B</strong></td><td><strong>9K</strong></td><td>94.1429%</td><td><strong>98.5119%</strong></td><td>87.8333%</td><td><strong>95.6667%</strong></td><td><strong>4B 规模赢家</strong></td></tr>
                       <tr><td>4B</td><td>18K</td><td>93.7500%</td><td>97.6310%</td><td>84.4167%</td><td>94.0000%</td><td>未入选</td></tr>
                       <tr><td>4B</td><td>36K</td><td>93.3929%</td><td>97.5952%</td><td>84.3333%</td><td>94.7500%</td><td>未入选</td></tr>
                       <tr><td>4B</td><td>54K</td><td>96.6190%</td><td>98.1905%</td><td>90.5833%</td><td>94.8333%</td><td>第二名</td></tr>
-                      <tr class="table-divider result-table-final"><td><strong>8B</strong></td><td><strong>9K</strong></td><td><strong>96.8690%</strong></td><td><strong>98.9405%</strong></td><td><strong>90.5833%</strong></td><td><strong>97.5833%</strong></td><td><strong>入选</strong></td></tr>
+                      <tr class="table-divider result-table-final"><td><strong>8B</strong></td><td><strong>9K</strong></td><td><strong>96.8690%</strong></td><td><strong>98.9405%</strong></td><td><strong>90.5833%</strong></td><td><strong>97.5833%</strong></td><td><strong>最终开发阶段入选</strong></td></tr>
                       <tr><td>8B</td><td>18K</td><td>95.7143%</td><td>98.5476%</td><td>86.3333%</td><td>95.3333%</td><td>未入选</td></tr>
                       <tr><td>8B</td><td>36K</td><td>96.1905%</td><td>98.7857%</td><td>90.5833%</td><td>97.0000%</td><td>第二名</td></tr>
                       <tr><td>8B</td><td>54K</td><td>96.8095%</td><td>98.5357%</td><td>90.2500%</td><td>96.1667%</td><td>未入选</td></tr>
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>选择结果：</strong>预先锁定的主指标上，4B 9K 比 54K 高 0.3214pp，8B 9K 比 36K 高 0.1548pp，因此两种模型都选择 9K。该结论限定为“统一配方下 9K 最好”；另一批 1,200 条回放仅保留为补充稳定性记录，配置中明确标记为“不参与正式流程”。</p>
+                <p class="planner-result-boundary"><strong>选择结果：</strong>先在每个模型尺寸内选择 9K：4B 9K 比 54K 高 0.3214pp，8B 9K 比 36K 高 0.1548pp。再在受保护测试打开前比较两位规模赢家：8B 在选择集高 0.4286pp，在组合隔离集高 1.9166pp，因此冻结 8B。结论只限于统一配方；不声称各规模分别调优后 9K 仍必然最好。</p>
                 </div>
 
                 <div class="planner-table-block">
                 <div class="planner-table-heading">
                   <h4>04B · 冻结 9K 权重，验证 RAG 是否仍有贡献</h4>
-                  <p>模型与解码保持不变，无 RAG 一次展示完整 100 工具，RAG 提供最终 Top-10。自然表达 6K 是主口径，接口表达 1K 是补充回归；两种训练后模型的 4 组配对均由 RAG 获胜。</p>
+                  <p>模型与解码保持不变，无 RAG 一次展示完整 100 工具，RAG 提供最终 Top-10。自然表达 6K 是主口径，接口式请求 1K 是补充回归；两种训练后模型的 4 组配对均由 RAG 获胜。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table planner-final-table">
@@ -1153,29 +1172,29 @@
                     <tbody>
                       <tr><td rowspan="2"><strong>自然表达 6K</strong><small>最终主口径</small></td><td>Qwen3-4B</td><td>57.2000% / 56.5167% / 95.8167%</td><td><strong>71.3500% / 71.0833% / 99.4167%</strong></td><td><strong>+14.5667pp</strong></td></tr>
                       <tr class="result-table-final"><td><strong>Qwen3-8B</strong></td><td>59.8833% / 59.3667% / 96.0000%</td><td><strong>70.6000% / 70.4833% / 99.3167%</strong></td><td><strong>+11.1167pp</strong></td></tr>
-                      <tr class="table-divider"><td rowspan="2"><strong>接口表达 1K</strong><small>补充回归</small></td><td>Qwen3-4B</td><td>93.2000% / 93.1000% / 98.8000%</td><td><strong>98.3000% / 98.3000% / 100.0000%</strong></td><td><strong>+5.2000pp</strong></td></tr>
+                      <tr class="table-divider"><td rowspan="2"><strong>接口式请求 1K</strong><small>补充回归</small></td><td>Qwen3-4B</td><td>93.2000% / 93.1000% / 98.8000%</td><td><strong>98.3000% / 98.3000% / 100.0000%</strong></td><td><strong>+5.2000pp</strong></td></tr>
                       <tr><td>Qwen3-8B</td><td>95.5000% / 95.5000% / 99.9000%</td><td>98.1000% / 98.1000% / 100.0000%</td><td><strong>+2.6000pp</strong></td></tr>
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>完整矩阵：</strong>连同 01 的未微调结果，4B / 8B × 训练前后 × 6K / 1K 共 8 个同模型配对，RAG 的工具链全对率全部提高。接口表达训练在同类测试上保持高分，但自然表达仍明显更难。</p>
+                <p class="planner-result-boundary"><strong>完整矩阵：</strong>连同 01 的未微调结果，4B / 8B × 训练前后 × 6K / 1K 共 8 个同模型配对，RAG 的工具链全对率全部提高。接口式请求监督在同类测试上保持高分，但自然表达仍明显更难。</p>
                 </div>
 
                 <div class="planner-table-block">
                 <div class="planner-table-heading">
                   <h4>04C · 固定上游链路，报告 4B / 8B 的 9K 静态结果</h4>
-                  <p>3,000 条闲聊正确旁路即成功；6,000 条电商请求还需检索完整并生成完全正确的有序工具链。8B 在打开冻结结果前已按开发协议锁定，因此不使用冻结集上的 4B 点估计反向改选。</p>
+                  <p>3,000 条闲聊正确旁路即成功；6,000 条电商请求还需检索完整并生成完全正确的有序工具链。8B 因开发选择集与组合隔离集均高于 4B 而在测试前锁定；下表是锁定后的最终报告，不用于反向改选。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table">
                     <thead><tr><th scope="col">固定规划模型</th><th scope="col">9K 集合成功率</th><th scope="col">9K 工具链成功率</th><th scope="col">工具链通过数</th><th scope="col">角色</th></tr></thead>
                     <tbody>
-                      <tr><td>Qwen3-4B · 接口表达 9K</td><td><strong>80.8556%</strong></td><td><strong>80.6778%</strong></td><td><strong>7,261 / 9,000</strong></td><td>成本与冻结点估计对照</td></tr>
-                      <tr class="result-table-final"><td><strong>Qwen3-8B · 接口表达 9K</strong><small>checkpoint-846</small></td><td><strong>80.3556%</strong></td><td><strong>80.2778%</strong></td><td><strong>7,225 / 9,000</strong></td><td><strong>正式端点</strong></td></tr>
+                      <tr><td>Qwen3-4B · 9K 接口式请求监督</td><td><strong>80.8556%</strong></td><td><strong>80.6778%</strong></td><td><strong>7,261 / 9,000</strong></td><td>冻结测试报告对照</td></tr>
+                      <tr class="result-table-final"><td><strong>Qwen3-8B · 9K 接口式请求监督</strong><small>checkpoint-846</small></td><td><strong>80.3556%</strong></td><td><strong>80.2778%</strong></td><td><strong>7,225 / 9,000</strong></td><td><strong>开发阶段已锁定端点</strong></td></tr>
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>模型锁：</strong>4B 的冻结工具链点估计高 0.4000pp，但受保护测试结果只用于报告，不能回写开发阶段的模型锁；正式端点仍为 Qwen3-8B checkpoint-846。</p>
+                <p class="planner-result-boundary"><strong>模型锁：</strong>最终 9K 上 4B 的工具链点估计高 0.4000pp，但这是模型冻结后才打开的测试结果；它不能回写由选择集与组合隔离集共同作出的开发阶段选择。正式端点仍为 Qwen3-8B checkpoint-846。</p>
                 </div>
 
                 <div class="planner-table-block">
@@ -1196,7 +1215,7 @@
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>最终结果：</strong>固定 1.7B 路由、R20 / P10 候选接口与 8B 接口表达 9K checkpoint-846 后，9K 静态工具链成功率为 80.2778%。</p>
+                <p class="planner-result-boundary"><strong>最终结果：</strong>沿用现有 1.7B 路由，并固定 R20 / P10 候选接口与 8B · 9K 接口式请求监督 checkpoint-846 后，9K 静态工具链成功率为 80.2778%。</p>
                 </div>
               </div>
             </details>
@@ -1212,50 +1231,29 @@
           <div class="disclosure-body efficiency-body">
             <section class="data-evidence-section experiment-data-section" aria-labelledby="plannerTrainingDataTitle">
               <div class="data-evidence-heading">
-                <div><p>05A · 数据职责</p><h3 id="plannerTrainingDataTitle">把接口选型、规模选择与最终测试分开</h3></div>
-                <span>候选接口先独立冻结；9K–54K 只比较 Planner 监督规模；6K、1K 与 9K 结果在模型锁定后打开。</span>
+                <div><p>05A · 数据与协议</p><h3 id="plannerTrainingDataTitle">每套数据只承担一个明确角色</h3></div>
+                <span>正式主线是“9K 配方选择 → 接收冻结候选接口 → 2.4K 规模选择 + 1.2K 组合隔离 → 锁定模型 → 6K / 1K / 9K 报告”。</span>
               </div>
               <div class="data-table-wrap" tabindex="0">
                 <table class="data-table experiment-data-table">
-                  <thead><tr><th scope="col">数据资产</th><th scope="col">来源与内容</th><th scope="col">规模</th><th scope="col">实验角色</th><th scope="col">边界</th></tr></thead>
+                  <thead><tr><th scope="col">阶段与数据</th><th scope="col">规模</th><th scope="col">回答的问题</th><th scope="col">是否参与选择</th><th scope="col">边界或输出</th></tr></thead>
                   <tbody>
-                    <tr><td><strong>接口表达监督池</strong><span>Planner 规模实验</span></td><td>单工具、多工具候选顺序变化与同类干扰请求，均配最终 Top-10 与目标工具链</td><td><strong>54,000 条</strong><br>9K / 18K / 36K / 54K 严格嵌套</td><td>固定训练配方下逐步放大数据规模</td><td>不混入自然表达 24K 训练轨迹</td></tr>
-                    <tr><td><strong>训练配方开发集</strong><span>9K 超参数选择</span></td><td>接口表达请求、当时的 RAG 候选输入与有序目标</td><td><strong>2,400 条</strong></td><td>比较学习率、训练轮数、LoRA 秩与 dropout</td><td>早于当前 R20 / P10 接口；不用于最终 6K / 1K 报告</td></tr>
-                    <tr><td><strong>候选接口选择集</strong><span>R / P 与二级 RRF</span></td><td>自然表达与接口表达面板，含单工具和训练未见组合</td><td><strong>2,400 条</strong></td><td>联合比较精排深度、规划深度与二级融合参数</td><td>强制 P≤R；先于最终测试冻结</td></tr>
-                    <tr><td><strong>候选接口确认集</strong><span>检索接口锁后证据</span></td><td>与接口选择集隔离的同结构面板</td><td><strong>1,200 条</strong></td><td>确认 R20 / P10 与二级 RRF 选择</td><td>属于检索接口正式证据；确认后不再调参</td></tr>
-                    <tr><td><strong>候选长度压力集</strong><span>锁后诊断</span></td><td>600 条单工具 + 600 条训练未见多工具组合</td><td><strong>1,200 条</strong></td><td>检查更深精排和更长 Planner 输入是否值得</td><td>只解释长候选干扰，不用于选择</td></tr>
-                    <tr><td><strong>Planner 规模选择集</strong><span>主选择指标</span></td><td>自然表达近似与接口表达两类面板</td><td><strong>2,400 条</strong></td><td>按 6:1 加权 RAG 工具链全对率选择训练规模</td><td>4B / 8B 分别锁定 9K</td></tr>
-                    <tr><td><strong>组合隔离保护集</strong><span>规模选择保护项</span></td><td>来源轨迹 ID 与工具组合均和训练侧隔离</td><td><strong>1,200 条</strong></td><td>防止规模选择只依赖训练中见过的工具组合</td><td>与主选择集共同使用，不是最终测试</td></tr>
-                    <tr><td><strong>冻结评测</strong><span>最终报告</span></td><td>自然表达电商、接口表达及含闲聊的静态系统集合</td><td><strong>6,000 + 1,000 + 9,000 条</strong></td><td>报告模块回归与静态全链路结果</td><td>模型锁定后打开，不反向选规模或模型</td></tr>
+                    <tr><td><strong>早期训练方向验证</strong><span>独立请求</span></td><td><strong>1,000 条</strong></td><td>固定 Top-10 时，首次监督训练是否学会工具集合与顺序</td><td>只确认方向</td><td>协议早于最终 6K，绝对分数不可直接比较</td></tr>
+                    <tr><td><strong>9K 配方开发</strong><span>接口式请求与当时候选</span></td><td><strong>2,400 条</strong></td><td>选择学习率、训练轮数、LoRA 秩与 dropout</td><td><strong>是</strong></td><td>4B 21 个唯一版本；8B 确认 3 个优胜配置</td></tr>
+                    <tr><td><strong>候选接口选型</strong><span>实验 02 的上游证据</span></td><td><strong>2,400 条选择 + 1,200 条确认</strong></td><td>联合选择精排 R、规划 P 与二级融合</td><td><strong>是</strong></td><td>强制 P≤R；冻结 R20 / P10 + 0.4 / 8</td></tr>
+                    <tr><td><strong>长候选压力验证</strong><span>锁后诊断</span></td><td><strong>1,200 条</strong></td><td>更深精排或更长 Planner 输入是否稳定带来收益</td><td>否</td><td>只解释候选干扰；完整结果见实验 02</td></tr>
+                    <tr><td><strong>接口式请求监督池</strong><span>Planner 规模实验</span></td><td><strong>9K / 18K / 36K / 54K</strong><small>严格嵌套</small></td><td>固定同一训练配方，观察增加监督数据是否改善质量</td><td>训练输入</td><td>不混入自然表达 24K 训练轨迹</td></tr>
+                    <tr><td><strong>规模与模型选择</strong><span>自然表达近似 + 接口式请求</span></td><td><strong>2,400 条选择 + 1,200 条组合隔离</strong></td><td>先为 4B / 8B 选择规模，再在两位规模赢家中选择模型</td><td><strong>是</strong></td><td>6:1 加权；最终锁定 8B · 9K</td></tr>
+                    <tr class="result-table-final"><td><strong>冻结报告</strong><span>模块与静态系统</span></td><td><strong>自然表达 6K + 接口式请求 1K + 系统 9K</strong></td><td>模型锁定后报告 RAG 贡献、分布差异与全链路结果</td><td>否</td><td><strong>7,225 / 9,000 · 80.2778%</strong></td></tr>
                   </tbody>
                 </table>
               </div>
-            </section>
-
-            <section class="data-evidence-section" aria-labelledby="plannerReportDataTitle">
-              <div class="data-evidence-heading">
-                <div><p>05B · 独立评测协议</p><h3 id="plannerReportDataTitle">每套数据只回答一个决策问题</h3></div>
-                <span>Planner 规模主线是“2.4K 选择 + 1.2K 组合隔离 → 锁定 9K → 6K / 1K 终评”；额外 1.2K 稳定性回放不属于正式流程。</span>
-              </div>
-              <div class="data-table-wrap" tabindex="0">
-                <table class="data-table experiment-data-table">
-                  <thead><tr><th scope="col">协议阶段</th><th scope="col">数据</th><th scope="col">回答的问题</th><th scope="col">是否影响决策</th><th scope="col">输出</th></tr></thead>
-                  <tbody>
-                    <tr><td><strong>首次监督训练验证</strong></td><td>自由生成请求 1K</td><td>固定 Top-10 时，监督训练是否学会集合与顺序</td><td>只确认训练方向</td><td>4B / 8B 工具链提升 45.90 / 39.20pp</td></tr>
-                    <tr><td><strong>监督训练配方选择</strong></td><td>9K 锚点 + 开发集 2.4K</td><td>学习率、轮数、LoRA 秩与 dropout 如何组合</td><td><strong>是</strong></td><td>4B 21 个唯一版本 + 8B 3 个确认版本；冻结 5e-5 / 3 / r32 / d0.05</td></tr>
-                    <tr><td><strong>候选接口选型</strong></td><td>选择 2.4K + 确认 1.2K</td><td>R、P 与二级 RRF 如何在近优质量和成本间取舍</td><td><strong>是</strong></td><td>冻结 R20 / P10 + 0.4 / 8</td></tr>
-                    <tr><td><strong>Planner 规模选型</strong></td><td>选择 2.4K + 组合隔离 1.2K</td><td>9K / 18K / 36K / 54K 中采用哪一档</td><td><strong>是</strong></td><td>4B / 8B 均锁定 9K</td></tr>
-                    <tr><td><strong>规模补充稳定性</strong></td><td>另一次 1.2K 回放</td><td>锁后方向是否在另一面板保持</td><td><strong>否</strong><small>配置标记为不参与正式流程</small></td><td>两种 9K 均保持 +0.1667pp；只作记录</td></tr>
-                    <tr><td><strong>模块冻结评测</strong></td><td>自然表达 6K + 接口表达 1K</td><td>模型锁定后的 RAG / 无 RAG 与分布差异</td><td>否</td><td>正式 8B RAG 工具链 70.4833% / 98.1000%</td></tr>
-                    <tr class="result-table-final"><td><strong>静态全链路</strong></td><td><strong>9,000 条</strong></td><td>固定路由、检索和规划后有多少请求全程正确</td><td>最终报告</td><td><strong>7,225 / 9,000 · 80.2778%</strong></td></tr>
-                  </tbody>
-                </table>
-              </div>
+              <p class="data-boundary-note"><strong>补充记录：</strong>另有一批 1,200 条规模稳定性回放，配置已标记为不参与正式流程；它不构成新的必经阶段，也不改变 2.4K 选择 + 1.2K 组合隔离的主协议。</p>
             </section>
 
             <section class="data-evidence-section" aria-labelledby="plannerAuditTitle">
               <div class="data-evidence-heading">
-                <div><p>05C · 数据审计</p><h3 id="plannerAuditTitle">嵌套规模、选择边界与冻结顺序均通过检查</h3></div>
+                <div><p>05B · 数据审计</p><h3 id="plannerAuditTitle">嵌套规模、选择边界与冻结顺序均通过检查</h3></div>
                 <span>规模实验从数据构造到结果打开顺序均有独立清单和哈希；冻结测试不会回流训练或选参。</span>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -1263,9 +1261,9 @@
                   <thead><tr><th scope="col">检查项</th><th scope="col">结果</th><th scope="col">说明</th></tr></thead>
                   <tbody>
                     <tr><td>9K / 18K / 36K / 54K 嵌套关系</td><td><strong>通过</strong></td><td>稳定规则逐级扩展；固定三轮配方与同一候选接口。</td></tr>
-                    <tr><td>训练与开发 / 测试请求重合</td><td><strong>0</strong></td><td>各规模与 API dev、接口表达测试、自然表达冻结集的规范化请求均无重合。</td></tr>
+                    <tr><td>训练与开发 / 测试请求重合</td><td><strong>0</strong></td><td>各规模与开发集、接口式请求测试、自然表达冻结集的规范化请求均无重合。</td></tr>
                     <tr><td>训练与开发 / 测试轨迹重合</td><td><strong>0</strong></td><td>来源轨迹 ID 独立；组合隔离集同时约束工具组合。</td></tr>
-                    <tr><td>候选接口 selection / confirmation 重合</td><td><strong>0</strong></td><td>请求、source ID 与训练未见组合均按协议隔离。</td></tr>
+                    <tr><td>候选接口选择集 / 确认集重合</td><td><strong>0</strong></td><td>请求、来源 ID 与训练未见组合均按协议隔离。</td></tr>
                     <tr><td>受保护结果打开顺序</td><td><strong>通过</strong></td><td>4B / 8B 的 9K 选择锁写入后，才打开 6K 与 1K 冻结回放。</td></tr>
                   </tbody>
                 </table>
@@ -1275,16 +1273,16 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerSftEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>05D · 监督训练环境</span><h3 id="plannerSftEnvironmentTitle">记录调参后的固定配方与训练成本</h3></div>
+                <div><span>05C · 监督训练环境</span><h3 id="plannerSftEnvironmentTitle">记录调参后的固定配方与训练成本</h3></div>
                 <p>正式 9K 配方来自上方分阶段搜索；运行产物记录进程数与显存字段，但没有绑定具体 GPU 型号。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table planner-training-efficiency-table">
                   <thead><tr><th scope="col">阶段</th><th scope="col">模型</th><th scope="col">训练配置</th><th scope="col">步数与耗时</th><th scope="col">资源记录</th></tr></thead>
                   <tbody>
-                    <tr><td rowspan="2"><strong>首次监督微调</strong><small>自由生成请求</small></td><td>Qwen3-4B</td><td>BF16 · 全局批量 32 · lr5e-5 · LoRA r16 / α32 / dropout 0.05 · 最大长度 2048</td><td><strong>3,376 步 · 1 小时 00 分 02 秒</strong><small>页面使用第 1 轮版本；单独到达时间未记录</small></td><td>4 GPU；型号与逐卡显存未记录</td></tr>
+                    <tr><td rowspan="2"><strong>首次监督微调</strong><small>早期独立请求</small></td><td>Qwen3-4B</td><td>BF16 · 全局批量 32 · lr5e-5 · LoRA r16 / α32 / dropout 0.05 · 最大长度 2048</td><td><strong>3,376 步 · 1 小时 00 分 02 秒</strong><small>页面使用第 1 轮版本；单独到达时间未记录</small></td><td>4 GPU；型号与逐卡显存未记录</td></tr>
                     <tr><td>Qwen3-8B</td><td>BF16 · 全局批量 32 · lr5e-5 · LoRA r16 / α32 / dropout 0.05 · 最大长度 2048</td><td><strong>1,688 步 · 50 分 17 秒</strong><small>1 轮</small></td><td>4 GPU；型号与逐卡显存未记录</td></tr>
-                    <tr class="table-divider"><td rowspan="2"><strong>最终接口表达 9K</strong><small>固定 3 轮</small></td><td>Qwen3-4B</td><td>BF16 · 全局批量 32 · lr5e-5 · LoRA r32 / α64 / dropout 0.05 · 最大长度 2048</td><td><strong>846 步 · 55 分 03 秒</strong></td><td>1 GPU；型号未记录；日志显存字段 11.85 GiB</td></tr>
+                    <tr class="table-divider"><td rowspan="2"><strong>最终 9K 接口式请求监督</strong><small>固定 3 轮</small></td><td>Qwen3-4B</td><td>BF16 · 全局批量 32 · lr5e-5 · LoRA r32 / α64 / dropout 0.05 · 最大长度 2048</td><td><strong>846 步 · 55 分 03 秒</strong></td><td>1 GPU；型号未记录；日志显存字段 11.85 GiB</td></tr>
                     <tr class="result-table-final"><td><strong>Qwen3-8B</strong></td><td>BF16 · 全局批量 32 · lr5e-5 · LoRA r32 / α64 / dropout 0.05 · 最大长度 2048</td><td><strong>846 步 · 1 小时 31 分 42 秒</strong></td><td><strong>1 GPU；型号未记录；日志显存字段 19.14 GiB</strong></td></tr>
                   </tbody>
                 </table>
@@ -1314,30 +1312,30 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerScaleEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>05E · 数据规模与训练成本</span><h3 id="plannerScaleEnvironmentTitle">同步比较质量与训练时间，选择 9K</h3></div>
+                <div><span>05D · 数据规模训练成本</span><h3 id="plannerScaleEnvironmentTitle">质量结果见 04A，这里只核对资源增长</h3></div>
                 <p>所有规模共用先在 9K 上选出的配方：1 GPU、BF16、全局批量 32、3 轮、lr5e-5、LoRA r32 / α64 / dropout 0.05、最大长度 2048；GPU 型号未记录。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table planner-scale-efficiency-table numeric-result-table">
-                  <thead><tr><th scope="col">模型</th><th scope="col">训练量</th><th scope="col">步数</th><th scope="col">训练耗时</th><th scope="col">选择集 RAG</th><th scope="col">组合隔离 RAG</th><th scope="col">判定</th></tr></thead>
+                  <thead><tr><th scope="col">模型</th><th scope="col">训练量</th><th scope="col">步数</th><th scope="col">训练耗时</th><th scope="col">相对同模型 9K</th></tr></thead>
                   <tbody>
-                    <tr class="result-table-final"><td><strong>4B</strong></td><td><strong>9K</strong></td><td>846</td><td><strong>55 分 03 秒</strong></td><td><strong>98.5119%</strong></td><td><strong>95.6667%</strong></td><td><strong>入选</strong></td></tr>
-                    <tr><td>4B</td><td>18K</td><td>1,689</td><td>1 小时 49 分 45 秒</td><td>97.6310%</td><td>94.0000%</td><td>未入选</td></tr>
-                    <tr><td>4B</td><td>36K</td><td>3,375</td><td>4 小时 00 分 51 秒</td><td>97.5952%</td><td>94.7500%</td><td>未入选</td></tr>
-                    <tr><td>4B</td><td>54K</td><td>5,064</td><td>6 小时 01 分 32 秒</td><td>98.1905%</td><td>94.8333%</td><td>第二名</td></tr>
-                    <tr class="table-divider result-table-final"><td><strong>8B</strong></td><td><strong>9K</strong></td><td>846</td><td><strong>1 小时 31 分 42 秒</strong></td><td><strong>98.9405%</strong></td><td><strong>97.5833%</strong></td><td><strong>入选</strong></td></tr>
-                    <tr><td>8B</td><td>18K</td><td>1,689</td><td>3 小时 03 分 03 秒</td><td>98.5476%</td><td>95.3333%</td><td>未入选</td></tr>
-                    <tr><td>8B</td><td>36K</td><td>3,375</td><td>6 小时 25 分 48 秒</td><td>98.7857%</td><td>97.0000%</td><td>第二名</td></tr>
-                    <tr><td>8B</td><td>54K</td><td>5,064</td><td>10 小时 10 分 02 秒</td><td>98.5357%</td><td>96.1667%</td><td>未入选</td></tr>
+                    <tr class="result-table-final"><td><strong>4B</strong></td><td><strong>9K</strong></td><td>846</td><td><strong>55 分 03 秒</strong></td><td><strong>1.00×</strong></td></tr>
+                    <tr><td>4B</td><td>18K</td><td>1,689</td><td>1 小时 49 分 45 秒</td><td>1.99×</td></tr>
+                    <tr><td>4B</td><td>36K</td><td>3,375</td><td>4 小时 00 分 51 秒</td><td>4.38×</td></tr>
+                    <tr><td>4B</td><td>54K</td><td>5,064</td><td>6 小时 01 分 32 秒</td><td>6.57×</td></tr>
+                    <tr class="table-divider result-table-final"><td><strong>8B</strong></td><td><strong>9K</strong></td><td>846</td><td><strong>1 小时 31 分 42 秒</strong></td><td><strong>1.00×</strong></td></tr>
+                    <tr><td>8B</td><td>18K</td><td>1,689</td><td>3 小时 03 分 03 秒</td><td>2.00×</td></tr>
+                    <tr><td>8B</td><td>36K</td><td>3,375</td><td>6 小时 25 分 48 秒</td><td>4.21×</td></tr>
+                    <tr><td>8B</td><td>54K</td><td>5,064</td><td>10 小时 10 分 02 秒</td><td>6.65×</td></tr>
                   </tbody>
                 </table>
               </div>
-              <p class="efficiency-boundary"><strong>解释边界：</strong>固定三轮配方下，数据增多没有带来单调 RAG 收益；这只支持当前配方选择 9K，不表示 54K 在重新调整 epoch 或学习率后必然更差。</p>
+              <p class="efficiency-boundary"><strong>成本结论：</strong>训练步数与数据规模近似线性增长；质量没有同步单调提升，详见 04A。该表不重复承担模型选择职责。</p>
             </section>
 
             <section class="efficiency-table-block" aria-labelledby="plannerCandidateEfficiencyTitle">
               <div class="efficiency-table-heading">
-                <div><span>05F · 候选数量成本</span><h3 id="plannerCandidateEfficiencyTitle">记录接口选型时的 4B / 8B 输入成本</h3></div>
+                <div><span>05E · 候选数量成本</span><h3 id="plannerCandidateEfficiencyTitle">记录接口选型时的 4B / 8B 输入成本</h3></div>
                 <p>单张 Tesla V100 上的补充测量；用于说明候选越多，输入 token、延迟与显存同步增长。它不替代 03 的质量近优选择。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
@@ -1359,21 +1357,21 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerInferenceEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>05G · 规划模型推理</span><h3 id="plannerInferenceEnvironmentTitle">比较训练前、首次训练与最终 9K 模型的离线生成成本</h3></div>
+                <div><span>05F · 规划模型推理</span><h3 id="plannerInferenceEnvironmentTitle">比较训练前、首次训练与最终 9K 模型的离线生成成本</h3></div>
                 <p>共同设置为 BF16、SDPA、贪心生成、最多 128 个 token、无预热；每个分片进程只暴露一个 CUDA 设备。延迟是批内均摊的生成器时间，不是在线单请求延迟，运行清单未保存 GPU 型号。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table planner-inference-efficiency-table">
                   <thead><tr><th scope="col">模型阶段</th><th scope="col">测试协议</th><th scope="col">批量</th><th scope="col">p50 / p95</th><th scope="col">输出吞吐</th><th scope="col">分片进程峰值显存：已分配 / 已保留</th></tr></thead>
                   <tbody>
-                    <tr><td>未微调 4B · Top-10</td><td>自由生成请求 1K</td><td>16</td><td>110.8 / 154.1ms</td><td>179.10 token/s</td><td>9.54 / 14.87 GiB</td></tr>
-                    <tr><td>未微调 8B · Top-10</td><td>自由生成请求 1K</td><td>8</td><td>187.7 / 269.0ms</td><td>105.83 token/s</td><td>16.38 / 20.13 GiB</td></tr>
-                    <tr><td>未微调 4B · 完整 100 工具</td><td>自由生成请求 1K</td><td>8</td><td>528.7 / 1334.2ms</td><td>34.67 token/s</td><td>12.55 / 23.81 GiB</td></tr>
-                    <tr><td>未微调 8B · 完整 100 工具</td><td>自由生成请求 1K</td><td>4</td><td>835.5 / 1078.8ms</td><td>23.16 token/s</td><td>18.07 / 22.72 GiB</td></tr>
-                    <tr class="table-divider"><td>首次监督微调 4B · Top-10</td><td>自由生成请求 1K</td><td>16</td><td>130.0 / 177.9ms</td><td>137.70 token/s</td><td>各分片 10.10–10.27 / 13.19–15.66 GiB</td></tr>
-                    <tr><td>首次监督微调 8B · Top-10</td><td>自由生成请求 1K</td><td>8</td><td>213.0 / 319.6ms</td><td>80.29 token/s</td><td>各分片 16.92–16.94 / 20.29–21.02 GiB</td></tr>
-                    <tr><td>接口表达 9K 4B · Top-10</td><td>自然表达 6K</td><td>16</td><td>253.8 / 341.2ms</td><td>74.17 token/s</td><td>约 10.43 / 18.57 GiB</td></tr>
-                    <tr class="result-table-final"><td><strong>接口表达 9K 8B · Top-10</strong></td><td><strong>自然表达 6K</strong></td><td><strong>8</strong></td><td><strong>412.0 / 580.6ms</strong></td><td><strong>43.36 token/s</strong></td><td><strong>约 17.16 / 22.64 GiB</strong></td></tr>
+                    <tr><td>未微调 4B · Top-10</td><td>早期独立请求 1K</td><td>16</td><td>110.8 / 154.1ms</td><td>179.10 token/s</td><td>9.54 / 14.87 GiB</td></tr>
+                    <tr><td>未微调 8B · Top-10</td><td>早期独立请求 1K</td><td>8</td><td>187.7 / 269.0ms</td><td>105.83 token/s</td><td>16.38 / 20.13 GiB</td></tr>
+                    <tr><td>未微调 4B · 完整 100 工具</td><td>早期独立请求 1K</td><td>8</td><td>528.7 / 1334.2ms</td><td>34.67 token/s</td><td>12.55 / 23.81 GiB</td></tr>
+                    <tr><td>未微调 8B · 完整 100 工具</td><td>早期独立请求 1K</td><td>4</td><td>835.5 / 1078.8ms</td><td>23.16 token/s</td><td>18.07 / 22.72 GiB</td></tr>
+                    <tr class="table-divider"><td>首次监督微调 4B · Top-10</td><td>早期独立请求 1K</td><td>16</td><td>130.0 / 177.9ms</td><td>137.70 token/s</td><td>各分片 10.10–10.27 / 13.19–15.66 GiB</td></tr>
+                    <tr><td>首次监督微调 8B · Top-10</td><td>早期独立请求 1K</td><td>8</td><td>213.0 / 319.6ms</td><td>80.29 token/s</td><td>各分片 16.92–16.94 / 20.29–21.02 GiB</td></tr>
+                    <tr><td>9K 接口式请求监督 4B · Top-10</td><td>自然表达 6K</td><td>16</td><td>253.8 / 341.2ms</td><td>74.17 token/s</td><td>约 10.43 / 18.57 GiB</td></tr>
+                    <tr class="result-table-final"><td><strong>9K 接口式请求监督 8B · Top-10</strong></td><td><strong>自然表达 6K</strong></td><td><strong>8</strong></td><td><strong>412.0 / 580.6ms</strong></td><td><strong>43.36 token/s</strong></td><td><strong>约 17.16 / 22.64 GiB</strong></td></tr>
                   </tbody>
                 </table>
               </div>
@@ -1382,7 +1380,7 @@
             <div class="environment-record-boundary">
               <p><strong>软件快照：</strong>项目环境清单的一次快照记录 Python 3.10.20、PyTorch 2.8.0+cu128、Transformers 4.53.2、MS-SWIFT 4.3.2、PEFT 0.14.0、TRL 0.18.2；这些版本没有与每次运行逐一绑定。</p>
               <p><strong>硬件边界：</strong>主机环境曾记录 8 × NVIDIA RTX 5880 Ada Generation（49,140 MiB / 卡），但训练与最终推理清单没有保存物理 GPU 型号；因此表内只报告实际进程 / GPU 数、运行日志显存字段和已记录的 V100 补充实验。</p>
-              <p><strong>最终系统评测：</strong>Qwen3-4B / 8B 均按接口表达 9K 配方训练，并接入冻结 R20 / P10 接口完成 6K、1K 与 9K 回放；正式端点为 8B checkpoint-846。</p>
+              <p><strong>最终系统评测：</strong>Qwen3-4B / 8B 均按 9K 接口式请求配方训练，并接入冻结 R20 / P10 接口完成 6K、1K 与 9K 回放；8B 因开发选择集和组合隔离集均更高而在测试前锁定为正式端点。</p>
             </div>
           </div>
         </details>
@@ -1400,18 +1398,17 @@
         <section class="final-system-overview" id="system" aria-labelledby="systemTitle">
           <header class="final-system-heading">
             <div>
-              <span>最终完整评测链 · 三个模块 / 五个步骤</span>
+              <span>最终完整评测链 · 三个模块 / 四个步骤</span>
               <h3 id="systemTitle">串联冻结配置，汇总三阶段结果</h3>
             </div>
-            <p>固定 1.7B 路由、精排 R20 / 规划 P10 候选接口与 8B 接口表达 9K 规划模型；三个模块均按同一 9K 测试集逐阶段累计。</p>
+            <p>沿用现有 1.7B 路由，并固定精排 R20 / 规划 P10 候选接口与 8B · 9K 接口式请求监督模型；三个模块均按同一 9K 测试集逐阶段累计。</p>
           </header>
 
           <ol class="route-phases final-route-phases">
-            <li><span>步骤 01 · 模块 01</span><strong>请求分流</strong><small>1.7B LoRA · 全链路评测冻结版本</small></li>
+            <li><span>步骤 01 · 模块 01</span><strong>请求分流</strong><small>1.7B LoRA · 现有系统冻结版本</small></li>
             <li><span>步骤 02 · 模块 02</span><strong>混合召回</strong><small>向量模型 + BM25</small></li>
             <li><span>步骤 03 · 模块 02</span><strong>重排与融合</strong><small>bge-reranker-v2-m3 + RRF</small></li>
-            <li><span>步骤 04 · 模块 03</span><strong>精确选择工具</strong><small>8B · 接口表达 9K 监督训练</small></li>
-            <li><span>步骤 05 · 模块 03</span><strong>生成有序工具链</strong><small>有序工具 ID</small></li>
+            <li><span>步骤 04 · 模块 03</span><strong>选择并排序工具</strong><small>8B · 9K 接口式请求监督 · 一次生成</small></li>
           </ol>
 
           <article class="pipeline-lane intent-lane">
@@ -1422,7 +1419,7 @@
             <div class="pipeline-row pipeline-row-intent">
               <div class="pipeline-node node-input"><small>输入</small><strong>用户请求</strong><span>复合电商诉求或开放闲聊</span></div>
               <div class="pipeline-arrow" aria-hidden="true">→</div>
-              <div class="pipeline-node node-primary"><small>冻结路由</small><strong>Qwen3-1.7B LoRA</strong><span>电商请求继续处理，闲聊直接响应</span></div>
+              <div class="pipeline-node node-primary"><small>现有系统路由</small><strong>Qwen3-1.7B LoRA</strong><span>电商请求继续处理，闲聊直接响应</span></div>
               <div class="pipeline-arrow" aria-hidden="true">→</div>
               <div class="pipeline-node node-output"><small>阶段输出</small><strong>结构化分流</strong><span>仅电商请求进入候选检索</span></div>
             </div>
@@ -1432,7 +1429,7 @@
 
           <article class="pipeline-lane retrieval-lane">
             <header>
-              <div><span>模块 02 · 候选检索</span><h3>完整工具集合检索</h3></div>
+              <div><span>模块 02 · 候选检索</span><h3>必要工具完整覆盖</h3></div>
               <p>截至检索 · 8,838 / 9,000 · 98.2000%</p>
             </header>
             <div class="retrieval-map-v2">
@@ -1452,7 +1449,7 @@
               <div class="pipeline-arrow" aria-hidden="true">→</div>
 
               <div class="retrieval-stage rerank-stage">
-                <div class="stage-label"><span>步骤 03A · 评分</span><strong>候选交互评分</strong></div>
+                <div class="stage-label"><span>步骤 03 · 评分</span><strong>候选交互评分</strong></div>
                 <div class="stage-model"><small>Top-20 候选</small><strong>bge-reranker-v2-m3</strong><span>1 正 + 7 负（3 个按类型挑选、4 个检索难例）</span></div>
                 <div class="rank-output"><span>输出重排名次</span></div>
               </div>
@@ -1460,7 +1457,7 @@
               <div class="pipeline-arrow" aria-hidden="true">→</div>
 
               <div class="retrieval-stage fusion-stage">
-                <div class="stage-label"><span>步骤 03B · 融合</span><strong>双路排序融合</strong></div>
+                <div class="stage-label"><span>步骤 03 · 融合</span><strong>双路排序融合</strong></div>
                 <div class="fusion-inputs">
                   <span><i></i>第一阶段名次 · 0.4</span>
                   <span><i></i>精排名次 · 0.6</span>
@@ -1491,7 +1488,7 @@
               </div>
               <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
               <div class="planner-model">
-                <small>固定规划模型 · 接口表达 9K</small>
+                <small>固定规划模型 · 9K 接口式请求监督</small>
                 <strong>Qwen3-8B · 监督训练</strong>
                 <span>checkpoint-846</span>
               </div>
@@ -1502,17 +1499,17 @@
                 <span>集合全对率 · 工具链全对率 · 严格 JSON 输出</span>
               </div>
             </div>
-            <p class="planner-boundary">输出止于静态有序工具 ID，不含参数生成与真实工具调用。</p>
+            <p class="planner-boundary">规划模型一次生成同时完成工具选择与排序；集合全对率与工具链全对率只是对同一输出的两种评分。输出止于静态有序工具 ID，不含参数生成与真实工具调用。</p>
           </article>
         </section>
 
         <p class="phase-context-label final-results-label">最终结果 · 静态全链路测试集 9,000 条</p>
         <div class="system-outcome-grid" role="group" aria-label="同一 9K 测试集的逐阶段累计结果">
-          <article><span>9K 累计 · 意图分流</span><h3>最终 Qwen3-1.7B LoRA 路由</h3><strong>99.96%</strong><p>8,996 / 9,000</p><small>该阶段新增失败 4 条</small></article>
+          <article><span>9K 累计 · 意图分流</span><h3>现有系统 Qwen3-1.7B LoRA 路由</h3><strong>99.96%</strong><p>8,996 / 9,000</p><small>该阶段新增失败 4 条 · 单模块最优为 0.6B</small></article>
           <article><span>9K 累计 · 候选检索</span><h3>负样本向量检索 + Top-20 交互精排</h3><strong>98.20%</strong><p>8,838 / 9,000</p><small>新增失败 158 条 · 自然表达 6K AllHit@10 97.37%</small></article>
-          <article class="is-selected"><span>9K 最终 · 有序工具链</span><h3>冻结 1.7B 路由 + R20 / P10 候选接口 + 8B 接口表达 9K</h3><strong>80.28%</strong><p>7,225 / 9,000</p><small>新增失败 1,613 条 · 自然表达 6K 工具链全对率 70.48%</small></article>
+          <article class="is-selected"><span>9K 最终 · 有序工具链</span><h3>现有 1.7B 路由 + R20 / P10 候选接口 + 8B · 9K 接口式请求监督</h3><strong>80.28%</strong><p>7,225 / 9,000</p><small>新增失败 1,613 条 · 自然表达 6K 工具链全对率 70.48%</small></article>
         </div>
-        <p class="metric-contract-note"><strong>主结果口径：</strong>三张卡均使用同一 9K 测试集逐阶段累计；开发集只用于选型，一次性终评与接口表达集只用于冻结后验收或回归，均不能替代 9K 最终结果。</p>
+        <p class="metric-contract-note"><strong>主结果口径：</strong>三张卡均使用同一 9K 测试集逐阶段累计；开发集只用于选型，一次性终评与接口式请求集只用于冻结后验收或回归，均不能替代 9K 最终结果。</p>
 
         <details class="narrative-disclosure data-disclosure system-data-disclosure" id="systemDataLedger">
           <summary>
@@ -1532,22 +1529,22 @@
                   <tbody>
                     <tr><td><strong>工具目录与文档</strong><span>三个实验的共同能力底座</span></td><td>8 个电商业务域；每项工具包含名称、描述与接口信息</td><td><strong>100 项工具</strong><br>52 项查询类 / 48 项操作类</td><td>定义闭集标签空间并生成检索文档</td><td>固定目录，不是评测请求；不覆盖新工具</td></tr>
                     <tr><td><strong>工具调用轨迹</strong><span>意图与检索的上游样本</span></td><td>单工具与多工具电商请求及目标工具链</td><td><strong>30,000 条</strong><br>12K 单工具 / 18K 多工具<br>24K 训练 / 6K 测试</td><td>生成意图监督数据、检索训练样本与固定检索集合</td><td>请求、轨迹 ID 与表达簇按稳定规则隔离</td></tr>
-                    <tr><td><strong>意图监督数据</strong><span>实验 01</span></td><td>训练侧电商轨迹、独立闲聊样本与 6 条边界样本</td><td><strong>48,006 条总计</strong><br>45,606 训练 / 2,400 验证</td><td>训练 0.6B 与 1.7B 路由模型；验证集选择模型版本</td><td>两个模型使用同一样本全集；1.7B 采用类别均衡排列</td></tr>
+                    <tr><td><strong>意图监督数据</strong><span>实验 01</span></td><td>训练侧电商轨迹、独立闲聊样本与 6 条边界样本</td><td><strong>48,006 条总计</strong><br>45,606 训练 / 2,400 验证</td><td>固定同一配方训练 0.6B 与 1.7B；验证集监控损失</td><td>同一样本全集、不同排列；没有受控超参数网格</td></tr>
                     <tr><td><strong>意图分流固定集合</strong><span>实验 01</span></td><td>6K 电商请求 + 3K 独立闲聊</td><td><strong>9,000 条</strong></td><td>比较规则、未微调模型与 LoRA 版本</td><td>同一 9K 后续复用于静态全链路；是合成固定集合，不是线上留出流量</td></tr>
                     <tr><td><strong>向量与重排训练数据</strong><span>实验 02</span></td><td>24K 训练轨迹与 100 份工具文档组成请求—工具样本</td><td>70,012 个正对<br>向量：每个正对 1 正 + 2 负<br>重排：每组 1 正 + 7 负</td><td>向量负例来自跨领域与新增无关工具；重排负例包括 3 个按工具类型挑选的样本与 4 个检索难例</td><td>负样本只来自训练划分；两类模型分别训练</td></tr>
-                    <tr><td><strong>跨表达开发集</strong><span>实验 02 · 模型训练选型</span></td><td>接口式表达与简洁自然表达各 600 条；工具数 1–6 均衡</td><td><strong>1,200 条请求</strong></td><td>比较 5 种向量训练方案和 4 种微调重排架构</td><td>模型版本在打开一次性终评及 6K、1K、9K 评测前冻结</td></tr>
-                    <tr><td><strong>候选接口选型数据</strong><span>实验 02 / 03 · R/P 与二级融合</span></td><td>自然表达与接口表达面板，包含单工具和训练未见组合</td><td><strong>2,400 条选择 + 1,200 条确认</strong></td><td>比较 R∈{10,20,30,50}、P∈{5,10,20,30,50} 与二级融合参数，并完成锁后确认</td><td>强制 P≤R；以 0.5pp 近优带和成本规则冻结 R20 / P10</td></tr>
+                    <tr><td><strong>跨表达开发集</strong><span>实验 02 · 模型训练选型</span></td><td>接口式请求与简洁自然表达各 600 条；工具数 1–6 均衡</td><td><strong>1,200 条请求</strong></td><td>比较 5 种向量训练方案和 4 种微调重排架构</td><td>模型版本在打开一次性终评及 6K、1K、9K 评测前冻结</td></tr>
+                    <tr><td><strong>候选接口选型数据</strong><span>实验 02 · R/P 与二级融合</span></td><td>自然表达与接口式请求面板，包含单工具和训练未见组合</td><td><strong>2,400 条选择 + 1,200 条确认</strong></td><td>比较 R∈{10,20,30,50}、P∈{5,10,20,30,50} 与二级融合参数，并完成锁后确认</td><td>强制 P≤R；以 0.5pp 近优带和成本规则冻结 R20 / P10</td></tr>
                     <tr><td><strong>候选长度压力验证</strong><span>实验 03 · 锁定后验证</span></td><td>600 条单工具 + 600 条监督训练未见多工具组合</td><td><strong>1,200 条请求</strong></td><td>检验更长候选是否稳定转化为规划收益</td><td>路线锁定后运行，不参与模型或参数选择</td></tr>
                     <tr><td><strong>自然表达测试集</strong><span>实验 02 / 03</span></td><td>3K 单工具 + 3K 多工具；多工具含已见与未见组合</td><td><strong>6,000 条请求</strong><br>15,196 个目标工具</td><td>检索与固定 4B / 8B 规划模型评测</td><td>检索 AllHit@10 97.3667%；同时构成 9K 全链路中的电商部分</td></tr>
                     <tr><td><strong>候选检索一次性终评</strong><span>实验 02 · 冻结后评测</span></td><td>独立跨表达请求，工具数 1–6 均衡</td><td><strong>1,200 条请求</strong></td><td>评测冻结整链的 AllHit@K 与 MRR</td><td>AllHit@10 99.8333%；结果打开后未继续调参</td></tr>
-                    <tr><td><strong>接口表达 Planner 监督池</strong><span>实验 03 · 数据规模</span></td><td>单工具、多工具候选顺序变化与同类干扰请求，均配最终候选和目标工具链</td><td><strong>54,000 条</strong><br>9K / 18K / 36K / 54K 严格嵌套</td><td>固定同一配方比较 4B / 8B 的训练规模与成本</td><td>最终两种模型均选择 9K；每档与开发、6K、1K 无请求或轨迹重合</td></tr>
-                    <tr><td><strong>监督训练配方开发集</strong><span>实验 03 · 9K 调参</span></td><td>接口表达请求、当时的 RAG 候选输入与有序目标</td><td><strong>2,400 条</strong></td><td>完成 4B 三轮参数搜索与 8B 三组确认</td><td>早于当前 R20 / P10 接口；支持统一配方，不代表当前接口下完整重评</td></tr>
-                    <tr><td><strong>Planner 规模选择集</strong><span>实验 03 · 主选择</span></td><td>自然表达近似与接口表达两类面板</td><td><strong>2,400 条</strong></td><td>按 6:1 加权 RAG 工具链全对率选择训练规模</td><td>4B / 8B 均在受保护结果打开前锁定 9K</td></tr>
+                    <tr><td><strong>接口式请求 Planner 监督池</strong><span>实验 03 · 数据规模</span></td><td>单工具、多工具候选顺序变化与同类干扰请求，均配最终候选和目标工具链</td><td><strong>54,000 条</strong><br>9K / 18K / 36K / 54K 严格嵌套</td><td>固定同一配方比较 4B / 8B 的训练规模与成本</td><td>最终两种模型均选择 9K；每档与开发、6K、1K 无请求或轨迹重合</td></tr>
+                    <tr><td><strong>监督训练配方开发集</strong><span>实验 03 · 9K 调参</span></td><td>接口式请求、当时的 RAG 候选输入与有序目标</td><td><strong>2,400 条</strong></td><td>完成 4B 三轮参数搜索与 8B 三组确认</td><td>早于当前 R20 / P10 接口；支持统一配方，不代表当前接口下完整重评</td></tr>
+                    <tr><td><strong>Planner 规模选择集</strong><span>实验 03 · 主选择</span></td><td>自然表达近似与接口式请求两类面板</td><td><strong>2,400 条</strong></td><td>按最终 6K / 1K 比例做 6:1 加权，选择训练规模与模型</td><td>4B / 8B 均选 9K；8B 在选择集与组合隔离集均高于 4B 后锁定</td></tr>
                     <tr><td><strong>组合隔离保护集</strong><span>实验 03 · 选择保护项</span></td><td>与训练侧来源轨迹和工具组合隔离的请求</td><td><strong>1,200 条</strong></td><td>检查规模选择能否覆盖训练未见组合</td><td>与 2.4K 选择集共同参与选型；不是最终测试</td></tr>
-                    <tr><td><strong>自由生成请求测试集</strong><span>实验 03 · 首次监督训练验证</span></td><td>1–5 个工具的自由生成请求，每档 200 条</td><td><strong>1,000 条</strong></td><td>固定同一 Top-10 比较未微调与首次监督训练</td><td>只验证训练方向；不作为最终 9K 指标</td></tr>
-                    <tr><td><strong>接口表达测试集</strong><span>实验 02 / 03</span></td><td>接口式结构化表达、目标工具与最终 Top-10 候选</td><td><strong>1,000 条请求</strong></td><td>检索与冻结 4B / 8B 接口表达 9K 规划模型回归</td><td>检索 AllHit@10 100%；正式 8B 工具链全对率 98.10%</td></tr>
-                    <tr><td><strong>输入工具范围配对评测</strong><span>实验 03 · 完整目录 / Top-10</span></td><td>自然表达 6K 与接口表达 1K；未微调 / 监督训练 4B / 8B 分别比较两种输入工具范围</td><td><strong>7,000 条请求 × 2 种输入</strong><br>8 组配对 · 16 份结果</td><td>评测集合、顺序与格式合规率，并验证候选检索对规划的作用</td><td>8 / 8 组工具链全对率提升；正式端点仍为监督训练 8B + 当前 Top-10</td></tr>
-                    <tr><td><strong>静态全链路测试集</strong><span>项目最终结果</span></td><td>3K 闲聊 + 6K 电商；固定路由、R20 / P10 候选接口与 8B 接口表达 9K 规划模型</td><td><strong>9,000 条</strong></td><td>逐样本联合计分；工具链成功 7,225 / 9,000</td><td>工具链成功率 80.2778%；未执行真实工具</td></tr>
+                    <tr><td><strong>早期独立请求测试集</strong><span>实验 03 · 首次监督训练验证</span></td><td>1–5 个工具的独立生成请求，每档 200 条</td><td><strong>1,000 条</strong></td><td>固定同一 Top-10 比较未微调与首次监督训练</td><td>只验证训练方向；协议不同，不能与自然表达 6K 直接比较</td></tr>
+                    <tr><td><strong>接口式请求测试集</strong><span>实验 02 / 03</span></td><td>较规则的能力与顺序表达、目标工具与最终 Top-10 候选</td><td><strong>1,000 条请求</strong></td><td>检索与冻结 4B / 8B · 9K 接口式请求监督模型回归</td><td>检索 AllHit@10 100%；正式 8B 工具链全对率 98.10%</td></tr>
+                    <tr><td><strong>输入工具范围配对评测</strong><span>实验 03 · 完整目录 / Top-10</span></td><td>自然表达 6K 与接口式请求 1K；未微调 / 监督训练 4B / 8B 分别比较两种输入工具范围</td><td><strong>7,000 条请求 × 2 种输入</strong><br>8 组配对 · 16 份结果</td><td>评测集合、顺序与格式合规率，并验证候选检索对规划的作用</td><td>8 / 8 组工具链全对率提升；正式端点仍为监督训练 8B + 当前 Top-10</td></tr>
+                    <tr><td><strong>静态全链路测试集</strong><span>项目最终结果</span></td><td>3K 闲聊 + 6K 电商；现有 1.7B 路由、R20 / P10 候选接口与 8B · 9K 接口式请求监督模型</td><td><strong>9,000 条</strong></td><td>逐样本联合计分；工具链成功 7,225 / 9,000</td><td>工具链成功率 80.2778%；未执行真实工具</td></tr>
                   </tbody>
                 </table>
               </div>
