@@ -565,18 +565,39 @@
 
         <details class="full-results narrative-disclosure retrieval-run-disclosure" id="retrievalSelection">
           <summary>
-            <span class="disclosure-summary-copy"><small>02 · 正式训练与参数选择</small><strong>从负样本训练到 R20 / P10 质量—成本选型</strong></span>
-            <span class="disclosure-summary-meta">5 种向量方案 · 1,190 组一级参数 · 14 组深度 · 110 组二级参数</span>
+            <span class="disclosure-summary-copy"><small>02 · 训练与参数选择</small><strong>从向量配方预筛到 R20 / P10 质量—成本选型</strong></span>
+            <span class="disclosure-summary-meta">9 组向量预筛 · 5 种负样本 × 3 种子 · 1,190 组一级参数 · 14 组深度</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="full-results-body">
             <div class="full-results-copy">
-              <h3>用独立开发集逐步冻结正式检索链</h3>
-              <p>依次选择向量负样本方案、一级检索路线和微调重排模型，再联合比较精排深度 R 与规划输入深度 P；最后在固定 R20 / P10 后选择二级融合参数。</p>
+              <h3>先确定基础训练参数，再用独立开发集冻结检索链</h3>
+              <p>先预筛向量模型、学习率和训练轮数，再以同一训练设置比较负样本方案；随后选择一级检索路线和微调重排模型，联合确定精排深度 R、规划输入深度 P 与二级融合参数。</p>
             </div>
 
+            <section class="full-results-group" aria-labelledby="retrievalEmbeddingTuningTitle">
+              <div class="full-results-group-head"><span>02A</span><div><h4 id="retrievalEmbeddingTuningTitle">预筛向量模型与基础训练参数</h4><p>九组 MNRL 训练比较模型、轮数与学习率；共同使用 24K 训练轨迹、无显式负样本和固定随机种子 20260707。6K 自然表达结果只用于观察参数趋势，最终向量模型由下一步独立开发集决定。</p></div></div>
+              <div class="result-table-wrap" tabindex="0">
+                <table class="result-table result-table-compact numeric-result-table embedding-tuning-table">
+                  <thead><tr><th scope="col">向量模型</th><th scope="col">训练设置</th><th scope="col">AllHit@6</th><th scope="col">AllHit@10</th><th scope="col">AllHit@30</th><th scope="col">MRR</th><th scope="col">训练耗时</th><th scope="col">实验作用</th></tr></thead>
+                  <tbody>
+                    <tr><td>bge-base-zh-v1.5</td><td>0.25 轮 · lr2e-5 · 批量 64</td><td>77.8833%</td><td>90.1167%</td><td>99.4167%</td><td>0.944691</td><td>50.77 秒</td><td>训练轮数下界</td></tr>
+                    <tr><td>bge-base-zh-v1.5</td><td>0.5 轮 · lr2e-5 · 批量 64</td><td>79.1833%</td><td>91.7333%</td><td>99.4667%</td><td>0.952655</td><td>1 分 45 秒</td><td>中间轮数</td></tr>
+                    <tr><td>bge-base-zh-v1.5</td><td>1 轮 · lr1e-5 · 批量 64</td><td>78.8500%</td><td>92.2500%</td><td>99.3500%</td><td>0.948139</td><td>7 分 19 秒</td><td>低学习率</td></tr>
+                    <tr><td>bge-base-zh-v1.5</td><td>1 轮 · lr2e-5 · 批量 64</td><td>81.0167%</td><td>93.9500%</td><td>99.5667%</td><td>0.957062</td><td>7 分 18 秒</td><td>标准配置</td></tr>
+                    <tr><td>bge-base-zh-v1.5</td><td>1 轮 · lr3e-5 · 批量 64</td><td>81.2167%</td><td>94.4500%</td><td>99.6000%</td><td>0.956073</td><td>7 分 23 秒</td><td>高学习率</td></tr>
+                    <tr><td>bge-base-zh-v1.5</td><td>1.5 轮 · lr2e-5 · 批量 64</td><td>81.5667%</td><td>93.5667%</td><td>99.5333%</td><td>0.958142</td><td>9 分 25 秒</td><td>更长训练</td></tr>
+                    <tr><td>bge-large-zh-v1.5</td><td>0.5 轮 · lr2e-5 · 批量 64</td><td>85.5167%</td><td>95.1500%</td><td>99.6333%</td><td>0.966435</td><td>2 分 57 秒</td><td>半轮对照</td></tr>
+                    <tr class="result-table-final"><td><strong>bge-large-zh-v1.5</strong></td><td><strong>1 轮 · lr2e-5 · 批量 64</strong></td><td><strong>85.8000%</strong></td><td><strong>95.7500%</strong></td><td><strong>99.7167%</strong></td><td><strong>0.966786</strong></td><td><strong>10 分 18 秒</strong></td><td><strong>正式负样本实验的统一起点</strong></td></tr>
+                    <tr><td>Qwen3-Embedding-0.6B</td><td>0.5 轮 · lr2e-5 · 批量 32</td><td>82.3500%</td><td>93.5833%</td><td>99.5333%</td><td>0.957144</td><td>5 分 18 秒</td><td>不同架构对照</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="efficiency-boundary"><strong>预筛结论：</strong>bge-large 在同类预算下优于另外两种基座，训练 1 轮又比 0.5 轮高 0.60pp；因此固定 bge-large、1 轮、lr2e-5 和有效批量 64，进入显式负样本正式选择。该无负样本版本不是最终模型。</p>
+            </section>
+
             <section class="full-results-group" aria-labelledby="retrievalEmbeddingSelectionTitle">
-              <div class="full-results-group-head"><span>02A</span><div><h4 id="retrievalEmbeddingSelectionTitle">比较向量负样本方案，选定向量模型</h4><p>五种方案各运行三个随机种子，以 1,200 条开发集的 AllHit@10 均值选型；入选方案每组包含 1 个正例和 2 个显式负例。</p></div></div>
+              <div class="full-results-group-head"><span>02B</span><div><h4 id="retrievalEmbeddingSelectionTitle">在统一训练设置下比较负样本方案</h4><p>固定 bge-large、1 轮、lr2e-5 与有效批量 64，五种方案各运行三个随机种子，以独立 1,200 条开发集的 AllHit@10 均值选型；入选方案每组包含 1 个正例和 2 个显式负例。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">训练方案</th><th scope="col">显式负样本 / 正对</th><th scope="col">单步批量 / 有效批量</th><th scope="col">AllHit@10 · 均值 ± 标准差</th><th scope="col">AllHit@20</th><th scope="col">AllHit@50</th><th scope="col">MRR</th><th scope="col">选择</th></tr></thead>
@@ -592,7 +613,7 @@
             </section>
 
             <section class="full-results-group" aria-labelledby="retrievalRouteScreenTitle">
-              <div class="full-results-group-head"><span>02B</span><div><h4 id="retrievalRouteScreenTitle">筛选一级检索路线，保留联合搜索候选</h4><p>固定入选向量模型，搜索候选数量、向量权重与 RRF 平滑常数；去除重复排名和被全面支配的路线后，将 24 条候选交给下一级联合评估。</p></div></div>
+              <div class="full-results-group-head"><span>02C</span><div><h4 id="retrievalRouteScreenTitle">筛选一级检索路线，保留联合搜索候选</h4><p>固定入选向量模型，搜索候选数量、向量权重与 RRF 平滑常数；去除重复排名和被全面支配的路线后，将 24 条候选交给下一级联合评估。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact route-screen-table">
                 <thead><tr><th scope="col">阶段</th><th scope="col">搜索或筛选范围</th><th scope="col">路线数</th><th scope="col">进入下一步的依据</th></tr></thead>
@@ -607,7 +628,7 @@
             </section>
 
             <section class="full-results-group" aria-labelledby="retrievalRerankerArchitectureTitle">
-              <div class="full-results-group-head"><span>02C</span><div><h4 id="retrievalRerankerArchitectureTitle">微调入围重排模型，选择架构与学习率</h4><p>训练前基线筛出的 4 个候选全部完成任务内微调；先选择学习率，再按三随机种子开发集结果比较。此处只筛模型，表内延迟对应各行筛选深度；正式 R 在 02E 联合选择。</p></div></div>
+              <div class="full-results-group-head"><span>02D</span><div><h4 id="retrievalRerankerArchitectureTitle">微调入围重排模型，选择架构与学习率</h4><p>训练前基线筛出的 4 个候选全部完成任务内微调；先选择学习率，再按三随机种子开发集结果比较。此处只筛模型，表内延迟对应各行筛选深度；正式 R 在 02F 联合选择。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">未微调基线入围模型</th><th scope="col">选中学习率</th><th scope="col">AllHit@6 均值</th><th scope="col">AllHit@10 均值</th><th scope="col">MRR 均值</th><th scope="col">重排候选数</th><th scope="col">估算 p50</th><th scope="col">选择</th></tr></thead>
@@ -622,7 +643,7 @@
             </section>
 
             <section class="full-results-group" aria-labelledby="retrievalRerankerNegativesTitle">
-              <div class="full-results-group-head"><span>02D</span><div><h4 id="retrievalRerankerNegativesTitle">固定重排架构，选择负样本组合</h4><p>每组固定为 1 个正例和 7 个负例；在 R=10 的共同筛选口径比较来源，并用另一种架构复核交互。这里只选择训练方案，正式精排深度由下一步确定。</p></div></div>
+              <div class="full-results-group-head"><span>02E</span><div><h4 id="retrievalRerankerNegativesTitle">固定重排架构，选择负样本组合</h4><p>每组固定为 1 个正例和 7 个负例；在 R=10 的共同筛选口径比较来源，并用另一种架构复核交互。这里只选择训练方案，正式精排深度由下一步确定。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact numeric-result-table">
                 <thead><tr><th scope="col">重排模型与负样本</th><th scope="col">AllHit@6 均值</th><th scope="col">AllHit@10 均值</th><th scope="col">MRR 均值</th><th scope="col">筛选 p50 · R=10</th><th scope="col">选择</th></tr></thead>
@@ -637,7 +658,7 @@
             </section>
 
             <section class="full-results-group" aria-labelledby="retrievalCandidateKTitle">
-              <div class="full-results-group-head"><span>02E</span><div><h4 id="retrievalCandidateKTitle">联合比较精排与规划深度，选择 R20 / P10</h4><p>R 表示 Cross-encoder 实际打分数，P 表示规划模型可见候选数；强制 P≤R，确保每个规划候选都有交互分数。先保留距最高工具链全对率 0.5pp 的近优方案，再按更小 P、R 和输入 token 选择。</p></div></div>
+              <div class="full-results-group-head"><span>02F</span><div><h4 id="retrievalCandidateKTitle">联合比较精排与规划深度，选择 R20 / P10</h4><p>R 表示 Cross-encoder 实际打分数，P 表示规划模型可见候选数；强制 P≤R，确保每个规划候选都有交互分数。先保留距最高工具链全对率 0.5pp 的近优方案，再按更小 P、R 和输入 token 选择。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact numeric-result-table retrieval-depth-selection-table">
                 <thead><tr><th scope="col">精排 R</th><th scope="col">规划 P</th><th scope="col">深度阶段二级 RRF<small>第一阶段权重 / 平滑常数</small></th><th scope="col">AllHit@P</th><th scope="col">加权工具链全对率</th><th scope="col">平均输入 token</th><th scope="col">精排 p50</th><th scope="col">判定</th></tr></thead>
@@ -663,7 +684,7 @@
             </section>
 
             <section class="full-results-group" aria-labelledby="retrievalSecondFusionTitle">
-              <div class="full-results-group-head"><span>02F</span><div><h4 id="retrievalSecondFusionTitle">固定 R20 / P10，选择二级排名融合参数</h4><p>在 2,400 条选择集上搜索 11 个第一阶段权重 × 10 个 RRF 平滑常数，共 110 组；排名去重并通过覆盖约束后保留 11 条路线，再按 6:1 加权工具链全对率选择。</p></div></div>
+              <div class="full-results-group-head"><span>02G</span><div><h4 id="retrievalSecondFusionTitle">固定 R20 / P10，选择二级排名融合参数</h4><p>在 2,400 条选择集上搜索 11 个第一阶段权重 × 10 个 RRF 平滑常数，共 110 组；排名去重并通过覆盖约束后保留 11 条路线，再按 6:1 加权工具链全对率选择。</p></div></div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table result-table-compact numeric-result-table retrieval-second-fusion-table">
                   <thead><tr><th scope="col">R20 / P10 二级参数</th><th scope="col">加权工具链全对率</th><th scope="col">自然表达风格</th><th scope="col">接口表达风格</th><th scope="col">未见工具组合</th><th scope="col">平均输入 token</th><th scope="col">判定</th></tr></thead>
@@ -687,7 +708,7 @@
             </section>
 
             <section class="full-results-group" aria-labelledby="retrievalFrozenRouteTitle">
-              <div class="full-results-group-head"><span>02G</span><div><h4 id="retrievalFrozenRouteTitle">汇总入选参数，冻结最终检索链</h4><p>表中只保留各阶段最终采用的模型与参数；精排 20 个候选、规划读取最终 Top-10，随后进入冻结评测。</p></div></div>
+              <div class="full-results-group-head"><span>02H</span><div><h4 id="retrievalFrozenRouteTitle">汇总入选参数，冻结最终检索链</h4><p>表中只保留各阶段最终采用的模型与参数；精排 20 个候选、规划读取最终 Top-10，随后进入冻结评测。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact configuration-result-table">
                 <thead><tr><th scope="col">阶段</th><th scope="col">模型或方法</th><th scope="col">训练 / 推理配置</th><th scope="col">阶段输出</th></tr></thead>
@@ -1551,7 +1572,7 @@
         <details class="narrative-disclosure evidence-section-disclosure" id="evidence">
           <summary>
             <span class="disclosure-summary-copy"><small>工程证据 · 复现</small><strong id="evidenceTitle" role="heading" aria-level="2">工程资产与复现</strong></span>
-            <span class="disclosure-summary-meta">11 项证据 · 4 条 CPU 校验命令</span>
+            <span class="disclosure-summary-meta">12 项证据 · 4 条 CPU 校验命令</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body evidence-section-body">
@@ -1568,12 +1589,13 @@
               <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/06_Assignment3_100%E5%B7%A5%E5%85%B7%E5%AE%9E%E9%AA%8C%E6%80%BB%E6%8A%A5%E5%91%8A.md" target="_blank" rel="noopener noreferrer"><span>规划实验报告</span><h3>RAG、监督训练、候选接口与 9K 结果</h3><b>reports/06_Assignment3_100工具实验总报告.md</b></a>
             </div>
 
-            <div class="evidence-group-heading evidence-group-heading-secondary"><strong>补充报告</strong><span>8 项</span></div>
+            <div class="evidence-group-heading evidence-group-heading-secondary"><strong>补充报告</strong><span>9 项</span></div>
             <div class="evidence-grid evidence-grid-secondary">
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/README.md" target="_blank" rel="noopener noreferrer"><span>项目地图</span><h3>项目概览</h3><b>PROJECT/README.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/01_%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB.md" target="_blank" rel="noopener noreferrer"><span>模型报告</span><h3>意图识别与关键词评测</h3><b>reports/01_意图识别.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/02_%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA.md" target="_blank" rel="noopener noreferrer"><span>基线报告</span><h3>检索增强</h3><b>reports/02_检索增强.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/04_%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8E%E8%AE%AD%E7%BB%83%E7%94%A8%E6%95%B0%E8%AF%B4%E6%98%8E.md" target="_blank" rel="noopener noreferrer"><span>数据地图</span><h3>数据与实验总表</h3><b>reports/04_数据集与训练用数说明.md</b></a>
+              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/configs/embedding_finetune_experiments.json" target="_blank" rel="noopener noreferrer"><span>实验配置</span><h3>向量训练预筛与负样本方案</h3><b>configs/embedding_finetune_experiments.json</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/planner_joint_depth_reselection_20260801/final_report.json" target="_blank" rel="noopener noreferrer"><span>结构化结果</span><h3>精排与规划深度联合选择</h3><b>planner_joint_depth.../final_report.json</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/configs/assignment3_sft_ablation.json" target="_blank" rel="noopener noreferrer"><span>实验配置</span><h3>9K 监督训练配方搜索</h3><b>configs/assignment3_sft_ablation.json</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/configs/assignment3_api_native_sft_scaling.json" target="_blank" rel="noopener noreferrer"><span>实验配置</span><h3>9K–54K 监督规模选择协议</h3><b>configs/assignment3_api_native_sft_scaling.json</b></a>

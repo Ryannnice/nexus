@@ -7367,6 +7367,19 @@ details table.result-table-compact td {
   table-layout: fixed;
 }
 
+.embedding-tuning-table {
+  min-width: 1150px;
+  table-layout: fixed;
+}
+
+.embedding-tuning-table th:nth-child(1) { width: 170px; }
+.embedding-tuning-table th:nth-child(2) { width: 230px; }
+.embedding-tuning-table th:nth-child(n + 3):nth-child(-n + 6) { width: 105px; }
+.embedding-tuning-table th:nth-child(7) { width: 140px; }
+.embedding-tuning-table th:nth-child(8) { width: 190px; }
+.embedding-tuning-table :is(th, td):nth-child(2),
+.embedding-tuning-table :is(th, td):last-child { text-align: left; }
+
 .retrieval-depth-selection-table th:nth-child(1),
 .retrieval-depth-selection-table th:nth-child(2) { width: 82px; }
 .retrieval-depth-selection-table th:nth-child(3) { width: 190px; }
