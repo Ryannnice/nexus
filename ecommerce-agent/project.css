@@ -7040,6 +7040,13 @@ details table td {
 #plannerEnvironment .planner-training-efficiency-table th:nth-child(5) { width: 250px; }
 #plannerEnvironment .planner-training-efficiency-table :is(th, td) { text-align: left; }
 
+#plannerEnvironment .planner-sft-config-wrap { margin-top: 12px; }
+#plannerEnvironment .planner-sft-config-table { min-width: 780px; table-layout: fixed; }
+#plannerEnvironment .planner-sft-config-table th:nth-child(1) { width: 170px; }
+#plannerEnvironment .planner-sft-config-table th:nth-child(2) { width: 210px; }
+#plannerEnvironment .planner-sft-config-table th:nth-child(3) { width: 400px; }
+#plannerEnvironment .planner-sft-config-table :is(th, td) { text-align: left; }
+
 #plannerEnvironment .planner-scale-efficiency-table { min-width: 1080px; }
 #plannerEnvironment .planner-scale-efficiency-table th:nth-child(1) { width: 100px; }
 #plannerEnvironment .planner-scale-efficiency-table th:nth-child(2) { width: 110px; }

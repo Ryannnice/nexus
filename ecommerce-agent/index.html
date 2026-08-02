@@ -868,7 +868,7 @@
         <p class="eyebrow">实验 03 · 工具链规划</p>
         <div class="section-heading split-heading">
           <h2 id="planningTitle">工具链规划：从未微调基线到 9K 最终系统</h2>
-          <p>先用未微调模型确认 Top-10 候选的作用，再验证首次监督训练；随后固定 R20 / P10 接口，比较 9K–54K 监督规模，并在锁定模型后完成 6K、1K 与 9K 最终评测。</p>
+          <p>先用未微调模型确认 Top-10 候选的作用，再以 9K 为锚点选择监督训练配方；随后固定 R20 / P10 接口，以同一配方比较 9K–54K 监督规模，并在锁定模型后完成 6K、1K 与 9K 最终评测。</p>
         </div>
 
         <section class="planner-final-lead" id="plannerLatestUpdate" aria-labelledby="plannerFinalLeadTitle">
@@ -888,13 +888,13 @@
 
         <section class="planner-compact-story" id="plannerExperiments" aria-labelledby="plannerStoryTitle">
           <div class="result-explorer-head">
-            <div><span class="result-subsection-label">规划实验主线</span><h3 id="plannerStoryTitle">训练前 RAG 对照 → 首次监督训练 → 候选接口冻结 → 数据规模选择与终评</h3></div>
-            <p>01–02 分别量化 RAG 与监督训练的贡献；03 用独立选型数据固定精排与规划深度；04 在该接口上逐步放大接口表达监督数据，并在锁定 9K 后打开最终测试。</p>
+            <div><span class="result-subsection-label">规划实验主线</span><h3 id="plannerStoryTitle">训练前 RAG 对照 → 9K 配方调参 → 候选接口冻结 → 数据规模选择与终评</h3></div>
+            <p>01 量化 RAG 贡献；02 先验证监督训练，再在 9K 上选择学习率、轮数与 LoRA 配置；03 固定候选接口；04 以同一配方逐步放大数据并打开最终测试。</p>
           </div>
 
           <div class="experiment-steps" role="group" aria-label="工具链规划模型选型路径">
             <article><span>01 · 训练前 RAG 对照</span><strong>完整 100 工具 vs Top-10</strong><small>固定未微调 4B / 8B</small></article>
-            <article><span>02 · 首次监督训练</span><strong>固定 Top-10 比较训练前后</strong><small>确认模型能学习工具链规划</small></article>
+            <article><span>02 · 训练与配方选择</span><strong>9K 锚点 · 21 + 3 个版本</strong><small>先调参，再固定配方比较数据规模</small></article>
             <article><span>03 · 候选接口冻结</span><strong>精排 R ≥ 规划 P</strong><small>选择 R20 / P10，并完成锁后确认</small></article>
             <article class="is-selected"><span>04 · 规模选择与终评</span><strong>9K → 54K，再打开冻结集</strong><small>7,225 / 9,000 · 80.28%</small></article>
           </div>
@@ -928,14 +928,14 @@
 
             <details class="narrative-disclosure planner-story-results" id="plannerCurrentTrainingResults">
               <summary>
-                <span class="disclosure-summary-copy"><small>02 · 首次监督训练</small><strong>固定同一 Top-10，比较训练前后的工具链能力</strong></span>
-                <span class="disclosure-summary-meta">自由生成 1K · 4B / 8B · 工具链分别提升 45.90 / 39.20pp</span>
+                <span class="disclosure-summary-copy"><small>02 · 训练与配方选择</small><strong>先验证训练收益，再在 9K 上选择监督训练参数</strong></span>
+                <span class="disclosure-summary-meta">首次训练 1K 对照 · 4B 21 个唯一版本 · 8B 3 个确认版本</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
                 <div class="planner-table-block">
                 <div class="planner-table-heading">
-                  <h4>02 · 固定 Top-10，检验第一次监督训练是否有效</h4>
+                  <h4>02A · 固定 Top-10，检验第一次监督训练是否有效</h4>
                   <p>固定同一批 1,000 条自由生成请求与同一 Top-10，只改变模型权重；该表回答训练是否有效，不代表最终 9K。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
@@ -947,7 +947,97 @@
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>本步结论：</strong>第一次监督训练已把同一 Top-10 下的工具链全对率提高到 98%–99%；后续实验不再重复证明“训练有效”，而是固定候选接口后比较训练数据规模。</p>
+                <p class="planner-result-boundary"><strong>验证结果：</strong>第一次监督训练已把同一 Top-10 下的工具链全对率提高到 98%–99%，因此继续在作业规定的 9K 基础数据上选择训练配方。</p>
+                </div>
+
+                <div class="planner-table-block">
+                <div class="planner-table-heading">
+                  <h4>02B · 用 4B 完整搜索，再把优胜配方迁移到 8B 确认</h4>
+                  <p>调参顺序是“9K 作为基础锚点 → 选择训练配方 → 固定配方比较数据规模”，不是先看到规模结果再调 9K。三轮 4B 搜索共产生 21 个唯一模型版本，随后只在 8B 上确认前三名。</p>
+                </div>
+                <div class="result-table-wrap" tabindex="0">
+                  <table class="result-table result-table-compact planner-result-table">
+                    <thead><tr><th scope="col">阶段</th><th scope="col">模型</th><th scope="col">搜索内容</th><th scope="col">运行规模</th><th scope="col">作用</th></tr></thead>
+                    <tbody>
+                      <tr><td><strong>第一轮</strong></td><td>Qwen3-4B</td><td>学习率 1e-5 / 3e-5 / 5e-5 × 1 / 2 / 3 轮</td><td><strong>9 个配置</strong></td><td>选择学习率与训练轮数</td></tr>
+                      <tr><td><strong>第二轮</strong></td><td>Qwen3-4B</td><td>LoRA 秩 8 / 16 / 32 × dropout 0 / 0.05 / 0.1</td><td><strong>9 个配置</strong><small>含与前一轮重复配置</small></td><td>选择 LoRA 容量与正则强度</td></tr>
+                      <tr><td><strong>第三轮</strong></td><td>Qwen3-4B</td><td>前两轮各取前三名，完成 3 × 3 交叉确认</td><td><strong>9 个配置</strong><small>含可复用配置</small></td><td>确认参数交互后的最终组合</td></tr>
+                      <tr><td><strong>4B 汇总</strong></td><td>Qwen3-4B</td><td>三轮去重</td><td><strong>21 个唯一模型版本</strong></td><td>冻结 4B 正式配方</td></tr>
+                      <tr class="result-table-final"><td><strong>8B 确认</strong></td><td><strong>Qwen3-8B</strong></td><td>把 4B 前三名迁移到 8B</td><td><strong>3 个配置</strong></td><td><strong>确认同一正式配方</strong></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                </div>
+
+                <div class="planner-table-block">
+                <div class="planner-table-heading">
+                  <h4>02C · 第一轮：比较学习率与训练轮数</h4>
+                  <p>Qwen3-4B、9K 数据、LoRA 秩 16、dropout 0.05；指标为当时 2,400 条开发集 RAG 工具链全对率。</p>
+                </div>
+                <div class="result-table-wrap" tabindex="0">
+                  <table class="result-table result-table-compact planner-result-table numeric-result-table">
+                    <thead><tr><th scope="col">学习率</th><th scope="col">训练 1 轮</th><th scope="col">训练 2 轮</th><th scope="col">训练 3 轮</th></tr></thead>
+                    <tbody>
+                      <tr><td><strong>1e-5</strong></td><td>82.4167%</td><td>88.1667%</td><td><strong>89.6250%</strong></td></tr>
+                      <tr><td><strong>3e-5</strong></td><td>90.1250%</td><td>91.7500%</td><td><strong>92.3750%</strong></td></tr>
+                      <tr><td><strong>5e-5</strong></td><td>90.9583%</td><td>92.1250%</td><td><strong>92.1667%</strong></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="planner-result-boundary"><strong>轮数依据：</strong>三个学习率下都是训练 3 轮最好；第一轮单点最高为 3e-5 / 3 轮，最终学习率还需结合下一轮 LoRA 参数做交叉确认。</p>
+                </div>
+
+                <div class="planner-table-block">
+                <div class="planner-table-heading">
+                  <h4>02D · 第二轮：比较 LoRA 秩与 dropout</h4>
+                  <p>固定学习率 3e-5、训练 3 轮；LoRA alpha 始终设为秩的 2 倍。</p>
+                </div>
+                <div class="result-table-wrap" tabindex="0">
+                  <table class="result-table result-table-compact planner-result-table numeric-result-table">
+                    <thead><tr><th scope="col">LoRA 秩</th><th scope="col">dropout 0</th><th scope="col">dropout 0.05</th><th scope="col">dropout 0.1</th></tr></thead>
+                    <tbody>
+                      <tr><td><strong>8</strong></td><td>91.6667%</td><td>91.8333%</td><td>91.5417%</td></tr>
+                      <tr><td><strong>16</strong></td><td>92.1667%</td><td>92.3750%</td><td>92.1667%</td></tr>
+                      <tr><td><strong>32</strong></td><td>92.2917%</td><td><strong>92.5417%</strong></td><td>91.4167%</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                </div>
+
+                <div class="planner-table-block">
+                <div class="planner-table-heading">
+                  <h4>02E · 第三轮：交叉确认前两轮的优胜参数</h4>
+                  <p>行是第一轮前三名，列是第二轮前三名；表内为 Qwen3-4B 开发集工具链全对率，已有配置直接复用评测结果。</p>
+                </div>
+                <div class="result-table-wrap" tabindex="0">
+                  <table class="result-table result-table-compact planner-result-table numeric-result-table">
+                    <thead><tr><th scope="col">学习率 / 轮数</th><th scope="col">秩 32 / dropout 0.05</th><th scope="col">秩 16 / dropout 0.05</th><th scope="col">秩 32 / dropout 0</th></tr></thead>
+                    <tbody>
+                      <tr><td><strong>3e-5 / 3</strong></td><td>92.5417%</td><td>92.3750%</td><td>92.2917%</td></tr>
+                      <tr class="result-table-final"><td><strong>5e-5 / 3</strong></td><td><strong>93.0417%</strong></td><td>92.1667%</td><td>92.9167%</td></tr>
+                      <tr><td><strong>5e-5 / 2</strong></td><td>92.2083%</td><td>92.1250%</td><td>92.3333%</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                </div>
+
+                <div class="planner-table-block">
+                <div class="planner-table-heading">
+                  <h4>02F · 将前三名迁移到 8B，冻结统一配方</h4>
+                  <p>8B 不重复完整网格，只确认 4B 排名前三的配置；4B 与 8B 最终采用同一组参数。</p>
+                </div>
+                <div class="result-table-wrap" tabindex="0">
+                  <table class="result-table result-table-compact planner-result-table numeric-result-table">
+                    <thead><tr><th scope="col">模型</th><th scope="col">学习率 / 轮数 / LoRA 秩 / dropout</th><th scope="col">开发集工具链全对率</th><th scope="col">判定</th></tr></thead>
+                    <tbody>
+                      <tr class="result-table-final"><td><strong>Qwen3-4B</strong></td><td><strong>5e-5 / 3 / 32 / 0.05</strong></td><td><strong>93.0417%</strong></td><td><strong>冻结 4B 配方</strong></td></tr>
+                      <tr class="result-table-final"><td><strong>Qwen3-8B</strong></td><td><strong>5e-5 / 3 / 32 / 0.05</strong></td><td><strong>93.5417%</strong></td><td><strong>冻结 8B 配方</strong></td></tr>
+                      <tr><td>Qwen3-8B</td><td>3e-5 / 3 / 32 / 0.05</td><td>93.4583%</td><td>学习率对照</td></tr>
+                      <tr><td>Qwen3-8B</td><td>5e-5 / 3 / 32 / 0</td><td>92.9167%</td><td>dropout 对照</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="planner-result-boundary"><strong>证据边界：</strong>这轮完整搜索使用较早的接口表达开发集与当时的候选输入，不是当前 R20 / P10 接口下的 24 个版本重评；8B 也只确认 3 个三轮配置，没有完整比较 1 / 2 / 3 轮。因此当前结论是“在 9K 上选定统一配方，再以该配方比较 9K–54K”，不声称每个规模都分别调到了最优。</p>
                 </div>
               </div>
             </details>
@@ -1011,7 +1101,7 @@
                 <div class="planner-table-block">
                 <div class="planner-table-heading">
                   <h4>04A · 固定候选接口，比较 9K–54K 监督规模</h4>
-                  <p>4B / 8B 均使用严格嵌套的接口表达数据、相同三轮配方与同一 R20 / P10 接口。主指标是 2,400 条选择集上的 6:1 加权 RAG 工具链全对率；1,200 条组合隔离集用于防止只记住训练工具组合。</p>
+                  <p>先在 9K 上选定 5e-5 / 3 轮 / LoRA r32 / dropout 0.05，再让 4B / 8B 的四个严格嵌套规模共用该配方与同一 R20 / P10 接口。主指标是 2,400 条选择集上的 6:1 加权 RAG 工具链全对率；1,200 条组合隔离集用于防止只记住训练工具组合。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table numeric-result-table">
@@ -1028,7 +1118,7 @@
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>选择结果：</strong>预先锁定的主指标上，4B 9K 比 54K 高 0.3214pp，8B 9K 比 36K 高 0.1548pp，因此两种模型都选择 9K。另一批 1,200 条回放仅保留为补充稳定性记录，配置中明确标记为“不参与正式流程”。</p>
+                <p class="planner-result-boundary"><strong>选择结果：</strong>预先锁定的主指标上，4B 9K 比 54K 高 0.3214pp，8B 9K 比 36K 高 0.1548pp，因此两种模型都选择 9K。该结论限定为“统一配方下 9K 最好”；另一批 1,200 条回放仅保留为补充稳定性记录，配置中明确标记为“不参与正式流程”。</p>
                 </div>
 
                 <div class="planner-table-block">
@@ -1109,6 +1199,7 @@
                   <thead><tr><th scope="col">数据资产</th><th scope="col">来源与内容</th><th scope="col">规模</th><th scope="col">实验角色</th><th scope="col">边界</th></tr></thead>
                   <tbody>
                     <tr><td><strong>接口表达监督池</strong><span>Planner 规模实验</span></td><td>单工具、多工具候选顺序变化与同类干扰请求，均配最终 Top-10 与目标工具链</td><td><strong>54,000 条</strong><br>9K / 18K / 36K / 54K 严格嵌套</td><td>固定训练配方下逐步放大数据规模</td><td>不混入自然表达 24K 训练轨迹</td></tr>
+                    <tr><td><strong>训练配方开发集</strong><span>9K 超参数选择</span></td><td>接口表达请求、当时的 RAG 候选输入与有序目标</td><td><strong>2,400 条</strong></td><td>比较学习率、训练轮数、LoRA 秩与 dropout</td><td>早于当前 R20 / P10 接口；不用于最终 6K / 1K 报告</td></tr>
                     <tr><td><strong>候选接口选择集</strong><span>R / P 与二级 RRF</span></td><td>自然表达与接口表达面板，含单工具和训练未见组合</td><td><strong>2,400 条</strong></td><td>联合比较精排深度、规划深度与二级融合参数</td><td>强制 P≤R；先于最终测试冻结</td></tr>
                     <tr><td><strong>候选接口确认集</strong><span>检索接口锁后证据</span></td><td>与接口选择集隔离的同结构面板</td><td><strong>1,200 条</strong></td><td>确认 R20 / P10 与二级 RRF 选择</td><td>属于检索接口正式证据；确认后不再调参</td></tr>
                     <tr><td><strong>候选长度压力集</strong><span>锁后诊断</span></td><td>600 条单工具 + 600 条训练未见多工具组合</td><td><strong>1,200 条</strong></td><td>检查更深精排和更长 Planner 输入是否值得</td><td>只解释长候选干扰，不用于选择</td></tr>
@@ -1130,6 +1221,7 @@
                   <thead><tr><th scope="col">协议阶段</th><th scope="col">数据</th><th scope="col">回答的问题</th><th scope="col">是否影响决策</th><th scope="col">输出</th></tr></thead>
                   <tbody>
                     <tr><td><strong>首次监督训练验证</strong></td><td>自由生成请求 1K</td><td>固定 Top-10 时，监督训练是否学会集合与顺序</td><td>只确认训练方向</td><td>4B / 8B 工具链提升 45.90 / 39.20pp</td></tr>
+                    <tr><td><strong>监督训练配方选择</strong></td><td>9K 锚点 + 开发集 2.4K</td><td>学习率、轮数、LoRA 秩与 dropout 如何组合</td><td><strong>是</strong></td><td>4B 21 个唯一版本 + 8B 3 个确认版本；冻结 5e-5 / 3 / r32 / d0.05</td></tr>
                     <tr><td><strong>候选接口选型</strong></td><td>选择 2.4K + 确认 1.2K</td><td>R、P 与二级 RRF 如何在近优质量和成本间取舍</td><td><strong>是</strong></td><td>冻结 R20 / P10 + 0.4 / 8</td></tr>
                     <tr><td><strong>Planner 规模选型</strong></td><td>选择 2.4K + 组合隔离 1.2K</td><td>9K / 18K / 36K / 54K 中采用哪一档</td><td><strong>是</strong></td><td>4B / 8B 均锁定 9K</td></tr>
                     <tr><td><strong>规模补充稳定性</strong></td><td>另一次 1.2K 回放</td><td>锁后方向是否在另一面板保持</td><td><strong>否</strong><small>配置标记为不参与正式流程</small></td><td>两种 9K 均保持 +0.1667pp；只作记录</td></tr>
@@ -1162,8 +1254,8 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerSftEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>05D · 监督训练环境</span><h3 id="plannerSftEnvironmentTitle">保留首次训练，并记录最终 9K 训练成本</h3></div>
-                <p>首次训练用于验证方法；最终 9K 采用固定三轮规模配方。运行产物记录进程数与显存字段，但没有绑定具体 GPU 型号。</p>
+                <div><span>05D · 监督训练环境</span><h3 id="plannerSftEnvironmentTitle">记录调参后的固定配方与训练成本</h3></div>
+                <p>正式 9K 配方来自上方分阶段搜索；运行产物记录进程数与显存字段，但没有绑定具体 GPU 型号。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table planner-training-efficiency-table">
@@ -1176,12 +1268,33 @@
                   </tbody>
                 </table>
               </div>
+              <div class="result-table-wrap planner-sft-config-wrap" tabindex="0">
+                <table class="result-table result-table-compact planner-sft-config-table">
+                  <thead><tr><th scope="col">正式参数</th><th scope="col">固定设置</th><th scope="col">选择依据</th></tr></thead>
+                  <tbody>
+                    <tr><td>训练方式</td><td>MS-SWIFT · LoRA 监督微调</td><td>固定</td></tr>
+                    <tr class="result-table-final"><td><strong>学习率</strong></td><td><strong>5e-5</strong></td><td><strong>已比较</strong></td></tr>
+                    <tr class="result-table-final"><td><strong>训练轮数</strong></td><td><strong>3</strong></td><td><strong>4B 完整比较；8B 只确认三轮优胜配置</strong></td></tr>
+                    <tr class="result-table-final"><td><strong>LoRA 秩 / alpha / dropout</strong></td><td><strong>32 / 64 / 0.05</strong></td><td><strong>秩与 dropout 已比较；alpha 固定为秩的 2 倍</strong></td></tr>
+                    <tr><td>目标层</td><td>全部线性层</td><td>固定</td></tr>
+                    <tr><td>最大长度</td><td>2,048</td><td>固定</td></tr>
+                    <tr><td>有效批量</td><td>32</td><td>固定</td></tr>
+                    <tr><td>优化器</td><td>AdamW Torch</td><td>固定</td></tr>
+                    <tr><td>学习率调度</td><td>Cosine</td><td>固定</td></tr>
+                    <tr><td>预热比例</td><td>0.05</td><td>固定</td></tr>
+                    <tr><td>权重衰减</td><td>0.1</td><td>固定</td></tr>
+                    <tr><td>梯度裁剪</td><td>1.0</td><td>固定</td></tr>
+                    <tr><td>训练精度</td><td>BF16</td><td>固定</td></tr>
+                    <tr><td>随机种子</td><td>20260725</td><td>单一种子</td></tr>
+                  </tbody>
+                </table>
+              </div>
             </section>
 
             <section class="efficiency-table-block" aria-labelledby="plannerScaleEnvironmentTitle">
               <div class="efficiency-table-heading">
                 <div><span>05E · 数据规模与训练成本</span><h3 id="plannerScaleEnvironmentTitle">同步比较质量与训练时间，选择 9K</h3></div>
-                <p>所有规模共用 1 GPU、BF16、全局批量 32、3 轮、lr5e-5、LoRA r32 / α64 / dropout 0.05、最大长度 2048；GPU 型号未记录。</p>
+                <p>所有规模共用先在 9K 上选出的配方：1 GPU、BF16、全局批量 32、3 轮、lr5e-5、LoRA r32 / α64 / dropout 0.05、最大长度 2048；GPU 型号未记录。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table planner-scale-efficiency-table numeric-result-table">
@@ -1383,7 +1496,7 @@
         <details class="narrative-disclosure data-disclosure system-data-disclosure" id="systemDataLedger">
           <summary>
             <span class="disclosure-summary-copy"><small>项目总数据表</small><strong>汇总三个实验的数据角色与复用边界</strong></span>
-            <span class="disclosure-summary-meta">17 类数据资产 · 训练 / 选型 / 报告</span>
+            <span class="disclosure-summary-meta">18 类数据资产 · 训练 / 选型 / 报告</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body">
@@ -1407,6 +1520,7 @@
                     <tr><td><strong>自然表达测试集</strong><span>实验 02 / 03</span></td><td>3K 单工具 + 3K 多工具；多工具含已见与未见组合</td><td><strong>6,000 条请求</strong><br>15,196 个目标工具</td><td>检索与固定 4B / 8B 规划模型评测</td><td>检索 AllHit@10 97.3667%；同时构成 9K 全链路中的电商部分</td></tr>
                     <tr><td><strong>候选检索一次性终评</strong><span>实验 02 · 冻结后评测</span></td><td>独立跨表达请求，工具数 1–6 均衡</td><td><strong>1,200 条请求</strong></td><td>评测冻结整链的 AllHit@K 与 MRR</td><td>AllHit@10 99.8333%；结果打开后未继续调参</td></tr>
                     <tr><td><strong>接口表达 Planner 监督池</strong><span>实验 03 · 数据规模</span></td><td>单工具、多工具候选顺序变化与同类干扰请求，均配最终候选和目标工具链</td><td><strong>54,000 条</strong><br>9K / 18K / 36K / 54K 严格嵌套</td><td>固定同一配方比较 4B / 8B 的训练规模与成本</td><td>最终两种模型均选择 9K；每档与开发、6K、1K 无请求或轨迹重合</td></tr>
+                    <tr><td><strong>监督训练配方开发集</strong><span>实验 03 · 9K 调参</span></td><td>接口表达请求、当时的 RAG 候选输入与有序目标</td><td><strong>2,400 条</strong></td><td>完成 4B 三轮参数搜索与 8B 三组确认</td><td>早于当前 R20 / P10 接口；支持统一配方，不代表当前接口下完整重评</td></tr>
                     <tr><td><strong>Planner 规模选择集</strong><span>实验 03 · 主选择</span></td><td>自然表达近似与接口表达两类面板</td><td><strong>2,400 条</strong></td><td>按 6:1 加权 RAG 工具链全对率选择训练规模</td><td>4B / 8B 均在受保护结果打开前锁定 9K</td></tr>
                     <tr><td><strong>组合隔离保护集</strong><span>实验 03 · 选择保护项</span></td><td>与训练侧来源轨迹和工具组合隔离的请求</td><td><strong>1,200 条</strong></td><td>检查规模选择能否覆盖训练未见组合</td><td>与 2.4K 选择集共同参与选型；不是最终测试</td></tr>
                     <tr><td><strong>自由生成请求测试集</strong><span>实验 03 · 首次监督训练验证</span></td><td>1–5 个工具的自由生成请求，每档 200 条</td><td><strong>1,000 条</strong></td><td>固定同一 Top-10 比较未微调与首次监督训练</td><td>只验证训练方向；不作为最终 9K 指标</td></tr>
@@ -1437,7 +1551,7 @@
         <details class="narrative-disclosure evidence-section-disclosure" id="evidence">
           <summary>
             <span class="disclosure-summary-copy"><small>工程证据 · 复现</small><strong id="evidenceTitle" role="heading" aria-level="2">工程资产与复现</strong></span>
-            <span class="disclosure-summary-meta">10 项证据 · 4 条 CPU 校验命令</span>
+            <span class="disclosure-summary-meta">11 项证据 · 4 条 CPU 校验命令</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body evidence-section-body">
@@ -1454,13 +1568,14 @@
               <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/06_Assignment3_100%E5%B7%A5%E5%85%B7%E5%AE%9E%E9%AA%8C%E6%80%BB%E6%8A%A5%E5%91%8A.md" target="_blank" rel="noopener noreferrer"><span>规划实验报告</span><h3>RAG、监督训练、候选接口与 9K 结果</h3><b>reports/06_Assignment3_100工具实验总报告.md</b></a>
             </div>
 
-            <div class="evidence-group-heading evidence-group-heading-secondary"><strong>补充报告</strong><span>7 项</span></div>
+            <div class="evidence-group-heading evidence-group-heading-secondary"><strong>补充报告</strong><span>8 项</span></div>
             <div class="evidence-grid evidence-grid-secondary">
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/README.md" target="_blank" rel="noopener noreferrer"><span>项目地图</span><h3>项目概览</h3><b>PROJECT/README.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/01_%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB.md" target="_blank" rel="noopener noreferrer"><span>模型报告</span><h3>意图识别与关键词评测</h3><b>reports/01_意图识别.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/02_%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA.md" target="_blank" rel="noopener noreferrer"><span>基线报告</span><h3>检索增强</h3><b>reports/02_检索增强.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/04_%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8E%E8%AE%AD%E7%BB%83%E7%94%A8%E6%95%B0%E8%AF%B4%E6%98%8E.md" target="_blank" rel="noopener noreferrer"><span>数据地图</span><h3>数据与实验总表</h3><b>reports/04_数据集与训练用数说明.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/planner_joint_depth_reselection_20260801/final_report.json" target="_blank" rel="noopener noreferrer"><span>结构化结果</span><h3>精排与规划深度联合选择</h3><b>planner_joint_depth.../final_report.json</b></a>
+              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/configs/assignment3_sft_ablation.json" target="_blank" rel="noopener noreferrer"><span>实验配置</span><h3>9K 监督训练配方搜索</h3><b>configs/assignment3_sft_ablation.json</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/configs/assignment3_api_native_sft_scaling.json" target="_blank" rel="noopener noreferrer"><span>实验配置</span><h3>9K–54K 监督规模选择协议</h3><b>configs/assignment3_api_native_sft_scaling.json</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_api_native_sft_scaling_20260802/results_summary.json" target="_blank" rel="noopener noreferrer"><span>结构化结果</span><h3>规模选择、冻结回放与 9K 汇总</h3><b>assignment3_api_native_sft_scaling_20260802/results_summary.json</b></a>
             </div>
