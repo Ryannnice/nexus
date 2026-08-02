@@ -776,7 +776,7 @@
                     <tr><td><strong>训练轨迹</strong></td><td>24,000 组 · 70,012 个正对</td><td>训练向量模型与重排模型</td><td>向量训练将每个查询—正例配对展开为 1 正 + 2 负；重排每组为 1 正 + 7 负</td></tr>
                     <tr><td><strong>检索开发集</strong></td><td>1,200 条</td><td>向量负样本方案与微调重排模型选型</td><td>五种向量方案和四种重排架构按三随机种子比较</td></tr>
                     <tr><td><strong>联合深度选型</strong></td><td>2,400 条选择 + 1,200 条确认</td><td>联合比较精排 R、规划 P 与二级融合</td><td>强制 P≤R；按 0.5pp 近优带和成本规则选择 R20 / P10</td></tr>
-                    <tr><td><strong>长度匹配挑战集</strong></td><td>1,200 条</td><td>路线锁定后的长候选干扰诊断</td><td>600 条单工具 + 600 条监督训练未见组合；不参与调参</td></tr>
+                    <tr><td><strong>候选长度压力验证</strong></td><td>1,200 条</td><td>路线锁定后的长候选干扰诊断</td><td>600 条单工具 + 600 条监督训练未见组合；不参与调参</td></tr>
                     <tr><td><strong>一次性终评</strong></td><td>1,200 条</td><td>冻结后的首次质量评测</td><td>AllHit@10 99.8333%，结果打开后未继续调参</td></tr>
                     <tr><td><strong>自然表达测试</strong></td><td>6,000 条</td><td>检索与固定规划模型评测</td><td>检索 AllHit@10 97.3667%</td></tr>
                     <tr><td><strong>接口表达回归</strong></td><td>1,000 条</td><td>格式化表达下的检索与规划回归</td><td>检索 AllHit@10 100.0000%</td></tr>
@@ -858,7 +858,7 @@
         <p class="eyebrow">实验 03 · 工具链规划</p>
         <div class="section-heading split-heading">
           <h2 id="planningTitle">工具链规划：从未微调基线到 9K 最终系统</h2>
-          <p>先用未微调模型检验 RAG 作用，再验证监督训练收益；随后联合选择精排与规划候选深度，最后冻结整条路线并报告 9K 结果。</p>
+          <p>先用未微调模型检验 RAG 作用，再验证监督训练收益；随后联合选择精排与规划候选深度，路线锁定后完成候选长度压力验证与 9K 最终评测。</p>
         </div>
 
         <section class="planner-final-lead" id="plannerLatestUpdate" aria-labelledby="plannerFinalLeadTitle">
@@ -878,15 +878,15 @@
 
         <section class="planner-compact-story" id="plannerExperiments" aria-labelledby="plannerStoryTitle">
           <div class="result-explorer-head">
-            <div><span class="result-subsection-label">规划实验主线</span><h3 id="plannerStoryTitle">训练前 RAG 对照 → 监督训练 → R/P 联合选择 → 9K 最终评测</h3></div>
-            <p>01–02 分别量化 RAG 与监督训练的贡献；03 在受保护测试集打开前选择一致的候选接口；04 只报告锁定路线的最终结果。</p>
+            <div><span class="result-subsection-label">规划实验主线</span><h3 id="plannerStoryTitle">训练前 RAG 对照 → 监督训练 → R/P 联合选择 → 锁后验证与 9K 评测</h3></div>
+            <p>01–02 分别量化 RAG 与监督训练的贡献；03 在受保护测试集打开前选择一致的候选接口；04 先验证锁定接口的候选长度，再报告最终结果。</p>
           </div>
 
           <div class="experiment-steps" role="group" aria-label="工具链规划模型选型路径">
             <article><span>01 · 训练前 RAG 对照</span><strong>完整 100 工具 vs Top-10</strong><small>固定未微调 4B / 8B</small></article>
             <article><span>02 · 监督训练验证</span><strong>训练前后 + RAG 前后</strong><small>确认训练与检索各自作用</small></article>
             <article><span>03 · 联合候选接口</span><strong>精排 R ≥ 规划 P</strong><small>质量近优约束下选择 R20 / P10</small></article>
-            <article class="is-selected"><span>04 · 冻结后评测</span><strong>固定全链路报告 9K</strong><small>8,177 / 9,000 · 90.86%</small></article>
+            <article class="is-selected"><span>04 · 锁后验证与评测</span><strong>候选压力检查 + 9K</strong><small>8,177 / 9,000 · 90.86%</small></article>
           </div>
 
           <div class="planner-story-disclosures">
@@ -963,7 +963,7 @@
             <details class="narrative-disclosure planner-story-results" id="plannerToolCountResults">
               <summary>
                 <span class="disclosure-summary-copy"><small>03 · 联合候选接口</small><strong>同时比较精排 R 与规划 P，选择 R20 / P10</strong></span>
-                <span class="disclosure-summary-meta">14 组一致深度 · 0.5pp 近优带 · 长度匹配挑战 1.2K</span>
+                <span class="disclosure-summary-meta">14 组一致深度 · 0.5pp 近优带 · 1.2K 独立确认</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
@@ -987,10 +987,20 @@
                 <p class="planner-result-boundary"><strong>选择结果：</strong>R20 / P10 位于 0.5pp 近优带；相比单点最高的 R30 / P20，规划 token 少 36.84%，精排 p50 低 33.65%。增加成本缺少足够收益证据，因此固定 R20 / P10。</p>
                 </div>
 
+              </div>
+            </details>
+
+            <details class="narrative-disclosure planner-story-results planner-final-results" id="plannerFinalEvaluationResults">
+              <summary>
+                <span class="disclosure-summary-copy"><small>04 · 锁后验证与最终评测</small><strong>固定接口后检查候选长度，再报告 9K 全链路结果</strong></span>
+                <span class="disclosure-summary-meta">压力验证 1.2K · 8B 工具链成功 8,177 / 9,000 · 90.8556%</span>
+                <i aria-hidden="true">+</i>
+              </summary>
+              <div class="disclosure-body planner-result-body">
                 <div class="planner-table-block">
                 <div class="planner-table-heading">
-                  <h4>03B · 用长度匹配挑战集检查长候选干扰</h4>
-                  <p>路线锁定后，用 600 条单工具和 600 条监督训练未见多工具组合复核。请求长度均值 / 中位数为 94.43 / 72，与自然表达 6K 的 94.01 / 71 接近；与监督、开发和测试数据的请求 / 来源精确重合均为 0，且不参与调参。</p>
+                  <h4>04A · 锁定接口后验证更长候选是否值得</h4>
+                  <p>用 600 条单工具和 600 条监督训练未见多工具组合复核。请求长度均值 / 中位数为 94.43 / 72，与自然表达 6K 的 94.01 / 71 接近；与监督、开发和测试数据的请求 / 来源精确重合均为 0，且不参与调参。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table">
@@ -1002,21 +1012,12 @@
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>复核结论：</strong>更长候选提高检索覆盖，不保证规划工具链更准；在更接近自然表达测试分布的请求上，长候选干扰已显现。</p>
+                <p class="planner-result-boundary"><strong>验证结论：</strong>更长候选提高检索覆盖，不保证规划工具链更准；在更接近自然表达测试分布的请求上，长候选干扰已显现。</p>
                 </div>
-              </div>
-            </details>
 
-            <details class="narrative-disclosure planner-story-results planner-final-results" id="plannerFinalEvaluationResults">
-              <summary>
-                <span class="disclosure-summary-copy"><small>04 · 冻结后最终评测</small><strong>固定路由、检索与候选深度，报告 9K 全链路结果</strong></span>
-                <span class="disclosure-summary-meta">4B / 8B · 8B 工具链成功 8,177 / 9,000 · 90.8556%</span>
-                <i aria-hidden="true">+</i>
-              </summary>
-              <div class="disclosure-body planner-result-body">
                 <div class="planner-table-block">
                 <div class="planner-table-heading">
-                  <h4>04A · 固定上游链路，比较 4B / 8B 最终结果</h4>
+                  <h4>04B · 固定上游链路，比较 4B / 8B 最终结果</h4>
                   <p>路由、检索排序与 Top-10 均保持冻结，只替换规划模型；3,000 条闲聊正确旁路即成功，6,000 条电商请求还需生成完全正确的有序工具链。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
@@ -1032,7 +1033,7 @@
 
                 <div class="planner-table-block">
                 <div class="planner-table-heading">
-                  <h4>04B · 对固定 8B 按目标工具数分层</h4>
+                  <h4>04C · 对固定 8B 按目标工具数分层</h4>
                   <p>该表用于解释最终结果随工具链长度的变化，不参与模型或参数选择。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
@@ -1065,17 +1066,17 @@
             <section class="data-evidence-section experiment-data-section" aria-labelledby="plannerTrainingDataTitle">
               <div class="data-evidence-heading">
                 <div><p>05A · 训练与选型数据</p><h3 id="plannerTrainingDataTitle">明确训练、选型与最终评测的数据边界</h3></div>
-                <span>9K–54K 嵌套监督数据与 77,724 条双来源联合监督数据对应两套独立监督训练，不是连续扩容。</span>
+                <span>9K–54K 嵌套数据与 77,724 条双来源数据采用不同训练协议；前者不能解释当前模型的数据规模收益。</span>
               </div>
               <div class="data-table-wrap" tabindex="0">
                 <table class="data-table experiment-data-table">
                   <thead><tr><th scope="col">数据资产</th><th scope="col">来源与内容</th><th scope="col">规模与划分</th><th scope="col">实验角色</th><th scope="col">边界与输出</th></tr></thead>
                   <tbody>
-                    <tr><td><strong>嵌套监督数据</strong><span>数据规模研究</span></td><td>自由生成请求、Top-10 候选视图与目标有序工具链</td><td>9K / 18K / 36K / 54K<br>稳定哈希前缀严格嵌套</td><td>训练 4B / 8B，研究监督规模与完整目录迁移</td><td>每档覆盖 100 / 100 工具；训练样本不直接暴露完整 100 工具目录视图</td></tr>
+                    <tr><td><strong>早期嵌套监督数据</strong><span>规模观察</span></td><td>自由生成请求、早期 Top-10 候选视图与目标有序工具链</td><td>9K / 18K / 36K / 54K<br>稳定哈希前缀严格嵌套</td><td>在同一早期协议内比较 4B / 8B 的规模与训练成本</td><td>每档覆盖 100 / 100 工具；与当前双来源数据及 R20 / P10 接口不作纵向比较</td></tr>
                     <tr><td><strong>早期规划开发集</strong><span>训练方案研究</span></td><td>独立请求、候选视图与有序目标</td><td><strong>2,400 条</strong></td><td>比较 4B 的 21 个参数组合、8B 的 3 个确认运行及早期候选视图</td><td>服务于监督训练方案研究，不决定当前正式候选数</td></tr>
-                    <tr><td><strong>两类表达联合监督数据</strong><span>固定规划模型训练</span></td><td>53,725 条自由生成请求 + 23,999 条句式组合请求，均配 Top-10 候选与目标工具链</td><td><strong>77,724 条</strong><br>模型版本 2429</td><td>训练最终评测使用的 4B / 8B 规划模型</td><td>接入最终检索链时保持该版本冻结，没有重新训练规划模型</td></tr>
+                    <tr><td><strong>两类表达联合监督数据</strong><span>固定规划模型训练</span></td><td>53,725 条自由生成请求 + 23,999 条句式组合请求，均配 Top-10 候选与目标工具链</td><td><strong>77,724 条</strong><br>模型版本 2429</td><td>训练最终评测使用的 4B / 8B 规划模型</td><td>当前只有全量训练点；接入最终检索链时保持该版本冻结，没有重新训练规划模型</td></tr>
                     <tr><td><strong>联合候选接口数据</strong><span>精排与规划深度选择</span></td><td>自然表达风格与接口表达风格面板；包含单工具和监督训练未见组合</td><td><strong>2,400 条选择 + 1,200 条确认</strong></td><td>固定 8B 模型版本 2429，联合比较精排 R、规划 P 与二级 RRF</td><td>强制 P≤R；在 6K、1K 与 9K 评测前锁定，不更新规划模型</td></tr>
-                    <tr><td><strong>长度匹配挑战集</strong><span>锁后诊断</span></td><td>600 条单工具 + 600 条监督训练未见组合；长度分布接近自然表达 6K</td><td><strong>1,200 条</strong></td><td>比较 R20/P10、R30/P10 与长候选路线的工具链表现</td><td>路线锁定后运行；只解释外部有效性，不参与选型</td></tr>
+                    <tr><td><strong>候选长度压力验证</strong><span>锁定后验证</span></td><td>600 条单工具 + 600 条监督训练未见组合；长度分布接近自然表达 6K</td><td><strong>1,200 条</strong></td><td>比较最终接口、更深重排与长候选输入的工具链表现</td><td>路线锁定后运行；检验成本选择，不参与选型</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -1084,7 +1085,7 @@
             <section class="data-evidence-section" aria-labelledby="plannerReportDataTitle">
               <div class="data-evidence-heading">
                 <div><p>05B · 独立评测协议</p><h3 id="plannerReportDataTitle">各类结果分别回答不同问题</h3></div>
-                <span>模块测试、输入范围配对、候选接口选择、锁后挑战与静态全链路不能合并计分；正文中的每个结果只对应本行注明的协议。</span>
+                <span>模块测试、输入范围配对、候选接口选择、锁定后压力验证与静态全链路不能合并计分；正文中的每个结果只对应本行注明的协议。</span>
               </div>
               <div class="data-table-wrap" tabindex="0">
                 <table class="data-table experiment-data-table">
@@ -1094,7 +1095,7 @@
                     <tr><td><strong>自然表达测试</strong><span>固定规划模型评测</span></td><td>固定请求、轨迹 ID、目标工具链与 R20 / P10 最终候选</td><td><strong>6,000 条</strong></td><td>评测最终候选上的规划准确率与工具数分层</td><td>8B 工具链全对率 86.3500%；不与 1K 模块测试混算</td></tr>
                     <tr><td><strong>完整目录 / Top-10 配对</strong><span>候选检索作用</span></td><td>固定未微调与监督训练的 4B / 8B、提示模板和生成方式，只改变输入工具范围</td><td><strong>自然表达 6K + 接口表达 1K</strong><br>8 组配对 · 16 份结果</td><td>比较候选检索对集合、工具链和格式合规率的影响</td><td>8 个 RAG 单元、共 28,000 条预测均按最终路线推理；行数、配置与文件哈希已校验</td></tr>
                     <tr><td><strong>联合候选接口协议</strong><span>推理接口选择</span></td><td>固定 8B 模型版本 2429，联合搜索 R、P 与二级 RRF；所有规划候选均有精排分数</td><td><strong>2,400 条选择 + 1,200 条确认</strong><br>入选 R20 / P10</td><td>联合比较工具覆盖、工具链全对率、输入 token 与精排延迟</td><td>先保留距最高值 0.5pp 的路线，再按更小 P、R 与 token 选择</td></tr>
-                    <tr><td><strong>长度匹配挑战</strong><span>锁后诊断</span></td><td>固定路线后比较 R20/P10、R30/P10 与 R50/P50</td><td><strong>1,200 条</strong></td><td>检查长候选是否把覆盖收益转化为工具链收益</td><td>不参与调参；R30/P10 仅多 2 条且 p=0.8877，R50/P50 反而低 1.25pp</td></tr>
+                    <tr><td><strong>候选长度压力验证</strong><span>锁定后验证</span></td><td>固定路线后比较最终接口、更深重排与长候选输入</td><td><strong>1,200 条</strong></td><td>检查长候选是否把覆盖收益转化为工具链收益</td><td>不参与调参；更深重排仅多 2 条且 p=0.8877，长候选反而低 1.25pp</td></tr>
                     <tr><td><strong>静态全链路测试</strong><span>最终主结果</span></td><td>3,000 条闲聊 + 6,000 条电商请求；固定路由、最终检索链与冻结 8B 规划模型</td><td><strong>9,000 条</strong></td><td>逐样本联合计分，工具链成功 8,177 条</td><td>成功率 90.8556%；不等于参数正确或真实工具执行成功</td></tr>
                   </tbody>
                 </table>
@@ -1140,8 +1141,8 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerScaleEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>05E · 补充规模研究</span><h3 id="plannerScaleEnvironmentTitle">比较 9K–54K 监督规模的质量与训练成本</h3></div>
-                <p>准确率来自自由生成请求 1K 模块测试。共同配置：1 GPU、BF16、全局批量 32、3 轮、lr5e-5、LoRA r32 / α64 / dropout 0.05、最大长度 2048；4B / 8B 分别为批量 8 × 累积 4 / 批量 4 × 累积 8。</p>
+                <div><span>05E · 早期规模观察</span><h3 id="plannerScaleEnvironmentTitle">记录另一训练协议下的 9K–54K 质量与成本</h3></div>
+                <p>这组实验使用单一自由生成表达与早期 Top-10 候选，只能比较组内趋势，不能与当前 77,724 条双来源训练纵向连接。准确率来自自由生成请求 1K 模块测试；共同配置为 1 GPU、BF16、全局批量 32、3 轮、lr5e-5、LoRA r32 / α64 / dropout 0.05、最大长度 2048。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table planner-scale-efficiency-table numeric-result-table">
@@ -1154,7 +1155,7 @@
                   </tbody>
                 </table>
               </div>
-              <p class="efficiency-boundary"><strong>复现边界：</strong>每个规模只保留一个固定种子的正式运行；4B 另完成 21 个 9K 参数组合，8B 另完成 3 个 9K 确认运行。表中单次耗时不能外推为完整搜索总成本。</p>
+              <p class="efficiency-boundary"><strong>解释边界：</strong>每个规模只保留一个固定种子的正式运行，结果存在非单调波动；该表说明早期协议内的数据量与成本变化，不作为当前 77,724 条训练规模的选择依据。4B 另完成 21 个 9K 参数组合，8B 另完成 3 个 9K 确认运行。</p>
             </section>
 
             <section class="efficiency-table-block" aria-labelledby="plannerCandidateEfficiencyTitle">
@@ -1194,8 +1195,8 @@
                     <tr><td>未微调 8B · 完整 100 工具</td><td>自由生成请求 1K</td><td>4</td><td>835.5 / 1078.8ms</td><td>23.16 token/s</td><td>18.07 / 22.72 GiB</td></tr>
                     <tr class="table-divider"><td>首次监督微调 4B · Top-10</td><td>自由生成请求 1K</td><td>16</td><td>130.0 / 177.9ms</td><td>137.70 token/s</td><td>各分片 10.10–10.27 / 13.19–15.66 GiB</td></tr>
                     <tr><td>首次监督微调 8B · Top-10</td><td>自由生成请求 1K</td><td>8</td><td>213.0 / 319.6ms</td><td>80.29 token/s</td><td>各分片 16.92–16.94 / 20.29–21.02 GiB</td></tr>
-                    <tr><td>54K 补充微调 4B</td><td>自由生成请求 1K</td><td>16</td><td>134.1 / 178.8ms</td><td>134.30 token/s</td><td>10.40 / 17.34 GiB</td></tr>
-                    <tr><td>54K 补充微调 8B</td><td>自由生成请求 1K</td><td>8</td><td>221.8 / 319.3ms</td><td>79.82 token/s</td><td>17.14 / 22.33 GiB</td></tr>
+                    <tr><td>早期 54K 微调 4B</td><td>自由生成请求 1K</td><td>16</td><td>134.1 / 178.8ms</td><td>134.30 token/s</td><td>10.40 / 17.34 GiB</td></tr>
+                    <tr><td>早期 54K 微调 8B</td><td>自由生成请求 1K</td><td>8</td><td>221.8 / 319.3ms</td><td>79.82 token/s</td><td>17.14 / 22.33 GiB</td></tr>
                     <tr><td>两类表达联合训练 4B</td><td>句式组合请求 6K</td><td>16</td><td>229.7 / 361.9ms</td><td>73.92 token/s</td><td>10.29 / 13.41 GiB</td></tr>
                     <tr class="result-table-final"><td><strong>两类表达联合训练 8B</strong></td><td>句式组合请求 6K</td><td>16</td><td><strong>270.6 / 317.8ms</strong></td><td>71.88 token/s</td><td>18.48 / 28.28 GiB</td></tr>
                   </tbody>
@@ -1361,14 +1362,14 @@
                     <tr><td><strong>向量与重排训练数据</strong><span>实验 02</span></td><td>24K 训练轨迹与 100 份工具文档组成请求—工具样本</td><td>70,012 个正对<br>向量：每个正对 1 正 + 2 负<br>重排：每组 1 正 + 7 负</td><td>向量负例来自跨领域与新增无关工具；重排负例包括 3 个按工具类型挑选的样本与 4 个检索难例</td><td>负样本只来自训练划分；两类模型分别训练</td></tr>
                     <tr><td><strong>跨表达开发集</strong><span>实验 02 · 模型训练选型</span></td><td>接口式表达与简洁自然表达各 600 条；工具数 1–6 均衡</td><td><strong>1,200 条请求</strong></td><td>比较 5 种向量训练方案和 4 种微调重排架构</td><td>模型版本在打开一次性终评及 6K、1K、9K 评测前冻结</td></tr>
                     <tr><td><strong>联合候选接口数据</strong><span>实验 02 / 03 · R/P 与二级融合</span></td><td>自然表达与接口表达风格面板，包含单工具和监督训练未见组合</td><td><strong>2,400 条选择 + 1,200 条确认</strong></td><td>比较 R∈{10,20,30,50}、P∈{5,10,20,30,50} 与二级融合参数</td><td>强制 P≤R；以 0.5pp 近优带和成本规则选择 R20 / P10</td></tr>
-                    <tr><td><strong>长度匹配挑战集</strong><span>实验 03 · 锁后诊断</span></td><td>600 条单工具 + 600 条监督训练未见多工具组合</td><td><strong>1,200 条请求</strong></td><td>检验更长候选是否稳定转化为规划收益</td><td>路线锁定后运行，不参与模型或参数选择</td></tr>
+                    <tr><td><strong>候选长度压力验证</strong><span>实验 03 · 锁定后验证</span></td><td>600 条单工具 + 600 条监督训练未见多工具组合</td><td><strong>1,200 条请求</strong></td><td>检验更长候选是否稳定转化为规划收益</td><td>路线锁定后运行，不参与模型或参数选择</td></tr>
                     <tr><td><strong>自然表达测试集</strong><span>实验 02 / 03</span></td><td>3K 单工具 + 3K 多工具；多工具含已见与未见组合</td><td><strong>6,000 条请求</strong><br>15,196 个目标工具</td><td>检索与固定 4B / 8B 规划模型评测</td><td>检索 AllHit@10 97.3667%；同时构成 9K 全链路中的电商部分</td></tr>
                     <tr><td><strong>候选检索一次性终评</strong><span>实验 02 · 冻结后评测</span></td><td>独立跨表达请求，工具数 1–6 均衡</td><td><strong>1,200 条请求</strong></td><td>评测冻结整链的 AllHit@K 与 MRR</td><td>AllHit@10 99.8333%；结果打开后未继续调参</td></tr>
-                    <tr><td><strong>嵌套规划监督数据</strong><span>实验 03 · 规模研究</span></td><td>自由生成请求、Top-10 候选与目标有序工具 ID</td><td><strong>9K / 18K / 36K / 54K</strong><br>四档严格嵌套</td><td>比较 4B / 8B、训练规模与完整目录迁移</td><td>四档是同一研究的嵌套子集，不与 77,724 条双来源训练串成连续扩容</td></tr>
+                    <tr><td><strong>早期嵌套规划监督数据</strong><span>实验 03 · 规模观察</span></td><td>自由生成请求、早期 Top-10 候选与目标有序工具 ID</td><td><strong>9K / 18K / 36K / 54K</strong><br>四档严格嵌套</td><td>在同一早期协议内比较 4B / 8B 的数据量与训练成本</td><td>与当前双来源数据及 R20 / P10 接口不同，不作为当前训练量依据</td></tr>
                     <tr><td><strong>早期规划开发集</strong><span>实验 03 · 训练方案研究</span></td><td>与正式测试隔离的自由生成规划请求及候选视图</td><td><strong>2,400 条</strong></td><td>完成早期学习率、候选视图与训练配置比较</td><td>不是 1K 模块测试，也不决定当前正式候选数</td></tr>
-                    <tr><td><strong>自由生成请求测试集</strong><span>实验 03 · 模块测试</span></td><td>1–5 个工具的自由生成请求，每档 200 条</td><td><strong>1,000 条</strong></td><td>对照未微调、首次、54K 补充及两类表达联合训练等规划模型</td><td>不用于参数选择；报告集合与工具链全对率</td></tr>
+                    <tr><td><strong>自由生成请求测试集</strong><span>实验 03 · 模块测试</span></td><td>1–5 个工具的自由生成请求，每档 200 条</td><td><strong>1,000 条</strong></td><td>对照未微调、首次、早期 54K 及两类表达联合训练等规划模型</td><td>不用于参数选择；报告集合与工具链全对率</td></tr>
                     <tr><td><strong>接口表达测试集</strong><span>实验 02 / 03</span></td><td>接口式结构化表达、目标工具与最终 Top-10 候选</td><td><strong>1,000 条请求</strong></td><td>检索与固定 4B / 8B 规划模型评测</td><td>检索 AllHit@10 100%；8B 工具链全对率 99.50%</td></tr>
-                    <tr><td><strong>两类表达联合监督数据</strong><span>实验 03 · 固定规划模型</span></td><td>53,725 条自由生成请求 + 23,999 条句式组合请求，均配候选与目标工具链</td><td><strong>77,724 条</strong></td><td>训练最终系统使用的 4B / 8B 规划模型</td><td>接入最终检索链时没有重新训练规划模型；固定模型版本 2429</td></tr>
+                    <tr><td><strong>两类表达联合监督数据</strong><span>实验 03 · 固定规划模型</span></td><td>53,725 条自由生成请求 + 23,999 条句式组合请求，均配候选与目标工具链</td><td><strong>77,724 条</strong></td><td>训练最终系统使用的 4B / 8B 规划模型</td><td>当前只有全量训练点；接入最终检索链时没有重新训练规划模型</td></tr>
                     <tr><td><strong>输入工具范围配对评测</strong><span>实验 03 · 完整目录 / Top-10</span></td><td>自然表达 6K 与接口表达 1K；未微调 / 监督训练 4B / 8B 分别比较两种输入工具范围</td><td><strong>7,000 条请求 × 2 种输入</strong><br>8 组配对 · 16 份结果</td><td>评测集合、顺序与格式合规率，并验证候选检索对规划的作用</td><td>8 / 8 组工具链全对率提升；正式端点仍为监督训练 8B + 当前 Top-10</td></tr>
                     <tr><td><strong>静态全链路测试集</strong><span>项目最终结果</span></td><td>3K 闲聊 + 6K 电商；固定路由、R20 / P10 候选接口与冻结 8B 规划模型</td><td><strong>9,000 条</strong></td><td>逐样本联合计分；工具链成功 8,177 / 9,000</td><td>工具链成功率 90.8556%；未执行真实工具</td></tr>
                   </tbody>
