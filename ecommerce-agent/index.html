@@ -663,18 +663,18 @@
             </section>
 
             <section class="full-results-group" aria-labelledby="retrievalSecondFusionTitle">
-              <div class="full-results-group-head"><span>02F</span><div><h4 id="retrievalSecondFusionTitle">固定 R20 / P10，选择二级排名融合参数</h4><p>搜索 11 个第一阶段权重 × 10 个 RRF 平滑常数，共 110 组；排名去重并通过覆盖约束后保留 11 条路线，再按 6:1 加权工具链全对率选择。</p></div></div>
+              <div class="full-results-group-head"><span>02F</span><div><h4 id="retrievalSecondFusionTitle">固定 R20 / P10，选择二级排名融合参数</h4><p>在 2,400 条选择集上搜索 11 个第一阶段权重 × 10 个 RRF 平滑常数，共 110 组；排名去重并通过覆盖约束后保留 11 条路线，再按 6:1 加权工具链全对率选择。</p></div></div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table result-table-compact numeric-result-table retrieval-second-fusion-table">
                   <thead><tr><th scope="col">R20 / P10 二级参数</th><th scope="col">加权工具链全对率</th><th scope="col">自然表达风格</th><th scope="col">接口表达风格</th><th scope="col">未见工具组合</th><th scope="col">平均输入 token</th><th scope="col">判定</th></tr></thead>
                   <tbody>
-                    <tr class="result-table-final"><td><strong>第一阶段权重 0.4 · 平滑常数 8</strong></td><td><strong>99.5714%</strong></td><td><strong>99.8333%</strong></td><td>98.0000%</td><td><strong>100.0000%</strong></td><td>461.61</td><td><strong>入选</strong></td></tr>
-                    <tr><td>第一阶段权重 0.4 · 平滑常数 2</td><td>99.5476%</td><td>99.8333%</td><td>97.8333%</td><td>100.0000%</td><td>461.58</td><td>同接口对照</td></tr>
-                    <tr><td>R30 / P20 · 第一阶段权重 0.1 · 平滑常数 8</td><td>99.4762%</td><td>99.8333%</td><td>97.3333%</td><td>100.0000%</td><td>727.27</td><td>高成本对照</td></tr>
+                    <tr class="result-table-final"><td><strong>第一阶段权重 0.4 · 平滑常数 8</strong></td><td><strong>99.5714%</strong></td><td><strong>99.6667%</strong></td><td><strong>99.0000%</strong></td><td><strong>99.3355%</strong></td><td><strong>461.19</strong></td><td><strong>入选</strong></td></tr>
+                    <tr><td>第一阶段权重 0.4 · 平滑常数 10</td><td>99.5714%</td><td>99.6667%</td><td>99.0000%</td><td>99.3355%</td><td>461.20</td><td>质量同分，输入略长</td></tr>
+                    <tr><td>第一阶段权重 0.4 · 平滑常数 2</td><td>99.3571%</td><td>99.4167%</td><td>99.0000%</td><td>99.0033%</td><td>461.24</td><td>同深度对照</td></tr>
                   </tbody>
                 </table>
               </div>
-              <p class="efficiency-boundary"><strong>参数含义：</strong>这里的平滑常数 8 只控制 RRF 排名衰减，不是候选数量；规划输入仍固定为 10 个候选。</p>
+              <p class="efficiency-boundary"><strong>补充稳定性检查：</strong>路线锁定后，在复用的 1,200 条数据上，入选参数相对同深度对照净多 1 条正确（p=1.0000），相对高成本深度参照净多 4 条（p=0.2188）。该检查不能重新选参，也不是独立最终测试；表中主结果均来自 2,400 条选择集。平滑常数 8 只控制排名衰减，规划输入仍为 10 个候选。</p>
             </section>
 
             <section class="full-results-group" aria-labelledby="retrievalFrozenRouteTitle">
@@ -760,7 +760,7 @@
         <details class="narrative-disclosure data-disclosure efficiency-disclosure experiment-environment-disclosure" id="retrievalEnvironmentCurrent">
           <summary>
             <span class="disclosure-summary-copy"><small>04 · 数据、成本与最终审计</small><strong>核对数据职责、运行成本与冻结产物</strong></span>
-            <span class="disclosure-summary-meta">24K 训练 · 1.2K / 2.4K 选型 · 6K / 1K / 9K 评测</span>
+            <span class="disclosure-summary-meta">24K 训练 · 2.4K 选型 · 1.2K 补充检查 · 6K / 1K / 9K 评测</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body efficiency-body">
@@ -775,7 +775,8 @@
                   <tbody>
                     <tr><td><strong>训练轨迹</strong></td><td>24,000 组 · 70,012 个正对</td><td>训练向量模型与重排模型</td><td>向量训练将每个查询—正例配对展开为 1 正 + 2 负；重排每组为 1 正 + 7 负</td></tr>
                     <tr><td><strong>检索开发集</strong></td><td>1,200 条</td><td>向量负样本方案与微调重排模型选型</td><td>五种向量方案和四种重排架构按三随机种子比较</td></tr>
-                    <tr><td><strong>联合深度选型</strong></td><td>2,400 条选择 + 1,200 条确认</td><td>联合比较精排 R、规划 P 与二级融合</td><td>强制 P≤R；按 0.5pp 近优带和成本规则选择 R20 / P10</td></tr>
+                    <tr><td><strong>联合深度选型</strong></td><td>2,400 条选择</td><td>联合比较精排 R、规划 P 与二级融合</td><td>强制 P≤R；按 0.5pp 近优带和成本规则选择 R20 / P10</td></tr>
+                    <tr><td><strong>补充稳定性检查</strong></td><td>1,200 条</td><td>路线锁定后复核入选参数与两个对照</td><td>不允许重新选参；该数据曾用于候选接口确认，不作为独立最终测试</td></tr>
                     <tr><td><strong>候选长度压力验证</strong></td><td>1,200 条</td><td>路线锁定后的长候选干扰诊断</td><td>600 条单工具 + 600 条监督训练未见组合；不参与调参</td></tr>
                     <tr><td><strong>一次性终评</strong></td><td>1,200 条</td><td>冻结后的首次质量评测</td><td>AllHit@10 99.8333%，结果打开后未继续调参</td></tr>
                     <tr><td><strong>自然表达测试</strong></td><td>6,000 条</td><td>检索与固定规划模型评测</td><td>检索 AllHit@10 97.3667%</td></tr>
@@ -963,7 +964,7 @@
             <details class="narrative-disclosure planner-story-results" id="plannerToolCountResults">
               <summary>
                 <span class="disclosure-summary-copy"><small>03 · 联合候选接口</small><strong>同时比较精排 R 与规划 P，选择 R20 / P10</strong></span>
-                <span class="disclosure-summary-meta">14 组一致深度 · 0.5pp 近优带 · 1.2K 独立确认</span>
+                <span class="disclosure-summary-meta">2.4K 选择集 · 14 组一致深度 · 0.5pp 近优带</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
@@ -1075,7 +1076,8 @@
                     <tr><td><strong>早期嵌套监督数据</strong><span>规模观察</span></td><td>自由生成请求、早期 Top-10 候选视图与目标有序工具链</td><td>9K / 18K / 36K / 54K<br>稳定哈希前缀严格嵌套</td><td>在同一早期协议内比较 4B / 8B 的规模与训练成本</td><td>每档覆盖 100 / 100 工具；与当前双来源数据及 R20 / P10 接口不作纵向比较</td></tr>
                     <tr><td><strong>早期规划开发集</strong><span>训练方案研究</span></td><td>独立请求、候选视图与有序目标</td><td><strong>2,400 条</strong></td><td>比较 4B 的 21 个参数组合、8B 的 3 个确认运行及早期候选视图</td><td>服务于监督训练方案研究，不决定当前正式候选数</td></tr>
                     <tr><td><strong>两类表达联合监督数据</strong><span>固定规划模型训练</span></td><td>53,725 条自由生成请求 + 23,999 条句式组合请求，均配 Top-10 候选与目标工具链</td><td><strong>77,724 条</strong><br>模型版本 2429</td><td>训练最终评测使用的 4B / 8B 规划模型</td><td>当前只有全量训练点；接入最终检索链时保持该版本冻结，没有重新训练规划模型</td></tr>
-                    <tr><td><strong>联合候选接口数据</strong><span>精排与规划深度选择</span></td><td>自然表达风格与接口表达风格面板；包含单工具和监督训练未见组合</td><td><strong>2,400 条选择 + 1,200 条确认</strong></td><td>固定 8B 模型版本 2429，联合比较精排 R、规划 P 与二级 RRF</td><td>强制 P≤R；在 6K、1K 与 9K 评测前锁定，不更新规划模型</td></tr>
+                    <tr><td><strong>联合候选接口数据</strong><span>精排与规划深度选择</span></td><td>自然表达风格与接口表达风格面板；包含单工具和监督训练未见组合</td><td><strong>2,400 条选择</strong></td><td>固定 8B 模型版本 2429，联合比较精排 R、规划 P 与二级 RRF</td><td>强制 P≤R；在 6K、1K 与 9K 评测前锁定，不更新规划模型</td></tr>
+                    <tr><td><strong>接口稳定性检查</strong><span>补充证据</span></td><td>复用候选接口确认数据，只比较锁定方案与对照</td><td><strong>1,200 条</strong></td><td>检查入选参数的效果方向是否保持</td><td>不允许重新选参，也不是独立最终测试</td></tr>
                     <tr><td><strong>候选长度压力验证</strong><span>锁定后验证</span></td><td>600 条单工具 + 600 条监督训练未见组合；长度分布接近自然表达 6K</td><td><strong>1,200 条</strong></td><td>比较最终接口、更深重排与长候选输入的工具链表现</td><td>路线锁定后运行；检验成本选择，不参与选型</td></tr>
                   </tbody>
                 </table>
@@ -1094,7 +1096,8 @@
                     <tr><td><strong>自由生成请求测试</strong><span>规划模块评测</span></td><td>固定请求、Top-10 候选与有序目标</td><td><strong>1,000 条</strong><br>1–5 个工具各 200 条</td><td>规划模块在自由生成请求上能否选对集合与顺序</td><td>不参与模型版本或超参数选择；约 99% 不是全链路结果</td></tr>
                     <tr><td><strong>自然表达测试</strong><span>固定规划模型评测</span></td><td>固定请求、轨迹 ID、目标工具链与 R20 / P10 最终候选</td><td><strong>6,000 条</strong></td><td>评测最终候选上的规划准确率与工具数分层</td><td>8B 工具链全对率 86.3500%；不与 1K 模块测试混算</td></tr>
                     <tr><td><strong>完整目录 / Top-10 配对</strong><span>候选检索作用</span></td><td>固定未微调与监督训练的 4B / 8B、提示模板和生成方式，只改变输入工具范围</td><td><strong>自然表达 6K + 接口表达 1K</strong><br>8 组配对 · 16 份结果</td><td>比较候选检索对集合、工具链和格式合规率的影响</td><td>8 个 RAG 单元、共 28,000 条预测均按最终路线推理；行数、配置与文件哈希已校验</td></tr>
-                    <tr><td><strong>联合候选接口协议</strong><span>推理接口选择</span></td><td>固定 8B 模型版本 2429，联合搜索 R、P 与二级 RRF；所有规划候选均有精排分数</td><td><strong>2,400 条选择 + 1,200 条确认</strong><br>入选 R20 / P10</td><td>联合比较工具覆盖、工具链全对率、输入 token 与精排延迟</td><td>先保留距最高值 0.5pp 的路线，再按更小 P、R 与 token 选择</td></tr>
+                    <tr><td><strong>联合候选接口协议</strong><span>推理接口选择</span></td><td>固定 8B 模型版本 2429，联合搜索 R、P 与二级 RRF；所有规划候选均有精排分数</td><td><strong>2,400 条选择</strong><br>入选 R20 / P10</td><td>联合比较工具覆盖、工具链全对率、输入 token 与精排延迟</td><td>先保留距最高值 0.5pp 的路线，再按更小 P、R 与 token 选择</td></tr>
+                    <tr><td><strong>接口稳定性检查</strong><span>补充证据</span></td><td>在路线锁定后复用 1,200 条候选接口确认数据</td><td><strong>1,200 条</strong></td><td>配对比较入选参数、同深度对照与高成本参照</td><td>不参与选择；相对两个对照的 p 值分别为 1.0000 / 0.2188</td></tr>
                     <tr><td><strong>候选长度压力验证</strong><span>锁定后验证</span></td><td>固定路线后比较最终接口、更深重排与长候选输入</td><td><strong>1,200 条</strong></td><td>检查长候选是否把覆盖收益转化为工具链收益</td><td>不参与调参；更深重排仅多 2 条且 p=0.8877，长候选反而低 1.25pp</td></tr>
                     <tr><td><strong>静态全链路测试</strong><span>最终主结果</span></td><td>3,000 条闲聊 + 6,000 条电商请求；固定路由、最终检索链与冻结 8B 规划模型</td><td><strong>9,000 条</strong></td><td>逐样本联合计分，工具链成功 8,177 条</td><td>成功率 90.8556%；不等于参数正确或真实工具执行成功</td></tr>
                   </tbody>
@@ -1342,7 +1345,7 @@
         <details class="narrative-disclosure data-disclosure system-data-disclosure" id="systemDataLedger">
           <summary>
             <span class="disclosure-summary-copy"><small>项目总数据表</small><strong>汇总三个实验的数据角色与复用边界</strong></span>
-            <span class="disclosure-summary-meta">17 类数据资产 · 训练 / 选型 / 报告</span>
+            <span class="disclosure-summary-meta">18 类数据资产 · 训练 / 选型 / 报告</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body">
@@ -1361,7 +1364,8 @@
                     <tr><td><strong>意图分流固定集合</strong><span>实验 01</span></td><td>6K 电商请求 + 3K 独立闲聊</td><td><strong>9,000 条</strong></td><td>比较规则、未微调模型与 LoRA 版本</td><td>同一 9K 后续复用于静态全链路；是合成固定集合，不是线上留出流量</td></tr>
                     <tr><td><strong>向量与重排训练数据</strong><span>实验 02</span></td><td>24K 训练轨迹与 100 份工具文档组成请求—工具样本</td><td>70,012 个正对<br>向量：每个正对 1 正 + 2 负<br>重排：每组 1 正 + 7 负</td><td>向量负例来自跨领域与新增无关工具；重排负例包括 3 个按工具类型挑选的样本与 4 个检索难例</td><td>负样本只来自训练划分；两类模型分别训练</td></tr>
                     <tr><td><strong>跨表达开发集</strong><span>实验 02 · 模型训练选型</span></td><td>接口式表达与简洁自然表达各 600 条；工具数 1–6 均衡</td><td><strong>1,200 条请求</strong></td><td>比较 5 种向量训练方案和 4 种微调重排架构</td><td>模型版本在打开一次性终评及 6K、1K、9K 评测前冻结</td></tr>
-                    <tr><td><strong>联合候选接口数据</strong><span>实验 02 / 03 · R/P 与二级融合</span></td><td>自然表达与接口表达风格面板，包含单工具和监督训练未见组合</td><td><strong>2,400 条选择 + 1,200 条确认</strong></td><td>比较 R∈{10,20,30,50}、P∈{5,10,20,30,50} 与二级融合参数</td><td>强制 P≤R；以 0.5pp 近优带和成本规则选择 R20 / P10</td></tr>
+                    <tr><td><strong>联合候选接口数据</strong><span>实验 02 / 03 · R/P 与二级融合</span></td><td>自然表达与接口表达风格面板，包含单工具和监督训练未见组合</td><td><strong>2,400 条选择</strong></td><td>比较 R∈{10,20,30,50}、P∈{5,10,20,30,50} 与二级融合参数</td><td>强制 P≤R；以 0.5pp 近优带和成本规则选择 R20 / P10</td></tr>
+                    <tr><td><strong>候选接口稳定性检查</strong><span>实验 02 / 03 · 补充证据</span></td><td>复用路线确认数据，配对比较锁定方案与两个对照</td><td><strong>1,200 条请求</strong></td><td>检查入选参数的效果方向是否保持</td><td>不参与选择，也不是独立最终测试</td></tr>
                     <tr><td><strong>候选长度压力验证</strong><span>实验 03 · 锁定后验证</span></td><td>600 条单工具 + 600 条监督训练未见多工具组合</td><td><strong>1,200 条请求</strong></td><td>检验更长候选是否稳定转化为规划收益</td><td>路线锁定后运行，不参与模型或参数选择</td></tr>
                     <tr><td><strong>自然表达测试集</strong><span>实验 02 / 03</span></td><td>3K 单工具 + 3K 多工具；多工具含已见与未见组合</td><td><strong>6,000 条请求</strong><br>15,196 个目标工具</td><td>检索与固定 4B / 8B 规划模型评测</td><td>检索 AllHit@10 97.3667%；同时构成 9K 全链路中的电商部分</td></tr>
                     <tr><td><strong>候选检索一次性终评</strong><span>实验 02 · 冻结后评测</span></td><td>独立跨表达请求，工具数 1–6 均衡</td><td><strong>1,200 条请求</strong></td><td>评测冻结整链的 AllHit@K 与 MRR</td><td>AllHit@10 99.8333%；结果打开后未继续调参</td></tr>
