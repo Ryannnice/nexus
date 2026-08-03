@@ -1266,8 +1266,8 @@ window.PROJECT_DATA = {
         "kind": "base"
       },
       {
-        "label": "Qwen3-0.6B LoRA（完整训练集）",
-        "short": "0.6B LoRA",
+        "label": "Qwen3-0.6B LoRA checkpoint-2000（最终路由）",
+        "short": "0.6B 最终路由",
         "accuracy": 1,
         "f1": 1,
         "kind": "final"
@@ -1280,8 +1280,8 @@ window.PROJECT_DATA = {
         "kind": "base"
       },
       {
-        "label": "Qwen3-1.7B LoRA（均衡训练集）",
-        "short": "1.7B LoRA",
+        "label": "Qwen3-1.7B LoRA（关键词与成本对照）",
+        "short": "1.7B 对照",
         "accuracy": 0.9996,
         "f1": 0.9995,
         "kind": "trained"
