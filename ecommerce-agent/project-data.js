@@ -4,13 +4,13 @@ window.PROJECT_DATA = {
     "date": "2026-08-02",
     "label": "INTEGRATED SYSTEM SNAPSHOT",
     "catalogVersion": "2026-07-06",
-    "scope": "100 个已知工具的意图分流、候选检索与静态有序选链一体化离线评测",
+    "scope": "固定 100 个工具范围内的意图分流、候选检索与有序工具链离线测试",
     "repository": "https://github.com/Ryannnice/Agent"
   },
   "heroTraces": [
     {
       "id": "single_test_048_000",
-      "label": "口语物流",
+      "label": "物流查询",
       "query": "帮我看看这款台灯的包裹送到哪了。",
       "gold": [
         "get_order_logistics"
@@ -30,7 +30,7 @@ window.PROJECT_DATA = {
     },
     {
       "id": "multi_test_01175",
-      "label": "库存联查",
+      "label": "库存与商品查询",
       "query": "查看南京地区净水器的仓库余量、商品核心信息和本地 SKU 库存。",
       "gold": [
         "get_warehouse_stock_region",
@@ -52,7 +52,7 @@ window.PROJECT_DATA = {
     },
     {
       "id": "multi_test_02965",
-      "label": "售后联办",
+      "label": "售后与退款处理",
       "query": "查看防晒霜售后处理进度和退款到账状态，并为破损商品创建售后单。",
       "gold": [
         "get_aftersale_ticket_status",
@@ -189,7 +189,7 @@ window.PROJECT_DATA = {
     },
     {
       "id": "chitchat_000007",
-      "label": "闲聊旁路",
+      "label": "闲聊请求",
       "type": "chat",
       "query": "番茄炒蛋做法能简单解释一下吗？",
       "gold": [],
@@ -1260,7 +1260,7 @@ window.PROJECT_DATA = {
       },
       {
         "label": "Qwen3-0.6B base",
-        "short": "0.6B 基座",
+        "short": "0.6B 未微调",
         "accuracy": 0.8476,
         "f1": 0.8374,
         "kind": "base"
@@ -1274,7 +1274,7 @@ window.PROJECT_DATA = {
       },
       {
         "label": "Qwen3-1.7B base",
-        "short": "1.7B 基座",
+        "short": "1.7B 未微调",
         "accuracy": 0.9047,
         "f1": 0.8838,
         "kind": "base"
@@ -1297,7 +1297,7 @@ window.PROJECT_DATA = {
     {
       "value": "0",
       "label": "Trace ID 重合",
-      "detail": "冻结轨迹边界"
+      "detail": "训练与测试轨迹 ID 不重合"
     },
     {
       "value": "0",
@@ -1306,13 +1306,13 @@ window.PROJECT_DATA = {
     },
     {
       "value": "0",
-      "label": "表达簇泄漏",
-      "detail": "测试表达是否见于训练集"
+      "label": "相似请求写法重合",
+      "detail": "相似写法分组是否同时出现在训练与测试"
     },
     {
       "value": "TRUE",
       "label": "划分检查通过",
-      "detail": "生成数据严格审计通过"
+      "detail": "生成数据全部检查通过"
     }
   ],
   "contextAudit": [

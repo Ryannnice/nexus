@@ -128,21 +128,21 @@
       var caseNumber = String((index + traces.length) % traces.length + 1).padStart(2, '0');
       var isChat = trace.type === 'chat';
       currentIndex = (index + traces.length) % traces.length;
-      queryLabel.textContent = '案例 ' + caseNumber + ' · ' + trace.label + ' · ' + (isChat ? '意图分流固定集合' : '固定检索测试');
+      queryLabel.textContent = '案例 ' + caseNumber + ' · ' + trace.label + ' · ' + (isChat ? '意图分流测试' : '电商请求检索测试');
       query.textContent = trace.query;
       counter.textContent = caseNumber + ' / ' + String(traces.length).padStart(2, '0');
 
       if (isChat) {
-        status.textContent = '闲聊 · 旁路';
+        status.textContent = '闲聊 · 无需检索';
         resultsLabel.textContent = '分流结果 · 无需工具调用';
-        results.innerHTML = '<div class="result-row result-row-empty"><b>—</b><span>直接响应 · 工具检索旁路</span><em>闲聊</em></div>';
+        results.innerHTML = '<div class="result-row result-row-empty"><b>—</b><span>直接响应 · 不进入工具检索</span><em>闲聊</em></div>';
         renderMatrix([]);
         setPipeline(
           { detail: '闲聊类 · 直接响应', state: '闲聊' },
-          { detail: '无需进入工具检索', state: '旁路' },
-          { detail: '无需生成工具短名单', state: '旁路' }
+          { detail: '无需进入工具检索', state: '跳过' },
+          { detail: '无需生成工具短名单', state: '跳过' }
         );
-        footnote.innerHTML = '意图分流固定集合案例 · <strong>' + escapeHtml(trace.id) + '</strong>';
+        footnote.innerHTML = '意图分流测试案例 · <strong>' + escapeHtml(trace.id) + '</strong>';
       } else {
         var gold = new Set(trace.gold);
         var recalled = trace.prediction.reduce(function (items, toolId, rank) {
@@ -150,7 +150,7 @@
           return items;
         }, []);
         status.textContent = (trace.gold.length > 1 ? '多工具' : '单工具') + ' · ' + recalled.length + ' / ' + trace.gold.length;
-        resultsLabel.textContent = '已召回全部 ' + trace.gold.length + ' 个目标工具';
+        resultsLabel.textContent = '已找到全部 ' + trace.gold.length + ' 个目标工具';
         renderRows(recalled, '目标');
         renderMatrix(trace.gold);
         setPipeline(
@@ -158,7 +158,7 @@
           { detail: 'BM25 + 负样本训练向量模型', state: '前 40' },
           { detail: '精排 20 + 二级 RRF', state: '输出 10' }
         );
-        footnote.innerHTML = '固定检索集案例 · <strong>' + escapeHtml(trace.id) + '</strong>';
+        footnote.innerHTML = '电商请求测试案例 · <strong>' + escapeHtml(trace.id) + '</strong>';
       }
 
       renderDots();
@@ -235,15 +235,15 @@
     var confusable = tool.confusable.length ? tool.confusable.map(function (id) {
       var related = toolById[id];
       return '<code>' + escapeHtml(id) + (related ? ' · ' + escapeHtml(related.name) : '') + '</code>';
-    }).join('') : '<code>无显式易混工具</code>';
+    }).join('') : '<code>没有标注容易混淆的工具</code>';
 
     root.innerHTML = '<span class="corner-square" aria-hidden="true"></span>' +
-      '<p class="tool-detail-kicker">CATALOG INSPECTOR</p>' +
+      '<p class="tool-detail-kicker">工具目录详情</p>' +
       '<h3>' + escapeHtml(tool.name) + '</h3>' +
       '<p class="tool-id">' + escapeHtml(tool.id) + '</p>' +
       '<p>' + escapeHtml(tool.description) + '</p>' +
-      '<div class="tool-meta"><div><span>DOMAIN</span><strong>' + escapeHtml(tool.domainName) + '</strong></div><div><span>OPERATION</span><strong>' + escapeHtml(operationLabels[tool.operation] || tool.operation) + '</strong></div></div>' +
-      '<div class="confusable-list"><span>CONFUSABLE BOUNDARIES</span>' + confusable + '</div>';
+      '<div class="tool-meta"><div><span>业务域</span><strong>' + escapeHtml(tool.domainName) + '</strong></div><div><span>操作类型</span><strong>' + escapeHtml(operationLabels[tool.operation] || tool.operation) + '</strong></div></div>' +
+      '<div class="confusable-list"><span>容易混淆的相关工具</span>' + confusable + '</div>';
   }
 
   function renderAudit() {
@@ -253,7 +253,7 @@
       var allClear = directChecks.every(function (item) { return item.value === '0'; });
       var context = data.contextAudit;
       grid.innerHTML =
-        '<tr><td><strong>显式泄漏检查</strong></td><td><strong>' + directChecks.length + ' 项均为 ' + (allClear ? '0' : '非 0') + '</strong><small>严格审计' + (allClear ? '通过' : '未通过') + '</small></td><td>归一化请求、Trace ID、工具目录触发词和表达簇</td></tr>' +
+        '<tr><td><strong>训练与测试重合检查</strong></td><td><strong>' + directChecks.length + ' 项均为 ' + (allClear ? '0' : '非 0') + '</strong><small>全部检查' + (allClear ? '通过' : '未通过') + '</small></td><td>归一化请求、轨迹 ID、工具目录触发词和相似请求写法分组</td></tr>' +
         '<tr><td><strong>上下文复用检查</strong></td><td><strong>' + escapeHtml(percent(context[0].value, 1)) + ' 骨架复用</strong><small>' + escapeHtml(percent(context[1].value, 2)) + ' 同骨架工具链 · ' + escapeHtml(percent(context[2].value, 2)) + ' 仅上下文 AllHit@10</small></td><td>场景可以复用，但不能靠骨架猜出目标工具组合</td></tr>';
     }
   }
@@ -351,7 +351,7 @@
     ];
 
     root.innerHTML = '<div class="a3-scale-legend">' +
-      '<span><i></i>其他规模点</span><span><i></i>54K 系统端点</span>' +
+      '<span><i></i>其他训练量</span><span><i></i>54K 训练版本</span>' +
       '<strong>' + escapeHtml(planningMetricLabels[metric]) + ' · AXIS 90–100%</strong>' +
       '</div><div class="a3-scale-groups">' +
       groupOrder.map(function (group) {
