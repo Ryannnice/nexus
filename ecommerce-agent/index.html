@@ -1647,17 +1647,17 @@
           <header class="system-progress-figure-head">
             <div>
               <span>00 · PROJECT OVERVIEW</span>
-              <h3 id="systemProgressTitle">九个决策点的系统级累计增益</h3>
+              <h3 id="systemProgressTitle">十二个决策点的系统级累计增益</h3>
             </div>
-            <p>从全基座 42.26% 到最终 84.94%；先用同一 9K Full Trace 口径看清每次模型、数据与接口选择带来的增益，再展开最终三个模块。</p>
+            <p>从没有 Intent 与闲聊出口的原始 8B Planner（19.29%）到最终 84.94%；同一 9K Full Trace 上依次加入路由、检索、重排与训练，横向模型选型不再混入累计折线。</p>
           </header>
           <div class="system-progress-image" tabindex="0" aria-label="可横向滚动查看完整折线图">
-            <img src="assets/agent-full-trace-progress.png" width="2200" height="1320" loading="lazy" decoding="async" alt="9K Full Trace 累计增益折线图：从全基座 42.26%，依次经过 8B Planner、意图 LoRA、通用重排、任务检索链、Planner SFT 和三轮 DPO，最终达到 84.94%，即 7,645 / 9,000 条完整成功。">
+            <img src="assets/agent-full-trace-progress.png" width="2200" height="1320" loading="lazy" decoding="async" alt="9K Full Trace 累计增益折线图：没有 Intent 与闲聊出口的原始 8B Planner 从 19.29% 起步，依次加入基础 Intent、Intent LoRA、基础 RAG、Embedding 微调、Reranker 加入与微调、最终检索融合、Planner SFT 和三轮 DPO，最终达到 84.94%，即 7,645 / 9,000 条完整成功。">
           </div>
           <figcaption>
             <strong>统一读图口径</strong>
             <span>空心橙点为回溯补测，只用于解释决策增益，不参与模型选型；实心绿点为正式系统端点。最终链路固定为 0.6B 路由 + 精排 20 / 规划 10 + 8B 三阶段偏好优化。</span>
-            <small class="system-progress-scroll-hint">小屏可横向滑动图表，查看全部 9 个点位。</small>
+            <small class="system-progress-scroll-hint">小屏可横向滑动图表，查看全部 12 个点位。</small>
           </figcaption>
         </figure>
 
