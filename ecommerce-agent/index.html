@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026080303">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：9,000 条请求中有 7,645 条生成完全正确的有序工具链">
 
-  <link rel="stylesheet" href="project.css?v=42">
+  <link rel="stylesheet" href="project.css?v=43">
   <script defer src="project-data.js?v=19"></script>
   <script defer src="project.js?v=23"></script>
 </head>
@@ -1642,6 +1642,24 @@
           <h2 id="limitsTitle">汇总三阶段 9K 结果与下一步</h2>
           <p>最终测试依次经过意图分流、候选检索和工具链规划；只检查输出的工具 ID 及顺序，不执行真实工具。</p>
         </div>
+
+        <figure class="system-progress-figure" aria-labelledby="systemProgressTitle">
+          <header class="system-progress-figure-head">
+            <div>
+              <span>00 · PROJECT OVERVIEW</span>
+              <h3 id="systemProgressTitle">九个决策点的系统级累计增益</h3>
+            </div>
+            <p>从全基座 42.26% 到最终 84.94%；先用同一 9K Full Trace 口径看清每次模型、数据与接口选择带来的增益，再展开最终三个模块。</p>
+          </header>
+          <div class="system-progress-image" tabindex="0" aria-label="可横向滚动查看完整折线图">
+            <img src="assets/agent-full-trace-progress.png" width="2200" height="1320" loading="lazy" decoding="async" alt="9K Full Trace 累计增益折线图：从全基座 42.26%，依次经过 8B Planner、意图 LoRA、通用重排、任务检索链、Planner SFT 和三轮 DPO，最终达到 84.94%，即 7,645 / 9,000 条完整成功。">
+          </div>
+          <figcaption>
+            <strong>统一读图口径</strong>
+            <span>空心橙点为回溯补测，只用于解释决策增益，不参与模型选型；实心绿点为正式系统端点。最终链路固定为 0.6B 路由 + 精排 20 / 规划 10 + 8B 三阶段偏好优化。</span>
+            <small class="system-progress-scroll-hint">小屏可横向滑动图表，查看全部 9 个点位。</small>
+          </figcaption>
+        </figure>
 
         <section class="final-system-overview" id="system" aria-labelledby="systemTitle">
           <header class="final-system-heading">
