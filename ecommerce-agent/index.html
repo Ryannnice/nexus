@@ -323,8 +323,8 @@
         <div class="experiment-steps" role="group" aria-label="意图分流实验进程">
           <article><span>01 · 规则基线</span><strong>关键词规则</strong><small>50.22%</small></article>
           <article><span>02 · 未微调</span><strong>0.6B / 1.7B</strong><small>84.76% / 90.47%</small></article>
-          <article class="is-selected"><span>03 · 最终采用</span><strong>0.6B LoRA</strong><small>checkpoint-2000 · 9K 分类 100.00%</small></article>
-          <article><span>04 · 关键词输出对照</span><strong>1.7B LoRA</strong><small>关键词 micro-F1 · 84.08%</small></article>
+          <article><span>03 · 微调后二分类</span><strong>0.6B / 1.7B</strong><small>100.00% / 99.96%</small></article>
+          <article class="is-selected"><span>04 · 最终采用</span><strong>0.6B LoRA</strong><small>checkpoint-2000 · 9K 分类 100.00%</small></article>
         </div>
 
         <p class="metric-contract-note"><strong>采用说明：</strong>最终路由使用 Qwen3-0.6B LoRA checkpoint-2000。它在固定 9K 上分类全对，且比 1.7B 推理更快、显存更低；当前检索只读取原始请求，不使用预测关键词，因此 1.7B 的关键词优势不会传递到后续模块。1.7B 只保留为对照。</p>
@@ -386,11 +386,11 @@
               </div>
               <div class="data-table-wrap" tabindex="0">
                 <table class="data-table experiment-data-table data-table-four-column">
-                  <thead><tr><th scope="col">数据</th><th scope="col">规模</th><th scope="col">用途</th><th scope="col">使用限制</th></tr></thead>
+                  <thead><tr><th scope="col">数据</th><th scope="col">规模</th><th scope="col">构造方法</th><th scope="col">用途</th></tr></thead>
                   <tbody>
-                    <tr><td><strong>监督训练与验证</strong><span>电商轨迹 + 独立闲聊</span></td><td><strong>45,606 / 2,400</strong><small>合计 48,006 条</small></td><td>训练 0.6B / 1.7B；验证集监控损失并保留检查点</td><td>两个模型使用同一样本全集，仅样本排列方式不同</td></tr>
-                    <tr><td><strong>意图分流与路由选择</strong><span>入口二分类</span></td><td><strong>9,000</strong><small>6K 电商 + 3K 闲聊</small></td><td>比较规则、未微调模型与 LoRA 版本；选出 0.6B 后复用于 9K 系统计分</td><td>不参与训练；已经用于路由型号选择，不能再视为未见测试</td></tr>
-                    <tr><td><strong>关键词评测</strong><span>测试集电商子集</span></td><td><strong>6,000</strong><small>15,196 个目标标签</small></td><td>字面集合全对率与 micro-P / R / F1</td><td>不是语义评分；候选检索不使用预测关键词</td></tr>
+                    <tr><td><strong>监督训练与验证</strong><span>电商轨迹 + 独立闲聊</span></td><td><strong>45,606 / 2,400</strong><small>合计 48,006 条</small></td><td>GPT-5.5 Agent 编写的离线生成逻辑依据 100 工具目录构造电商请求；程序化扩展通用与易混淆闲聊，再按固定随机种子划分 95% / 5%；构建时未调用外部 API</td><td>训练 0.6B / 1.7B；验证集监控损失并保留检查点</td></tr>
+                    <tr><td><strong>意图分流与路由选择</strong><span>入口二分类</span></td><td><strong>9,000</strong><small>6K 电商 + 3K 闲聊</small></td><td>6K 电商请求由同一离线生成逻辑使用独立表达簇构造；3K 闲聊由主题与句式组合生成，去重后固定打乱</td><td>比较规则、未微调模型与 LoRA 版本；选出 0.6B 后复用于 9K 系统计分</td></tr>
+                    <tr><td><strong>关键词评测</strong><span>测试集电商子集</span></td><td><strong>6,000</strong><small>15,196 个目标标签</small></td><td>直接取 9K 中的电商请求，并把目标工具 ID 映射为工具目录中的规范关键词集合</td><td>计算字面集合全对率与 micro-P / R / F1；候选检索不使用预测关键词</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -400,14 +400,13 @@
             <section class="efficiency-table-block" aria-labelledby="intentTrainingEnvironmentTitle">
               <div class="efficiency-table-heading">
                 <div><span>02B · 训练记录</span><h3 id="intentTrainingEnvironmentTitle">比较 0.6B / 1.7B 的 LoRA 训练成本</h3></div>
-                <p>共同固定配置：BF16 · 批量 32 · 2 轮 · 学习率 1e-4 · LoRA r16 / α32 / dropout 0.05 · 最大长度 512。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table intent-training-efficiency-table">
-                  <thead><tr><th scope="col">模型与样本排列</th><th scope="col">最低验证损失版本</th><th scope="col">页面报告版本</th><th scope="col">完整训练</th><th scope="col">资源记录</th></tr></thead>
+                  <thead><tr><th scope="col">模型与样本排列</th><th scope="col">最低验证损失版本</th><th scope="col">页面报告版本</th><th scope="col">完整训练</th><th scope="col">训练信息</th></tr></thead>
                   <tbody>
-                    <tr class="result-table-final"><td><strong>Qwen3-0.6B</strong><small>45,606 条 · 原始排列</small></td><td>训练步 2000<small>loss 0.00038608</small></td><td><strong>训练步 2000</strong><small>最终路由模型</small></td><td><strong>19 分 39 秒</strong><small>2,852 步</small></td><td>单进程；训练 GPU 型号与峰值显存未记录</td></tr>
-                    <tr><td><strong>Qwen3-1.7B</strong><small>45,606 条 · 类别均衡排列</small></td><td>训练步 1600<small>loss 0.00028329</small></td><td><strong>训练步 2852</strong><small>关键词输出对照</small></td><td><strong>29 分 05 秒</strong><small>2,852 步</small></td><td>单进程；训练 GPU 型号与峰值显存未记录</td></tr>
+                    <tr class="result-table-final"><td><strong>Qwen3-0.6B</strong><small>45,606 条 · 原始排列</small></td><td>训练步 2000<small>loss 0.00038608</small></td><td><strong>训练步 2000</strong><small>最终路由模型</small></td><td><strong>19 分 39 秒</strong><small>2,852 步</small></td><td>BF16 · 批量 32 · 2 轮 · 学习率 1e-4<small>LoRA r16 / α32 / dropout 0.05 · 最大长度 512</small></td></tr>
+                    <tr><td><strong>Qwen3-1.7B</strong><small>45,606 条 · 类别均衡排列</small></td><td>训练步 1600<small>loss 0.00028329</small></td><td><strong>训练步 2852</strong><small>关键词输出对照</small></td><td><strong>29 分 05 秒</strong><small>2,852 步</small></td><td>BF16 · 批量 32 · 2 轮 · 学习率 1e-4<small>LoRA r16 / α32 / dropout 0.05 · 最大长度 512</small></td></tr>
                   </tbody>
                 </table>
               </div>
@@ -429,7 +428,7 @@
                     <tr><td>0.6B · LoRA · 训练步 2852</td><td>RTX 3090 / 64</td><td>44.83 / 54.11ms</td><td>22.06 条 / 秒</td><td>4.04 / 5.10 GiB</td></tr>
                     <tr class="table-divider"><td>1.7B · 未微调</td><td>RTX 3090 / 48</td><td>54.64 / 58.57ms</td><td>18.52 条 / 秒</td><td>5.43 / 5.86 GiB</td></tr>
                     <tr><td>1.7B · LoRA · 训练步 1600<small>最佳验证版本</small></td><td>RTX 3090 / 48</td><td>69.58 / 75.51ms</td><td>14.36 条 / 秒</td><td>6.09 / 6.85 GiB</td></tr>
-                    <tr><td><strong>1.7B · LoRA · 训练步 2852</strong><small>关键词输出对照</small></td><td>RTX 3090 / 48</td><td>69.24 / 75.82ms</td><td>14.41 条 / 秒</td><td>6.09 / 6.85 GiB</td></tr>
+                    <tr><td>1.7B · LoRA · 训练步 2852<small>关键词输出对照</small></td><td>RTX 3090 / 48</td><td>69.24 / 75.82ms</td><td>14.41 条 / 秒</td><td>6.09 / 6.85 GiB</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -439,6 +438,7 @@
             <div class="environment-record-boundary">
               <p><strong>推理环境：</strong>PyTorch 2.8.0+cu128 · Transformers 4.53.2 · PEFT 0.14.0 · 驱动 570.124.04。RTX 3090 记录只绑定推理，不代表历史训练硬件。</p>
               <p><strong>延迟如何计算：</strong>p50 / p95 是生成阶段在批内平均到每条请求的时间，不含 prompt 构建与分词，也不等同于线上单请求延迟。不同批量以及 CPU 规则方法不直接比较速度；显存只报告本次推理记录的 CUDA 峰值。</p>
+              <p><strong>峰值显存：</strong>“已分配”是推理时模型实际占用的显存峰值，“已保留”是 PyTorch 为复用和缓存预留的显存峰值上限。</p>
             </div>
           </div>
         </details>
