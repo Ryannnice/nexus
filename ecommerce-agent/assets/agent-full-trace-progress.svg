@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1320" viewBox="0 0 2200 1320">
+  <rect width="2200" height="1320" fill="#000"/>
+  <rect x="70" y="40" width="120" height="14" fill="#76b900"/>
+  <text x="70" y="94" fill="#76b900" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="24" font-weight="700">PROJECT CONCLUSION / FROZEN 9K</text>
+  <text x="70" y="150" fill="#fff" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="40" font-weight="700">11 个决策点，如何把工具链成功率推到 92.62%</text>
+  <text x="70" y="184" fill="#bdbdbd" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="22">同一 9K 工具链口径｜3K 闲聊 + 6K 电商｜逐条静态聚合</text>
+  <line x1="1640" y1="32" x2="1640" y2="162" stroke="#555"/>
+  <text x="1710" y="68" fill="#76b900" font-family="Arial,sans-serif" font-size="22" font-weight="700">FINAL</text>
+  <text x="1710" y="128" fill="#fff" font-family="Arial,sans-serif" font-size="58" font-weight="700">92.62%</text>
+  <text x="1932" y="128" fill="#bdbdbd" font-family="Arial,sans-serif" font-size="24">8,336 / 9,000</text>
+
+  <rect x="0" y="202" width="2200" height="850" fill="#fff"/>
+  <g font-family="Arial,'Noto Sans CJK SC',sans-serif" font-weight="700" font-size="19">
+    <rect x="140" y="226" width="175" height="40" fill="#eee" stroke="#cfcfcf"/><text x="198" y="252" fill="#333">PLANNER</text>
+    <rect x="315" y="226" width="350" height="40" fill="#e8e8e8" stroke="#cfcfcf"/><text x="455" y="252" fill="#333">INTENT</text>
+    <rect x="665" y="226" width="890" height="40" fill="#edf5e3" stroke="#cfcfcf"/><text x="1035" y="252" fill="#557f00">RAG / RERANK</text>
+    <rect x="1555" y="226" width="175" height="40" fill="#dfeecf" stroke="#cfcfcf"/><text x="1614" y="252" fill="#557f00">SFT</text>
+    <rect x="1730" y="226" width="350" height="40" fill="#eee" stroke="#cfcfcf"/><text x="1815" y="252" fill="#333">PREFERENCE TRAINING</text>
+  </g>
+
+  <g stroke="#d7d7d7" stroke-width="1">
+    <line x1="140" y1="326" x2="2080" y2="326"/><line x1="140" y1="384" x2="2080" y2="384"/>
+    <line x1="140" y1="441" x2="2080" y2="441"/><line x1="140" y1="499" x2="2080" y2="499"/>
+    <line x1="140" y1="556" x2="2080" y2="556"/><line x1="140" y1="614" x2="2080" y2="614"/>
+    <line x1="140" y1="671" x2="2080" y2="671"/><line x1="140" y1="729" x2="2080" y2="729"/>
+  </g>
+  <g fill="#777" font-family="Arial,sans-serif" font-size="17" text-anchor="end">
+    <text x="124" y="332">90%</text><text x="124" y="390">80%</text><text x="124" y="447">70%</text><text x="124" y="505">60%</text>
+    <text x="124" y="562">50%</text><text x="124" y="620">40%</text><text x="124" y="677">30%</text><text x="124" y="735">20%</text>
+  </g>
+  <text x="40" y="292" fill="#777" font-family="Arial,sans-serif" font-size="17" font-weight="700">FULL TRACE</text>
+  <text x="40" y="316" fill="#999" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16">越高越好</text>
+
+  <path d="M140 733 L318 594 L496 543 L674 539 L852 521 L1030 543 L1208 509 L1386 518 L1564 323 L1742 322 L1920 310 L1920 760 L140 760 Z" fill="#76b900" opacity="0.08"/>
+  <path d="M140 733 L318 594 L496 543 L674 539 L852 521 L1030 543 L1208 509 L1386 518 L1564 323 L1742 322 L1920 310" fill="none" stroke="#76b900" stroke-width="8" stroke-linejoin="round"/>
+
+  <g font-family="Arial,sans-serif" text-anchor="middle" font-size="22" font-weight="700">
+    <g fill="#fff" stroke="#f39a18" stroke-width="5"><circle cx="140" cy="733" r="12"/><circle cx="318" cy="594" r="12"/><circle cx="496" cy="543" r="12"/><circle cx="674" cy="539" r="12"/><circle cx="852" cy="521" r="12"/><circle cx="1030" cy="543" r="12"/><circle cx="1208" cy="509" r="12"/><circle cx="1386" cy="518" r="12"/></g>
+    <g fill="#76b900" stroke="#111" stroke-width="3"><circle cx="1564" cy="323" r="13"/><circle cx="1742" cy="322" r="13"/><circle cx="1920" cy="310" r="17"/></g>
+    <g fill="#f39a18"><text x="140" y="705">19.29%</text><text x="318" y="566">43.77%</text><text x="496" y="515">52.62%</text><text x="674" y="511">53.33%</text><text x="852" y="493">56.48%</text><text x="1030" y="515">52.74%</text><text x="1208" y="481">58.70%</text><text x="1386" y="490">57.11%</text></g>
+    <g fill="#111"><text x="1564" y="295">90.46%</text><text x="1742" y="294">90.53%</text><text x="1920" y="277">92.62%</text></g>
+  </g>
+
+  <g font-family="Arial,sans-serif" font-size="15" font-weight="700">
+    <g transform="translate(184 648)"><rect width="170" height="30" fill="#111"/><text x="85" y="21" fill="#fff" text-anchor="middle">+24.48pp / +2,203</text></g>
+    <g transform="translate(362 552)"><rect width="156" height="30" fill="#111"/><text x="78" y="21" fill="#fff" text-anchor="middle">+8.86pp / +797</text></g>
+    <g transform="translate(540 500)"><rect width="150" height="30" fill="#111"/><text x="75" y="21" fill="#fff" text-anchor="middle">+0.71pp / +64</text></g>
+    <g transform="translate(718 468)"><rect width="154" height="30" fill="#111"/><text x="77" y="21" fill="#fff" text-anchor="middle">+3.14pp / +283</text></g>
+    <g transform="translate(896 550)"><rect width="152" height="30" fill="#111"/><text x="76" y="21" fill="#fff" text-anchor="middle">−3.73pp / −336</text></g>
+    <g transform="translate(1074 458)"><rect width="152" height="30" fill="#111"/><text x="76" y="21" fill="#fff" text-anchor="middle">+5.96pp / +536</text></g>
+    <g transform="translate(1252 530)"><rect width="150" height="30" fill="#111"/><text x="75" y="21" fill="#fff" text-anchor="middle">−1.59pp / −143</text></g>
+    <g transform="translate(1408 364)"><rect width="190" height="30" fill="#111"/><text x="95" y="21" fill="#fff" text-anchor="middle">+33.34pp / +3,001</text></g>
+    <g transform="translate(1648 350)"><rect width="162" height="30" fill="#111"/><text x="81" y="21" fill="#fff" text-anchor="middle">+0.08pp / +7</text></g>
+    <g transform="translate(1808 344)"><rect width="176" height="30" fill="#111"/><text x="88" y="21" fill="#fff" text-anchor="middle">+2.09pp / +188</text></g>
+  </g>
+
+  <g font-family="Arial,'Noto Sans CJK SC',sans-serif">
+    <g transform="translate(140 790)"><rect width="170" height="232" fill="#f7f7f7" stroke="#ccc"/><rect width="170" height="6" fill="#f39a18"/><text x="14" y="42" font-size="18" font-weight="700">00 · 8B Planner</text><text x="14" y="76" font-size="15" fill="#777">完整 100 工具</text><text x="14" y="101" font-size="15" fill="#777">无路由出口</text><text x="14" y="208" font-size="16" font-weight="700">1,736 / 9K</text></g>
+    <g transform="translate(318 790)"><rect width="170" height="232" fill="#f7f7f7" stroke="#ccc"/><rect width="170" height="6" fill="#f39a18"/><text x="14" y="42" font-size="18" font-weight="700">01 · 基础路由</text><text x="14" y="76" font-size="15" fill="#777">加入电商 / 闲聊</text><text x="14" y="101" font-size="15" fill="#777">分类出口</text><text x="14" y="208" font-size="16" font-weight="700">3,939 / 9K</text></g>
+    <g transform="translate(496 790)"><rect width="170" height="232" fill="#f7f7f7" stroke="#ccc"/><rect width="170" height="6" fill="#f39a18"/><text x="14" y="42" font-size="18" font-weight="700">02 · 路由 LoRA</text><text x="14" y="76" font-size="15" fill="#777">0.6B checkpoint</text><text x="14" y="101" font-size="15" fill="#777">路由固定</text><text x="14" y="208" font-size="16" font-weight="700">4,736 / 9K</text></g>
+    <g transform="translate(674 790)"><rect width="170" height="232" fill="#f7f7f7" stroke="#ccc"/><rect width="170" height="6" fill="#f39a18"/><text x="14" y="42" font-size="18" font-weight="700">03 · 基础 RAG</text><text x="14" y="76" font-size="15" fill="#777">未微调检索</text><text x="14" y="101" font-size="15" fill="#777">提供 Top-10</text><text x="14" y="208" font-size="16" font-weight="700">4,800 / 9K</text></g>
+    <g transform="translate(852 790)"><rect width="170" height="232" fill="#f7f7f7" stroke="#ccc"/><rect width="170" height="6" fill="#f39a18"/><text x="14" y="42" font-size="18" font-weight="700">04 · 向量训练</text><text x="14" y="76" font-size="15" fill="#777">显式负样本</text><text x="14" y="101" font-size="15" fill="#777">+ BM25 融合</text><text x="14" y="208" font-size="16" font-weight="700">5,083 / 9K</text></g>
+    <g transform="translate(1030 790)"><rect width="170" height="232" fill="#f7f7f7" stroke="#ccc"/><rect width="170" height="6" fill="#f39a18"/><text x="14" y="42" font-size="18" font-weight="700">05 · 加入重排</text><text x="14" y="76" font-size="15" fill="#777">公开权重</text><text x="14" y="101" font-size="15" fill="#777">候选交互评分</text><text x="14" y="208" font-size="16" font-weight="700">4,747 / 9K</text></g>
+    <g transform="translate(1208 790)"><rect width="170" height="232" fill="#f7f7f7" stroke="#ccc"/><rect width="170" height="6" fill="#f39a18"/><text x="14" y="42" font-size="18" font-weight="700">06 · 重排训练</text><text x="14" y="76" font-size="15" fill="#777">1 正 + 7 负</text><text x="14" y="101" font-size="15" fill="#777">任务内微调</text><text x="14" y="208" font-size="16" font-weight="700">5,283 / 9K</text></g>
+    <g transform="translate(1386 790)"><rect width="170" height="232" fill="#f7f7f7" stroke="#ccc"/><rect width="170" height="6" fill="#f39a18"/><text x="14" y="42" font-size="18" font-weight="700">07 · 固定接口</text><text x="14" y="76" font-size="15" fill="#777">精排 20</text><text x="14" y="101" font-size="15" fill="#777">规划 10</text><text x="14" y="208" font-size="16" font-weight="700">5,140 / 9K</text></g>
+    <g transform="translate(1564 790)"><rect width="170" height="232" fill="#f7f7f7" stroke="#ccc"/><rect width="170" height="6" fill="#76b900"/><text x="14" y="42" font-size="18" font-weight="700">08 · Planner SFT</text><text x="14" y="76" font-size="15" fill="#777">77,724 条</text><text x="14" y="101" font-size="15" fill="#777">两种请求写法</text><text x="14" y="208" font-size="16" font-weight="700">8,141 / 9K</text></g>
+    <g transform="translate(1742 790)"><rect width="170" height="232" fill="#f7f7f7" stroke="#ccc"/><rect width="170" height="6" fill="#76b900"/><text x="14" y="42" font-size="18" font-weight="700">09 · DPO 起点</text><text x="14" y="76" font-size="15" fill="#777">真实错误学习</text><text x="14" y="101" font-size="15" fill="#777">用于继续挖掘</text><text x="14" y="208" font-size="16" font-weight="700">8,148 / 9K</text></g>
+    <g transform="translate(1920 790)"><rect width="170" height="232" fill="#f7f7f7" stroke="#ccc"/><rect width="170" height="6" fill="#76b900"/><text x="14" y="42" font-size="18" font-weight="700">10 · RPO → DPO</text><text x="14" y="76" font-size="15" fill="#777">4,000 对偏好</text><text x="14" y="101" font-size="15" fill="#777">最终 checkpoint-113</text><text x="14" y="208" font-size="16" font-weight="700">8,336 / 9K</text></g>
+  </g>
+
+  <rect x="70" y="1090" width="12" height="150" fill="#76b900"/>
+  <text x="108" y="1125" fill="#76b900" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="20" font-weight="700">累计净增益</text>
+  <text x="108" y="1182" fill="#fff" font-family="Arial,sans-serif" font-size="48" font-weight="700">+73.33pp</text>
+  <text x="108" y="1224" fill="#bbb" font-family="Arial,sans-serif" font-size="22">1,736 → 8,336（+6,600 条）</text>
+  <line x1="650" y1="1090" x2="650" y2="1240" stroke="#555"/>
+  <text x="690" y="1125" fill="#76b900" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="20" font-weight="700">最终系统路径</text>
+  <text x="690" y="1172" fill="#fff" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="28" font-weight="700">0.6B 路由 + 精排 20 / 规划 10 + 8B Planner</text>
+  <text x="690" y="1214" fill="#bbb" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="21">77,724 条 SFT → RPO 主训练 → DPO 短程收敛</text>
+  <line x1="1580" y1="1090" x2="1580" y2="1240" stroke="#555"/>
+  <text x="1620" y="1125" fill="#76b900" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="20" font-weight="700">读图口径</text>
+  <circle cx="1634" cy="1168" r="10" fill="#fff" stroke="#f39a18" stroke-width="4"/><text x="1660" y="1176" fill="#bbb" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="18">回溯补测</text>
+  <circle cx="1634" cy="1210" r="10" fill="#76b900" stroke="#fff" stroke-width="2"/><text x="1660" y="1218" fill="#bbb" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="18">当前训练路径端点</text>
+</svg>

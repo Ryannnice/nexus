@@ -4,28 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>100-Tool Commerce Agent — 从意图识别、工具检索到有序工具链</title>
-  <meta name="description" content="在固定的 100 个电商工具范围内，9,000 条请求中有 7,645 条完成正确分流、找齐候选并生成完全正确的有序工具链。">
+  <meta name="description" content="在固定的 100 个电商工具范围内，9,000 条请求中有 8,336 条完成正确分流、找齐候选并生成完全正确的有序工具链。">
   <meta name="theme-color" content="#000000">
   <link rel="canonical" href="https://ryannnice.github.io/nexus/ecommerce-agent/">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="让复杂电商请求，先找齐工具，再排对工具链。">
-  <meta property="og:description" content="在固定的 100 个电商工具范围内，9,000 条请求中有 7,645 条完成正确分流、找齐候选并生成完全正确的有序工具链。">
+  <meta property="og:description" content="在固定的 100 个电商工具范围内，9,000 条请求中有 8,336 条完成正确分流、找齐候选并生成完全正确的有序工具链。">
   <meta property="og:url" content="https://ryannnice.github.io/nexus/ecommerce-agent/">
-  <meta property="og:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026080303">
+  <meta property="og:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026080801">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="100-Tool Commerce Agent：9,000 条请求中有 7,645 条生成完全正确的有序工具链">
+  <meta property="og:image:alt" content="100-Tool Commerce Agent：9,000 条请求中有 8,336 条生成完全正确的有序工具链">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="让复杂电商请求，先找齐工具，再排对工具链。">
-  <meta name="twitter:description" content="100-Tool Commerce Agent · 9,000 条请求中有 7,645 条生成完全正确的有序工具链">
-  <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026080303">
-  <meta name="twitter:image:alt" content="100-Tool Commerce Agent：9,000 条请求中有 7,645 条生成完全正确的有序工具链">
+  <meta name="twitter:description" content="100-Tool Commerce Agent · 9,000 条请求中有 8,336 条生成完全正确的有序工具链">
+  <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026080801">
+  <meta name="twitter:image:alt" content="100-Tool Commerce Agent：9,000 条请求中有 8,336 条生成完全正确的有序工具链">
 
   <link rel="stylesheet" href="project.css?v=43">
-  <script defer src="project-data.js?v=19"></script>
-  <script defer src="project.js?v=23"></script>
+  <script defer src="project-data.js?v=20"></script>
+  <script defer src="project.js?v=24"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">跳到主要内容</a>
@@ -69,7 +69,7 @@
             <div><dt>100</dt><dd>固定工具空间</dd></div>
             <div><dt>100.00%</dt><dd>截至意图分流 · 9,000 / 9,000</dd></div>
             <div><dt>98.24%</dt><dd>截至候选检索 · 8,842 / 9,000</dd></div>
-            <div class="hero-stat-primary"><dt>84.94%</dt><dd>最终有序工具链 · 7,645 / 9,000</dd></div>
+            <div class="hero-stat-primary"><dt>92.62%</dt><dd>最终有序工具链 · 8,336 / 9,000</dd></div>
           </dl>
         </div>
 
@@ -125,8 +125,8 @@
           </div>
           <div class="abstract-brief-result">
             <span>最终结果</span>
-            <strong>系统级工具链成功率 · 84.94%</strong>
-            <p>最终系统采用 0.6B 路由、完整负样本检索链与 8B · 9K 监督训练 + 初始偏好优化 + 两轮残差偏好优化模型；9K 逐阶段通过数为 9,000 → 8,842 → 7,645。结果止于工具 ID 序列，不含真实工具执行。</p>
+            <strong>系统级工具链成功率 · 92.62%</strong>
+            <p>最终系统采用 0.6B 路由、完整负样本检索链与 8B Planner；Planner 先用 77,724 条两种写法的数据完成监督训练，再用当前模型真实错误完成 RPO 与 DPO。9K 逐阶段通过数为 9,000 → 8,842 → 8,336。结果止于工具 ID 序列，不含真实工具执行。</p>
           </div>
         </div>
 
@@ -148,7 +148,7 @@
             <span>阶段 03 · 工具链规划</span>
             <strong>集合 / 工具链全对率</strong>
             <p>集合全对要求工具集合完全一致；工具链全对进一步要求工具及其顺序完全一致。</p>
-            <small>最终有序工具链 · 7,645 / 9,000 · 84.9444%</small>
+            <small>最终有序工具链 · 8,336 / 9,000 · 92.6222%</small>
           </article>
         </div>
         <p class="metric-contract-note"><strong>为什么检索有两个百分比：</strong>97.3667% 只计算 6,000 条电商请求；98.2444% 还把 3,000 条被 0.6B 正确分流、无需检索的闲聊计入 9K 系统累计值。电商请求随后还要生成完全正确的有序工具链。</p>
@@ -477,7 +477,7 @@
             <li><strong>158 条</strong><b>检索阶段新增失败</b><span>9K · 9,000 → 8,842</span></li>
             <li><strong>97.3667%</strong><b>日常电商请求测试</b><span>6,000 条 · 必要工具全部进入 Top-10</span></li>
             <li><strong>47.09ms</strong><b>精排模块 p50</b><span>20 个候选 · 同硬件离线均摊</span></li>
-            <li><strong>84.9444%</strong><b>系统级工具链成功率</b><span>0.6B 路由 + 8B · 9K SFT + 初始与残差偏好优化 · 7,645 / 9,000 · 未执行真实工具</span></li>
+            <li><strong>92.6222%</strong><b>系统级工具链成功率</b><span>0.6B 路由 + 8B · 77,724 条 SFT + RPO / DPO · 8,336 / 9,000 · 未执行真实工具</span></li>
           </ul>
         </div>
 
@@ -851,7 +851,7 @@
                     <tr><td><strong>独立改写请求测试</strong></td><td>1,200 条</td><td>模型与参数确定后的首次检索质量测试</td><td>AllHit@10 99.8333%；查看结果后未继续调参</td></tr>
                     <tr><td><strong>日常电商请求测试</strong></td><td>6,000 条</td><td>报告必要工具是否全部进入 Top-10</td><td>AllHit@10 97.3667%</td></tr>
                     <tr><td><strong>工具需求明确的请求测试</strong></td><td>1,000 条</td><td>补充检查需求写得更明确时的检索与规划</td><td>AllHit@10 100.0000%</td></tr>
-                    <tr><td><strong>9K 分流—检索—规划联合测试</strong></td><td>9,000 条</td><td>将 0.6B 路由与检索、规划预测逐条联合计分</td><td>工具链成功 7,645 条；不含真实工具执行</td></tr>
+                    <tr><td><strong>9K 分流—检索—规划联合测试</strong></td><td>9,000 条</td><td>将 0.6B 路由与检索、规划预测逐条联合计分</td><td>工具链成功 8,336 条；不含真实工具执行</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -928,38 +928,38 @@
       <div class="wrap">
         <p class="eyebrow">实验 03 · 工具链规划</p>
         <div class="section-heading split-heading">
-          <h2 id="planningTitle">工具链规划：从未微调模型到 SFT 与偏好优化</h2>
-          <p>先验证把候选缩小到 Top-10 是否有帮助，再选择监督训练参数和数据量；随后固定“精排 20 个、规划读取 10 个”的输入，先学习 SFT 模型的真实错误，再用新出现的残余错误继续两轮偏好优化。</p>
+          <h2 id="planningTitle">工具链规划：从监督训练到偏好优化</h2>
+          <p>先验证 Top-10 候选能否帮助基础模型，再固定“精排 20、规划读取 10”的接口；8B Planner 先学习两种请求写法，再从自身真实错误中构造偏好数据，通过 RPO 主训练和 DPO 短程收敛确定最终模型。</p>
         </div>
-        <p class="metric-contract-note"><strong>两类请求：</strong>6,000 条主测试使用接近日常说法的电商请求；另有 1,000 条请求会明确写出所需工具能力和顺序，只作补充测试。9K–54K 监督数据也采用后一种写法。早期 1,000 条独立请求只验证第一次训练是否有效，因测试协议不同，不能与 6,000 条主测试直接比较。</p>
+        <p class="metric-contract-note"><strong>结果口径：</strong>6,000 条日常电商请求是规划主测试，1,000 条工具需求明确的请求用于补充检查；最终系统结果把 3,000 条闲聊与 6,000 条电商请求逐条合并。偏好数据和 1,200 条开发请求均来自训练侧，6K / 1K 只在模型锁定后报告。</p>
 
         <section class="planner-final-lead" id="plannerLatestUpdate" aria-labelledby="plannerFinalLeadTitle">
           <div class="planner-final-lead-copy">
             <span>最终结果 · 9,000 条系统测试</span>
-            <h3 id="plannerFinalLeadTitle"><strong>84.94%</strong> 请求生成了完全正确的有序工具链</h3>
-            <p>0.6B 路由先区分电商与闲聊，检索模块精排 20 个候选并向规划模型提供前 10 个；8B 模型经过 9K 监督训练、初始 DPO 和两轮残差 DPO。最终 <b>7,645 / 9,000</b> 条请求通过，比相同推理条件下仅做 SFT 增加 416 条；其中 6,000 条日常电商请求的工具链全对率为 77.42%。</p>
+            <h3 id="plannerFinalLeadTitle"><strong>92.62%</strong> 请求生成了完全正确的有序工具链</h3>
+            <p>0.6B 路由先区分电商与闲聊，检索模块精排 20 个候选并向 Planner 提供前 10 个；8B Planner 使用 77,724 条两种写法的监督数据训练，再以 4,000 对真实错误偏好数据完成 RPO 与 DPO。最终 <b>8,336 / 9,000</b> 条请求通过，其中 6,000 条日常电商请求的工具链全对率为 88.9333%。</p>
           </div>
           <div class="planner-final-lead-choice" role="group" aria-label="最终规划模型选择">
             <div class="is-selected">
               <span>最终规划模型</span>
-              <strong>Qwen3-8B · 三阶段偏好优化</strong>
-              <small>9K SFT → 初始 DPO → 两轮残差 DPO · checkpoint-63</small>
+              <strong>Qwen3-8B · RPO → DPO</strong>
+              <small>77,724 条 SFT → RPO 主训练 → DPO 短程收敛 · checkpoint-113</small>
             </div>
           </div>
         </section>
 
         <section class="planner-compact-story" id="plannerExperiments" aria-labelledby="plannerStoryTitle">
           <div class="result-explorer-head">
-            <div><span class="result-subsection-label">规划实验顺序</span><h3 id="plannerStoryTitle">比较有无 Top-10 → 选择 SFT 参数 → 确定候选输入 → 比较训练量 → 初始与残差 DPO</h3></div>
-            <p>01 测量 Top-10 候选带来的收益；02 在 9K 上选择监督训练参数；03 接收实验 02 选出的“精排 20 / 规划 10”；04 固定参数比较 9K–54K 训练量；05 先从 SFT 实际错误学习，再用隔离数据上的新残余错误继续优化并锁定最终端点。</p>
+            <div><span class="result-subsection-label">规划实验顺序</span><h3 id="plannerStoryTitle">验证 Top-10 → 训练 8B Planner → 固定输入 → 挖掘真实错误 → 选择偏好训练端点</h3></div>
+            <p>01 只改变候选范围，确认 RAG 是否帮助基础模型；02 用日常说法与工具需求明确写法训练 8B Planner；03 固定检索模块交付的 Top-10；04 从训练侧长短链请求挖出当前模型真实错误；05 比较 RPO 与 DPO，并在独立开发请求上锁定最终模型。</p>
           </div>
 
           <div class="experiment-steps planner-five-steps" role="group" aria-label="工具链规划模型选择路径">
             <article><span>01 · Top-10 是否有用</span><strong>完整 100 工具 vs Top-10</strong><small>固定未微调 4B / 8B，只改变候选范围</small></article>
-            <article><span>02 · 训练参数选择</span><strong>先用 9K 调参 · 21 + 3 个版本</strong><small>再固定参数比较 9K–54K</small></article>
-            <article><span>03 · 确定候选输入</span><strong>精排 20 → 规划读取 10</strong><small>直接采用实验 02 的结果，不重复选参数</small></article>
-            <article><span>04 · 比较监督训练量</span><strong>9K / 18K / 36K / 54K</strong><small>固定同一组参数 · 最终选择 8B / 9K</small></article>
-            <article class="is-selected"><span>05 · 偏好优化与最终测试</span><strong>SFT 错误 → 初始 DPO → 两轮残差 DPO</strong><small>7,645 / 9,000 · 84.94%</small></article>
+            <article><span>02 · 监督训练</span><strong>8B · 77,724 条 · 1 轮</strong><small>53,725 条明确需求写法 + 23,999 条日常说法</small></article>
+            <article><span>03 · 固定候选输入</span><strong>精排 20 → 规划读取 10</strong><small>检索参数不随 Planner 训练变化</small></article>
+            <article><span>04 · 构造偏好数据</span><strong>8,309 个真实错误 → 4,000 对</strong><small>长短链均衡 · 3,600 训练 / 400 监控</small></article>
+            <article class="is-selected"><span>05 · 偏好训练与最终测试</span><strong>RPO 主训练 → DPO 短程收敛</strong><small>8,336 / 9,000 · 92.62%</small></article>
           </div>
 
           <div class="planner-story-disclosures">
@@ -972,11 +972,11 @@
               <div class="disclosure-body planner-result-body">
                 <div class="planner-table-heading">
                   <h4>检验缩小候选范围能否帮助未微调模型</h4>
-                  <p>固定模型、提示模板与生成方式，只改变输入：无 RAG 展示完整 100 工具，RAG 按检索顺序提供 Top-10。该配对只量化 RAG 贡献，不参与候选深度选择。</p>
+                  <p>固定模型、提示模板与生成方式，只改变输入：无 RAG 展示完整 100 工具，RAG 按检索顺序提供 Top-10。该配对只量化候选检索的贡献，不参与候选深度选择。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table planner-final-table">
-                    <thead><tr><th scope="col">评测集</th><th scope="col">基础模型</th><th scope="col"><span class="result-column-title">无 RAG · 完整 100 工具</span><small class="result-column-metrics">集合 / 工具链 / 格式合规率</small></th><th scope="col"><span class="result-column-title">RAG · 当前检索 Top-10</span><small class="result-column-metrics">集合 / 工具链 / 格式合规率</small></th><th scope="col">RAG 工具链提升</th></tr></thead>
+                    <thead><tr><th scope="col">评测集</th><th scope="col">基础模型</th><th scope="col"><span class="result-column-title">完整 100 工具</span><small class="result-column-metrics">集合 / 工具链 / 格式合规率</small></th><th scope="col"><span class="result-column-title">当前检索 Top-10</span><small class="result-column-metrics">集合 / 工具链 / 格式合规率</small></th><th scope="col">工具链提升</th></tr></thead>
                     <tbody>
                       <tr><td rowspan="2"><strong>日常电商请求 6K</strong></td><td>未微调 4B</td><td>26.9500% / 25.2167% / 84.6833%</td><td>35.9667% / 33.9333% / 94.1833%</td><td><strong>+8.7167pp</strong></td></tr>
                       <tr><td>未微调 8B</td><td>30.7500% / 28.9333% / 92.5333%</td><td>37.3333% / 35.6667% / 94.1500%</td><td><strong>+6.7333pp</strong></td></tr>
@@ -985,448 +985,238 @@
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>本步结论：</strong>Top-10 在 4 / 4 组配对中提高工具链全对率；工具需求明确的请求的格式合规率仍会下降，说明缩小候选范围不能替代监督训练。</p>
+                <p class="planner-result-boundary"><strong>本步结论：</strong>Top-10 在 4 / 4 组配对中提高工具链全对率；候选检索能缩小判断范围，但不能替代 Planner 训练。</p>
               </div>
             </details>
 
             <details class="narrative-disclosure planner-story-results" id="plannerCurrentTrainingResults">
               <summary>
-                <span class="disclosure-summary-copy"><small>02 · 监督训练参数选择</small><strong>先验证训练收益，再在 9K 上选择学习率、轮数与 LoRA 参数</strong></span>
-                <span class="disclosure-summary-meta">首次训练 1K 对照 · 4B 21 个唯一版本 · 8B 3 个确认版本</span>
+                <span class="disclosure-summary-copy"><small>02 · 监督训练</small><strong>让 8B Planner 同时学习两种请求写法</strong></span>
+                <span class="disclosure-summary-meta">77,724 条 · 4 × RTX 5090 · 1 轮 · 9K 工具链成功率 90.4556%</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
                 <div class="planner-table-block">
-                <div class="planner-table-heading">
-                  <h4>02A · 固定 Top-10，检验第一次监督训练是否有效</h4>
-                  <p>固定同一批 1,000 条早期独立请求与同一 Top-10，只改变模型权重；该表回答训练方向是否有效。该协议早于最终日常电商请求 6K，绝对分数不能直接横向比较。</p>
-                </div>
-                <div class="result-table-wrap" tabindex="0">
-                  <table class="result-table result-table-compact planner-result-table">
-                    <thead><tr><th scope="col">模型</th><th scope="col"><span class="result-column-title">未微调 · 固定 Top-10</span><small class="result-column-metrics">集合 / 工具链全对率</small></th><th scope="col"><span class="result-column-title">第一次监督训练 · 同一 Top-10</span><small class="result-column-metrics">集合 / 工具链全对率</small></th><th scope="col">工具链提升</th></tr></thead>
-                    <tbody>
-                      <tr><td>Qwen3-4B</td><td>54.00% / 53.10%</td><td><strong>99.00% / 99.00%</strong></td><td><strong>+45.90pp</strong></td></tr>
-                      <tr><td>Qwen3-8B</td><td>60.00% / 59.10%</td><td><strong>98.30% / 98.30%</strong></td><td><strong>+39.20pp</strong></td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p class="planner-result-boundary"><strong>验证结果：</strong>第一次监督训练在这套早期独立测试上把工具链全对率提高到 98%–99%，因此继续在作业规定的 9K 基础数据上选择训练参数；这套请求写法更直接、测试数据与候选输入也不同，因此高分不代表 6K 日常电商主结果。</p>
-                </div>
-
-                <div class="planner-table-block">
-                <div class="planner-table-heading">
-                  <h4>02B · 用 4B 完整搜索，再把前三名参数放到 8B 上确认</h4>
-                  <p>先用 9K 数据选择训练参数，再固定这套参数比较 9K / 18K / 36K / 54K；不是先看到数据量结果后再专门优化 9K。三轮 4B 搜索共产生 21 个唯一模型版本，随后只在 8B 上确认前三名。</p>
-                </div>
-                <div class="result-table-wrap" tabindex="0">
-                  <table class="result-table result-table-compact planner-result-table">
-                    <thead><tr><th scope="col">阶段</th><th scope="col">模型</th><th scope="col">搜索内容</th><th scope="col">运行规模</th><th scope="col">作用</th></tr></thead>
-                    <tbody>
-                      <tr><td><strong>第一轮</strong></td><td>Qwen3-4B</td><td>学习率 1e-5 / 3e-5 / 5e-5 × 1 / 2 / 3 轮</td><td><strong>9 个配置</strong></td><td>选择学习率与训练轮数</td></tr>
-                      <tr><td><strong>第二轮</strong></td><td>Qwen3-4B</td><td>LoRA 秩 8 / 16 / 32 × dropout 0 / 0.05 / 0.1</td><td><strong>9 个配置</strong><small>含与前一轮重复配置</small></td><td>选择 LoRA 容量与正则强度</td></tr>
-                      <tr><td><strong>第三轮</strong></td><td>Qwen3-4B</td><td>前两轮各取前三名，完成 3 × 3 交叉确认</td><td><strong>9 个配置</strong><small>含可复用配置</small></td><td>确认参数交互后的最终组合</td></tr>
-                      <tr><td><strong>4B 汇总</strong></td><td>Qwen3-4B</td><td>三轮去重</td><td><strong>21 个唯一模型版本</strong></td><td>确定 4B 训练参数</td></tr>
-                      <tr class="result-table-final"><td><strong>8B 确认</strong></td><td><strong>Qwen3-8B</strong></td><td>把 4B 前三名参数用于 8B</td><td><strong>3 个配置</strong></td><td><strong>确认两种模型采用同一组参数</strong></td></tr>
-                    </tbody>
-                  </table>
-                </div>
+                  <div class="planner-table-heading">
+                    <h4>02A · 监督数据同时覆盖明确需求与日常说法</h4>
+                    <p>所有样本都包含当前检索链生成的 Top-10 和正确有序工具链。两种写法共同训练，使模型既学会清晰接口表达，也能处理主测试中的自然请求。</p>
+                  </div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table">
+                      <thead><tr><th scope="col">数据来源</th><th scope="col">条数</th><th scope="col">训练作用</th><th scope="col">占比</th></tr></thead>
+                      <tbody>
+                        <tr><td><strong>工具需求明确的请求</strong></td><td><strong>53,725</strong></td><td>学习候选选择、相似工具排除和多工具依赖顺序</td><td>69.12%</td></tr>
+                        <tr><td><strong>日常说法请求</strong></td><td><strong>23,999</strong></td><td>对齐 6K 主测试的表达方式与工具链长度</td><td>30.88%</td></tr>
+                        <tr class="result-table-final"><td><strong>合计</strong></td><td><strong>77,724</strong></td><td><strong>固定 Top-10 输入与有序目标</strong></td><td><strong>100%</strong></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
 
                 <div class="planner-table-block">
-                <div class="planner-table-heading">
-                  <h4>02C · 第一轮：比较学习率与训练轮数</h4>
-                  <p>Qwen3-4B、9K 数据、LoRA 秩 16、dropout 0.05；指标为当时 2,400 条开发集 RAG 工具链全对率。</p>
+                  <div class="planner-table-heading">
+                    <h4>02B · 冻结监督训练端点</h4>
+                    <p>Qwen3-8B 使用 LoRA 训练 1 轮，学习率 5e-5、有效批量 32、LoRA r16 / α32 / dropout 0.05；随后以一次短 DPO 得到偏好训练的固定起点。</p>
+                  </div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table planner-final-table">
+                      <thead><tr><th scope="col">模型阶段</th><th scope="col"><span class="result-column-title">日常电商请求 6K</span><small class="result-column-metrics">集合 / 工具链 / 格式合规率</small></th><th scope="col">明确工具需求 1K<br><small>工具链全对率</small></th><th scope="col">9K 系统工具链</th><th scope="col">作用</th></tr></thead>
+                      <tbody>
+                        <tr><td><strong>77,724 条监督训练</strong><small>checkpoint-2429</small></td><td>86.1333% / 85.6833% / 99.7833%</td><td>99.5000%</td><td><strong>8,141 / 9,000 · 90.4556%</strong></td><td>监督训练端点</td></tr>
+                        <tr class="result-table-final"><td><strong>偏好训练起点</strong><small>checkpoint-29</small></td><td><strong>86.2667% / 85.8000% / 99.7833%</strong></td><td><strong>99.5000%</strong></td><td><strong>8,148 / 9,000 · 90.5333%</strong></td><td><strong>用于挖掘真实错误</strong></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <div class="result-table-wrap" tabindex="0">
-                  <table class="result-table result-table-compact planner-result-table numeric-result-table">
-                    <thead><tr><th scope="col">学习率</th><th scope="col">训练 1 轮</th><th scope="col">训练 2 轮</th><th scope="col">训练 3 轮</th></tr></thead>
-                    <tbody>
-                      <tr><td><strong>1e-5</strong></td><td>82.4167%</td><td>88.1667%</td><td><strong>89.6250%</strong></td></tr>
-                      <tr><td><strong>3e-5</strong></td><td>90.1250%</td><td>91.7500%</td><td><strong>92.3750%</strong></td></tr>
-                      <tr><td><strong>5e-5</strong></td><td>90.9583%</td><td>92.1250%</td><td><strong>92.1667%</strong></td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p class="planner-result-boundary"><strong>轮数依据：</strong>三个学习率下都是训练 3 轮最好；第一轮单点最高为 3e-5 / 3 轮，最终学习率还需结合下一轮 LoRA 参数做交叉确认。</p>
-                </div>
-
-                <div class="planner-table-block">
-                <div class="planner-table-heading">
-                  <h4>02D · 第二轮：比较 LoRA 秩与 dropout</h4>
-                  <p>固定学习率 3e-5、训练 3 轮；LoRA alpha 始终设为秩的 2 倍。</p>
-                </div>
-                <div class="result-table-wrap" tabindex="0">
-                  <table class="result-table result-table-compact planner-result-table numeric-result-table">
-                    <thead><tr><th scope="col">LoRA 秩</th><th scope="col">dropout 0</th><th scope="col">dropout 0.05</th><th scope="col">dropout 0.1</th></tr></thead>
-                    <tbody>
-                      <tr><td><strong>8</strong></td><td>91.6667%</td><td>91.8333%</td><td>91.5417%</td></tr>
-                      <tr><td><strong>16</strong></td><td>92.1667%</td><td>92.3750%</td><td>92.1667%</td></tr>
-                      <tr><td><strong>32</strong></td><td>92.2917%</td><td><strong>92.5417%</strong></td><td>91.4167%</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                </div>
-
-                <div class="planner-table-block">
-                <div class="planner-table-heading">
-                  <h4>02E · 第三轮：交叉确认前两轮的优胜参数</h4>
-                  <p>行是第一轮前三名，列是第二轮前三名；表内为 Qwen3-4B 开发集工具链全对率，已有配置直接复用评测结果。</p>
-                </div>
-                <div class="result-table-wrap" tabindex="0">
-                  <table class="result-table result-table-compact planner-result-table numeric-result-table">
-                    <thead><tr><th scope="col">学习率 / 轮数</th><th scope="col">秩 32 / dropout 0.05</th><th scope="col">秩 16 / dropout 0.05</th><th scope="col">秩 32 / dropout 0</th></tr></thead>
-                    <tbody>
-                      <tr><td><strong>3e-5 / 3</strong></td><td>92.5417%</td><td>92.3750%</td><td>92.2917%</td></tr>
-                      <tr class="result-table-final"><td><strong>5e-5 / 3</strong></td><td><strong>93.0417%</strong></td><td>92.1667%</td><td>92.9167%</td></tr>
-                      <tr><td><strong>5e-5 / 2</strong></td><td>92.2083%</td><td>92.1250%</td><td>92.3333%</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                </div>
-
-                <div class="planner-table-block">
-                <div class="planner-table-heading">
-                  <h4>02F · 在 8B 上复核前三名，确定统一训练参数</h4>
-                  <p>8B 不重复完整网格，只确认 4B 排名前三的配置；4B 与 8B 最终采用同一组参数。</p>
-                </div>
-                <div class="result-table-wrap" tabindex="0">
-                  <table class="result-table result-table-compact planner-result-table numeric-result-table">
-                    <thead><tr><th scope="col">模型</th><th scope="col">学习率 / 轮数 / LoRA 秩 / dropout</th><th scope="col">开发集工具链全对率</th><th scope="col">判定</th></tr></thead>
-                    <tbody>
-                      <tr class="result-table-final"><td><strong>Qwen3-4B</strong></td><td><strong>5e-5 / 3 / 32 / 0.05</strong></td><td><strong>93.0417%</strong></td><td><strong>采用该组参数</strong></td></tr>
-                      <tr class="result-table-final"><td><strong>Qwen3-8B</strong></td><td><strong>5e-5 / 3 / 32 / 0.05</strong></td><td><strong>93.5417%</strong></td><td><strong>采用同一组参数</strong></td></tr>
-                      <tr><td>Qwen3-8B</td><td>3e-5 / 3 / 32 / 0.05</td><td>93.4583%</td><td>学习率对照</td></tr>
-                      <tr><td>Qwen3-8B</td><td>5e-5 / 3 / 32 / 0</td><td>92.9167%</td><td>dropout 对照</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p class="planner-result-boundary"><strong>这张表能证明什么：</strong>完整参数搜索使用较早的 2,400 条开发请求和当时的 Top-10 候选，不是用当前“精排 20 / 规划 10”重新评测全部 24 个版本；8B 只复核了 4B 排名前三的配置，也没有分别训练 1 / 2 / 3 轮。因此这里只能得出“先在 9K 上确定统一训练参数，再用同一组参数比较 9K–54K”，不能声称每种数据量都已单独调到最优。</p>
-                </div>
+                <p class="planner-result-boundary"><strong>进入下一步的固定模型：</strong>Qwen3-8B checkpoint-29。后续偏好数据只使用它在训练侧请求上的真实可解析错误，不使用 6K / 1K 冻结测试。</p>
               </div>
             </details>
 
             <details class="narrative-disclosure planner-story-results" id="plannerToolCountResults">
               <summary>
-                <span class="disclosure-summary-copy"><small>03 · 确定规划模型的候选输入</small><strong>直接采用实验 02 选出的“精排 20 / 规划 10”</strong></span>
-                <span class="disclosure-summary-meta">14 组候选数量比较与 110 组融合参数见实验 02 · 02F–02G</span>
+                <span class="disclosure-summary-copy"><small>03 · 固定规划模型的候选输入</small><strong>检索精排 20 个候选，Planner 只读取前 10 个</strong></span>
+                <span class="disclosure-summary-meta">一级 Top-40 / 路 · 精排 Top-20 · 二级 RRF · Planner Top-10</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
-                <div class="planner-table-block">
                 <div class="planner-table-heading">
-                  <h4>03A · 检索模块最终给规划模型什么</h4>
-                  <p>实验 02 已经比较候选数量、融合参数以及长输入成本。本节只列出最终输入格式，避免重复展示同一组选参结果。</p>
+                  <h4>检索模块向所有 Planner 阶段提供同一种输入</h4>
+                  <p>候选排序在 Planner 训练前已经锁定。监督训练、错误挖掘、开发集比较和最终测试都使用同一 Top-10 接口，不为某个 Planner checkpoint 重新调整检索参数。</p>
                 </div>
                 <div class="result-table-wrap" tabindex="0">
                   <table class="result-table result-table-compact planner-result-table">
-                    <thead><tr><th scope="col">处理环节</th><th scope="col">最终配置</th><th scope="col">为什么这样做</th><th scope="col">输出</th></tr></thead>
+                    <thead><tr><th scope="col">处理环节</th><th scope="col">最终配置</th><th scope="col">作用</th><th scope="col">输出</th></tr></thead>
                     <tbody>
-                      <tr><td><strong>一级检索</strong></td><td>BM25 / 向量各取 Top-40 · 向量权重 0.8 · 平滑常数 5</td><td>保留词面与语义互补</td><td>统一候选排名</td></tr>
-                      <tr><td><strong>交互精排</strong></td><td>bge-reranker-v2-m3 · R=20</td><td>规划可见候选必须全部经过 Cross-encoder 评分</td><td>Top-20 精排名次</td></tr>
+                      <tr><td><strong>一级检索</strong></td><td>BM25 / 向量各取 Top-40 · 向量权重 0.8 · 平滑常数 5</td><td>结合词面与语义信号</td><td>统一候选排名</td></tr>
+                      <tr><td><strong>交互精排</strong></td><td>bge-reranker-v2-m3 · R=20</td><td>对 Planner 可能看到的候选完整打分</td><td>Top-20 精排名次</td></tr>
                       <tr><td><strong>二级融合</strong></td><td>一级权重 0.4 · 精排权重 0.6 · 平滑常数 8</td><td>融合两路互补名次</td><td>最终 Top-10</td></tr>
-                      <tr class="result-table-final"><td><strong>规划输入</strong></td><td><strong>P=10 · 保持最终检索顺序</strong></td><td><strong>P≤R</strong></td><td><strong>一次生成工具集合与顺序</strong></td></tr>
+                      <tr class="result-table-final"><td><strong>规划输入</strong></td><td><strong>P=10 · 保持检索顺序</strong></td><td><strong>所有候选都已精排，满足 P≤R</strong></td><td><strong>一次生成工具集合与顺序</strong></td></tr>
                     </tbody>
                   </table>
                 </div>
-                <p class="planner-result-boundary"><strong>数据使用规则：</strong>14 组精排 / 规划数量结果、110 组融合参数和长输入压力测试都在实验 02；后续只训练规划模型，不再利用 6K / 1K 最终测试去修改检索参数。</p>
-                </div>
+                <p class="planner-result-boundary"><strong>固定边界：</strong>6K 日常电商请求的检索 AllHit@10 为 97.3667%；检索未命中的样本仍计入 Planner 端到端工具链全对率。</p>
               </div>
             </details>
 
-            <details class="narrative-disclosure planner-story-results planner-final-results" id="plannerFinalEvaluationResults">
+            <details class="narrative-disclosure planner-story-results" id="plannerPreferenceDataResults">
               <summary>
-                <span class="disclosure-summary-copy"><small>04 · 比较监督训练量</small><strong>固定训练参数，比较 9K / 18K / 36K / 54K</strong></span>
-                <span class="disclosure-summary-meta">9K / 18K / 36K / 54K · 固定训练参数 · DPO 从选出的 9K 模型继续训练</span>
+                <span class="disclosure-summary-copy"><small>04 · 构造偏好数据</small><strong>从当前模型真实错误中均衡选择长短工具链</strong></span>
+                <span class="disclosure-summary-meta">36,000 条训练侧请求 · 8,309 个去重错误 · 4,000 对偏好数据</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
                 <div class="planner-table-block">
-                <div class="planner-table-heading">
-                  <h4>04A · 增加训练数据是否继续改善工具链准确率</h4>
-                  <p>先在 9K 数据上选定学习率 5e-5、训练 3 轮、LoRA r32、dropout 0.05；随后让 4B / 8B 的 9K、18K、36K、54K 数据共用这套参数和同一“精排 20 / 规划 10”输入。主指标来自 2,400 条开发请求，并按最终 6K 日常电商 / 1K 明确工具需求的比例做 6:1 加权；另用 1,200 条训练中未出现过目标工具组合的请求检查组合泛化。</p>
-                </div>
-                <div class="result-table-wrap" tabindex="0">
-                  <table class="result-table result-table-compact planner-result-table numeric-result-table">
-                    <thead><tr><th scope="col">模型</th><th scope="col">训练量</th><th scope="col">2.4K 开发请求 · 完整 100 工具</th><th scope="col">2.4K 开发请求 · Top-10</th><th scope="col">1.2K 未见组合 · 完整 100 工具</th><th scope="col">1.2K 未见组合 · Top-10</th><th scope="col">判定</th></tr></thead>
-                    <tbody>
-                      <tr class="result-table-final"><td><strong>4B</strong></td><td><strong>9K</strong></td><td>94.1429%</td><td><strong>98.5119%</strong></td><td>87.8333%</td><td><strong>95.6667%</strong></td><td><strong>4B 采用 9K</strong></td></tr>
-                      <tr><td>4B</td><td>18K</td><td>93.7500%</td><td>97.6310%</td><td>84.4167%</td><td>94.0000%</td><td>未选择</td></tr>
-                      <tr><td>4B</td><td>36K</td><td>93.3929%</td><td>97.5952%</td><td>84.3333%</td><td>94.7500%</td><td>未选择</td></tr>
-                      <tr><td>4B</td><td>54K</td><td>96.6190%</td><td>98.1905%</td><td>90.5833%</td><td>94.8333%</td><td>第二名</td></tr>
-                      <tr class="table-divider result-table-final"><td><strong>8B</strong></td><td><strong>9K</strong></td><td><strong>96.8690%</strong></td><td><strong>98.9405%</strong></td><td><strong>90.5833%</strong></td><td><strong>97.5833%</strong></td><td><strong>作为 DPO 起点</strong></td></tr>
-                      <tr><td>8B</td><td>18K</td><td>95.7143%</td><td>98.5476%</td><td>86.3333%</td><td>95.3333%</td><td>未选择</td></tr>
-                      <tr><td>8B</td><td>36K</td><td>96.1905%</td><td>98.7857%</td><td>90.5833%</td><td>97.0000%</td><td>第二名</td></tr>
-                      <tr><td>8B</td><td>54K</td><td>96.8095%</td><td>98.5357%</td><td>90.2500%</td><td>96.1667%</td><td>未选择</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p class="planner-result-boundary"><strong>为什么选择 8B / 9K：</strong>在同一模型内部，4B / 8B 都是 9K 得分最高：4B 的 9K 比次优 54K 高 0.3214pp，8B 的 9K 比次优 36K 高 0.1548pp。再比较两种模型的 9K 版本，8B 在 2.4K 开发请求高 0.4286pp，在 1.2K 未见工具组合请求高 1.9166pp，因此选 8B / 9K 进入 DPO。这个结论只适用于统一训练参数，不代表每种数据量单独调参后仍是 9K 最好。</p>
+                  <div class="planner-table-heading">
+                    <h4>04A · 用两个训练侧请求池找到模型会犯的错误</h4>
+                    <p>先只保留目标工具全部进入 Top-10 的请求，再让 checkpoint-29 贪心生成。正确答案作为 chosen，模型实际生成且格式可解析、但集合或顺序错误的输出作为 rejected。</p>
+                  </div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table numeric-result-table">
+                      <thead><tr><th scope="col">请求范围</th><th scope="col">生成请求</th><th scope="col">Top-10 覆盖完整</th><th scope="col">起点工具链全对率</th><th scope="col">真实语义错误</th></tr></thead>
+                      <tbody>
+                        <tr><td><strong>偏长、多约束请求</strong></td><td>24,000</td><td>23,068</td><td>70.8080%</td><td><strong>6,734</strong></td></tr>
+                        <tr><td><strong>1–2 工具短请求</strong></td><td>12,000</td><td>11,867</td><td>85.8178%</td><td><strong>1,683</strong><small>单工具 203 · 双工具 1,480</small></td></tr>
+                        <tr class="result-table-final"><td><strong>去重错误池</strong></td><td colspan="3">共观察 8,417 个错误；按请求与来源去重</td><td><strong>8,309</strong></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
 
                 <div class="planner-table-block">
-                <div class="planner-table-heading">
-                  <h4>04B · 选出 9K 版本后，再比较完整 100 工具与 Top-10</h4>
-                  <p>模型权重和解码方式保持不变，只改变候选范围：完整目录一次展示 100 个工具，RAG 只提供检索 Top-10。6,000 条日常电商请求是主测试，1,000 条工具需求明确的请求是补充测试；4B / 8B 在两套测试中都受益于 Top-10。</p>
-                </div>
-                <div class="result-table-wrap" tabindex="0">
-                  <table class="result-table result-table-compact planner-result-table planner-final-table">
-                    <thead><tr><th scope="col">评测集</th><th scope="col">9K 监督训练模型</th><th scope="col"><span class="result-column-title">无 RAG · 完整 100 工具</span><small class="result-column-metrics">集合 / 工具链 / 格式合规率</small></th><th scope="col"><span class="result-column-title">RAG · 最终 Top-10</span><small class="result-column-metrics">集合 / 工具链 / 格式合规率</small></th><th scope="col">RAG 工具链提升</th></tr></thead>
-                    <tbody>
-                      <tr><td rowspan="2"><strong>日常电商请求 6K</strong><small>主要测试集</small></td><td>Qwen3-4B</td><td>57.2000% / 56.5167% / 95.8167%</td><td><strong>71.3500% / 71.0833% / 99.4167%</strong></td><td><strong>+14.5667pp</strong></td></tr>
-                      <tr class="result-table-final"><td><strong>Qwen3-8B</strong></td><td>59.8833% / 59.3667% / 96.0000%</td><td><strong>70.6000% / 70.4833% / 99.3167%</strong></td><td><strong>+11.1167pp</strong></td></tr>
-                      <tr class="table-divider"><td rowspan="2"><strong>工具需求明确的请求 1K</strong><small>补充测试</small></td><td>Qwen3-4B</td><td>93.2000% / 93.1000% / 98.8000%</td><td><strong>98.3000% / 98.3000% / 100.0000%</strong></td><td><strong>+5.2000pp</strong></td></tr>
-                      <tr><td>Qwen3-8B</td><td>95.5000% / 95.5000% / 99.9000%</td><td>98.1000% / 98.1000% / 100.0000%</td><td><strong>+2.6000pp</strong></td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p class="planner-result-boundary"><strong>完整对照：</strong>连同 01 的未微调结果，共有 4B / 8B × 训练前后 × 两套测试的 8 组同模型比较，Top-10 的工具链全对率全部提高。训练数据和 1K 补充测试采用相近的明确需求写法，因此得分较高；日常电商请求明显更难，也是系统主结果。</p>
-                </div>
-
-                <div class="planner-table-block">
-                <div class="planner-table-heading">
-                  <h4>04C · DPO 前，9K 系统中仅做 SFT 的结果</h4>
-                  <p>3,000 条闲聊只需正确分流；6,000 条电商请求还要找齐候选并生成完全正确的有序工具链。8B 已依据开发请求和训练中未见的工具组合请求选出，下表只记录最终测试结果，不再用来改选模型。</p>
-                </div>
-                <div class="result-table-wrap" tabindex="0">
-                  <table class="result-table result-table-compact planner-result-table">
-                    <thead><tr><th scope="col">规划模型</th><th scope="col">9K 集合成功率</th><th scope="col">9K 工具链成功率</th><th scope="col">工具链通过数</th><th scope="col">用途</th></tr></thead>
-                    <tbody>
-                      <tr><td>Qwen3-4B · 9K 监督训练</td><td><strong>80.9000%</strong></td><td><strong>80.7222%</strong></td><td><strong>7,265 / 9,000</strong></td><td>最终测试中的 4B 对照</td></tr>
-                      <tr class="result-table-final"><td><strong>Qwen3-8B · 9K 监督训练</strong><small>checkpoint-846</small></td><td><strong>80.4000%</strong></td><td><strong>80.3222%</strong></td><td><strong>7,229 / 9,000</strong></td><td><strong>DPO 训练起点</strong></td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p class="planner-result-boundary"><strong>为什么不在这里改选 4B：</strong>最终 9K 测试中，4B 的工具链点估计高 0.4000pp；但模型选择已在查看这套测试前由开发请求和未见工具组合请求完成。为避免用最终测试调参，DPO 仍从预先选定的 8B checkpoint-846 开始。</p>
+                  <div class="planner-table-heading">
+                    <h4>04B · 选择 4,000 对，并约束工具链长度与错误类型</h4>
+                    <p>每个请求和来源轨迹最多保留一对，候选保持原检索顺序；数据覆盖全部 100 个工具。</p>
+                  </div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table numeric-result-table">
+                      <thead><tr><th scope="col">维度</th><th scope="col">1 工具</th><th scope="col">2 工具</th><th scope="col">3 工具</th><th scope="col">4 工具</th><th scope="col">5 工具</th><th scope="col">6 工具</th></tr></thead>
+                      <tbody><tr class="result-table-final"><td><strong>偏好对数</strong></td><td>200</td><td>600</td><td>800</td><td>800</td><td>800</td><td>800</td></tr></tbody>
+                    </table>
+                  </div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table numeric-result-table">
+                      <thead><tr><th scope="col">主要错误</th><th scope="col">相似工具替换</th><th scope="col">遗漏必要工具</th><th scope="col">多选无关工具</th><th scope="col">只错顺序</th><th scope="col">训练 / 监控</th></tr></thead>
+                      <tbody><tr><td><strong>对数</strong></td><td>2,064</td><td>911</td><td>765</td><td>260</td><td><strong>3,600 / 400</strong></td></tr></tbody>
+                    </table>
+                  </div>
                 </div>
 
                 <div class="planner-table-block">
-                <div class="planner-table-heading">
-                  <h4>04D · DPO 前：8B 在不同工具链长度上的准确率</h4>
-                  <p>该表记录 DPO 前不同工具链长度的准确率；DPO 后按相同方法统计的结果见 05F。</p>
+                  <div class="planner-table-heading">
+                    <h4>04C · 独立开发请求不进入训练</h4>
+                    <p>1,200 条开发请求包含 600 条单工具和 600 条 2–6 工具请求，每种多工具长度各 120 条；覆盖 100 个工具。</p>
+                  </div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table">
+                      <thead><tr><th scope="col">开发集检查</th><th scope="col">结果</th><th scope="col">如何计分</th></tr></thead>
+                      <tbody>
+                        <tr><td>与 SFT、偏好数据、6K / 1K 的请求、轨迹、表达簇、短语和上下文骨架重叠</td><td><strong>0</strong></td><td>仅用于 checkpoint 选择</td></tr>
+                        <tr class="result-table-final"><td>当前检索 Top-10 覆盖率</td><td><strong>96.6667%</strong></td><td>40 条检索未命中仍计为工具链失败，不做条件过滤</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <div class="result-table-wrap" tabindex="0">
-                  <table class="result-table result-table-compact planner-result-table">
-                    <thead><tr><th scope="col">目标工具数</th><th scope="col">样本数</th><th scope="col">工具链全对数</th><th scope="col">工具链全对率</th></tr></thead>
-                    <tbody>
-                      <tr><td>1</td><td>3,000</td><td>2,594</td><td>86.4667%</td></tr>
-                      <tr><td>2</td><td>481</td><td>325</td><td>67.5676%</td></tr>
-                      <tr><td>3</td><td>681</td><td>377</td><td>55.3598%</td></tr>
-                      <tr><td>4</td><td>592</td><td>312</td><td>52.7027%</td></tr>
-                      <tr><td>5</td><td>653</td><td>356</td><td>54.5176%</td></tr>
-                      <tr><td>6</td><td>593</td><td>265</td><td>44.6880%</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p class="planner-result-boundary"><strong>进入下一步的固定条件：</strong>候选输入为“精排 20 / 规划 10”，模型为 8B · 9K SFT checkpoint-846；接入最终 0.6B 路由后的 9K 工具链成功率为 80.3222%，这是 DPO 前的比较起点，不是项目最终结果。</p>
-                </div>
+                <p class="planner-result-boundary"><strong>数据边界：</strong>不手工拼接错误输出，也不使用冻结测试中的失败样本。最大序列长度 672，小于训练上限 768，样本截断为 0。</p>
               </div>
             </details>
 
             <details class="narrative-disclosure planner-story-results planner-final-results" id="plannerDpoResults">
               <summary>
-                <span class="disclosure-summary-copy"><small>05 · 偏好优化与最终测试</small><strong>从 SFT 实际错误到两轮残差 DPO</strong></span>
-                <span class="disclosure-summary-meta">初始 2,000 对 / 模型 · 残差 2,200 + 5,000 对 · 最终 7,645 / 9,000</span>
+                <span class="disclosure-summary-copy"><small>05 · 偏好训练与最终测试</small><strong>RPO 主训练推进质量，再用 DPO 短程收敛</strong></span>
+                <span class="disclosure-summary-meta">8 个训练配方 · 28 个 checkpoint · 6K 工具链 88.9333% · 9K 工具链 92.6222%</span>
                 <i aria-hidden="true">+</i>
               </summary>
               <div class="disclosure-body planner-result-body">
                 <div class="planner-table-block">
                   <div class="planner-table-heading">
-                    <h4>05A · 初始 DPO：用 SFT 模型实际生成的错误构造偏好数据</h4>
-                    <p>候选输入始终是“精排 20 / 规划 10”，不调整向量模型、重排模型或 RRF。每一对数据都包含训练标注中的正确工具链，以及同一请求下 SFT 模型实际生成的错误工具链；错误输出必须能解析，只是工具选错或顺序排错。</p>
-                  </div>
-                  <div class="result-table-wrap" tabindex="0">
-                    <table class="result-table result-table-compact planner-result-table">
-                      <thead><tr><th scope="col">构建环节</th><th scope="col">4B</th><th scope="col">8B</th><th scope="col">隔离与用途</th></tr></thead>
-                      <tbody>
-                        <tr><td><strong>用于寻找 SFT 错误的训练请求</strong></td><td colspan="2"><strong>17,000 条；先排除 37 条必要工具未全部进入 Top-10 的请求</strong></td><td>避免要求规划模型选择候选中不存在的工具</td></tr>
-                        <tr><td><strong>可用于 DPO 的实际错误</strong></td><td>2,156 条</td><td>2,157 条</td><td>只保留可解析的工具集合错误或顺序错误</td></tr>
-                        <tr class="result-table-final"><td><strong>DPO 偏好数据</strong></td><td><strong>2,000 对</strong><small>1,916 个唯一请求 + 84 个同题第二次真实生成</small></td><td><strong>2,000 对</strong><small>请求与来源轨迹全部唯一</small></td><td><strong>1,800 对训练 + 200 对监控；日常说法 / 明确工具需求 1,600 / 400；覆盖 100 个工具</strong></td></tr>
-                        <tr><td><strong>初始 DPO 参数开发集</strong></td><td colspan="2"><strong>1,400 条</strong><small>日常说法 1,200 + 明确工具需求 200</small></td><td>与 SFT、初始偏好数据和受控回放在请求及轨迹 ID 上均不重叠</td></tr>
-                        <tr><td><strong>初始 DPO 受控回放</strong></td><td colspan="2">日常电商 6K + 明确工具需求 1K + 9K 分流—检索—规划联合测试</td><td>初始参数与随机种子确定后使用；checkpoint-100 结果只作为残差训练起点</td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <p class="planner-result-boundary"><strong>哪些数据没有进入训练：</strong>没有使用手工伪造的错误答案、只有格式错误的输出或任何最终测试样本。4B 中有 84 个请求各使用了 SFT 模型的第二次实际错误生成，但每个请求最多贡献两对。</p>
-                </div>
-
-                <div class="planner-table-block">
-                  <div class="planner-table-heading">
-                    <h4>05B · 初始 DPO：分别选择 4B / 8B 参数</h4>
-                    <p>使用 MS-SWIFT <code>swift rlhf</code> 与 Qwen3 对话模板，损失为 sigmoid DPO。每个模型训练 4 个学习率 × beta 组合，并评测 0.5 / 1 轮，共 8 个候选点；所有样本均未截断。</p>
-                  </div>
-                  <div class="result-table-wrap" tabindex="0">
-                    <table class="result-table result-table-compact planner-result-table numeric-result-table dpo-grid-table">
-                      <thead><tr><th scope="col">模型</th><th scope="col">学习率</th><th scope="col">beta</th><th scope="col">轮数</th><th scope="col">无 RAG 工具链</th><th scope="col">RAG 集合</th><th scope="col">RAG 工具链</th><th scope="col">格式合规率</th><th scope="col">3–6 工具最差值</th><th scope="col">判定</th></tr></thead>
-                      <tbody>
-                        <tr><td>4B · 仅 SFT</td><td>—</td><td>—</td><td>—</td><td>61.5714%</td><td>74.4286%</td><td>73.9286%</td><td>99.7857%</td><td>56.9536%</td><td>同输入比较起点</td></tr>
-                        <tr><td>4B</td><td>5e-7</td><td>0.05</td><td>0.5</td><td>62.7143%</td><td>76.0714%</td><td>75.7143%</td><td>99.8571%</td><td>58.2781%</td><td>通过</td></tr>
-                        <tr><td>4B</td><td>5e-7</td><td>0.05</td><td>1</td><td>62.5000%</td><td>76.6429%</td><td>76.2857%</td><td>99.8571%</td><td>60.5263%</td><td>通过</td></tr>
-                        <tr><td>4B</td><td>5e-7</td><td>0.10</td><td>0.5</td><td>62.7857%</td><td>76.0000%</td><td>75.7143%</td><td>99.8571%</td><td>58.9404%</td><td>通过</td></tr>
-                        <tr><td>4B</td><td>5e-7</td><td>0.10</td><td>1</td><td>62.7143%</td><td>76.5714%</td><td>76.2143%</td><td>99.8571%</td><td>60.2649%</td><td>通过</td></tr>
-                        <tr><td>4B</td><td>1e-6</td><td>0.05</td><td>0.5</td><td>62.2857%</td><td>78.0000%</td><td>77.7143%</td><td>99.9286%</td><td>61.8421%</td><td>通过</td></tr>
-                        <tr class="result-table-final"><td><strong>4B</strong></td><td><strong>1e-6</strong></td><td><strong>0.05</strong></td><td><strong>1</strong></td><td>62.6429%</td><td><strong>78.6429%</strong></td><td><strong>78.3571%</strong></td><td><strong>99.9286%</strong></td><td><strong>62.5000%</strong></td><td><strong>采用</strong></td></tr>
-                        <tr><td>4B</td><td>1e-6</td><td>0.10</td><td>0.5</td><td>62.6429%</td><td>77.8571%</td><td>77.5714%</td><td>99.8571%</td><td>61.1842%</td><td>通过</td></tr>
-                        <tr><td>4B</td><td>1e-6</td><td>0.10</td><td>1</td><td>62.8571%</td><td>78.5714%</td><td>78.2857%</td><td>99.9286%</td><td>61.8421%</td><td>通过</td></tr>
-                        <tr class="table-divider"><td>8B · 仅 SFT</td><td>—</td><td>—</td><td>—</td><td>64.2857%</td><td>74.7857%</td><td>74.5714%</td><td>99.8571%</td><td>57.8947%</td><td>同输入比较起点</td></tr>
-                        <tr><td>8B</td><td>5e-7</td><td>0.05</td><td>0.5</td><td>64.2857%</td><td>76.2143%</td><td>76.0000%</td><td>99.8571%</td><td>60.5263%</td><td>通过</td></tr>
-                        <tr><td>8B</td><td>5e-7</td><td>0.05</td><td>1</td><td>64.2143%</td><td>76.5714%</td><td>76.3571%</td><td>99.8571%</td><td>61.1842%</td><td>通过</td></tr>
-                        <tr><td>8B</td><td>5e-7</td><td>0.10</td><td>0.5</td><td>64.5000%</td><td>76.1429%</td><td>75.9286%</td><td>99.8571%</td><td>60.9272%</td><td>通过</td></tr>
-                        <tr><td>8B</td><td>5e-7</td><td>0.10</td><td>1</td><td>64.2857%</td><td>76.7857%</td><td>76.5000%</td><td>99.8571%</td><td>61.8421%</td><td>通过</td></tr>
-                        <tr><td>8B</td><td>1e-6</td><td>0.05</td><td>0.5</td><td>64.0714%</td><td>77.5714%</td><td>77.5000%</td><td>99.7857%</td><td>62.5000%</td><td>通过</td></tr>
-                        <tr><td>8B</td><td>1e-6</td><td>0.05</td><td>1</td><td>64.1429%</td><td>77.9286%</td><td>77.8571%</td><td>99.5714%</td><td>62.5000%</td><td>格式合规率低于预设下限</td></tr>
-                        <tr><td>8B</td><td>1e-6</td><td>0.10</td><td>0.5</td><td>64.4286%</td><td>77.6429%</td><td>77.5000%</td><td>99.7857%</td><td>62.5000%</td><td>通过</td></tr>
-                        <tr class="result-table-final"><td><strong>8B</strong></td><td><strong>1e-6</strong></td><td><strong>0.10</strong></td><td><strong>1</strong></td><td><strong>64.5714%</strong></td><td><strong>77.9286%</strong></td><td><strong>77.8571%</strong></td><td><strong>99.7143%</strong></td><td><strong>62.5000%</strong></td><td><strong>采用</strong></td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <p class="planner-result-boundary"><strong>选择规则：</strong>先比较 Top-10 输入下的工具链全对率、集合全对率和 3–6 工具中的最低分，再检查完整 100 工具输入、JSON 格式以及两类请求是否明显下降。8B 的 beta 0.05 / 1 轮虽然主分数并列，但格式合规率低于预设下限，因此选择 beta 0.10。</p>
-                </div>
-
-                <div class="planner-table-block">
-                  <div class="planner-table-heading">
-                    <h4>05C · 初始 DPO：用三个随机种子确认所选参数是否稳定</h4>
-                    <p>20260802 是正式网格种子；只用 20260803 / 20260804 复训确认，不从三个种子中重新挑最高结果。</p>
+                    <h4>05A · 主训练：比较纯 DPO 与正确答案概率锚点</h4>
+                    <p>四个配方并行训练 1 轮。RPO 在 DPO 排序损失之外加入 chosen 的生成损失，使模型在远离错误工具链的同时维持正确工具链概率；四组共同使用 beta 0.1 和同一固定参考模型。</p>
                   </div>
                   <div class="result-table-wrap" tabindex="0">
                     <table class="result-table result-table-compact planner-result-table numeric-result-table">
-                      <thead><tr><th scope="col">采用参数</th><th scope="col">仅 SFT</th><th scope="col">seed 20260802</th><th scope="col">seed 20260803</th><th scope="col">seed 20260804</th><th scope="col">DPO 三次均值</th><th scope="col">DPO 最低值</th><th scope="col">标准差</th><th scope="col">判定</th></tr></thead>
+                      <thead><tr><th scope="col">训练目标</th><th scope="col">学习率</th><th scope="col">正确答案损失权重</th><th scope="col">第 225 步开发集工具链全对率</th><th scope="col">判定</th></tr></thead>
                       <tbody>
-                        <tr class="result-table-final"><td><strong>4B · lr1e-6 / beta 0.05 / 1 轮</strong></td><td>73.9286%</td><td>78.3571%</td><td>78.2857%</td><td>78.0000%</td><td><strong>78.2143%</strong></td><td>78.0000%</td><td>0.1543pp</td><td><strong>通过</strong></td></tr>
-                        <tr class="result-table-final"><td><strong>8B · lr1e-6 / beta 0.10 / 1 轮</strong></td><td>74.5714%</td><td>77.8571%</td><td>77.9286%</td><td>77.7857%</td><td><strong>77.8571%</strong></td><td>77.7857%</td><td>0.0583pp</td><td><strong>通过</strong></td></tr>
+                        <tr><td>DPO</td><td>5e-7</td><td>0</td><td>87.3333%</td><td>对照</td></tr>
+                        <tr><td>DPO + RPO</td><td>5e-7</td><td>0.5</td><td>87.4167%</td><td>对照</td></tr>
+                        <tr><td>DPO + RPO</td><td>5e-7</td><td>1.0</td><td>87.2500%</td><td>对照</td></tr>
+                        <tr class="result-table-final"><td><strong>DPO + RPO</strong></td><td><strong>1e-6</strong></td><td><strong>0.5</strong></td><td><strong>88.2500%</strong></td><td><strong>进入短程扩展</strong></td></tr>
                       </tbody>
                     </table>
                   </div>
-                  <p class="planner-result-boundary"><strong>稳定性结果：</strong>4B / 8B 的 DPO 三次均值分别比仅 SFT 高 4.2857pp / 3.2857pp；三次训练都满足 JSON 格式、完整 100 工具输入、两类请求和长工具链的预设下限。</p>
+                  <p class="planner-result-boundary"><strong>为什么继续：</strong>主训练最高分出现在最后一个 checkpoint，说明曲线仍在边界上升；因此从该点继续 0.5 轮，并保持参考模型不变。</p>
                 </div>
 
                 <div class="planner-table-block">
                   <div class="planner-table-heading">
-                    <h4>05D · 初始 DPO：在完全相同的推理条件下比较 SFT 与 DPO</h4>
-                    <p>每一行中的“仅 SFT”和“SFT + DPO”使用相同输入、提示、批量、分片、精度、随机种子和贪心解码。因此 DPO 增量只能在同一行内计算，不能与 04B 的另一批 SFT 预测交叉相减。</p>
+                    <h4>05B · 短程扩展：比较继续 RPO 与切换纯 DPO</h4>
+                    <p>从主训练 checkpoint-225 出发，比较四种 0.5 轮扩展。主阶段与扩展阶段合计 28 个 checkpoint，全部在同一 1,200 条开发请求上评测。</p>
+                  </div>
+                  <div class="result-table-wrap" tabindex="0">
+                    <table class="result-table result-table-compact planner-result-table numeric-result-table">
+                      <thead><tr><th scope="col">扩展目标</th><th scope="col">学习率</th><th scope="col">第 113 步集合全对率</th><th scope="col">第 113 步工具链全对率</th><th scope="col">格式合规率</th><th scope="col">判定</th></tr></thead>
+                      <tbody>
+                        <tr class="result-table-final"><td><strong>DPO</strong></td><td><strong>5e-7</strong></td><td><strong>88.9167%</strong></td><td><strong>88.8333%</strong></td><td><strong>99.8333%</strong></td><td><strong>采用</strong></td></tr>
+                        <tr><td>DPO + RPO · 权重 0.5</td><td>1e-6</td><td>88.9167%</td><td>88.8333%</td><td>99.8333%</td><td>聚合指标并列</td></tr>
+                        <tr><td>DPO + RPO · 权重 0.5</td><td>5e-7</td><td>88.7500%</td><td>88.5833%</td><td>99.8333%</td><td>未采用</td></tr>
+                        <tr><td>DPO + RPO · 权重 0.5</td><td>2e-7</td><td>88.5833%</td><td>88.5000%</td><td>99.9167%</td><td>未采用</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p class="planner-result-boundary"><strong>锁定规则：</strong>纯 DPO 与继续 RPO 的两个端点聚合指标完全相同，逐条改善 / 回退为 2 / 2；按预先固定的确定性排序选择纯 DPO checkpoint-113。6K / 1K 冻结测试没有参与破平。</p>
+                </div>
+
+                <div class="planner-table-block">
+                  <div class="planner-table-heading">
+                    <h4>05C · 开发集确认最终端点</h4>
+                    <p>该 1,200 条开发集是唯一参与模型选择的端到端请求集，检索未覆盖的 40 条仍按失败计入。</p>
                   </div>
                   <div class="result-table-wrap" tabindex="0">
                     <table class="result-table result-table-compact planner-result-table planner-final-table">
-                      <thead><tr><th scope="col">模型</th><th scope="col">评测集</th><th scope="col">模型可见的工具</th><th scope="col"><span class="result-column-title">仅 SFT</span><small class="result-column-metrics">集合 / 工具链 / 格式合规率</small></th><th scope="col"><span class="result-column-title">SFT + DPO</span><small class="result-column-metrics">集合 / 工具链 / 格式合规率</small></th><th scope="col">工具链增量</th></tr></thead>
+                      <thead><tr><th scope="col">模型阶段</th><th scope="col">集合全对率</th><th scope="col">工具链全对率</th><th scope="col">格式合规率</th><th scope="col">检索命中条件下工具链全对率</th></tr></thead>
                       <tbody>
-                        <tr><td rowspan="4">4B</td><td rowspan="2">日常电商请求 6K</td><td>完整 100 工具</td><td>57.3000% / 56.6333% / 95.7167%</td><td>57.3167% / 56.7167% / 96.6500%</td><td>+0.0833pp</td></tr>
-                        <tr><td><strong>RAG Top-10</strong></td><td>71.3500% / 71.0667% / 99.4167%</td><td><strong>74.9667% / 74.7000% / 99.6333%</strong></td><td><strong>+3.6333pp</strong></td></tr>
-                        <tr><td rowspan="2">工具需求明确的请求 1K</td><td>完整 100 工具</td><td>93.1000% / 93.0000% / 98.8000%</td><td>93.2000% / 93.1000% / 98.9000%</td><td>+0.1000pp</td></tr>
-                        <tr><td><strong>RAG Top-10</strong></td><td>98.4000% / 98.4000% / 100.0000%</td><td><strong>99.1000% / 99.1000% / 100.0000%</strong></td><td><strong>+0.7000pp</strong></td></tr>
-                        <tr class="table-divider"><td rowspan="4"><strong>8B</strong></td><td rowspan="2">日常电商请求 6K</td><td>完整 100 工具</td><td>59.8500% / 59.3167% / 95.9167%</td><td>59.1833% / 58.9167% / 96.6167%</td><td><strong>−0.4000pp</strong></td></tr>
-                        <tr class="result-table-final"><td><strong>RAG Top-10</strong></td><td>70.6000% / 70.4833% / 99.3167%</td><td><strong>73.6667% / 73.5333% / 99.2333%</strong></td><td><strong>+3.0500pp</strong></td></tr>
-                        <tr><td rowspan="2">工具需求明确的请求 1K</td><td>完整 100 工具</td><td>95.8000% / 95.8000% / 99.9000%</td><td>94.9000% / 94.9000% / 99.9000%</td><td><strong>−0.9000pp</strong></td></tr>
-                        <tr class="result-table-final"><td><strong>RAG Top-10</strong></td><td>98.1000% / 98.1000% / 100.0000%</td><td><strong>99.1000% / 99.1000% / 100.0000%</strong></td><td><strong>+1.0000pp</strong></td></tr>
+                        <tr><td>偏好训练起点</td><td>85.8333%</td><td>85.6667%</td><td>99.7500%</td><td>88.6207%</td></tr>
+                        <tr class="result-table-final"><td><strong>最终 Planner</strong></td><td><strong>88.9167%</strong></td><td><strong>88.8333%</strong></td><td><strong>99.8333%</strong></td><td><strong>91.8966%</strong></td></tr>
+                        <tr><td><strong>提升</strong></td><td>+3.0834pp</td><td><strong>+3.1666pp</strong></td><td>+0.0833pp</td><td>+3.2759pp</td></tr>
                       </tbody>
                     </table>
                   </div>
-                  <p class="planner-result-boundary"><strong>中间结果：</strong>8B 在 6K 日常电商 Top-10 测试中改善 210 条、变差 27 条，McNemar p=2.68e-36；在 1K 明确工具需求 Top-10 测试中改善 10 条、变差 0 条，p=0.001953。该模型随后作为残差 DPO 的固定起点，不是最终部署权重。</p>
+                  <p class="planner-result-boundary"><strong>逐条证据：</strong>工具链改善 42 条、回退 4 条，净改善 38 条；exact McNemar p=5.10e-9。</p>
                 </div>
 
                 <div class="planner-table-block">
                   <div class="planner-table-heading">
-                    <h4>05E · 初始 DPO：记录 9K 中间端点</h4>
-                    <p>3,000 条闲聊需正确识别且不进入工具检索；6,000 条电商请求还需候选完整，并生成集合与顺序均完全正确的工具链。该表保留初始 DPO 的受控结果，用来说明后续残差训练从哪里开始。</p>
-                  </div>
-                  <div class="result-table-wrap" tabindex="0">
-                    <table class="result-table result-table-compact planner-result-table numeric-result-table">
-                      <thead><tr><th scope="col">规划模型</th><th scope="col">仅 SFT · 集合 / 工具链</th><th scope="col">初始 DPO · 集合 / 工具链</th><th scope="col">初始 DPO 工具链通过数</th><th scope="col">工具链增量</th><th scope="col">用途</th></tr></thead>
-                      <tbody>
-                        <tr><td>4B · 9K</td><td>80.9000% / 80.7111%</td><td><strong>83.3111% / 83.1333%</strong></td><td><strong>7,482 / 9,000</strong></td><td><strong>+2.4222pp</strong></td><td>4B 对照，不再继续残差训练</td></tr>
-                        <tr class="result-table-final"><td><strong>8B · 9K</strong><small>初始 DPO checkpoint-100</small></td><td>80.4000% / 80.3222%</td><td><strong>82.4444% / 82.3556%</strong></td><td><strong>7,412 / 9,000</strong></td><td><strong>+2.0333pp</strong></td><td><strong>两轮残差 DPO 的起点</strong></td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <p class="planner-result-boundary"><strong>为什么继续使用 8B：</strong>4B 初始 DPO 在这套 9K 测试上的点估计更高，但 8B 分支已在查看最终测试前依据开发请求与未见工具组合请求锁定；后续只沿该分支训练，避免使用最终测试反向选择模型。</p>
-                </div>
-
-                <div class="planner-table-block">
-                  <div class="planner-table-heading">
-                    <h4>05F · 两轮残差 DPO：继续学习上一阶段仍答错的真实样本</h4>
-                    <p>另建两套各 1,200 条、写法接近日常请求的开发集与确认集；两者不进入训练，并与 SFT、初始 DPO、偏好数据和冻结测试隔离。第一轮使用 2,200 对真实错误；第二轮从全新 24K 训练侧请求的 5,993 个真实语义错误中选取 5,000 对。</p>
-                  </div>
-                  <div class="result-table-wrap" tabindex="0">
-                    <table class="result-table result-table-compact planner-result-table numeric-result-table">
-                      <thead><tr><th scope="col">训练阶段</th><th scope="col">偏好对</th><th scope="col">开发集工具链全对率</th><th scope="col">独立确认集工具链全对率</th><th scope="col">确认集格式合规率</th><th scope="col">判定</th></tr></thead>
-                      <tbody>
-                        <tr><td>初始 DPO checkpoint-100</td><td>2,000</td><td>72.5000%</td><td>72.8333%</td><td>99.3333%</td><td>残差训练起点</td></tr>
-                        <tr><td>残差 DPO 第一轮 · checkpoint-196</td><td>2,200</td><td>77.5000%</td><td>75.4167%</td><td>99.2500%</td><td>进入第二轮</td></tr>
-                        <tr class="result-table-final"><td><strong>残差 DPO 第二轮 · checkpoint-63</strong></td><td><strong>5,000</strong></td><td><strong>78.1667%</strong></td><td><strong>76.4167%</strong></td><td><strong>99.1667%</strong></td><td><strong>采用</strong></td></tr>
-                        <tr><td>第三批全新残余错误</td><td>5,000</td><td>78.4167%</td><td>76.0833%</td><td>98.7500%</td><td>确认集下降，不采用</td></tr>
-                        <tr><td>旧错误 / 新残余错误各半回放</td><td>5,000</td><td>78.4167%</td><td>76.4167%</td><td>98.6667%</td><td>准确率持平但格式变差，不采用</td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <p class="planner-result-boundary"><strong>停止依据：</strong>第二轮在学习率 1e-6、beta 0.1 的第 63 步达到更好的独立确认结果；后续全新错误和旧新回放都没有同时改善工具链与格式合规率，说明同分布残差训练已经出现饱和。</p>
-                </div>
-
-                <div class="planner-table-block">
-                  <div class="planner-table-heading">
-                    <h4>05G · 用三个训练种子确认第二轮结果</h4>
-                    <p>三个种子使用同一配方；seed 20260804 是原始选择种子，另外两个只检查稳定性，不从三次结果中重新挑选最高开发分。</p>
-                  </div>
-                  <div class="result-table-wrap" tabindex="0">
-                    <table class="result-table result-table-compact planner-result-table numeric-result-table">
-                      <thead><tr><th scope="col">训练种子</th><th scope="col">开发集工具链全对率</th><th scope="col">独立确认集工具链全对率</th><th scope="col">判定</th></tr></thead>
-                      <tbody>
-                        <tr class="result-table-final"><td><strong>20260804</strong></td><td>78.1667%</td><td><strong>76.4167%</strong></td><td><strong>保留原始选择</strong></td></tr>
-                        <tr><td>20260805</td><td>78.1667%</td><td>76.1667%</td><td>稳定性检查</td></tr>
-                        <tr><td>20260806</td><td>78.3333%</td><td>75.9167%</td><td>稳定性检查</td></tr>
-                        <tr class="table-divider"><td><strong>三次均值</strong></td><td><strong>78.2222%</strong></td><td><strong>76.1667%</strong></td><td>未重新选种子</td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div class="planner-table-block">
-                  <div class="planner-table-heading">
-                    <h4>05H · 锁定后一次性报告最终测试</h4>
-                    <p>模型在隔离开发集、独立确认集与三个种子检查后锁定，随后才执行本轮 6K、1K 与 9K 最终回放。下表将初始 DPO checkpoint-100 与最终第二轮残差 DPO checkpoint-63 作同口径比较。</p>
+                    <h4>05D · 模型锁定后报告 6K、1K 与 9K</h4>
+                    <p>三行模型使用同一个检索 Top-10 和同一批测试请求，用来展示当前训练路径的阶段增益；最终采用 checkpoint-113。</p>
                   </div>
                   <div class="result-table-wrap" tabindex="0">
                     <table class="result-table result-table-compact planner-result-table planner-final-table">
-                      <thead><tr><th scope="col">正式评测</th><th scope="col"><span class="result-column-title">初始 DPO</span><small class="result-column-metrics">checkpoint-100</small></th><th scope="col"><span class="result-column-title">最终残差 DPO</span><small class="result-column-metrics">checkpoint-63</small></th><th scope="col">工具链提升</th></tr></thead>
+                      <thead><tr><th scope="col">Planner 阶段</th><th scope="col"><span class="result-column-title">日常电商请求 6K</span><small class="result-column-metrics">集合 / 工具链 / 格式合规率</small></th><th scope="col">明确工具需求 1K<br><small>工具链全对率</small></th><th scope="col">9K 系统工具链</th></tr></thead>
                       <tbody>
-                        <tr><td><strong>日常电商请求 6K</strong><small>集合 / 工具链 / 格式合规率</small></td><td>73.6667% / 73.5333% / 99.2333%</td><td><strong>77.5833% / 77.4167% / 99.1000%</strong></td><td><strong>+3.8834pp</strong></td></tr>
-                        <tr><td><strong>工具需求明确的请求 1K</strong><small>集合 / 工具链 / 格式合规率</small></td><td>99.1000% / 99.1000% / 100.0000%</td><td><strong>99.6000% / 99.6000% / 100.0000%</strong></td><td><strong>+0.5000pp</strong></td></tr>
-                        <tr class="result-table-final"><td><strong>9K 分流—检索—规划联合测试</strong><small>集合 / 有序工具链</small></td><td>82.4444% / 82.3556%</td><td><strong>85.0556% / 84.9444%</strong><small>7,655 / 7,645 条</small></td><td><strong>+2.5889pp</strong></td></tr>
+                        <tr><td>监督训练</td><td>86.1333% / 85.6833% / 99.7833%</td><td>99.5000%</td><td>8,141 / 9,000 · 90.4556%</td></tr>
+                        <tr><td>偏好训练起点</td><td>86.2667% / 85.8000% / 99.7833%</td><td>99.5000%</td><td>8,148 / 9,000 · 90.5333%</td></tr>
+                        <tr class="result-table-final"><td><strong>最终 Planner · checkpoint-113</strong></td><td><strong>89.2000% / 88.9333% / 99.8833%</strong></td><td><strong>99.4000%</strong></td><td><strong>8,336 / 9,000 · 92.6222%</strong></td></tr>
                       </tbody>
                     </table>
                   </div>
-                  <p class="planner-result-boundary"><strong>最终端点：</strong>Qwen3-8B · 9K SFT → 初始 DPO → 两轮残差 DPO checkpoint-63。相对仅 SFT，6K 工具链全对率累计提高 6.9334pp，9K 系统工具链成功数增加 416 条。</p>
+                  <p class="planner-result-boundary"><strong>最终增益：</strong>相对监督训练，6K 工具链提高 3.2500pp，9K 增加 195 条成功请求；相对偏好训练起点，6K 改善 / 回退 222 / 34，p=5.28e-35。1K 由 99.5% 变为 99.4%，仅 1 条改善、2 条回退，不能支持稳定变化结论。</p>
                 </div>
 
                 <div class="planner-table-block">
                   <div class="planner-table-heading">
-                    <h4>05I · 最终模型改善了哪些工具链，剩余错误在哪里</h4>
-                    <p>下面只分析 6,000 条日常电商请求上的最终 8B Top-10 结果。该测试集已经打开，其错误只用于解释结果，不再回流训练或选择 checkpoint。</p>
+                    <h4>05E · 最终系统主结果</h4>
+                    <p>3,000 条闲聊必须被正确分流；6,000 条电商请求还需输出完全正确的工具集合与顺序。</p>
                   </div>
                   <div class="result-table-wrap" tabindex="0">
-                    <table class="result-table result-table-compact planner-result-table numeric-result-table">
-                      <thead><tr><th scope="col">目标工具数</th><th scope="col">样本数</th><th scope="col">仅 SFT</th><th scope="col">最终残差 DPO</th><th scope="col">增量</th></tr></thead>
+                    <table class="result-table result-table-compact planner-result-table planner-final-table">
+                      <thead><tr><th scope="col">系统指标</th><th scope="col">正确数</th><th scope="col">比例</th><th scope="col">是否包含真实工具执行</th></tr></thead>
                       <tbody>
-                        <tr><td>1</td><td>3,000</td><td>86.4667%</td><td><strong>91.3667%</strong></td><td>+4.9000pp</td></tr>
-                        <tr><td>2</td><td>481</td><td>67.5676%</td><td><strong>76.0915%</strong></td><td>+8.5239pp</td></tr>
-                        <tr><td>3</td><td>681</td><td>55.3598%</td><td><strong>65.3451%</strong></td><td>+9.9853pp</td></tr>
-                        <tr><td>4</td><td>592</td><td>52.7027%</td><td><strong>64.1892%</strong></td><td><strong>+11.4865pp</strong></td></tr>
-                        <tr><td>5</td><td>653</td><td>54.5176%</td><td><strong>62.4809%</strong></td><td>+7.9633pp</td></tr>
-                        <tr><td>6</td><td>593</td><td>44.6880%</td><td><strong>51.4334%</strong></td><td>+6.7454pp</td></tr>
+                        <tr><td><strong>工具集合完全正确</strong></td><td><strong>8,352 / 9,000</strong></td><td><strong>92.8000%</strong></td><td>否</td></tr>
+                        <tr class="result-table-final"><td><strong>有序工具链完全正确</strong></td><td><strong>8,336 / 9,000</strong></td><td><strong>92.6222%</strong></td><td><strong>否</strong></td></tr>
                       </tbody>
                     </table>
                   </div>
-                  <div class="result-table-wrap" tabindex="0">
-                    <table class="result-table result-table-compact planner-result-table numeric-result-table">
-                      <thead><tr><th scope="col">6K 最终结果 · 互斥归因</th><th scope="col">条数</th><th scope="col">占 6K</th><th scope="col">含义</th></tr></thead>
-                      <tbody>
-                        <tr class="result-table-final"><td><strong>工具链完全正确</strong></td><td><strong>4,645</strong></td><td><strong>77.4167%</strong></td><td>集合与顺序都正确</td></tr>
-                        <tr><td>检索未找齐必要工具</td><td>157</td><td>2.6167%</td><td>Top-10 中缺少至少一个目标工具</td></tr>
-                        <tr><td>规划模型集合选择错误</td><td>1,134</td><td>18.9000%</td><td>候选可用，但漏选、多选或错选工具</td></tr>
-                        <tr><td>输出格式错误</td><td>54</td><td>0.9000%</td><td>重复、未知或越过候选范围</td></tr>
-                        <tr><td>只错顺序</td><td>10</td><td>0.1667%</td><td>工具集合正确，但顺序不正确</td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <p class="planner-result-boundary"><strong>当前瓶颈：</strong>检索成功样本中的工具链全对率为 79.5104%；1,134 条集合选择错误远多于其他错误，且 5–6 工具长链仍最低。检索模块单独统计有 158 条 Top-10 失败；这里先归入格式错误，因此互斥归因剩 157 条。6K 达到 90% 需要 5,400 条正确，目前还差净修复 755 条。冻结测试不再用于继续调参。</p>
                 </div>
+                <p class="planner-result-boundary"><strong>最终端点：</strong>Qwen3-8B · 77,724 条监督训练 → 偏好训练起点 → RPO 主训练 → DPO 短程收敛 checkpoint-113。92.6222% 只表示静态分流与有序工具 ID 选择成功率。</p>
               </div>
             </details>
           </div>
@@ -1434,168 +1224,63 @@
 
         <details class="narrative-disclosure data-disclosure efficiency-disclosure experiment-environment-disclosure" id="plannerEnvironment">
           <summary>
-            <span class="disclosure-summary-copy"><small>06 · 数据、隔离与运行环境</small><strong>每套数据用来做什么，以及训练和推理花费多少</strong></span>
-            <span class="disclosure-summary-meta">初始 8B DPO：16 分 51 秒 ｜ 最终残差模型 6K 推理 p50：410.1ms</span>
+            <span class="disclosure-summary-copy"><small>06 · 实验数据、协议与环境</small><strong>核对监督数据、偏好数据、隔离规则与运行成本</strong></span>
+            <span class="disclosure-summary-meta">SFT 77,724 条 · 偏好 4,000 对 · 开发 1,200 条 · 4 × RTX 5090</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body efficiency-body">
             <section class="data-evidence-section experiment-data-section" aria-labelledby="plannerTrainingDataTitle">
               <div class="data-evidence-heading">
-                <div><p>06A · 每套数据的用途</p><h3 id="plannerTrainingDataTitle">训练、选参数和最终测试彼此分开</h3></div>
-                <span>先用 9K 数据选择 SFT 参数并比较训练量，再依次用 SFT 错误和新残余错误训练 DPO；残差阶段只在隔离开发与确认数据上选择，锁定后才执行本轮 6K / 1K / 9K 最终回放。</span>
+                <div><p>06A · 数据职责</p><h3 id="plannerTrainingDataTitle">训练、选择和最终测试彼此分开</h3></div>
+                <span>冻结测试不进入偏好构造或 checkpoint 选择。</span>
               </div>
               <div class="data-table-wrap" tabindex="0">
                 <table class="data-table experiment-data-table">
-                  <thead><tr><th scope="col">阶段与数据</th><th scope="col">规模</th><th scope="col">回答的问题</th><th scope="col">是否参与选择</th><th scope="col">结果 / 使用限制</th></tr></thead>
+                  <thead><tr><th scope="col">数据</th><th scope="col">规模</th><th scope="col">用途</th><th scope="col">参与选型</th><th scope="col">隔离与结果</th></tr></thead>
                   <tbody>
-                    <tr><td><strong>早期训练方向验证</strong><span>独立请求</span></td><td><strong>1,000 条</strong></td><td>固定 Top-10 时，首次监督训练是否学会工具集合与顺序</td><td>只确认方向</td><td>协议早于最终 6K，绝对分数不可直接比较</td></tr>
-                    <tr><td><strong>9K 监督训练参数开发</strong><span>工具需求明确的请求与当时候选</span></td><td><strong>2,400 条</strong></td><td>选择学习率、训练轮数、LoRA 秩与 dropout</td><td><strong>是</strong></td><td>4B 21 个唯一版本；8B 确认 3 个优胜配置</td></tr>
-                    <tr><td><strong>候选数量与融合开发集</strong><span>实验 02</span></td><td><strong>2,400 条开发 + 1,200 条确认</strong></td><td>联合选择精排数量、规划输入数量与最终融合参数</td><td><strong>是</strong></td><td>规划候选必须全部经过精排；最终采用精排 20 / 规划 10</td></tr>
-                    <tr><td><strong>长候选压力测试</strong><span>参数确定后</span></td><td><strong>1,200 条</strong></td><td>增加精排或规划候选是否稳定改善准确率</td><td>否</td><td>只解释长输入干扰；完整结果见实验 02</td></tr>
-                    <tr><td><strong>SFT 训练数据</strong><span>明确写出工具需求</span></td><td><strong>9K / 18K / 36K / 54K</strong><small>后者逐级包含前者</small></td><td>固定同一训练参数，检查增加数据是否改善质量</td><td>训练输入</td><td>不混入检索模型使用的 24K 轨迹</td></tr>
-                    <tr><td><strong>SFT 训练量与模型开发集</strong><span>日常说法 + 明确工具需求</span></td><td><strong>2,400 条开发 + 1,200 条未见组合</strong></td><td>先为 4B / 8B 选择训练量，再比较两个模型</td><td><strong>是</strong></td><td>按 6:1 加权；最终选择 8B · 9K</td></tr>
-                    <tr><td><strong>初始 DPO 偏好数据</strong><span>SFT 实际错误</span></td><td><strong>每模型 2,000 对</strong><small>1,800 训练 + 200 监控</small></td><td>学习把同一 Top-10 下的错误工具链改成正确工具链</td><td>训练输入</td><td>覆盖 100 工具；不含手工错误答案或最终测试</td></tr>
-                    <tr><td><strong>初始 DPO 参数开发集</strong><span>日常说法 + 明确工具需求</span></td><td><strong>1,400 条</strong><small>1,200 / 200</small></td><td>选择学习率、beta 与轮数，并检查长链、格式和完整 100 工具输入</td><td><strong>是</strong></td><td>与 SFT、DPO 偏好数据和 6K / 1K 最终测试均无重叠</td></tr>
-                    <tr><td><strong>残差 DPO 偏好数据</strong><span>上一阶段仍答错的真实输出</span></td><td><strong>第一轮 2,200 对</strong><small>1,980 / 220</small><br><strong>第二轮 5,000 对</strong><small>4,500 / 500</small></td><td>继续学习更接近日常说法的残余错误</td><td>训练输入</td><td>第二轮来自全新 24K 训练侧请求；5,000 个请求与来源均唯一，覆盖 100 工具</td></tr>
-                    <tr><td><strong>残差 DPO 开发与确认集</strong><span>两套隔离的日常说法请求</span></td><td><strong>1,200 + 1,200 条</strong></td><td>选择两轮 checkpoint、做三种子确认，并拒绝后续无增益训练</td><td><strong>是</strong></td><td>开发 / 确认检索 AllHit@10 为 97.75% / 97.25%；均不进入训练</td></tr>
-                    <tr class="result-table-final"><td><strong>最终测试</strong><span>锁定残差 DPO 后一次性报告</span></td><td><strong>日常电商 6K + 明确工具需求 1K + 9K 联合测试</strong></td><td>第二轮 checkpoint、三个种子与停止结论确定后，报告最终结果</td><td>否</td><td><strong>7,645 / 9,000 · 84.9444%</strong></td></tr>
+                    <tr><td><strong>SFT 训练数据</strong><span>两种请求写法</span></td><td><strong>77,724 条</strong><small>53,725 + 23,999</small></td><td>训练 8B Planner 的候选选择与有序输出</td><td>训练输入</td><td>固定当前 Top-10 与正确工具链</td></tr>
+                    <tr><td><strong>偏好错误挖掘请求</strong><span>训练侧新生成</span></td><td><strong>24,000 + 12,000 条</strong></td><td>分别覆盖偏长多约束与 1–2 工具请求</td><td>数据构造</td><td>只从 Top-10 覆盖完整且模型实际答错的样本取 rejected</td></tr>
+                    <tr><td><strong>偏好数据</strong><span>真实错误配对</span></td><td><strong>4,000 对</strong><small>3,600 训练 / 400 监控</small></td><td>比较 DPO、RPO 与短程扩展</td><td>训练输入</td><td>覆盖 1–6 工具和全部 100 工具；每个请求 / 来源最多一对</td></tr>
+                    <tr><td><strong>Planner 开发集</strong><span>训练侧独立生成</span></td><td><strong>1,200 条</strong></td><td>评测 28 个 checkpoint 并锁定最终端点</td><td><strong>是</strong></td><td>检索 AllHit@10 96.6667%；40 条未命中仍计失败</td></tr>
+                    <tr class="result-table-final"><td><strong>冻结测试</strong><span>模型锁定后报告</span></td><td><strong>日常电商 6K + 明确需求 1K + 系统 9K</strong></td><td>报告规划主结果、补充结果与系统结果</td><td>否</td><td><strong>6K 工具链 88.9333% · 9K 工具链 92.6222%</strong></td></tr>
                   </tbody>
                 </table>
               </div>
-              <p class="data-boundary-note"><strong>不参与选择的补充检查：</strong>另有 1,200 条请求只用于复核训练量结论，不会改变“2.4K 开发请求 + 1.2K 未见工具组合请求”的选择结果。</p>
             </section>
 
             <section class="data-evidence-section" aria-labelledby="plannerAuditTitle">
               <div class="data-evidence-heading">
-                <div><p>06B · 数据隔离检查</p><h3 id="plannerAuditTitle">训练、开发与最终测试没有样本重叠</h3></div>
-                <span>SFT、初始 DPO 与残差 DPO 的数据构造、模型选择和最终测试各有独立清单与哈希；冻结测试不会回流训练或参数选择。</span>
+                <div><p>06B · 数据与产物检查</p><h3 id="plannerAuditTitle">确认没有测试回流、截断或模型身份漂移</h3></div>
+                <span>所有关键审计均为 strict_ok=true。</span>
               </div>
               <div class="result-table-wrap" tabindex="0">
-                <table class="result-table retrieval-audit-table">
-                  <thead><tr><th scope="col">检查项</th><th scope="col">结果</th><th scope="col">说明</th></tr></thead>
+                <table class="result-table planner-audit-table">
+                  <thead><tr><th scope="col">检查项</th><th scope="col">结果</th><th scope="col">核验内容</th></tr></thead>
                   <tbody>
-                    <tr><td>9K / 18K / 36K / 54K 嵌套关系</td><td><strong>通过</strong></td><td>按稳定规则逐级扩展；使用同一组训练参数和候选输入。</td></tr>
-                    <tr><td>训练与开发 / 测试请求重合</td><td><strong>0</strong></td><td>各训练量与开发集、1K 明确工具需求测试、6K 日常电商测试的规范化请求均无重合。</td></tr>
-                    <tr><td>训练与开发 / 测试轨迹重合</td><td><strong>0</strong></td><td>来源轨迹 ID 独立；训练中未见工具组合检查集同时约束工具组合。</td></tr>
-                    <tr><td>候选输入选择集 / 确认集重合</td><td><strong>0</strong></td><td>请求、来源 ID 与训练未见组合均按协议隔离。</td></tr>
-                    <tr><td>初始 DPO 开发集与 SFT / 偏好 / 最终测试重合</td><td><strong>0</strong></td><td>请求、轨迹 ID 与来源轨迹 ID 三项均无重合。</td></tr>
-                    <tr><td>残差 DPO 训练与开发 / 确认 / 冻结测试重合</td><td><strong>0</strong></td><td>两轮训练请求与来源均隔离；第二轮全新 24K 还与第一轮训练数据隔离。</td></tr>
-                    <tr><td>DPO 样本截断</td><td><strong>0</strong></td><td>最大长度 768；初始与残差偏好数据的 chosen / rejected 均未超过上限。</td></tr>
-                    <tr><td>最终测试使用顺序</td><td><strong>通过</strong></td><td>残差第二轮 checkpoint、三个随机种子与停止结论确定后，才执行并读取本轮 6K / 1K / 9K 最终回放。</td></tr>
+                    <tr><td>开发集与 SFT / 偏好 / 冻结测试重合</td><td><strong>0</strong></td><td>请求、轨迹 ID、来源、表达簇、短语和上下文骨架均隔离</td></tr>
+                    <tr><td>偏好数据与 6K / 1K 冻结测试重合</td><td><strong>0</strong></td><td>请求、轨迹 ID 和来源均不重叠</td></tr>
+                    <tr><td>偏好样本截断</td><td><strong>0</strong></td><td>最大长度 672，训练上限 768</td></tr>
+                    <tr><td>候选接口</td><td><strong>通过</strong></td><td>所有阶段使用当前精排 Top-20 后的 Top-10，且保持检索顺序</td></tr>
+                    <tr><td>训练与选择记录</td><td><strong>通过</strong></td><td>8 个训练 run、28 个 checkpoint、参考模型、步数和超参数均可追溯</td></tr>
+                    <tr class="result-table-final"><td>最终模型身份</td><td><strong>通过</strong></td><td><code>checkpoint-113</code> · adapter SHA256 <code>68cd6eba…fc1d</code></td></tr>
                   </tbody>
                 </table>
               </div>
-              <p class="data-boundary-note"><strong>最终核对：</strong><code>strict_ok=true</code>；checkpoint-63 模型哈希、样本行数、实际 Top-10 / Top-20 候选、评测清单、部署等价性与脚本语法均一致。</p>
             </section>
 
             <section class="efficiency-table-block" aria-labelledby="plannerSftEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>06C · 监督训练与偏好优化环境</span><h3 id="plannerSftEnvironmentTitle">记录 SFT、初始 DPO 与残差 DPO 的参数和成本</h3></div>
-                <p>9K SFT 参数来自分阶段搜索，其产物未绑定 GPU 型号；初始 DPO 记录了 3 × RTX 3090 24GB。残差 DPO 清单记录 3 个训练进程与逐进程显存，但未逐次绑定物理 GPU 型号。</p>
+                <div><span>06C · 训练环境</span><h3 id="plannerSftEnvironmentTitle">记录 SFT、RPO 与 DPO 的参数和成本</h3></div>
+                <p>SFT 使用四卡数据并行；偏好训练同时启动四个单卡配方，因此表内每个配方的耗时不相加为串行总时长。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table planner-training-efficiency-table">
-                  <thead><tr><th scope="col">阶段</th><th scope="col">模型</th><th scope="col">训练配置</th><th scope="col">步数与耗时</th><th scope="col">资源记录</th></tr></thead>
+                  <thead><tr><th scope="col">阶段</th><th scope="col">数据与配置</th><th scope="col">硬件</th><th scope="col">训练耗时</th><th scope="col">资源记录</th></tr></thead>
                   <tbody>
-                    <tr><td rowspan="2"><strong>首次监督微调</strong><small>早期独立请求</small></td><td>Qwen3-4B</td><td>BF16 · 全局批量 32 · lr5e-5 · LoRA r16 / α32 / dropout 0.05 · 最大长度 2048</td><td><strong>3,376 步 · 1 小时 00 分 02 秒</strong><small>页面使用第 1 轮版本；单独到达时间未记录</small></td><td>4 GPU；型号与逐卡显存未记录</td></tr>
-                    <tr><td>Qwen3-8B</td><td>BF16 · 全局批量 32 · lr5e-5 · LoRA r16 / α32 / dropout 0.05 · 最大长度 2048</td><td><strong>1,688 步 · 50 分 17 秒</strong><small>1 轮</small></td><td>4 GPU；型号与逐卡显存未记录</td></tr>
-                    <tr class="table-divider"><td rowspan="2"><strong>最终 9K 工具需求明确的请求监督</strong><small>固定 3 轮</small></td><td>Qwen3-4B</td><td>BF16 · 全局批量 32 · lr5e-5 · LoRA r32 / α64 / dropout 0.05 · 最大长度 2048</td><td><strong>846 步 · 55 分 03 秒</strong></td><td>1 GPU；型号未记录；日志显存字段 11.85 GiB</td></tr>
-                    <tr class="result-table-final"><td><strong>Qwen3-8B</strong></td><td>BF16 · 全局批量 32 · lr5e-5 · LoRA r32 / α64 / dropout 0.05 · 最大长度 2048</td><td><strong>846 步 · 1 小时 31 分 42 秒</strong></td><td><strong>1 GPU；型号未记录；日志显存字段 19.14 GiB</strong></td></tr>
-                    <tr class="table-divider"><td rowspan="2"><strong>初始 DPO</strong><small>1,800 对 · 1 轮</small></td><td>Qwen3-4B</td><td>BF16 · 有效批量 18 · lr1e-6 · beta 0.05 · LoRA r32 / α64 / dropout 0.05 · 最大长度 768</td><td><strong>100 步 · 9 分 52 秒</strong></td><td>3 × RTX 3090 24GB；日志峰值 10.88 GiB / 进程</td></tr>
-                    <tr><td><strong>Qwen3-8B</strong></td><td>BF16 · 有效批量 18 · lr1e-6 · beta 0.10 · LoRA r32 / α64 / dropout 0.05 · 最大长度 768</td><td><strong>100 步 · 16 分 51 秒</strong></td><td><strong>3 × RTX 3090 24GB；日志峰值 18.85 GiB / 进程</strong></td></tr>
-                    <tr class="table-divider"><td><strong>残差 DPO 第一轮</strong><small>2,200 对</small></td><td>Qwen3-8B</td><td>BF16 · 有效批量 18 · lr1e-6 · beta 0.10 · 最大长度 768</td><td><strong>完整曲线 220 步 · 36 分 24 秒</strong><small>采用 checkpoint-196</small></td><td>3 个训练进程；日志峰值 18.85 GiB / 进程；物理 GPU 型号未逐次绑定</td></tr>
-                    <tr class="result-table-final"><td><strong>残差 DPO 第二轮</strong><small>5,000 对</small></td><td><strong>Qwen3-8B</strong></td><td>BF16 · 有效批量 18 · lr1e-6 · beta 0.10 · 最大长度 768</td><td><strong>比较至 step-252 · 约 40 分钟</strong><small>采用 checkpoint-63</small></td><td><strong>3 个训练进程；日志峰值 18.85 GiB / 进程；物理 GPU 型号未逐次绑定</strong></td></tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="result-table-wrap planner-sft-config-wrap" tabindex="0">
-                <table class="result-table result-table-compact planner-sft-config-table">
-                  <thead><tr><th scope="col">正式参数</th><th scope="col">固定设置</th><th scope="col">选择依据</th></tr></thead>
-                  <tbody>
-                    <tr><td>训练方式</td><td>MS-SWIFT · LoRA 监督微调</td><td>固定</td></tr>
-                    <tr class="result-table-final"><td><strong>学习率</strong></td><td><strong>5e-5</strong></td><td><strong>已比较</strong></td></tr>
-                    <tr class="result-table-final"><td><strong>训练轮数</strong></td><td><strong>3</strong></td><td><strong>4B 完整比较；8B 只确认三轮优胜配置</strong></td></tr>
-                    <tr class="result-table-final"><td><strong>LoRA 秩 / alpha / dropout</strong></td><td><strong>32 / 64 / 0.05</strong></td><td><strong>秩与 dropout 已比较；alpha 固定为秩的 2 倍</strong></td></tr>
-                    <tr><td>目标层</td><td>全部线性层</td><td>固定</td></tr>
-                    <tr><td>最大长度</td><td>2,048</td><td>固定</td></tr>
-                    <tr><td>有效批量</td><td>32</td><td>固定</td></tr>
-                    <tr><td>优化器</td><td>AdamW Torch</td><td>固定</td></tr>
-                    <tr><td>学习率调度</td><td>Cosine</td><td>固定</td></tr>
-                    <tr><td>预热比例</td><td>0.05</td><td>固定</td></tr>
-                    <tr><td>权重衰减</td><td>0.1</td><td>固定</td></tr>
-                    <tr><td>梯度裁剪</td><td>1.0</td><td>固定</td></tr>
-                    <tr><td>训练精度</td><td>BF16</td><td>固定</td></tr>
-                    <tr><td>随机种子</td><td>20260725</td><td>单一种子</td></tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="result-table-wrap planner-sft-config-wrap" tabindex="0">
-                <table class="result-table result-table-compact planner-sft-config-table">
-                  <thead><tr><th scope="col">初始 DPO 参数</th><th scope="col">4B</th><th scope="col">8B</th><th scope="col">共同设置</th></tr></thead>
-                  <tbody>
-                    <tr><td>训练引擎</td><td colspan="2">MS-SWIFT <code>swift rlhf</code></td><td>Qwen3 chat template · sigmoid DPO</td></tr>
-                    <tr class="result-table-final"><td><strong>学习率 / beta / 轮数</strong></td><td><strong>1e-6 / 0.05 / 1</strong></td><td><strong>1e-6 / 0.10 / 1</strong></td><td><strong>完整网格选择</strong></td></tr>
-                    <tr><td>LoRA</td><td colspan="2">r32 / α64 / dropout 0.05</td><td>延续 SFT 适配器</td></tr>
-                    <tr><td>有效批量 / 最大长度</td><td colspan="2">18 / 768</td><td>无样本截断</td></tr>
-                    <tr><td>调度与正则</td><td colspan="2">Cosine · warmup 0.05 · weight decay 0.1</td><td>固定</td></tr>
-                    <tr><td>采用 / 确认种子</td><td colspan="2">20260802 / 20260803 / 20260804</td><td>8B checkpoint-100 作为残差训练起点</td></tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="result-table-wrap planner-sft-config-wrap" tabindex="0">
-                <table class="result-table result-table-compact planner-sft-config-table">
-                  <thead><tr><th scope="col">8B 残差 DPO</th><th scope="col">第一轮</th><th scope="col">第二轮</th><th scope="col">共同设置</th></tr></thead>
-                  <tbody>
-                    <tr><td>父模型</td><td>初始 DPO checkpoint-100</td><td>第一轮 checkpoint-196</td><td>固定 Top-10 输入</td></tr>
-                    <tr><td>偏好数据</td><td>2,200 对：1,980 / 220</td><td>5,000 对：4,500 / 500</td><td>正确标注 vs 父模型真实语义错误</td></tr>
-                    <tr class="result-table-final"><td><strong>学习率 / beta / 选中点</strong></td><td><strong>1e-6 / 0.10 / step 196</strong></td><td><strong>1e-6 / 0.10 / step 63</strong></td><td><strong>独立确认集决定是否继续</strong></td></tr>
-                    <tr><td>训练种子</td><td>20260803</td><td>20260804</td><td>第二轮另用 20260805 / 20260806 检查稳定性</td></tr>
-                    <tr><td>LoRA / 最大长度</td><td colspan="2">r32 / α64 / dropout 0.05 · 768</td><td>无样本截断</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </section>
-
-            <section class="efficiency-table-block" aria-labelledby="plannerScaleEnvironmentTitle">
-              <div class="efficiency-table-heading">
-                <div><span>06D · 数据规模训练成本</span><h3 id="plannerScaleEnvironmentTitle">质量结果见 04A，这里只核对资源增长</h3></div>
-                <p>所有规模共用先在 9K 上选出的参数：1 GPU、BF16、全局批量 32、3 轮、lr5e-5、LoRA r32 / α64 / dropout 0.05、最大长度 2048；GPU 型号未记录。</p>
-              </div>
-              <div class="result-table-wrap" tabindex="0">
-                <table class="result-table efficiency-table planner-scale-efficiency-table numeric-result-table">
-                  <thead><tr><th scope="col">模型</th><th scope="col">训练量</th><th scope="col">步数</th><th scope="col">训练耗时</th><th scope="col">相对同模型 9K</th></tr></thead>
-                  <tbody>
-                    <tr class="result-table-final"><td><strong>4B</strong></td><td><strong>9K</strong></td><td>846</td><td><strong>55 分 03 秒</strong></td><td><strong>1.00×</strong></td></tr>
-                    <tr><td>4B</td><td>18K</td><td>1,689</td><td>1 小时 49 分 45 秒</td><td>1.99×</td></tr>
-                    <tr><td>4B</td><td>36K</td><td>3,375</td><td>4 小时 00 分 51 秒</td><td>4.38×</td></tr>
-                    <tr><td>4B</td><td>54K</td><td>5,064</td><td>6 小时 01 分 32 秒</td><td>6.57×</td></tr>
-                    <tr class="table-divider result-table-final"><td><strong>8B</strong></td><td><strong>9K</strong></td><td>846</td><td><strong>1 小时 31 分 42 秒</strong></td><td><strong>1.00×</strong></td></tr>
-                    <tr><td>8B</td><td>18K</td><td>1,689</td><td>3 小时 03 分 03 秒</td><td>2.00×</td></tr>
-                    <tr><td>8B</td><td>36K</td><td>3,375</td><td>6 小时 25 分 48 秒</td><td>4.21×</td></tr>
-                    <tr><td>8B</td><td>54K</td><td>5,064</td><td>10 小时 10 分 02 秒</td><td>6.65×</td></tr>
-                  </tbody>
-                </table>
-              </div>
-              <p class="efficiency-boundary"><strong>成本结论：</strong>训练步数与数据规模近似线性增长；质量没有同步单调提升，详见 04A。该表不重复承担模型选择职责。</p>
-            </section>
-
-            <section class="efficiency-table-block" aria-labelledby="plannerCandidateEfficiencyTitle">
-              <div class="efficiency-table-heading">
-                <div><span>06E · 候选数量成本</span><h3 id="plannerCandidateEfficiencyTitle">比较规划模型读取 5 / 10 / 20 / 30 个候选的成本</h3></div>
-                <p>在单张 Tesla V100 上补充测量候选数量带来的成本；候选越多，输入 token、延迟与显存同步增长。最终数量仍依据实验 02 中“最高分 0.5pp 内优先低成本”的规则选择。</p>
-              </div>
-              <div class="result-table-wrap" tabindex="0">
-                <table class="result-table efficiency-table planner-candidate-efficiency-table">
-                  <thead><tr><th scope="col">固定规划模型</th><th scope="col">候选数 K</th><th scope="col">批量</th><th scope="col">生成均值</th><th scope="col">p50 / p95</th><th scope="col">输出吞吐</th><th scope="col">峰值显存：已分配 / 已保留</th></tr></thead>
-                  <tbody>
-                    <tr><td rowspan="4">4B 候选数量比较</td><td>5</td><td>16</td><td>576.4ms</td><td>517.1 / 947.4ms</td><td>26.32 token/s</td><td>10.52 / 19.03 GiB</td></tr>
-                    <tr><td>10</td><td>16</td><td>718.1ms</td><td>632.5 / 1118.3ms</td><td>21.74 token/s</td><td>11.77 / 24.58 GiB</td></tr>
-                    <tr><td>20</td><td>16</td><td>1011.4ms</td><td>918.7 / 1449.9ms</td><td>15.50 token/s</td><td>14.62 / 31.21 GiB</td></tr>
-                    <tr><td>30</td><td>16</td><td>1333.2ms</td><td>1228.0 / 1831.8ms</td><td>11.76 token/s</td><td>17.86 / 31.14 GiB</td></tr>
-                    <tr class="table-divider"><td rowspan="4">8B 候选数量比较</td><td>5</td><td>4</td><td>1657.6ms</td><td>1356.3 / 2897.4ms</td><td>9.05 token/s</td><td>16.17 / 18.55 GiB</td></tr>
-                    <tr><td>10</td><td>4</td><td>1917.5ms</td><td>1583.2 / 3280.6ms</td><td>8.13 token/s</td><td>16.47 / 20.24 GiB</td></tr>
-                    <tr><td>20</td><td>4</td><td>2385.6ms</td><td>2032.2 / 3833.9ms</td><td>6.57 token/s</td><td>17.20 / 25.42 GiB</td></tr>
-                    <tr><td>30</td><td>4</td><td>2871.3ms</td><td>2514.1 / 4348.1ms</td><td>5.46 token/s</td><td>18.01 / 31.10 GiB</td></tr>
+                    <tr><td><strong>监督训练</strong><small>checkpoint-2429</small></td><td>77,724 条 · 1 轮 · lr5e-5 · 有效批量 32 · LoRA r16 / α32 / dropout 0.05</td><td><strong>4 × RTX 5090</strong></td><td><strong>57 分 41 秒</strong><small>2,429 步</small></td><td>日志显存 20.23 GiB / 进程</td></tr>
+                    <tr><td><strong>偏好训练起点</strong><small>checkpoint-29</small></td><td>1,800 训练 / 200 监控 · 1 轮 · lr1e-6 · beta 0.1 · 有效批量 16</td><td><strong>4 × RTX 5090</strong></td><td><strong>4 分 56 秒</strong><small>完整运行 113 步；采用第 29 步</small></td><td>日志显存 18.55 GiB / 进程</td></tr>
+                    <tr><td><strong>RPO / DPO 主搜索</strong><small>4 个并行配方</small></td><td>3,600 训练 / 400 监控 · 1 轮 · beta 0.1 · 有效批量 16 · LoRA r16 / α32 / dropout 0.05</td><td><strong>4 × RTX 5090</strong><small>每配方 1 卡</small></td><td><strong>33 分 40 秒–34 分 08 秒 / 配方</strong><small>225 步</small></td><td>日志显存 18.47 GiB / 进程</td></tr>
+                    <tr class="result-table-final"><td><strong>DPO 短程扩展</strong><small>最终 checkpoint-113</small></td><td>从 RPO 主训练端点继续 0.5 轮 · lr5e-7 · beta 0.1 · 固定参考模型</td><td><strong>4 × RTX 5090</strong><small>4 个扩展配方并行</small></td><td><strong>18 分 40 秒–18 分 55 秒 / 配方</strong><small>113 步</small></td><td><strong>日志显存 18.47 GiB / 进程</strong></td></tr>
                   </tbody>
                 </table>
               </div>
@@ -1603,36 +1288,32 @@
 
             <section class="efficiency-table-block" aria-labelledby="plannerInferenceEnvironmentTitle">
               <div class="efficiency-table-heading">
-                <div><span>06F · 规划模型推理</span><h3 id="plannerInferenceEnvironmentTitle">比较训练前、SFT、初始 DPO 与最终模型的离线生成成本</h3></div>
-                <p>共同设置为 BF16、SDPA、贪心生成、最多 128 个 token、无预热；每个分片进程只暴露一个 CUDA 设备。延迟是批内均摊的生成器时间，不是在线单请求延迟，运行清单未保存 GPU 型号。</p>
+                <div><span>06D · 规划模型推理</span><h3 id="plannerInferenceEnvironmentTitle">比较完整工具目录、Top-10 与最终 Planner 的离线生成成本</h3></div>
+                <p>均为贪心生成；行内延迟来自批内生成记录，不等同于线上单请求端到端延迟。最终模型最多生成 96 token。</p>
               </div>
               <div class="result-table-wrap" tabindex="0">
                 <table class="result-table efficiency-table planner-inference-efficiency-table">
-                  <thead><tr><th scope="col">模型阶段</th><th scope="col">测试协议</th><th scope="col">批量</th><th scope="col">p50 / p95</th><th scope="col">输出吞吐</th><th scope="col">分片进程峰值显存：已分配 / 已保留</th></tr></thead>
+                  <thead><tr><th scope="col">模型阶段</th><th scope="col">测试协议</th><th scope="col">批量</th><th scope="col">p50 / p95</th><th scope="col">输出吞吐</th><th scope="col">峰值显存</th></tr></thead>
                   <tbody>
                     <tr><td>未微调 4B · Top-10</td><td>早期独立请求 1K</td><td>16</td><td>110.8 / 154.1ms</td><td>179.10 token/s</td><td>9.54 / 14.87 GiB</td></tr>
                     <tr><td>未微调 8B · Top-10</td><td>早期独立请求 1K</td><td>8</td><td>187.7 / 269.0ms</td><td>105.83 token/s</td><td>16.38 / 20.13 GiB</td></tr>
-                    <tr><td>未微调 4B · 完整 100 工具</td><td>早期独立请求 1K</td><td>8</td><td>528.7 / 1334.2ms</td><td>34.67 token/s</td><td>12.55 / 23.81 GiB</td></tr>
-                    <tr><td>未微调 8B · 完整 100 工具</td><td>早期独立请求 1K</td><td>4</td><td>835.5 / 1078.8ms</td><td>23.16 token/s</td><td>18.07 / 22.72 GiB</td></tr>
-                    <tr class="table-divider"><td>首次监督微调 4B · Top-10</td><td>早期独立请求 1K</td><td>16</td><td>130.0 / 177.9ms</td><td>137.70 token/s</td><td>各分片 10.10–10.27 / 13.19–15.66 GiB</td></tr>
-                    <tr><td>首次监督微调 8B · Top-10</td><td>早期独立请求 1K</td><td>8</td><td>213.0 / 319.6ms</td><td>80.29 token/s</td><td>各分片 16.92–16.94 / 20.29–21.02 GiB</td></tr>
-                    <tr><td>9K 工具需求明确的请求监督 4B · Top-10</td><td>日常电商请求 6K</td><td>16</td><td>253.8 / 341.2ms</td><td>74.17 token/s</td><td>约 10.43 / 18.57 GiB</td></tr>
-                    <tr><td>9K 工具需求明确的请求监督 8B · Top-10</td><td>日常电商请求 6K</td><td>8</td><td>412.0 / 580.6ms</td><td>43.36 token/s</td><td>约 17.16 / 22.64 GiB</td></tr>
-                    <tr><td>9K SFT + 初始 DPO 8B · Top-10</td><td>日常电商请求 6K</td><td>8</td><td>415.4 / 570.7ms</td><td>43.25 token/s</td><td>该次清单未记录显存</td></tr>
-                    <tr class="result-table-final"><td><strong>9K SFT + 初始 DPO + 两轮残差 DPO 8B · Top-10</strong></td><td><strong>日常电商请求 6K</strong></td><td><strong>8</strong></td><td><strong>410.1 / 563.9ms</strong></td><td><strong>42.16 token/s</strong></td><td><strong>该次评测清单未记录显存</strong></td></tr>
+                    <tr><td>未微调 4B · 完整 100 工具</td><td>早期独立请求 1K</td><td>8</td><td>528.7 / 1,334.2ms</td><td>34.67 token/s</td><td>12.55 / 23.81 GiB</td></tr>
+                    <tr><td>未微调 8B · 完整 100 工具</td><td>早期独立请求 1K</td><td>4</td><td>835.5 / 1,078.8ms</td><td>23.16 token/s</td><td>18.07 / 22.72 GiB</td></tr>
+                    <tr class="table-divider"><td>8B · 监督训练 · Top-10</td><td>日常电商请求 6K</td><td>16</td><td>154.2 / 185.8ms</td><td>126.99 token/s</td><td>18.49 / 26.64 GiB</td></tr>
+                    <tr><td>8B · 偏好训练起点 · Top-10</td><td>日常电商请求 6K</td><td>16</td><td>157.1 / 188.1ms</td><td>125.30 token/s</td><td>18.49 / 26.64 GiB</td></tr>
+                    <tr class="result-table-final"><td><strong>8B · 最终 Planner · Top-10</strong></td><td><strong>日常电商请求 6K</strong></td><td><strong>16</strong></td><td><strong>149.7 / 184.5ms</strong></td><td><strong>125.64 token/s</strong></td><td><strong>18.34–18.49 / 22.96–28.38 GiB</strong></td></tr>
                   </tbody>
                 </table>
               </div>
             </section>
 
             <div class="environment-record-boundary">
-              <p><strong>软件快照：</strong>项目环境清单的一次快照记录 Python 3.10.20、PyTorch 2.8.0+cu128、Transformers 4.53.2、MS-SWIFT 4.3.2、PEFT 0.14.0、TRL 0.18.2；这些版本没有与每次运行逐一绑定。</p>
-              <p><strong>硬件记录说明：</strong>较早主机快照曾记录 8 × NVIDIA RTX 5880 Ada Generation（49,140 MiB / 卡），SFT 与最终推理清单没有逐次绑定物理 GPU 型号；初始 DPO 正式训练另有 3 进程与 RTX 3090 24GB 运行记录，残差 DPO 只保留 3 进程与显存日志。表内不把不同机器的耗时直接相加。</p>
-              <p><strong>最终系统测试：</strong>检索输入始终为“精排 20 / 规划 10”。正式 8B 模型从 9K SFT checkpoint-846 出发，依次经过初始 DPO checkpoint-100、第一轮残差 checkpoint-196 和第二轮残差 checkpoint-63；最终使用 seed 20260804 的 checkpoint-63。</p>
+              <p><strong>训练软件：</strong>MS-SWIFT；监督阶段使用 <code>swift sft</code>，偏好阶段使用 <code>swift rlhf</code>。偏好输入为 messages + rejected_response，采用 Qwen3 chat template。</p>
+              <p><strong>共同训练设置：</strong>BF16、Cosine、warmup 0.05、weight decay 0.1、最大梯度 1.0；偏好训练最大长度 768，参考适配器始终固定为 checkpoint-29。</p>
+              <p><strong>最终系统测试：</strong>检索输入始终为“精排 20 / 规划 10”。正式 8B Planner 使用 seed 20260819 的 DPO 短程扩展 checkpoint-113。</p>
             </div>
           </div>
         </details>
-
       </div>
     </section>
     <section class="section section-soft" id="limits" aria-labelledby="limitsTitle">
@@ -1647,17 +1328,17 @@
           <header class="system-progress-figure-head">
             <div>
               <span>00 · PROJECT OVERVIEW</span>
-              <h3 id="systemProgressTitle">十二个决策点的系统级累计增益</h3>
+              <h3 id="systemProgressTitle">十一个决策点的系统级累计增益</h3>
             </div>
-            <p>从没有 Intent 与闲聊出口的原始 8B Planner（19.29%）到最终 84.94%；同一 9K Full Trace 上依次加入路由、检索、重排与训练，横向模型选型不再混入累计折线。</p>
+            <p>从没有 Intent 与闲聊出口的原始 8B Planner（19.29%）到最终 92.62%；同一 9K 工具链口径上依次加入路由、检索、重排、监督训练与偏好训练，横向模型选型不混入累计折线。</p>
           </header>
           <div class="system-progress-image" tabindex="0" aria-label="可横向滚动查看完整折线图">
-            <img src="assets/agent-full-trace-progress.png" width="2200" height="1320" loading="lazy" decoding="async" alt="9K Full Trace 累计增益折线图：没有 Intent 与闲聊出口的原始 8B Planner 从 19.29% 起步，依次加入基础 Intent、Intent LoRA、基础 RAG、Embedding 微调、Reranker 加入与微调、最终检索融合、Planner SFT 和三轮 DPO，最终达到 84.94%，即 7,645 / 9,000 条完整成功。">
+            <img src="assets/agent-full-trace-progress.svg?v=2026080801" width="2200" height="1320" loading="lazy" decoding="async" alt="9K 工具链成功率累计增益图：没有 Intent 与闲聊出口的原始 8B Planner 从 19.29% 起步，依次加入路由、检索、重排、77,724 条监督训练、偏好训练起点、RPO 主训练与 DPO 短程收敛，最终达到 92.62%，即 8,336 / 9,000 条完整成功。">
           </div>
           <figcaption>
             <strong>统一读图口径</strong>
-            <span>空心橙点为回溯补测，只用于解释决策增益，不参与模型选型；实心绿点为正式系统端点。最终链路固定为 0.6B 路由 + 精排 20 / 规划 10 + 8B 三阶段偏好优化。</span>
-            <small class="system-progress-scroll-hint">小屏可横向滑动图表，查看全部 12 个点位。</small>
+            <span>空心橙点为回溯补测，只用于解释决策增益；实心绿点为当前训练路径上的系统端点。最终链路固定为 0.6B 路由 + 精排 20 / 规划 10 + 8B 监督训练、RPO 与 DPO。</span>
+            <small class="system-progress-scroll-hint">小屏可横向滑动图表，查看全部 11 个点位。</small>
           </figcaption>
         </figure>
 
@@ -1667,14 +1348,14 @@
               <span>最终系统测试 · 三个模块 / 四个步骤</span>
               <h3 id="systemTitle">把最终采用的模块串起来，逐阶段统计 9K 通过数</h3>
             </div>
-            <p>系统使用 Qwen3-0.6B checkpoint-2000 路由；检索模块精排 20 个候选，规划模型读取其中前 10 个；规划模型为 8B · 9K SFT + 初始 DPO + 两轮残差 DPO。三个模块都在同一 9K 测试集上逐阶段累计通过数。</p>
+            <p>系统使用 Qwen3-0.6B checkpoint-2000 路由；检索模块精排 20 个候选，Planner 读取其中前 10 个；8B Planner 由 77,724 条监督训练、RPO 主训练与 DPO 短程收敛得到。三个模块都在同一 9K 测试集上逐阶段累计通过数。</p>
           </header>
 
           <ol class="route-phases final-route-phases">
             <li><span>步骤 01 · 模块 01</span><strong>请求分流</strong><small>0.6B LoRA · checkpoint-2000</small></li>
             <li><span>步骤 02 · 模块 02</span><strong>混合检索</strong><small>向量模型 + BM25</small></li>
             <li><span>步骤 03 · 模块 02</span><strong>重排与融合</strong><small>bge-reranker-v2-m3 + RRF</small></li>
-            <li><span>步骤 04 · 模块 03</span><strong>选择并排序工具</strong><small>8B · SFT + 初始与残差 DPO · 一次生成</small></li>
+            <li><span>步骤 04 · 模块 03</span><strong>选择并排序工具</strong><small>8B · SFT + RPO + DPO · 一次生成</small></li>
           </ol>
 
           <article class="pipeline-lane intent-lane">
@@ -1745,7 +1426,7 @@
           <article class="pipeline-lane planner-lane">
             <header>
               <div><span>模块 03 · 工具链规划</span><h3>精确工具集合与有序工具链生成</h3></div>
-              <p>最终结果 · 集合 7,655 / 9,000 · 85.0556% ｜ 有序工具链 7,645 / 9,000 · 84.9444%</p>
+              <p>最终结果 · 集合 8,352 / 9,000 · 92.8000% ｜ 有序工具链 8,336 / 9,000 · 92.6222%</p>
             </header>
             <div class="planner-map">
               <div class="planner-inputs">
@@ -1755,8 +1436,8 @@
               <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
               <div class="planner-model">
                 <small>固定规划模型 · Top-10 输入</small>
-                <strong>Qwen3-8B · 三阶段偏好优化</strong>
-                <span>9K SFT → 初始 DPO → 两轮残差 DPO · checkpoint-63</span>
+                <strong>Qwen3-8B · RPO → DPO</strong>
+                <span>77,724 条 SFT → RPO 主训练 → DPO 短程收敛 · checkpoint-113</span>
               </div>
               <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
               <div class="planner-output">
@@ -1773,14 +1454,14 @@
         <div class="system-outcome-grid" role="group" aria-label="同一 9K 测试集的逐阶段累计结果">
           <article><span>9K 累计 · 意图分流</span><h3>Qwen3-0.6B LoRA · checkpoint-2000</h3><strong>100.00%</strong><p>9,000 / 9,000</p><small>6,000 条电商和 3,000 条闲聊均正确分流</small></article>
           <article><span>9K 累计 · 候选检索</span><h3>负样本向量检索 + Top-20 交互精排</h3><strong>98.24%</strong><p>8,842 / 9,000</p><small>新增失败 158 条 · 6K 日常电商中 97.37% 找齐 Top-10 必要工具</small></article>
-          <article class="is-selected"><span>9K 最终 · 有序工具链</span><h3>0.6B 路由 + 精排 20 / 规划 10 + 8B 三阶段偏好优化</h3><strong>84.94%</strong><p>7,645 / 9,000</p><small>新增失败 1,197 条 · 日常电商请求 6K 工具链全对率 77.42%</small></article>
+          <article class="is-selected"><span>9K 最终 · 有序工具链</span><h3>0.6B 路由 + 精排 20 / 规划 10 + 8B RPO / DPO</h3><strong>92.62%</strong><p>8,336 / 9,000</p><small>规划阶段新增失败 506 条 · 日常电商请求 6K 工具链全对率 88.93%</small></article>
         </div>
-        <p class="metric-contract-note"><strong>三张卡如何计算：</strong>都使用同一 9K 测试集，并把上一阶段失败保留到下一阶段。0.6B 路由型号也依据这套 9K 比较确定，因此 100% 与 84.94% 是固定合成测试结果，不是完全未见的线上验证；残差 DPO 只在隔离开发 / 确认集上选型，6K 与 1K 在锁定后报告。</p>
+        <p class="metric-contract-note"><strong>三张卡如何计算：</strong>都使用同一 9K 测试集，并把上一阶段失败保留到下一阶段。0.6B 路由型号也依据这套 9K 比较确定，因此 100% 与 92.62% 是固定合成测试结果，不是完全未见的线上验证；Planner 只在训练侧独立开发请求上选型，6K 与 1K 在模型锁定后报告。</p>
 
         <details class="narrative-disclosure data-disclosure system-data-disclosure" id="systemDataLedger">
           <summary>
             <span class="disclosure-summary-copy"><small>项目总数据表</small><strong>每套数据有多少条、用于训练还是测试</strong></span>
-            <span class="disclosure-summary-meta">22 类数据 · 训练 / 选择参数 / 最终测试</span>
+            <span class="disclosure-summary-meta">18 类数据 · 训练 / 选择参数 / 最终测试</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body">
@@ -1801,20 +1482,16 @@
                     <tr><td><strong>检索模型开发集</strong><span>实验 02</span></td><td>明确工具需求与简洁日常说法各 600 条；工具数 1–6 均衡</td><td><strong>1,200 条请求</strong></td><td>比较 5 种向量训练方案和 4 种微调重排架构</td><td>选完模型后才使用 1.2K、6K、1K 与 9K 最终测试</td></tr>
                     <tr><td><strong>候选数量与融合开发集</strong><span>实验 02</span></td><td>日常说法与明确工具需求两类请求，包含单工具和训练未见组合</td><td><strong>2,400 条开发 + 1,200 条确认</strong></td><td>比较精排 10/20/30/50、规划 5/10/20/30/50 和最终融合参数</td><td>规划候选必须全部经过精排；最高分 0.5pp 内优先低成本方案</td></tr>
                     <tr><td><strong>长候选压力测试</strong><span>实验 02 · 参数确定后</span></td><td>600 条单工具 + 600 条监督训练未见多工具组合</td><td><strong>1,200 条请求</strong></td><td>检查增加候选是否稳定改善规划准确率</td><td>参数确定后运行，不参与模型或参数选择</td></tr>
-                    <tr><td><strong>日常电商请求测试集</strong><span>实验 02 / 03</span></td><td>3K 单工具 + 3K 多工具；多工具含已见与未见组合</td><td><strong>6,000 条请求</strong><br>15,196 个目标工具</td><td>报告最终检索覆盖率与规划工具链全对率</td><td>Top-10 找齐必要工具 97.3667%；最终 8B 工具链全对率 77.4167%</td></tr>
+                    <tr><td><strong>日常电商请求测试集</strong><span>实验 02 / 03</span></td><td>3K 单工具 + 3K 多工具；多工具含已见与未见组合</td><td><strong>6,000 条请求</strong><br>15,196 个目标工具</td><td>报告最终检索覆盖率与规划工具链全对率</td><td>Top-10 找齐必要工具 97.3667%；最终 8B 工具链全对率 88.9333%</td></tr>
                     <tr><td><strong>检索独立改写请求测试</strong><span>实验 02 · 参数确定后</span></td><td>独立构造的两类写法，工具数 1–6 均衡</td><td><strong>1,200 条请求</strong></td><td>补充检查最终检索链的 AllHit@K 与 MRR</td><td>AllHit@10 99.8333%；查看结果后未继续调参</td></tr>
-                    <tr><td><strong>SFT 训练数据</strong><span>实验 03 · 数据量比较</span></td><td>单工具、多工具、候选顺序变化与同类干扰请求，均配 Top-10 和目标工具链</td><td><strong>54,000 条</strong><br>9K / 18K / 36K / 54K 逐级包含</td><td>固定同一组参数比较 4B / 8B 的训练量与成本</td><td>两种模型最终都选择 9K；与开发、6K、1K 无请求或轨迹重合</td></tr>
-                    <tr><td><strong>监督训练参数开发集</strong><span>实验 03 · 9K 调参</span></td><td>工具需求明确的请求、当时的 RAG 候选输入与有序目标</td><td><strong>2,400 条</strong></td><td>完成 4B 三轮参数搜索与 8B 三组确认</td><td>早于当前“精排 20 / 规划 10”候选输入；支持使用同一组参数，不代表当前输入下完整重评</td></tr>
-                    <tr><td><strong>SFT 训练量开发集</strong><span>实验 03</span></td><td>接近日常说法与明确工具需求两类请求</td><td><strong>2,400 条</strong></td><td>按最终 6K / 1K 比例做 6:1 加权，选择训练量与模型</td><td>4B / 8B 都选 9K；随后选择 8B</td></tr>
-                    <tr><td><strong>训练中未见工具组合检查集</strong><span>实验 03</span></td><td>来源轨迹和目标工具组合都未用于训练的请求</td><td><strong>1,200 条</strong></td><td>检查所选模型能否处理训练中未出现的工具组合</td><td>与 2.4K 开发集共同参与选择；不是最终测试</td></tr>
-                    <tr><td><strong>初始 DPO 偏好数据</strong><span>实验 03 · SFT 实际错误</span></td><td>正确工具链与同一请求下仅 SFT 模型实际生成的可解析错误工具链</td><td><strong>每模型 2,000 对</strong><br>1,800 训练 / 200 监控</td><td>比较学习率、beta 与半轮 / 一轮 DPO</td><td>日常说法 / 明确工具需求 1,600 / 400；覆盖 100 工具；不含最终测试</td></tr>
-                    <tr><td><strong>初始 DPO 参数开发集</strong><span>实验 03</span></td><td>日常说法与明确工具需求请求，覆盖 1–6 工具</td><td><strong>1,400 条</strong><br>1,200 / 200</td><td>选择 DPO 参数，并检查 JSON 格式、完整 100 工具输入与长链结果</td><td>与 SFT、DPO 偏好数据、6K 和 1K 均无请求或轨迹 ID 重合</td></tr>
-                    <tr><td><strong>残差 DPO 偏好数据</strong><span>实验 03 · 上一阶段真实错误</span></td><td>第一轮使用初始 DPO 的残余错误；第二轮从全新 24K 训练侧请求挖出 5,993 个真实语义错误</td><td><strong>2,200 + 5,000 对</strong><br>第二轮 4,500 训练 / 500 监控</td><td>分两轮继续改善日常说法下的工具选择</td><td>不含冻结测试；第三批新残差与旧新各半回放各 5,000 对均未晋级</td></tr>
-                    <tr><td><strong>残差 DPO 开发与确认集</strong><span>实验 03</span></td><td>两套隔离的日常说法请求；检索 Top-10 覆盖率分别为 97.75% / 97.25%</td><td><strong>1,200 + 1,200 条</strong></td><td>选择两轮 checkpoint、确认三个训练种子并判断何时停止</td><td>与训练、初始 DPO、6K 和 1K 均隔离；冻结结果不回流</td></tr>
-                    <tr><td><strong>早期独立请求测试集</strong><span>实验 03 · 首次监督训练验证</span></td><td>1–5 个工具的独立生成请求，每档 200 条</td><td><strong>1,000 条</strong></td><td>固定同一 Top-10 比较未微调与首次监督训练</td><td>只验证训练方向；协议不同，不能与日常电商请求 6K 直接比较</td></tr>
-                    <tr><td><strong>工具需求明确的请求测试集</strong><span>实验 02 / 03</span></td><td>明确写出所需能力与顺序，并配目标工具与最终 Top-10</td><td><strong>1,000 条请求</strong></td><td>补充测试最终检索和 4B / 8B 规划模型</td><td>Top-10 找齐必要工具 100%；最终 8B 工具链全对率 99.60%</td></tr>
-                    <tr><td><strong>完整 100 工具 / Top-10 配对测试</strong><span>实验 03</span></td><td>日常电商 6K + 明确工具需求 1K；未微调 / SFT 4B / 8B 分别比较两种候选范围</td><td><strong>7,000 条请求 × 2 种输入</strong><br>8 组配对 · 16 份结果</td><td>在 DPO 前验证 Top-10 候选是否帮助规划</td><td>8 / 8 组工具链全对率提高；DPO 另在相同条件下与仅 SFT 比较</td></tr>
-                    <tr><td><strong>系统级工具链测试集</strong><span>项目最终结果</span></td><td>3K 闲聊 + 6K 电商；0.6B checkpoint-2000 路由、精排 20 / 规划 10 候选输入与 8B · 9K SFT + 初始及残差 DPO 模型</td><td><strong>9,000 条</strong></td><td>逐样本联合计分；工具链成功 7,645 / 9,000</td><td>集合 / 工具链成功率 85.0556% / 84.9444%；未执行真实工具</td></tr>
+                    <tr><td><strong>Planner 监督训练数据</strong><span>实验 03</span></td><td>工具需求明确写法与日常说法，均配当前检索 Top-10 和正确有序工具链</td><td><strong>77,724 条</strong><br>53,725 + 23,999</td><td>训练 Qwen3-8B Planner 的工具选择与顺序规划</td><td>1 轮 LoRA；与开发、6K、1K 无请求或轨迹重合</td></tr>
+                    <tr><td><strong>偏好训练起点数据</strong><span>实验 03</span></td><td>正确工具链与监督模型在同一训练侧请求上的实际错误输出</td><td><strong>2,000 对</strong><br>1,800 训练 / 200 监控</td><td>得到用于真实错误挖掘的固定 checkpoint-29</td><td>不含冻结测试；保持当前 Top-10 顺序</td></tr>
+                    <tr><td><strong>偏好错误挖掘请求</strong><span>实验 03 · 训练侧新生成</span></td><td>24K 偏长多约束请求 + 12K 一至两工具请求</td><td><strong>36,000 条</strong><br>8,309 个去重语义错误</td><td>构造长短链均衡的 chosen / rejected</td><td>rejected 均为 checkpoint-29 的实际贪心输出，不手工伪造</td></tr>
+                    <tr><td><strong>RPO / DPO 偏好数据</strong><span>实验 03 · 当前模型真实错误</span></td><td>覆盖 1–6 工具；包含替换、遗漏、多选与纯顺序错误</td><td><strong>4,000 对</strong><br>3,600 训练 / 400 监控</td><td>比较四个主训练配方与四个短程扩展配方</td><td>覆盖全部 100 工具；每个请求和来源最多一对；截断为 0</td></tr>
+                    <tr><td><strong>Planner 开发集</strong><span>实验 03</span></td><td>600 条单工具 + 600 条 2–6 工具请求</td><td><strong>1,200 条</strong></td><td>评测 28 个 checkpoint，并锁定最终 checkpoint-113</td><td>检索 AllHit@10 96.6667%；与训练和冻结测试均隔离</td></tr>
+                    <tr><td><strong>工具需求明确的请求测试集</strong><span>实验 02 / 03</span></td><td>明确写出所需能力与顺序，并配目标工具与最终 Top-10</td><td><strong>1,000 条请求</strong></td><td>补充测试最终检索和 8B Planner</td><td>Top-10 找齐必要工具 100%；最终工具链全对率 99.4000%</td></tr>
+                    <tr><td><strong>完整 100 工具 / Top-10 配对测试</strong><span>实验 03 · 基础模型</span></td><td>日常电商 6K + 明确工具需求 1K；未微调 4B / 8B 分别比较两种候选范围</td><td><strong>7,000 条请求 × 2 种输入</strong><br>4 组配对 · 8 份结果</td><td>验证 Top-10 候选是否帮助未微调 Planner</td><td>4 / 4 组工具链全对率提高</td></tr>
+                    <tr><td><strong>系统级工具链测试集</strong><span>项目最终结果</span></td><td>3K 闲聊 + 6K 电商；0.6B checkpoint-2000 路由、精排 20 / 规划 10 与最终 8B Planner</td><td><strong>9,000 条</strong></td><td>逐样本联合计分；工具链成功 8,336 / 9,000</td><td>集合 / 工具链成功率 92.8000% / 92.6222%；未执行真实工具</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -1839,7 +1516,7 @@
         <details class="narrative-disclosure evidence-section-disclosure" id="evidence">
           <summary>
             <span class="disclosure-summary-copy"><small>工程证据 · 复现</small><strong id="evidenceTitle" role="heading" aria-level="2">工程资产与复现</strong></span>
-            <span class="disclosure-summary-meta">16 项证据 · 4 条 CPU 校验命令</span>
+            <span class="disclosure-summary-meta">14 项证据 · 4 条 CPU 校验命令</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body evidence-section-body">
@@ -1849,28 +1526,26 @@
               <a class="btn btn-outline" href="https://github.com/Ryannnice/Agent" target="_blank" rel="noopener noreferrer">项目仓库 ↗</a>
             </aside>
 
-            <div class="evidence-group-heading"><strong>核心结果</strong><span>5 项</span></div>
+            <div class="evidence-group-heading"><strong>核心结果</strong><span>6 项</span></div>
             <div class="evidence-grid evidence-grid-primary">
               <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/configs/retrieval_canonical_route.json" target="_blank" rel="noopener noreferrer"><span>最终配置</span><h3>精排 20 / 规划 10 的检索与规划输入</h3><b>configs/retrieval_canonical_route.json</b></a>
               <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/03_%E5%90%91%E9%87%8F%E8%AE%AD%E7%BB%83.md" target="_blank" rel="noopener noreferrer"><span>检索实验报告</span><h3>负样本训练、参数选择与最终测试</h3><b>reports/03_向量训练.md</b></a>
-              <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/06_Assignment3_100%E5%B7%A5%E5%85%B7%E5%AE%9E%E9%AA%8C%E6%80%BB%E6%8A%A5%E5%91%8A.md" target="_blank" rel="noopener noreferrer"><span>规划实验报告</span><h3>RAG、SFT、初始与残差 DPO、9K 结果</h3><b>reports/06_Assignment3_100工具实验总报告.md</b></a>
+              <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/07_Planner%E5%86%8D%E8%AE%AD%E7%BB%83_20260808.md" target="_blank" rel="noopener noreferrer"><span>规划实验报告</span><h3>77,724 条 SFT、RPO / DPO 选择与冻结结果</h3><b>reports/07_Planner再训练_20260808.md</b></a>
               <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/intent_0p6b_canonical_20260803/summary.json" target="_blank" rel="noopener noreferrer"><span>路由结构化结果</span><h3>0.6B 路由选择与 9K 分流结果</h3><b>intent_0p6b_canonical_20260803/summary.json</b></a>
-              <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_rag_residual_dpo_v2_20260803/evaluation/system9000/selected_seed20260804.system.metrics.json" target="_blank" rel="noopener noreferrer"><span>最新结构化结果</span><h3>checkpoint-63 的 9K 联合评测</h3><b>residual_dpo.../system9000/...metrics.json</b></a>
+              <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_planner_dpo2_20260808/final_summary.json" target="_blank" rel="noopener noreferrer"><span>最终结构化结果</span><h3>checkpoint-113 的 6K / 1K / 9K 汇总</h3><b>assignment3_planner_dpo2_20260808/final_summary.json</b></a>
+              <a class="evidence-card evidence-card-latest" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_planner_dpo2_20260808/selection/dpo_checkpoint_selection.json" target="_blank" rel="noopener noreferrer"><span>模型选择锁</span><h3>28 个 checkpoint 的开发集排序与确定性破平</h3><b>selection/dpo_checkpoint_selection.json</b></a>
             </div>
 
-            <div class="evidence-group-heading evidence-group-heading-secondary"><strong>补充报告</strong><span>11 项</span></div>
+            <div class="evidence-group-heading evidence-group-heading-secondary"><strong>补充报告</strong><span>8 项</span></div>
             <div class="evidence-grid evidence-grid-secondary">
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/README.md" target="_blank" rel="noopener noreferrer"><span>项目地图</span><h3>项目概览</h3><b>PROJECT/README.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/01_%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB.md" target="_blank" rel="noopener noreferrer"><span>模型报告</span><h3>意图识别与关键词评测</h3><b>reports/01_意图识别.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/02_%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA.md" target="_blank" rel="noopener noreferrer"><span>基线报告</span><h3>检索增强</h3><b>reports/02_检索增强.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/04_%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8E%E8%AE%AD%E7%BB%83%E7%94%A8%E6%95%B0%E8%AF%B4%E6%98%8E.md" target="_blank" rel="noopener noreferrer"><span>数据地图</span><h3>数据与实验总表</h3><b>reports/04_数据集与训练用数说明.md</b></a>
+              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/reports/06_Assignment3_100%E5%B7%A5%E5%85%B7%E5%AE%9E%E9%AA%8C%E6%80%BB%E6%8A%A5%E5%91%8A.md" target="_blank" rel="noopener noreferrer"><span>综合报告</span><h3>100 工具检索与规划总结果</h3><b>reports/06_Assignment3_100工具实验总报告.md</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/configs/embedding_finetune_experiments.json" target="_blank" rel="noopener noreferrer"><span>实验配置</span><h3>向量训练预筛与负样本方案</h3><b>configs/embedding_finetune_experiments.json</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/planner_joint_depth_reselection_20260801/final_report.json" target="_blank" rel="noopener noreferrer"><span>结构化结果</span><h3>精排与规划深度联合选择</h3><b>planner_joint_depth.../final_report.json</b></a>
-              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/configs/assignment3_sft_ablation.json" target="_blank" rel="noopener noreferrer"><span>实验配置</span><h3>9K 监督训练参数搜索</h3><b>configs/assignment3_sft_ablation.json</b></a>
-              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/configs/assignment3_api_native_sft_scaling.json" target="_blank" rel="noopener noreferrer"><span>实验配置</span><h3>9K–54K 监督规模选择协议</h3><b>configs/assignment3_api_native_sft_scaling.json</b></a>
-              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_api_native_sft_scaling_20260802/results_summary.json" target="_blank" rel="noopener noreferrer"><span>结构化结果</span><h3>训练量选择、最终测试与 9K 汇总</h3><b>assignment3_api_native_sft_scaling_20260802/results_summary.json</b></a>
-              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/configs/assignment3_current_dpo.json" target="_blank" rel="noopener noreferrer"><span>实验配置</span><h3>从仅 SFT 模型继续训练 DPO</h3><b>configs/assignment3_current_dpo.json</b></a>
-              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/assignment3_current_api9k_dpo_20260802/evaluation/final_summary.json" target="_blank" rel="noopener noreferrer"><span>结构化结果</span><h3>初始 DPO 参数网格、三个随机种子与受控回放</h3><b>assignment3_current_api9k_dpo_20260802/evaluation/final_summary.json</b></a>
+              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/configs/assignment3_current_dpo.json" target="_blank" rel="noopener noreferrer"><span>实验配置</span><h3>真实错误偏好数据、RPO 主搜索与 DPO 扩展</h3><b>configs/assignment3_current_dpo.json</b></a>
             </div>
 
             <div class="reproduce-block">
@@ -1897,7 +1572,7 @@ python3 \
             </div>
 
             <div class="provenance">
-              <div><span>项目快照</span><strong>2026-08-03</strong></div>
+              <div><span>项目快照</span><strong>2026-08-08</strong></div>
               <div><span>工具目录版本</span><strong>100 个工具 · 2026-07-06</strong></div>
             </div>
           </div>
@@ -1923,7 +1598,7 @@ python3 \
       <div class="footer-links"><strong>实验</strong><a href="#intent">意图分流</a><a href="#results">候选检索</a><a href="#planning">工具链规划</a></div>
       <div class="footer-links"><strong>成果</strong><a href="#limits">系统结论与适用范围</a><a href="#evidence">工程资产与复现</a><a href="https://github.com/Ryannnice/Agent" target="_blank" rel="noopener noreferrer" title="需要 GitHub 仓库访问权限">项目仓库（需权限）↗</a></div>
     </div>
-    <div class="wrap footer-fine"><span>项目快照 · 2026-08-03</span><span>100 个工具 · 意图分流 → 候选检索 → 有序工具链</span></div>
+    <div class="wrap footer-fine"><span>项目快照 · 2026-08-08</span><span>100 个工具 · 意图分流 → 候选检索 → 有序工具链</span></div>
   </footer>
 
   <button class="to-top" id="toTop" type="button" aria-label="返回顶部">↑</button>
