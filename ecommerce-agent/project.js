@@ -365,6 +365,7 @@
       insight: '#results',
       analysis: '#results',
       planning: '#planning',
+      multiturn: '#multiturn',
       limits: '#limits',
       evidence: '#evidence'
     };
