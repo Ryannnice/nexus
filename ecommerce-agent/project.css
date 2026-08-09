@@ -575,7 +575,7 @@ code, pre { font-family: var(--font); }
 .tool-meta strong { display: block; margin-top: 4px; font-size: 12px; }
 .confusable-list { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--hairline); }
 .confusable-list > span { display: block; margin-bottom: 9px; color: var(--mute); font-size: 9px; font-weight: 700; }
-.confusable-list code { display: block; padding: 5px 0; color: var(--link-blue); font-size: 10px; overflow-wrap: anywhere; }
+.confusable-list code { display: block; padding: 5px 0; color: var(--ink); font-size: 10px; overflow-wrap: anywhere; }
 
 /* System */
 .route-phases { display: grid; grid-template-columns: repeat(4,1fr); margin-bottom: 24px; padding: 0; border: 1px solid var(--hairline); background: var(--canvas); list-style: none; }
