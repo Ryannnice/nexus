@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026080801">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：9,000 条请求中有 8,336 条生成完全正确的有序工具链">
 
-  <link rel="stylesheet" href="project.css?v=46">
+  <link rel="stylesheet" href="project.css?v=47">
   <script defer src="project-data.js?v=20"></script>
   <script defer src="project.js?v=25"></script>
 </head>
@@ -452,36 +452,28 @@
         <p class="eyebrow">实验 02 · 候选检索</p>
         <div class="section-heading split-heading">
           <h2 id="resultsTitle">候选检索：从训练前基线到最终 Top-10</h2>
-          <p>先训练请求与工具的语义表示，再用交叉编码重排和排名融合生成 Top-10 候选。</p>
+          <p>这一章只负责从 100 个工具中找出 10 个候选，并尽量让本轮需要的工具全部在其中；后续如何选择和排序工具，留到实验 03。</p>
         </div>
 
-        <div class="result-command-center">
-          <article class="result-verdict">
-            <p class="eyebrow">候选检索 · 最终采用方案</p>
-            <h3>负样本训练 +<br>交互重排</h3>
-            <p>bge-large-zh-v1.5 使用跨领域与新增无关负样本训练，bge-reranker-v2-m3 使用按工具类型挑选的负例与检索结果中的难例训练；精排 20 个候选后输出 Top-10。</p>
-            <div class="result-verdict-tags">
-              <span>向量模型 · bge-large-zh-v1.5</span>
-              <span>重排模型 · bge-reranker-v2-m3</span>
-              <span>实际精排 · Top-20</span>
-              <span>规划输入 · Top-10</span>
-            </div>
-          </article>
-
-          <div class="result-main-score">
-            <span>9K 逐阶段计分 · 完成候选检索后</span>
-            <strong>98.24<small>%</small></strong>
-            <p>8,842 / 9,000 · 累计通过</p>
-            <div><b>日常电商请求 · 6,000 条</b><span>必要工具全部进入 Top-10 · 97.3667%</span></div>
+        <section class="retrieval-compact-story" aria-labelledby="retrievalStoryTitle">
+          <div class="result-explorer-head">
+            <div><span class="result-subsection-label">本章阅读顺序</span><h3 id="retrievalStoryTitle">训练前筛选 → 训练与选型 → 最终测试 → 成本与复现</h3></div>
+            <p>全章使用同一个判断：本轮需要的每个工具都进入 Top-10 才算检索成功；少一个就失败。这里不统计后续规划模型的工具链结果。</p>
           </div>
 
-          <ul class="result-scoreboard">
-            <li><strong>158 条</strong><b>检索阶段新增失败</b><span>9K · 9,000 → 8,842</span></li>
-            <li><strong>97.3667%</strong><b>日常电商请求测试</b><span>6,000 条 · 必要工具全部进入 Top-10</span></li>
-            <li><strong>47.09ms</strong><b>精排模块 p50</b><span>20 个候选 · 同硬件离线均摊</span></li>
-            <li><strong>92.6222%</strong><b>系统级工具链成功率</b><span>0.6B 路由 + 8B · 77,724 条 SFT + RPO / DPO · 8,336 / 9,000 · 未执行真实工具</span></li>
-          </ul>
-        </div>
+          <div class="experiment-steps" role="group" aria-label="候选检索实验阅读顺序">
+            <article><span>01 · 训练前筛选</span><strong>确定比较起点</strong><small>比较向量检索、BM25、融合方法、候选深度和公开重排模型。</small></article>
+            <article><span>02 · 训练与选型</span><strong>训练模型并锁定参数</strong><small>比较负样本和融合方案，最终确定“精排 20、交付 10”。</small></article>
+            <article><span>03 · 锁定后测试</span><strong>检查 Top-10 是否找齐</strong><small>在三套测试上检查必要工具覆盖，并定位漏在哪个检索步骤。</small></article>
+            <article><span>04 · 成本与复现</span><strong>说明数据、时间与产物</strong><small>分开记录训练和测试数据，并解释各模块的计时口径。</small></article>
+          </div>
+
+          <div class="experiment-question retrieval-route-summary">
+            <span>本章最终交付</span>
+            <strong>各取 40 → 精排 20 → 输出 Top-10</strong>
+            <p>向量检索与 BM25 各取 40 个候选，第一次融合后精排 20 个，再经第二次融合输出 10 个；实验 02 到这里结束。</p>
+          </div>
+        </section>
 
         <details class="full-results narrative-disclosure retrieval-run-disclosure" id="retrievalBaseComparisons">
           <summary>
@@ -811,10 +803,10 @@
             </section>
 
             <section class="full-results-group" aria-labelledby="retrievalFrozenEfficiencyTitle">
-              <div class="full-results-group-head"><span>03C</span><div><h4 id="retrievalFrozenEfficiencyTitle">候选越多，精排需要多长时间</h4><p>在同一硬件和同一模型下，测量 Cross-encoder 分别评分 10、20、30、50 个候选的离线批内均摊 p50；该表说明最终“精排 20”相对更深方案的成本差异。</p></div></div>
+              <div class="full-results-group-head"><span>03C</span><div><h4 id="retrievalFrozenEfficiencyTitle">候选越多，精排需要多长时间</h4><p>这是同机同配置的离线批处理对照：先把每批评分总耗时平摊到每条请求，再取中位数。它只用于比较 10、20、30、50 个候选的相对成本，不代表线上单请求延迟。</p></div></div>
             <div class="result-table-wrap" tabindex="0">
               <table class="result-table result-table-compact efficiency-table retrieval-final-efficiency-table numeric-result-table">
-                <thead><tr><th scope="col">精排候选数 R</th><th scope="col">规划可见数 P</th><th scope="col">精排 p50</th><th scope="col">相对精排 20</th><th scope="col">用途</th></tr></thead>
+                <thead><tr><th scope="col">精排候选数 R</th><th scope="col">规划可见数 P</th><th scope="col">离线批均摊 p50</th><th scope="col">相对精排 20</th><th scope="col">用途</th></tr></thead>
                 <tbody>
                   <tr><td>10</td><td>≤10</td><td>23.95ms</td><td>−49.14%</td><td>覆盖约束未通过</td></tr>
                   <tr class="result-table-final"><td><strong>20</strong></td><td><strong>10</strong></td><td><strong>47.09ms</strong></td><td><strong>基准</strong></td><td><strong>最终路线</strong></td></tr>

@@ -5333,6 +5333,15 @@ main summary {
   margin-top: 20px;
 }
 
+.retrieval-compact-story .result-explorer-head {
+  margin-top: 0;
+}
+
+.retrieval-route-summary {
+  grid-template-columns: 150px minmax(260px, .8fr) minmax(0, 1.2fr);
+  margin-top: 12px;
+}
+
 .planner-evidence-intro {
   display: grid;
   grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
