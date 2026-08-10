@@ -7623,6 +7623,232 @@ details table.result-table-compact td {
 }
 
 /* Multi-turn tool planning */
+.multiturn-primer {
+  margin-top: 24px;
+  border: 1px solid var(--hairline);
+  border-top: 6px solid var(--ink);
+  background: var(--canvas);
+}
+
+.multiturn-primer-head {
+  display: grid;
+  grid-template-columns: minmax(320px, .95fr) minmax(360px, 1.05fr);
+  gap: 48px;
+  align-items: end;
+  padding: 24px 26px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.multiturn-primer-head span,
+.multiturn-example figcaption > span,
+.multiturn-score-rules article > span {
+  color: var(--primary-text);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .45px;
+}
+
+.multiturn-primer-head h3 {
+  margin-top: 7px;
+  font-size: 26px;
+  line-height: 1.3;
+}
+
+.multiturn-primer-head p {
+  color: var(--body);
+}
+
+.multiturn-primer-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, .82fr) minmax(0, 1.18fr);
+  gap: 1px;
+  background: var(--hairline);
+}
+
+.multiturn-term-list {
+  margin: 0;
+  background: var(--canvas);
+}
+
+.multiturn-term-list > div {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.multiturn-term-list > div:last-child {
+  border-bottom: 0;
+}
+
+.multiturn-term-list dt {
+  color: var(--primary-text);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.multiturn-term-list dd {
+  margin: 0;
+  color: var(--body);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.multiturn-example {
+  margin: 0;
+  padding: 22px;
+  background: var(--surface-soft);
+}
+
+.multiturn-example figcaption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.multiturn-example figcaption small {
+  color: var(--mute);
+  font-size: 10px;
+}
+
+.multiturn-turn-list {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.multiturn-turn-list li {
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr);
+  gap: 5px 14px;
+  padding: 15px 16px;
+  border: 1px solid var(--hairline);
+  border-left: 5px solid var(--ink);
+  background: var(--canvas);
+}
+
+.multiturn-turn-list li.is-current {
+  border-left-color: var(--primary-dark);
+}
+
+.multiturn-turn-list li > span {
+  grid-row: 1 / span 2;
+  color: var(--primary-text);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.multiturn-turn-list q {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.multiturn-turn-list small {
+  color: var(--mute);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.multiturn-example-output {
+  margin-top: 8px;
+  padding: 16px 18px;
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+.multiturn-example-output > span,
+.multiturn-example-output > strong,
+.multiturn-example-output > small {
+  display: block;
+}
+
+.multiturn-example-output > span {
+  color: var(--primary);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.multiturn-example-output > strong {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.multiturn-example-output i {
+  margin-inline: 7px;
+  color: var(--primary);
+  font-style: normal;
+}
+
+.multiturn-example-output > small {
+  margin-top: 8px;
+  color: var(--on-dark-mute);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.multiturn-example-output code {
+  border: 0;
+  background: transparent;
+  color: var(--on-dark);
+  font-size: inherit;
+}
+
+.multiturn-score-rules {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 54px minmax(0, 1fr);
+  align-items: stretch;
+  border-top: 1px solid var(--hairline);
+  background: var(--canvas);
+}
+
+.multiturn-score-rules article {
+  padding: 19px 22px;
+}
+
+.multiturn-score-rules article > strong,
+.multiturn-score-rules article > small {
+  display: block;
+}
+
+.multiturn-score-rules article > strong {
+  margin-top: 8px;
+  font-size: 17px;
+}
+
+.multiturn-score-rules article > small {
+  margin-top: 7px;
+  color: var(--mute);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.multiturn-score-rules > i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  color: var(--ink);
+  font-style: normal;
+  font-weight: 800;
+}
+
+.multiturn-primer .multiturn-eval-split {
+  margin-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 0;
+}
+
+.multiturn-primer + .multiturn-result-lead {
+  margin-top: 18px;
+}
+
 .multiturn-result-lead {
   display: grid;
   grid-template-columns: minmax(0, 1.18fr) minmax(420px, .82fr);
@@ -8197,6 +8423,31 @@ details table.result-table-compact td {
   color: var(--body);
 }
 
+.multiturn-config-note {
+  margin-top: 16px;
+  padding: 13px 15px;
+  border-left: 5px solid var(--primary);
+  background: var(--canvas);
+  color: var(--body);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.multiturn-config-note code {
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.multiturn-config-id {
+  display: block;
+  margin-top: 5px;
+  color: var(--mute);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .15px;
+}
+
 .multiturn-ablation-table-wrap {
   margin-top: 16px;
 }
@@ -8206,7 +8457,7 @@ details table.result-table-compact td {
   table-layout: fixed;
 }
 
-.multiturn-ablation-table th:nth-child(1) { width: 155px; }
+.multiturn-ablation-table th:nth-child(1) { width: 185px; }
 .multiturn-ablation-table th:nth-child(2) { width: 235px; }
 .multiturn-ablation-table th:nth-child(3) { width: 82px; }
 .multiturn-ablation-table th:nth-child(n + 4):nth-child(-n + 6) { width: 122px; }
@@ -8341,6 +8592,10 @@ details table.result-table-compact td {
   background: var(--surface-soft);
 }
 
+.multiturn-detail-block + .multiturn-dataset-grid {
+  margin-top: 28px;
+}
+
 .multiturn-test-table {
   min-width: 760px;
 }
@@ -8425,10 +8680,15 @@ details table.result-table-compact td {
 }
 
 @media (max-width: 900px) {
+  .multiturn-primer-head,
   .multiturn-framework-head,
   .multiturn-framework figcaption {
     grid-template-columns: minmax(0, 1fr);
     gap: 10px;
+  }
+
+  .multiturn-primer-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .multiturn-eval-split {
@@ -8484,6 +8744,47 @@ details table.result-table-compact td {
 }
 
 @media (max-width: 620px) {
+  .multiturn-primer-head {
+    padding: 18px 16px;
+  }
+
+  .multiturn-primer-head h3 {
+    font-size: 22px;
+  }
+
+  .multiturn-term-list > div {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .multiturn-example {
+    padding: 18px 16px;
+  }
+
+  .multiturn-example figcaption {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .multiturn-turn-list li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .multiturn-turn-list li > span {
+    grid-row: auto;
+  }
+
+  .multiturn-score-rules {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .multiturn-score-rules > i {
+    min-height: 36px;
+    transform: rotate(90deg);
+  }
+
   .multiturn-result-copy {
     padding: 28px 22px;
   }
