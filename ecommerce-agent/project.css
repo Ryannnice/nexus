@@ -5720,8 +5720,226 @@ main summary {
   line-height: 1.7;
 }
 
+.final-runtime-decision {
+  margin: 0 0 28px;
+  border: 1px solid var(--hairline);
+  border-top: 6px solid var(--primary);
+  background: var(--canvas);
+}
+
+.final-runtime-decision > header {
+  display: grid;
+  grid-template-columns: minmax(280px, .9fr) minmax(360px, 1.1fr);
+  gap: 44px;
+  align-items: end;
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.final-runtime-decision > header span {
+  color: var(--primary-text);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .45px;
+}
+
+.final-runtime-decision > header h4 {
+  margin-top: 6px;
+  font-size: 21px;
+  line-height: 1.35;
+}
+
+.final-runtime-decision > header p {
+  color: var(--body);
+  font-size: 12px !important;
+  line-height: 1.65;
+}
+
+.final-runtime-main {
+  display: grid;
+  grid-template-columns: minmax(110px, .72fr) 24px minmax(150px, 1fr) 24px minmax(120px, .78fr) 24px minmax(170px, 1.15fr) 24px minmax(130px, .84fr) 24px minmax(130px, .84fr);
+  align-items: stretch;
+  padding: 22px;
+  background: var(--surface-soft);
+}
+
+.final-runtime-node {
+  min-width: 0;
+  padding: 15px 14px;
+  border: 1px solid var(--hairline);
+  border-top: 4px solid var(--ink);
+  background: var(--canvas);
+}
+
+.final-runtime-node.is-agent {
+  border-color: var(--primary-dark);
+  background: var(--primary);
+}
+
+.final-runtime-node.is-output {
+  border-color: var(--primary-dark);
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+.final-runtime-node :is(small, strong, span) {
+  display: block;
+}
+
+.final-runtime-node small {
+  color: var(--primary-text);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.final-runtime-node.is-agent small {
+  color: var(--ink);
+}
+
+.final-runtime-node.is-output small {
+  color: var(--primary);
+}
+
+.final-runtime-node strong {
+  margin-top: 9px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.final-runtime-node span {
+  margin-top: 6px;
+  color: var(--mute);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.final-runtime-node.is-agent span {
+  color: var(--ink);
+}
+
+.final-runtime-node.is-output span {
+  color: var(--on-dark-mute);
+}
+
+.final-runtime-main > i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-text);
+  font-style: normal;
+  font-weight: 800;
+}
+
+.final-runtime-routes {
+  display: grid;
+  grid-template-columns: 1.35fr repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--hairline);
+  background: var(--hairline);
+}
+
+.final-runtime-routes article {
+  min-width: 0;
+  padding: 18px;
+  background: var(--canvas);
+}
+
+.final-runtime-routes article.is-full-route {
+  border-top: 4px solid var(--ink);
+}
+
+.final-runtime-routes article.is-direct {
+  border-top: 4px solid var(--primary-dark);
+  background: color-mix(in srgb, var(--primary) 25%, var(--canvas));
+}
+
+.final-runtime-routes article.is-catalog {
+  border-top: 4px solid var(--primary-dark);
+  background: color-mix(in srgb, var(--primary) 25%, var(--canvas));
+}
+
+.final-runtime-routes article > span,
+.final-runtime-routes article > strong,
+.final-runtime-routes article > p {
+  display: block;
+}
+
+.final-runtime-routes article > span {
+  color: var(--primary-text);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .35px;
+}
+
+.final-runtime-routes article > strong {
+  margin-top: 9px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.final-runtime-routes article > p,
+.final-runtime-routes li {
+  color: var(--mute);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.final-runtime-routes article > p {
+  margin-top: 9px;
+}
+
+.final-runtime-routes ul {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding-left: 16px;
+}
+
+.final-runtime-routes li b {
+  color: var(--ink);
+}
+
+.final-runtime-decision figcaption {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 20px;
+  padding: 15px 20px;
+  border-top: 1px solid var(--hairline);
+  background: var(--canvas);
+  color: var(--body);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.final-runtime-decision figcaption strong {
+  color: var(--primary-text);
+  font-size: 10px;
+}
+
+.final-system-detail-label {
+  display: flex;
+  gap: 18px;
+  align-items: baseline;
+  margin: 0 0 12px;
+  padding: 12px 15px;
+  border-left: 5px solid var(--primary);
+  background: var(--canvas);
+  color: var(--body);
+  font-size: 11px !important;
+}
+
+.final-system-detail-label strong {
+  flex: 0 0 auto;
+  color: var(--ink);
+}
+
 .final-system-overview .final-route-phases {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   margin-bottom: 24px;
+}
+
+.final-system-overview .final-route-phases li.is-agent-step {
+  background: color-mix(in srgb, var(--primary) 25%, var(--canvas));
 }
 
 .final-system-overview .pipeline-lane {
@@ -5909,6 +6127,10 @@ main summary {
 }
 
 @media (max-width: 1080px) {
+  .final-runtime-routes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .planner-storyline {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -5934,7 +6156,24 @@ main summary {
     gap: 10px;
   }
 
-  .final-route-phases {
+  .final-runtime-decision > header,
+  .final-runtime-decision figcaption {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .final-runtime-main {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 7px;
+    padding: 18px;
+  }
+
+  .final-runtime-main > i {
+    min-height: 20px;
+    transform: rotate(90deg);
+  }
+
+  .final-system-overview .final-route-phases {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -5948,12 +6187,13 @@ main summary {
   }
 
   .final-route-phases li:last-child {
-    grid-column: auto;
+    grid-column: 1 / -1;
     border-right: 0;
     border-bottom: 0;
   }
 
-  .final-route-phases li:nth-child(n+3) {
+  .final-route-phases li:nth-child(3),
+  .final-route-phases li:nth-child(4) {
     border-bottom: 0;
   }
 
@@ -6031,6 +6271,31 @@ main summary {
 }
 
 @media (max-width: 620px) {
+  .final-runtime-decision > header,
+  .final-runtime-decision figcaption {
+    padding: 17px 15px;
+  }
+
+  .final-runtime-main {
+    padding: 15px;
+  }
+
+  .final-runtime-routes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .final-runtime-routes article {
+    padding: 16px;
+  }
+
+  .final-system-detail-label {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+@media (max-width: 620px) {
   .section {
     padding-block: 56px;
   }
@@ -6063,7 +6328,7 @@ main summary {
     font-size: 14px;
   }
 
-  .final-route-phases {
+  .final-system-overview .final-route-phases {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -8670,8 +8935,627 @@ details table.result-table-compact td {
   margin-top: 28px;
 }
 
+/* Final natural multi-turn protocol */
+.multiturn-session-flow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(105px, 1fr));
+  gap: 1px;
+  margin: 16px 0 0;
+  padding: 1px;
+  overflow-x: auto;
+  background: var(--hairline);
+  list-style: none;
+}
+
+.multiturn-session-flow li {
+  position: relative;
+  min-width: 105px;
+  padding: 14px 12px;
+  background: var(--canvas);
+}
+
+.multiturn-session-flow li.is-reference {
+  background: var(--primary);
+}
+
+.multiturn-session-flow :is(span, strong, small) {
+  display: block;
+}
+
+.multiturn-session-flow span {
+  color: var(--primary-text);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.multiturn-session-flow .is-reference span {
+  color: var(--ink);
+}
+
+.multiturn-session-flow strong {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.multiturn-session-flow small {
+  margin-top: 5px;
+  color: var(--mute);
+  font-size: 9px;
+}
+
+.multiturn-session-flow .is-reference small {
+  color: var(--ink);
+}
+
+.multiturn-example-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px minmax(0, .72fr);
+  gap: 8px;
+  align-items: stretch;
+  margin-top: 10px;
+}
+
+.multiturn-example-pair > div {
+  padding: 13px 14px;
+  border: 1px solid var(--hairline);
+  background: var(--canvas);
+}
+
+.multiturn-example-pair span,
+.multiturn-example-pair q {
+  display: block;
+}
+
+.multiturn-example-pair span {
+  color: var(--primary-text);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.multiturn-example-pair q {
+  margin-top: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.multiturn-example-pair > i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-text);
+  font-style: normal;
+  font-weight: 800;
+}
+
+.multiturn-session-example .multiturn-example-output > strong {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.multiturn-protocol-grid,
+.multiturn-waterfall-notes,
+.multiturn-acceptance-grid,
+.multiturn-runtime-grid {
+  display: grid;
+  gap: 1px;
+  border-top: 1px solid var(--hairline);
+  background: var(--hairline);
+}
+
+.multiturn-protocol-grid,
+.multiturn-acceptance-grid,
+.multiturn-runtime-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.multiturn-protocol-grid article,
+.multiturn-waterfall-notes article,
+.multiturn-acceptance-grid article,
+.multiturn-runtime-grid article {
+  min-width: 0;
+  padding: 17px 18px;
+  background: var(--canvas);
+}
+
+.multiturn-protocol-grid article > span,
+.multiturn-waterfall-notes article > span,
+.multiturn-path-card header > span,
+.multiturn-protection-strip article > span,
+.multiturn-acceptance-grid article > span,
+.multiturn-runtime-grid article > span {
+  color: var(--primary-text);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .35px;
+}
+
+.multiturn-protocol-grid :is(strong, small),
+.multiturn-waterfall-notes :is(strong, small),
+.multiturn-acceptance-grid :is(strong, small),
+.multiturn-runtime-grid :is(strong, small) {
+  display: block;
+}
+
+.multiturn-protocol-grid strong,
+.multiturn-waterfall-notes strong,
+.multiturn-acceptance-grid strong,
+.multiturn-runtime-grid strong {
+  margin-top: 9px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.multiturn-protocol-grid small,
+.multiturn-waterfall-notes small,
+.multiturn-acceptance-grid small,
+.multiturn-runtime-grid small {
+  margin-top: 7px;
+  color: var(--mute);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.multiturn-result-copy h3 .multiturn-result-range {
+  font-size: clamp(44px, 5.2vw, 70px);
+  white-space: nowrap;
+}
+
+.multiturn-waterfall {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: 1px;
+  align-items: start;
+  margin-top: 20px;
+  border: 1px solid var(--hairline);
+  background: var(--hairline);
+}
+
+.multiturn-waterfall-group {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+  background: var(--canvas);
+}
+
+.multiturn-waterfall-group > header {
+  min-height: 88px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--hairline);
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+.multiturn-waterfall-group.is-final-group > header {
+  background: var(--primary);
+  color: var(--ink);
+}
+
+.multiturn-waterfall-group > header span,
+.multiturn-waterfall-group > header strong {
+  display: block;
+}
+
+.multiturn-waterfall-group > header span {
+  color: var(--primary);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.multiturn-waterfall-group.is-final-group > header span {
+  color: var(--ink);
+}
+
+.multiturn-waterfall-group > header strong {
+  margin-top: 9px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.multiturn-waterfall-group ol {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.multiturn-waterfall-explainer {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  padding: 1px;
+  background: var(--hairline);
+}
+
+.multiturn-waterfall-explainer > div {
+  display: flex;
+  min-width: 0;
+  min-height: 190px;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px 13px;
+  background: var(--surface-soft);
+}
+
+.multiturn-waterfall-explainer :is(span, strong, small) {
+  display: block;
+}
+
+.multiturn-waterfall-explainer span {
+  color: var(--primary-text);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.multiturn-waterfall-explainer strong {
+  margin-top: 8px;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.multiturn-waterfall-explainer small {
+  margin-top: 6px;
+  color: var(--mute);
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.multiturn-waterfall-group li {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 62px 58px;
+  gap: 12px;
+  align-items: center;
+  min-height: 96px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.multiturn-waterfall-group li:last-child {
+  border-bottom: 0;
+}
+
+.multiturn-waterfall-group li.is-final {
+  background: color-mix(in srgb, var(--primary) 42%, var(--canvas));
+}
+
+.multiturn-waterfall-stage {
+  display: flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--hairline-strong);
+  background: var(--ink);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.multiturn-waterfall-copy {
+  min-width: 0;
+}
+
+.multiturn-waterfall-copy strong,
+.multiturn-waterfall-copy small,
+.multiturn-waterfall-copy i {
+  display: block;
+}
+
+.multiturn-waterfall-copy strong {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.multiturn-waterfall-copy small {
+  margin-top: 4px;
+  color: var(--mute);
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.multiturn-waterfall-copy i {
+  height: 4px;
+  margin-top: 9px;
+  overflow: hidden;
+  background: var(--surface-soft);
+}
+
+.multiturn-waterfall-copy i b {
+  display: block;
+  width: var(--score);
+  height: 100%;
+  background: var(--ink);
+}
+
+.multiturn-waterfall-group li.is-gain .multiturn-waterfall-copy i b,
+.multiturn-waterfall-group li.is-final .multiturn-waterfall-copy i b {
+  background: var(--primary-dark);
+}
+
+.multiturn-waterfall-group li.is-negative .multiturn-waterfall-copy i b {
+  background: var(--error);
+}
+
+.multiturn-waterfall-value {
+  font-size: 16px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.multiturn-waterfall-group li > em {
+  padding: 5px 4px;
+  background: var(--surface-soft);
+  color: var(--mute);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.multiturn-waterfall-group li.is-gain > em {
+  background: var(--primary);
+  color: var(--ink);
+}
+
+.multiturn-waterfall-group li.is-negative > em {
+  background: color-mix(in srgb, var(--error) 12%, var(--canvas));
+  color: var(--error);
+}
+
+.multiturn-waterfall-group li > em.is-base {
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+.multiturn-waterfall-notes {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 12px;
+  border: 1px solid var(--hairline);
+}
+
+.multiturn-ablation-table {
+  min-width: 980px;
+}
+
+.multiturn-ablation-table th:nth-child(1) { width: 72px; }
+.multiturn-ablation-table th:nth-child(2) { width: 330px; }
+.multiturn-ablation-table th:nth-child(3) { width: 170px; }
+.multiturn-ablation-table th:nth-child(4) { width: 115px; }
+.multiturn-ablation-table th:nth-child(5),
+.multiturn-ablation-table th:nth-child(6) { width: 120px; }
+
+.multiturn-ablation-table :is(th, td):nth-child(2) {
+  text-align: left;
+}
+
+.multiturn-path-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0 20px 20px;
+}
+
+.multiturn-path-card {
+  min-width: 0;
+  border: 1px solid var(--hairline);
+  border-top: 5px solid var(--ink);
+  background: var(--canvas);
+}
+
+.multiturn-path-card.is-history {
+  border-top-color: var(--primary-dark);
+}
+
+.multiturn-path-card.is-cache {
+  border-top-color: var(--primary-dark);
+  background: color-mix(in srgb, var(--primary) 24%, var(--canvas));
+}
+
+.multiturn-path-card > header {
+  padding: 16px 17px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.multiturn-path-card header > span,
+.multiturn-path-card header > strong {
+  display: block;
+}
+
+.multiturn-path-card header > strong {
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+.multiturn-path-card ol {
+  counter-reset: path-step;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.multiturn-path-card li {
+  position: relative;
+  counter-increment: path-step;
+  min-height: 92px;
+  padding: 16px 15px 16px 48px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.multiturn-path-card li:last-child {
+  border-bottom: 0;
+}
+
+.multiturn-path-card li::before {
+  position: absolute;
+  top: 17px;
+  left: 15px;
+  display: flex;
+  width: 23px;
+  height: 23px;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  color: var(--primary);
+  content: counter(path-step, decimal-leading-zero);
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.multiturn-path-card li.is-output {
+  background: var(--surface-soft);
+}
+
+.multiturn-path-card.is-cache li.is-output {
+  background: var(--primary);
+}
+
+.multiturn-path-card li b,
+.multiturn-path-card li small {
+  display: block;
+}
+
+.multiturn-path-card li b {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.multiturn-path-card li small {
+  margin-top: 6px;
+  color: var(--mute);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.multiturn-path-card.is-cache li.is-output small {
+  color: var(--ink);
+}
+
+.multiturn-path-memory {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  padding: 1px;
+  background: var(--hairline);
+}
+
+.multiturn-path-memory span {
+  padding: 8px 5px;
+  background: var(--surface-soft);
+  color: var(--body);
+  font-size: 8px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.multiturn-protection-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 10px;
+  border: 1px solid var(--hairline-strong);
+  background: var(--hairline-strong);
+}
+
+.multiturn-protection-strip article {
+  min-width: 0;
+  padding: 14px 16px;
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+.multiturn-protection-strip article > span {
+  display: block;
+  color: var(--primary);
+}
+
+.multiturn-protection-strip article > strong {
+  display: block;
+  margin-top: 7px;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.multiturn-validation {
+  margin-top: 54px;
+}
+
+.multiturn-validation-panel {
+  margin-top: 20px;
+  border: 1px solid var(--hairline);
+  background: var(--canvas);
+}
+
+.multiturn-test-table {
+  min-width: 760px;
+}
+
+.multiturn-test-table :is(th, td):first-child {
+  width: 44%;
+}
+
+.multiturn-validation-note {
+  margin: 0;
+  padding: 15px 17px;
+  border-top: 1px solid var(--hairline);
+  border-left: 5px solid var(--primary);
+  background: var(--surface-soft);
+  color: var(--body);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.multiturn-error-summary {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid var(--hairline);
+  background: var(--surface-soft);
+}
+
+.multiturn-error-summary .planner-table-heading h4 {
+  margin: 0;
+}
+
+.multiturn-acceptance-grid {
+  margin-top: 14px;
+  border: 1px solid var(--hairline);
+}
+
+.multiturn-rules-table {
+  min-width: 920px;
+  table-layout: fixed;
+}
+
+.multiturn-rules-table th:nth-child(1) { width: 190px; }
+.multiturn-rules-table th:nth-child(2) { width: 530px; }
+.multiturn-rules-table th:nth-child(3) { width: 200px; }
+.multiturn-rules-table :is(th, td) { text-align: left; }
+
+.multiturn-runtime-detail,
+.multiturn-data-detail {
+  margin-top: 28px;
+}
+
+.multiturn-runtime-grid {
+  margin-top: 16px;
+  border: 1px solid var(--hairline);
+}
+
 @media (max-width: 1100px) {
   .multiturn-result-lead {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .multiturn-protocol-grid,
+  .multiturn-acceptance-grid,
+  .multiturn-runtime-grid,
+  .multiturn-protection-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .multiturn-waterfall,
+  .multiturn-path-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -8697,6 +9581,10 @@ details table.result-table-compact td {
   }
 
   .multiturn-primer-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .multiturn-waterfall-notes {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -8777,6 +9665,19 @@ details table.result-table-compact td {
     gap: 4px;
   }
 
+  .multiturn-example-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .multiturn-example-pair > i {
+    min-height: 20px;
+    transform: rotate(90deg);
+  }
+
+  .multiturn-session-flow {
+    grid-template-columns: repeat(5, minmax(116px, 1fr));
+  }
+
   .multiturn-turn-list li {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -8806,14 +9707,50 @@ details table.result-table-compact td {
     font-size: 54px;
   }
 
+  .multiturn-result-copy h3 .multiturn-result-range {
+    font-size: 39px;
+    letter-spacing: -2px;
+  }
+
   .multiturn-result-stats,
   .multiturn-memory-grid,
   .multiturn-ablation-grid,
   .multiturn-parameter-grid,
   .multiturn-dataset-grid,
   .multiturn-guard-grid,
-  .multiturn-safety-rail {
+  .multiturn-safety-rail,
+  .multiturn-protocol-grid,
+  .multiturn-acceptance-grid,
+  .multiturn-runtime-grid,
+  .multiturn-protection-strip {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .multiturn-waterfall-group li {
+    grid-template-columns: 42px minmax(0, 1fr) 62px;
+    gap: 9px;
+    padding: 12px;
+  }
+
+  .multiturn-waterfall-group li > em {
+    grid-column: 3;
+  }
+
+  .multiturn-waterfall-explainer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .multiturn-waterfall-explainer > div {
+    display: block;
+    min-height: 0;
+  }
+
+  .multiturn-path-grid {
+    padding: 0 16px 16px;
+  }
+
+  .multiturn-error-summary {
+    padding: 16px;
   }
 
   .multiturn-result-stats article {

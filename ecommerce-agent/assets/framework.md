@@ -1,3 +1,7 @@
+> 历史材料（已停用）
+>
+> 本文件记录 2026-08-09 的旧 594 轮 / v1 实验，保留用于追溯，不再作为页面或最终结果证据。当前 canonical 以 `PROJECT/reports/07_多轮对话与记忆系统设计.md`、`natural_multiturn_agent_protocol_20260811/unified_ablation/results.json`、`confirmation_result.json` 和 `PROJECT/configs/agent_runtime.json` 为准；最终配置为 `E3-n2-k2-t640`，Search 与 Confirmation 各 500 轮 / 100 会话，TraceEM 均为 93.2%。
+
 完整汇报你做的工作
 
 
