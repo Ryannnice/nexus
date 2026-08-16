@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026080801">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：9,000 条请求中有 8,336 条生成完全正确的有序工具链">
 
-  <link rel="stylesheet" href="project.css?v=53">
+  <link rel="stylesheet" href="project.css?v=54">
   <script defer src="project-data.js?v=20"></script>
   <script defer src="project.js?v=25"></script>
 </head>
@@ -1313,19 +1313,19 @@
 
     <section class="section experiment-section multiturn-section" id="multiturn" aria-labelledby="multiturnTitle">
       <div class="wrap">
-        <p class="eyebrow">实验 04 · 自然短会话记忆</p>
+        <p class="eyebrow">实验 04 · 自然短会话评测</p>
         <div class="section-heading split-heading">
-          <h2 id="multiturnTitle">十二种候选将独立测试从 41.0% 提高到 94.6%</h2>
-          <p>固定同一套 100 工具检索与工具规划模型（Planner），只改变模型外的历史处理；既测试短句能否接回先前任务，也测试完整新请求会不会误带入旧工具。</p>
+          <h2 id="multiturnTitle">多轮工具调用 Agent 框架</h2>
+          <p>Agent 先判断当前句是否需要历史，再选择保持原句、恢复完整任务或复用已校验计划；100 工具检索与工具规划模型（Planner）始终固定。</p>
         </div>
 
         <section class="multiturn-primer" aria-labelledby="multiturnPrimerTitle">
           <header class="multiturn-primer-head">
             <div>
-              <span>01 · 先看规则与例子</span>
+              <span>01 · 评测规则与例子</span>
               <h3 id="multiturnPrimerTitle">每段自然会话有 2～7 轮，只统计最后一个目标轮</h3>
             </div>
-            <p>前面的请求都会真实经过检索和 Planner，并写入本会话的记忆。最后一轮要么引用先前任务，要么提出与历史无关的完整新请求，两种能力必须同时成立。</p>
+            <p>前面的请求都会真实经过检索和 Planner，并写入本会话。最后一轮分为历史回放和完整新请求：前者必须找回正确任务，后者必须保持独立。</p>
           </header>
 
           <div class="multiturn-primer-grid">
@@ -1374,28 +1374,27 @@
         <section class="multiturn-result-lead" aria-labelledby="multiturnResultTitle">
           <div class="multiturn-result-copy">
             <span>02 · 独立测试 · 993 个目标轮</span>
-            <h3 id="multiturnResultTitle"><strong class="multiturn-result-range">41.0% → 94.6%</strong>同时做到“该继承”和“不该继承”</h3>
-            <p>A 只看当前句，L 使用结构化记忆、完整任务恢复和同版本计划复用。两者使用相同模型、Top-10、提示词与生成方式，没有修改任何模型权重。</p>
+            <h3 id="multiturnResultTitle"><strong class="multiturn-result-range">41.0% → 94.6%</strong>从只看当前句，到按需恢复完整历史任务</h3>
+            <p>A 没有会话记忆；L 使用结构化记录、完整任务恢复和已验证计划复用。两者使用相同模型、Top-10、提示词与生成方式，没有修改任何模型权重。</p>
             <div class="multiturn-result-badges" role="group" aria-label="独立测试补充结果">
               <span>A → L 提高 53.58 个百分点</span>
-              <span>两类任务各占一半计算 95.09%</span>
-              <span>被引用轮找对 95.26%</span>
-              <span>严格输出 100%</span>
+              <span>被引用轮定位正确 95.26%</span>
+              <span>输出格式合规率 100%</span>
             </div>
           </div>
           <div class="multiturn-result-stats" role="group" aria-label="方案 L 独立测试结果">
-            <article class="is-primary"><span>测试集整体</span><strong>939 / 993</strong><small>有序工具链完全正确率 94.56%</small></article>
-            <article><span>历史回放</span><strong>568 / 612</strong><small>完全正确率 92.81%</small></article>
-            <article><span>完整新请求</span><strong>371 / 381</strong><small>不继承旧工具 97.38%</small></article>
-            <article><span>目标轮规划模型调用</span><strong>993 → 394</strong><small>597 次复用、2 次来源未解析；减少 60.3%</small></article>
+            <article class="is-primary"><span>主指标 · 整体工具链</span><strong>939 / 993</strong><small>有序工具链完全正确率 94.56%</small></article>
+            <article><span>历史回放工具链</span><strong>568 / 612</strong><small>完全正确率 92.81%</small></article>
+            <article><span>完整新请求工具链</span><strong>371 / 381</strong><small>不继承旧工具 97.38%</small></article>
+            <article><span>Planner 调用次数</span><strong>993 → 394</strong><small>597 次复用、2 次来源未解析；减少 60.3%</small></article>
           </div>
         </section>
         <p class="metric-contract-note"><strong>整体分数怎样读：</strong>评测约含 60% 历史回放和 40% 完整新请求，这个比例用于同时看清两种能力，不代表线上请求分布；因此页面始终同时报告两项分数。</p>
 
         <section class="multiturn-ablation" aria-labelledby="multiturnAblationTitle">
           <div class="result-explorer-head">
-            <div><span class="result-subsection-label">03 · A～L 十二种候选</span><h3 id="multiturnAblationTitle">原文拼接能读到历史，却会严重污染完整新请求</h3></div>
-            <p>A、B 是两条基线；C～L 是逐步完善的结构化主线。表内三项都来自同一独立测试，避免只看整体分数而漏掉安全退化。</p>
+            <div><span class="result-subsection-label">03 · A～L 十二种方案</span><h3 id="multiturnAblationTitle">同时比较历史任务恢复与完整新请求保护</h3></div>
+            <p>A 只看当前句，B 直接拼接历史，C～L 逐步加入结构化处理。三项分数都来自同一独立测试，任何明显损害完整新请求的方案都不能采用。</p>
           </div>
 
           <div class="result-table-wrap multiturn-ablation-table-wrap" tabindex="0">
@@ -1409,11 +1408,11 @@
                 <tr><td><strong>E</strong></td><td>按对象和关键词查询最多两条完整记录</td><td>85.5%</td><td>84.6%</td><td>86.9%</td></tr>
                 <tr><td><strong>F</strong></td><td>“刚才”等近期线索优先于宽泛历史词</td><td>85.5%</td><td>84.6%</td><td>86.9%</td></tr>
                 <tr class="table-divider"><td><strong>G</strong></td><td>分清当前业务动作和继承历史的指令</td><td>91.9%</td><td>88.6%</td><td>97.4%</td></tr>
-                <tr><td><strong>H</strong></td><td>把被切碎的单工具请求保留为完整目标</td><td>92.4%</td><td>89.4%</td><td>97.4%</td></tr>
-                <tr><td><strong>I</strong></td><td>只有标准工具全名精确命中时才直达</td><td>92.4%</td><td>89.4%</td><td>97.4%</td></tr>
+                <tr><td><strong>H</strong></td><td>把被规则拆散的单工具请求还原为完整目标</td><td>92.4%</td><td>89.4%</td><td>97.4%</td></tr>
+                <tr><td><strong>I</strong></td><td>只有按固定结构写出完整工具名称时才直达</td><td>92.4%</td><td>89.4%</td><td>97.4%</td></tr>
                 <tr><td><strong>J</strong></td><td>找到被引用轮后，恢复当时的完整请求</td><td>94.6%</td><td>92.8%</td><td>97.4%</td></tr>
-                <tr><td><strong>K</strong></td><td>完整多目标新请求强制清空历史证据</td><td>94.6%</td><td>92.8%</td><td>97.4%</td></tr>
-                <tr class="result-table-final"><td><strong>L</strong></td><td><strong>来源状态、输出和版本全部有效时复用原计划</strong></td><td><strong>94.6%</strong></td><td><strong>92.8%</strong></td><td><strong>97.4%</strong></td></tr>
+                <tr><td><strong>K</strong></td><td>完整的多目标新请求不读取历史</td><td>94.6%</td><td>92.8%</td><td>97.4%</td></tr>
+                <tr class="result-table-final"><td><strong>L</strong></td><td><strong>来源计划有效且运行配置一致时复用原计划</strong></td><td><strong>94.6%</strong></td><td><strong>92.8%</strong></td><td><strong>97.4%</strong></td></tr>
               </tbody>
             </table>
           </div>
@@ -1421,7 +1420,7 @@
           <div class="multiturn-waterfall-notes">
             <article><span>为什么不直接拼原文</span><strong>回放 5.2% → 59.2%，新请求却降到 36.5%</strong><small>B 证明历史确实有用，也证明无条件拼接会把旧工具带进当前任务。</small></article>
             <article><span>主要质量增益</span><strong>摘要 · 按需记忆 · 请求边界 · 完整恢复</strong><small>D、E、G、J 分别解决窗口外任务、来源定位、误继承和任务碎片丢失。</small></article>
-            <article><span>L 的作用</span><strong>准确率保持 94.6%，规划模型只调用 394 次</strong><small>F、I、K 是保护或直达规则；L 只在严格校验通过时减少重复推理。</small></article>
+            <article><span>完整恢复与计划复用</span><strong>J 提高质量，L 在相同准确率下减少调用</strong><small>J 恢复来源轮的完整任务；L 只在校验通过时复用原计划，把 Planner 调用降至 394 次。</small></article>
           </div>
         </section>
 
@@ -1435,13 +1434,13 @@
             <section class="multiturn-detail-block" aria-labelledby="multiturnSelectionTitle">
               <div class="planner-table-heading">
                 <h4 id="multiturnSelectionTitle">先守住完整新请求，再提高历史回放</h4>
-                <p>方案只由开发集决定：完整新请求准确率不得比 A 低超过 1 个百分点；合格后依次比较历史回放、完整新请求、输入长度和候选顺序。L 在测试运行前已经锁定。</p>
+                <p>方案只由开发集决定：完整新请求准确率不得比 A 低超过 1 个百分点；达标后依次比较历史回放、完整新请求和输入长度。L 在测试运行前已经锁定。</p>
               </div>
               <div class="multiturn-runtime-grid">
                 <article><span>完整新请求门槛</span><strong>至少 96.67%</strong><small>A 的开发集完整新请求为 97.67%。</small></article>
                 <article><span>L · 开发集整体</span><strong>957 / 991 · 96.57%</strong><small>回放 96.03%；完整新请求 97.41%。</small></article>
                 <article><span>L · 独立测试</span><strong>939 / 993 · 94.56%</strong><small>95% 区间为 92.97%～95.81%。</small></article>
-                <article><span>测试使用</span><strong>锁定后一次性运行</strong><small>开发选择完成时，测试候选预测文件为 0。</small></article>
+                <article><span>独立测试</span><strong>方案锁定后只运行一次</strong><small>开发选择完成时，测试候选预测文件为 0。</small></article>
               </div>
             </section>
           </div>
@@ -1450,10 +1449,10 @@
         <figure class="multiturn-framework" aria-labelledby="multiturnFrameworkTitle">
           <header class="multiturn-framework-head">
             <div>
-              <span>04 · 方案 L 的运行框架</span>
-              <h3 id="multiturnFrameworkTitle">先判断要不要历史，再恢复完整请求或复用计划</h3>
+              <span>04 · 最终 Agent 运行框架</span>
+              <h3 id="multiturnFrameworkTitle">一个判断入口、三条处理路径、一个固定后端</h3>
             </div>
-            <p>Agent 在模型外管理会话，不把整段历史全部塞给 Planner。完整新请求保持原句；自然确认、近期续办和对象线索才会触发相应历史读取。</p>
+            <p>Agent 不把整段历史全部塞给 Planner。当前句完整就保持原文；只有自然确认、近期续办和对象线索等可靠证据才触发历史读取。</p>
           </header>
 
           <div class="multiturn-framework-body">
@@ -1464,68 +1463,68 @@
               <div class="multiturn-ingress">
                 <div class="multiturn-node multiturn-node-input"><small>本轮输入</small><strong>会话编号 + 当前原句</strong><span>先确认本句是否已经完整，再判断它是自然确认、近期续办还是带对象线索的历史引用。</span></div>
                 <div class="multiturn-arrow" aria-hidden="true">→</div>
-                <div class="multiturn-node multiturn-node-router"><small>请求判断</small><strong>完整新请求 / 近期引用 / 较早引用</strong><span>没有可靠历史证据就不继承；当前业务动作不会被误解成修改上一轮任务。</span></div>
+                <div class="multiturn-node multiturn-node-router"><small>Agent 核心判断</small><strong>完整新请求 / 近期引用 / 较早引用</strong><span>没有可靠历史证据就不继承；当前业务动作不会被误解成修改上一轮任务。</span></div>
               </div>
 
-              <div class="multiturn-memory-grid" role="group" aria-label="多轮 Agent 的四个记忆模组">
-                <article><span>模组 1 · 近期记录</span><strong>最近 2 轮任务事件</strong><small>保存原句、完整任务、候选与计划，不直接拼接原文。</small></article>
-                <article><span>模组 2 · 规则摘要</span><strong>窗口外任务仍可追溯</strong><small>按固定规则保留目标、顺序和来源，不递归生成摘要。</small></article>
-                <article><span>模组 3 · 按需记忆</span><strong>最多读取 2 条完整记录</strong><small>只在对象或关键词证据足够时查询，并始终按会话隔离。</small></article>
-                <article class="is-selected"><span>模组 4 · 计划复用</span><strong>状态、输出、版本三重校验</strong><small>任一条件不满足，就恢复完整请求并重新走固定后端。</small></article>
+              <div class="multiturn-memory-grid" role="group" aria-label="多轮 Agent 的四个组成部分">
+                <article><span>组成 1 · 近期任务记录</span><strong>保留最近 2 轮任务</strong><small>分别保存原句、完整任务、候选与计划，不直接拼接原文。</small></article>
+                <article><span>组成 2 · 窗口外摘要</span><strong>较早任务仍可追溯</strong><small>按固定规则保留目标、顺序和来源，不让模型反复改写摘要。</small></article>
+                <article><span>组成 3 · 按需历史查询</span><strong>最多读取 2 条完整记录</strong><small>只在对象或关键词证据足够时查询，并始终按会话隔离。</small></article>
+                <article><span>组成 4 · 已验证计划复用</span><strong>有效计划才可直接使用</strong><small>来源状态、输出或运行配置任一不一致，就恢复请求并重新规划。</small></article>
               </div>
 
-              <div class="multiturn-path-grid" role="group" aria-label="方案 L 的三条处理路径">
+              <div class="multiturn-path-grid" role="group" aria-label="最终 Agent 的三条互斥处理路径">
                 <article class="multiturn-path-card">
-                  <header><span>路径 1 · 完整新请求</span><strong>保持当前原句</strong></header>
+                  <header><span>路径 1 · 当前请求已经完整</span><strong>保持当前原句</strong></header>
                   <ol>
                     <li><b>本句目标已经完整</b><small>没有继承或取消历史任务的可靠证据。</small></li>
                     <li><b>清空无关历史证据</b><small>多个明确新目标不会与旧目标合并。</small></li>
-                    <li class="is-output"><b>原句进入固定后端</b><small>正常执行意图、检索和 Planner。</small></li>
+                    <li class="is-output"><b>原句进入默认后端</b><small>自然语言请求执行意图、检索和 Planner；固定结构的完整工具名称可严格直达。</small></li>
                   </ol>
                 </article>
 
-                <article class="multiturn-path-card is-history">
-                  <header><span>路径 2 · 历史回放</span><strong>恢复完整任务</strong></header>
+                <article class="multiturn-path-card">
+                  <header><span>路径 2 · 历史任务需要重新规划</span><strong>恢复完整请求</strong></header>
                   <div class="multiturn-path-memory"><span>近期记录</span><span>规则摘要</span><span>按需完整记录</span></div>
                   <ol>
-                    <li><b>定位唯一被引用轮</b><small>利用确认关系、近期线索或对象线索，不凭宽泛词猜历史。</small></li>
+                    <li><b>定位唯一被引用轮</b><small>利用确认关系、近期线索或对象线索；找不到可靠来源就返回空工具结果。</small></li>
                     <li><b>读取当时的完整请求</b><small>保留全部目标与顺序，不重新拼装任务碎片。</small></li>
-                    <li class="is-output"><b>完整请求进入固定后端</b><small>无法安全复用来源计划时重新检索和规划。</small></li>
+                    <li class="is-output"><b>完整请求进入固定后端</b><small>来源计划不可用或运行配置变化时，重新检索和规划。</small></li>
                   </ol>
                 </article>
 
-                <article class="multiturn-path-card is-cache">
-                  <header><span>路径 3 · 同一任务完整回放</span><strong>严格校验后复用</strong></header>
+                <article class="multiturn-path-card">
+                  <header><span>路径 3 · 历史计划可以直接复用</span><strong>校验通过后跳过后端</strong></header>
                   <ol>
                     <li><b>只回放一个完整任务</b><small>没有新增、取消、局部修改或多个来源合并。</small></li>
-                    <li><b>来源计划和三个版本有效</b><small>来源状态、严格输出、路线、检索与 Agent 配置全部一致。</small></li>
-                    <li class="is-output"><b>直接复用有序工具计划</b><small>跳过后端；任一条件失败就回到路径 2。</small></li>
+                    <li><b>来源计划与运行配置一致</b><small>计划非空并通过输出检查，检索路线、版本和 Agent 配置均未改变。</small></li>
+                    <li class="is-output"><b>直接使用原有序工具计划</b><small>不再调用固定后端；任一条件失败就回到路径 2。</small></li>
                   </ol>
                 </article>
               </div>
             </section>
 
-            <div class="multiturn-boundary-bridge"><span>路径 1 / 2 的共同后端</span><strong>只接收当前原句或恢复后的完整请求</strong><small>模型、Top-10、提示词和生成方式保持一致</small></div>
+            <div class="multiturn-boundary-bridge"><span>路径 1 / 2 的默认后端</span><strong>只接收当前原句或恢复后的完整请求</strong><small>未命中工具名称严格直达时使用；模型、Top-10 与提示词保持一致</small></div>
 
             <section class="multiturn-layer multiturn-backend-layer" aria-labelledby="multiturnBackendLayerTitle">
               <header>
                 <div><span>固定的单轮后端</span><h4 id="multiturnBackendLayerTitle">意图分流、候选检索和工具规划不因候选方案改变</h4></div>
               </header>
               <div class="multiturn-backend-flow">
-                <div><small>意图分流</small><strong>Qwen3-0.6B</strong><span>电商请求继续，闲聊直接响应。</span></div>
+                <div><small>意图分流</small><strong>Qwen3-0.6B</strong><span>电商请求继续；闲聊输出空工具计划并结束。</span></div>
                 <i aria-hidden="true">→</i>
                 <div><small>候选检索</small><strong>固定检索链 → Top-10</strong><span>按实际进入后端的完整请求检索。</span></div>
                 <i aria-hidden="true">→</i>
-                <div class="is-selected"><small>工具规划</small><strong>Qwen3-8B Planner</strong><span>固定提示词、候选顺序和贪心生成。</span></div>
+                <div><small>工具规划</small><strong>Qwen3-8B Planner</strong><span>固定提示词、候选顺序和贪心生成。</span></div>
                 <i aria-hidden="true">→</i>
                 <div><small>严格检查</small><strong>有序工具 ID</strong><span>格式合法、工具不重复，并属于目录和本轮 Top-10。</span></div>
               </div>
             </section>
 
             <div class="multiturn-protection-strip" role="group" aria-label="运行保护规则">
-              <article><span>来源不足</span><strong>不猜测、不继承旧工具</strong></article>
-              <article><span>输入预算</span><strong>常态 640 / 硬上限 1,024 Token</strong></article>
-              <article><span>会话安全</span><strong>隔离、互斥、按版本写入</strong></article>
+              <article><span>来源不足</span><strong>返回空工具结果，不猜其他历史</strong></article>
+              <article><span>输入长度</span><strong>目标 640 / 硬上限 1,024 Token</strong></article>
+              <article><span>会话安全</span><strong>按会话隔离，旧状态不能覆盖新状态</strong></article>
               <article><span>无效输出</span><strong>不覆盖上次有效计划</strong></article>
             </div>
 
@@ -1534,7 +1533,7 @@
             <div class="multiturn-backend-flow multiturn-writeback-summary" role="group" aria-label="保存本轮记录并更新下一轮状态">
               <div><small>保存本轮事件</small><strong>原句 · 完整任务 · 来源 · 候选 · 计划</strong><span>下一轮可以追溯当时真正送入 Planner 的请求。</span></div>
               <i aria-hidden="true">→</i>
-              <div class="is-selected"><small>更新会话状态</small><strong>近期记录 · 规则摘要 · 完整记录</strong><span>会话有效期 30 天，支持清理和整会话删除。</span></div>
+              <div><small>更新会话状态</small><strong>近期记录 · 规则摘要 · 完整记录</strong><span>会话有效期 30 天，支持清理和整会话删除。</span></div>
             </div>
           </div>
 
@@ -1543,7 +1542,7 @@
 
         <section class="multiturn-validation" aria-labelledby="multiturnValidationTitle">
           <div class="result-explorer-head">
-            <div><span class="result-subsection-label">05 · 54 个错误在哪里</span><h3 id="multiturnValidationTitle">主要问题集中在来源定位和来源轮已有的规划错误</h3></div>
+            <div><span class="result-subsection-label">05 · 错误分析</span><h3 id="multiturnValidationTitle">54 个错误主要来自来源定位和来源轮原有计划</h3></div>
             <p>方案 L 在 993 个目标中错 54 个：44 个来自历史回放，10 个来自完整新请求。下面按可以继续改进的环节拆开，而不是把所有错误归给“上下文”。</p>
           </div>
 
@@ -1564,13 +1563,13 @@
             <article><span>最弱引用表达</span><strong>自然确认 89.7%</strong><small>183 / 204；“行，就这么办”缺少对象线索。</small></article>
             <article><span>最弱任务长度</span><strong>6 工具 87.8%</strong><small>72 / 82；10 个错误中 8 个来自来源轮原有规划。</small></article>
             <article><span>回放目标运行</span><strong>594 次复用 · 16 次规划</strong><small>另有 2 个目标没有解析出可靠来源。</small></article>
-            <article><span>正式运行完整性</span><strong>67,536 条 · 后端错误 0</strong><small>12 个候选 × 开发 / 测试的全部逐轮预测。</small></article>
+            <article><span>运行记录完整性</span><strong>67,536 条 · 后端错误 0</strong><small>12 个候选 × 开发 / 测试的全部逐轮预测。</small></article>
           </div>
         </section>
 
         <details class="narrative-disclosure multiturn-disclosure" id="multiturnEngineeringDetails">
           <summary>
-            <span class="disclosure-summary-copy"><small>数据与工程复核</small><strong>查看数据来源、输入成本和守门测试</strong></span>
+            <span class="disclosure-summary-copy"><small>数据与工程复核</small><strong>查看数据来源、输入成本和异常场景测试</strong></span>
             <span class="disclosure-summary-meta">按需展开 · 主线之外的证据</span>
             <i aria-hidden="true">+</i>
           </summary>
@@ -1582,9 +1581,9 @@
               </div>
               <div class="multiturn-runtime-grid">
                 <article><span>L · 目标轮输入</span><strong>平均 184.1 Token</strong><small>95% 的输入不超过 511.4 Token；直接拼接 B 为 665.4。</small></article>
-                <article><span>严格输出</span><strong>A / J / K / L 均为 100%</strong><small>B 为 98.99%，说明原文拼接也增加格式压力。</small></article>
+                <article><span>输出格式合规率</span><strong>A / J / K / L 均为 100%</strong><small>B 为 98.99%，说明原文拼接也增加格式压力。</small></article>
                 <article><span>Agent 单元测试</span><strong>55 / 55</strong><small>会话状态、恢复、缓存和写入行为全部通过。</small></article>
-                <article><span>故障与边界守门</span><strong>8 / 8</strong><small>来源不足、超限、非法输出、隔离和超时均通过。</small></article>
+                <article><span>异常场景检查</span><strong>8 / 8</strong><small>来源不足、超限、非法输出、隔离和超时均通过。</small></article>
               </div>
             </section>
 
@@ -1596,8 +1595,8 @@
               <div class="multiturn-guard-grid">
                 <article><span>会话长度</span><strong>2～7 个用户轮</strong><small>测试实际执行 2,835 轮，只统计 993 个最后目标轮。</small></article>
                 <article><span>任务范围</span><strong>1～6 个工具 · 最多跨 5 轮</strong><small>历史回放覆盖确认、续办和对象线索三类自然表达。</small></article>
-                <article><span>隔离审计</span><strong>四项重合均为 0</strong><small>归一化请求、来源轨迹、表达簇和会话结构均隔离。</small></article>
-                <article><span>首轮原句回归</span><strong>7,000 / 7,000 一致</strong><small>Legacy 6K 与 API 1K 的原始请求没有被多轮层改写。</small></article>
+                <article><span>数据隔离</span><strong>四项重合均为 0</strong><small>归一化请求、来源轨迹、表达簇和会话结构均隔离。</small></article>
+                <article><span>原句保持检查</span><strong>7,000 / 7,000 一致</strong><small>两套既有单轮数据的原始请求都没有被多轮层改写。</small></article>
               </div>
             </section>
           </div>
@@ -1677,8 +1676,8 @@
                 <p>找到唯一来源后，以完整请求进入同一后端；纯引用找不到可靠来源时返回合法空工具结果，不猜测其他历史。</p>
               </article>
               <article class="is-direct">
-                <span>路径 3 · 同一任务完整回放</span>
-                <strong>通过校验才复用原计划</strong>
+                <span>路径 3 · 历史计划可以直接复用</span>
+                <strong>校验通过后跳过后端</strong>
                 <p>来源状态正常、计划非空且通过输出检查，同时检索路线、检索版本和 Agent 配置一致时直接复用；任一条件失败，就恢复完整请求并走固定后端。</p>
               </article>
               <article class="is-catalog">
@@ -1688,7 +1687,7 @@
               </article>
             </div>
 
-            <figcaption><strong>怎样读这张图</strong><span>路径 1 和找到唯一来源的路径 2，如果没有命中结构化直达，就进入上方模型主链；路径 3 未通过复用校验时回到路径 2。纯引用找不到可靠来源则跳过固定后端，返回空工具结果；闲聊在意图判断后结束。成功或失败都会保存本轮事件，只有有效结果会更新可复用计划。A～L 对比中，标准工具全名直达没有增加正确数；同版本计划复用保持 94.6% 不变，并把目标轮 Planner 调用降到 394 次。</span></figcaption>
+            <figcaption><strong>怎样读这张图</strong><span>路径 1 和找到唯一来源的路径 2，如果没有命中结构化直达，就进入上方模型主链；路径 3 未通过复用校验时回到路径 2。纯引用找不到可靠来源则返回空工具结果，闲聊在意图判断后结束。浅绿色只标记两类可以跳过固定后端的安全直达，不表示准确率更高；标准工具名称直达没有增加正确数，计划复用保持 94.6% 不变，并把目标轮 Planner 调用降到 394 次。</span></figcaption>
           </figure>
 
           <p class="final-system-detail-label"><strong>模型主链与会话收尾</strong><span>这张图描述组合后的运行架构。实验 04 在 993 个会话的最后目标轮评价 Agent；下方 9K 沿用单轮 Intent → 检索 → Planner 口径，不把 Agent 另算为一个得分阶段。</span></p>
@@ -1897,7 +1896,7 @@
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/tool_call_trace/_aux/assignment3/planner_joint_depth_reselection_20260801/final_report.json" target="_blank" rel="noopener noreferrer"><span>结构化结果</span><h3>精排与规划深度联合选择</h3><b>planner_joint_depth.../final_report.json</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/configs/assignment3_current_dpo.json" target="_blank" rel="noopener noreferrer"><span>实验配置</span><h3>真实错误偏好数据、RPO 主搜索与 DPO 扩展</h3><b>configs/assignment3_current_dpo.json</b></a>
               <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/agent/_aux/natural_short_memory_evaluation/selection.lock.json" target="_blank" rel="noopener noreferrer"><span>多轮方案锁</span><h3>独立测试运行前锁定方案 L 的开发集证据</h3><b>natural_short_memory_evaluation/selection.lock.json</b></a>
-              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/agent/_aux/natural_short_memory_evaluation/validation/failure_guards.json" target="_blank" rel="noopener noreferrer"><span>故障与边界守门</span><h3>8 / 8 来源、Token、非法输出、隔离与超时检查</h3><b>natural_short_memory_evaluation/validation/failure_guards.json</b></a>
+              <a class="evidence-card" href="https://github.com/Ryannnice/Agent/blob/main/PROJECT/data/agent/_aux/natural_short_memory_evaluation/validation/failure_guards.json" target="_blank" rel="noopener noreferrer"><span>异常场景检查</span><h3>8 / 8 来源、Token、非法输出、隔离与超时检查</h3><b>natural_short_memory_evaluation/validation/failure_guards.json</b></a>
             </div>
 
             <div class="reproduce-block">
