@@ -8506,12 +8506,14 @@ details table.result-table-compact td {
   align-items: center;
   margin-block: 10px;
   padding: 13px 18px;
-  background: var(--ink);
-  color: var(--on-dark);
+  border: 1px solid var(--hairline);
+  border-left: 5px solid var(--primary);
+  background: var(--canvas);
+  color: var(--ink);
 }
 
 .multiturn-boundary-bridge span {
-  color: var(--primary);
+  color: var(--primary-text);
   font-size: 10px;
   font-weight: 800;
 }
@@ -8521,7 +8523,7 @@ details table.result-table-compact td {
 }
 
 .multiturn-boundary-bridge small {
-  color: var(--on-dark-mute);
+  color: var(--mute);
   font-size: 10px;
   text-align: right;
 }
@@ -9465,20 +9467,21 @@ details table.result-table-compact td {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1px;
   margin-top: 10px;
-  border: 1px solid var(--hairline-strong);
-  background: var(--hairline-strong);
+  border: 1px solid var(--hairline);
+  background: var(--hairline);
 }
 
 .multiturn-protection-strip article {
   min-width: 0;
   padding: 14px 16px;
-  background: var(--ink);
-  color: var(--on-dark);
+  border-top: 3px solid var(--primary);
+  background: var(--canvas);
+  color: var(--ink);
 }
 
 .multiturn-protection-strip article > span {
   display: block;
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 .multiturn-protection-strip article > strong {
