@@ -23,8 +23,9 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026080801">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：9,000 条请求中有 8,336 条生成完全正确的有序工具链">
 
-  <link rel="stylesheet" href="project.css?v=56">
-  <script defer src="project-data.js?v=20"></script>
+  <link rel="stylesheet" href="project.css?v=57">
+  <script defer src="project-data.js?v=21"></script>
+  <script defer src="progress-charts.js?v=1"></script>
   <script defer src="project.js?v=25"></script>
 </head>
 <body>
@@ -1425,8 +1426,8 @@
               </div>
               <p>绿色主线从 A 直接进入 C～L；B 是直接拼接历史的单独对照，不属于逐步累加顺序。图中同时保留整体、历史恢复和完整新请求三条曲线，避免只看整体分数而忽略误继承。</p>
             </header>
-            <div class="system-progress-image" tabindex="0" aria-label="可横向滚动查看多轮 Agent 完整进步图">
-              <img src="assets/agent-multiturn-trace-progress.svg?v=2026081601" width="2200" height="1360" loading="lazy" decoding="async" alt="多轮 Agent 独立测试进步图：A 不读取历史时，993 个目标的整体工具链完全正确率为 40.99%，历史任务恢复为 5.23%，完整新请求为 98.43%；结构化主线依次加入近期状态、规则摘要、按需记忆、近期优先、请求边界、目标归并、严格名称直达、完整任务恢复、新请求保护和计划复用，最终 L 的整体正确率为 94.56%，历史恢复为 92.81%，完整新请求为 97.38%，Planner 调用从 993 次降至 394 次。B 直接拼接历史单独列出，完整新请求仅为 36.48%，不接入逐步累加主线。">
+            <div class="system-progress-image progress-chart-host" data-progress-chart="multiturn" role="img" tabindex="0" aria-label="多轮 Agent 独立测试进步图">
+              <p class="progress-chart-fallback">正在根据页面数据生成多轮 Agent 进步图。</p>
             </div>
             <figcaption>
               <strong>三条线怎样读</strong>
@@ -1770,8 +1771,8 @@
             </div>
             <p>从没有 Intent 与闲聊出口的原始 8B Planner（19.29%）到最终 92.62%；同一 9K 工具链口径上依次加入路由、检索、重排、监督训练与偏好训练，横向模型选型不混入累计折线。</p>
           </header>
-          <div class="system-progress-image" tabindex="0" aria-label="可横向滚动查看完整折线图">
-            <img src="assets/agent-full-trace-progress.svg?v=2026080802" width="2200" height="1320" loading="lazy" decoding="async" alt="9K 工具链成功率累计增益图：没有 Intent 与闲聊出口的原始 8B Planner 从 19.29% 起步，依次加入路由、检索、重排、77,724 条监督训练、偏好训练起点、RPO 主训练与 DPO 短程收敛，最终达到 92.62%，即 8,336 / 9,000 条完整成功。">
+          <div class="system-progress-image progress-chart-host" data-progress-chart="system" role="img" tabindex="0" aria-label="单轮 9K 工具链成功率累计增益图">
+            <p class="progress-chart-fallback">正在根据页面数据生成单轮 9K 进步图。</p>
           </div>
           <figcaption>
             <strong>统一读图口径</strong>

@@ -4,7 +4,7 @@
 
 **[查看完整项目主页](https://ryannnice.github.io/nexus/ecommerce-agent/)**
 
-![100 工具电商导购 Agent 全链路决策增益图](assets/agent-full-trace-progress.svg)
+![100 工具电商导购 Agent 全链路决策增益图](assets/agent-full-trace-progress.png)
 
 ## 项目要解决什么问题
 

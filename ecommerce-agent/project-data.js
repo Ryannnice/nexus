@@ -1,4 +1,4 @@
-/* Generated from /renyuanliu/Agent/PROJECT artifacts through 2026-08-08. */
+/* Generated from /renyuanliu/Agent/PROJECT artifacts through 2026-08-16. */
 window.PROJECT_DATA = {
   "snapshot": {
     "date": "2026-08-08",
@@ -1331,5 +1331,141 @@ window.PROJECT_DATA = {
       "label": "Context matcher AllHit@10",
       "interpretation": "能力语义是主要预测信号"
     }
-  ]
+  ],
+  "progressCharts": {
+    "system": {
+      "kind": "system",
+      "width": 2200,
+      "height": 1320,
+      "total": 9000,
+      "header": {
+        "eyebrow": "PROJECT CONCLUSION / FROZEN 9K",
+        "titlePrefix": "11 个决策点，如何把工具链成功率推到 ",
+        "subtitle": "同一 9K 工具链口径｜3K 闲聊 + 6K 电商｜逐条静态聚合",
+        "finalLabel": "FINAL"
+      },
+      "canvas": {
+        "y": 202,
+        "height": 850
+      },
+      "plot": {
+        "x1": 140,
+        "x2": 2080,
+        "top": 326,
+        "bottom": 729,
+        "areaBottom": 760,
+        "min": 20,
+        "max": 90,
+        "ticks": [90, 80, 70, 60, 50, 40, 30, 20],
+        "axisTitle": "FULL TRACE",
+        "axisSubtitle": "越高越好",
+        "axisX": 40,
+        "axisY": 292,
+        "axisSubtitleY": 316
+      },
+      "pointStart": 140,
+      "pointStep": 178,
+      "bands": [
+        { "x": 140, "width": 175, "label": "PLANNER", "tone": "neutral" },
+        { "x": 315, "width": 350, "label": "INTENT", "tone": "soft" },
+        { "x": 665, "width": 890, "label": "RAG / RERANK", "tone": "green" },
+        { "x": 1555, "width": 175, "label": "SFT", "tone": "greenStrong" },
+        { "x": 1730, "width": 350, "label": "PREFERENCE TRAINING", "tone": "neutral" }
+      ],
+      "card": {
+        "y": 790,
+        "width": 170,
+        "height": 232
+      },
+      "points": [
+        { "id": "00", "title": "8B Planner", "lines": ["完整 100 工具", "无路由出口"], "correct": 1736, "kind": "backfill" },
+        { "id": "01", "title": "基础路由", "lines": ["加入电商 / 闲聊", "分类出口"], "correct": 3939, "kind": "backfill", "badge": { "x": 184, "y": 648, "width": 170 } },
+        { "id": "02", "title": "路由 LoRA", "lines": ["0.6B checkpoint", "路由固定"], "correct": 4736, "kind": "backfill", "badge": { "x": 362, "y": 552, "width": 156 } },
+        { "id": "03", "title": "基础 RAG", "lines": ["未微调检索", "提供 Top-10"], "correct": 4800, "kind": "backfill", "badge": { "x": 540, "y": 570, "width": 150 } },
+        { "id": "04", "title": "向量训练", "lines": ["显式负样本", "+ BM25 融合"], "correct": 5083, "kind": "backfill", "badge": { "x": 718, "y": 570, "width": 154 } },
+        { "id": "05", "title": "加入重排", "lines": ["公开权重", "候选交互评分"], "correct": 4747, "kind": "backfill", "badge": { "x": 896, "y": 550, "width": 152 } },
+        { "id": "06", "title": "重排训练", "lines": ["1 正 + 7 负", "任务内微调"], "correct": 5283, "kind": "backfill", "badge": { "x": 1074, "y": 565, "width": 152 } },
+        { "id": "07", "title": "固定接口", "lines": ["精排 20", "规划 10"], "correct": 5140, "kind": "backfill", "badge": { "x": 1252, "y": 530, "width": 150 } },
+        { "id": "08", "title": "Planner SFT", "lines": ["77,724 条", "两种请求写法"], "correct": 8141, "kind": "final", "badge": { "x": 1408, "y": 364, "width": 190 } },
+        { "id": "09", "title": "DPO 起点", "lines": ["真实错误学习", "用于继续挖掘"], "correct": 8148, "kind": "final", "badge": { "x": 1648, "y": 350, "width": 162 } },
+        { "id": "10", "title": "RPO → DPO", "lines": ["4,000 对偏好", "最终 checkpoint-113"], "correct": 8336, "kind": "final", "badge": { "x": 1808, "y": 344, "width": 176 } }
+      ],
+      "footer": {
+        "pathTitle": "最终系统路径",
+        "pathLines": [
+          "0.6B 路由 + 精排 20 / 规划 10 + 8B Planner",
+          "77,724 条 SFT → RPO 主训练 → DPO 短程收敛"
+        ]
+      }
+    },
+    "multiturn": {
+      "kind": "multiturn",
+      "width": 2200,
+      "height": 1360,
+      "total": 993,
+      "replayTotal": 612,
+      "noInheritTotal": 381,
+      "header": {
+        "eyebrow": "MULTI-TURN AGENT / INDEPENDENT TEST",
+        "titlePrefix": "11 个主线点，如何把多轮工具链推到 ",
+        "subtitle": "固定模型与后端｜独立测试 993 段｜A → C～L 逐步累加",
+        "finalLabel": "FINAL · L"
+      },
+      "sideComparison": {
+        "id": "B",
+        "label": "DIRECT CONCAT",
+        "correct": 501,
+        "replayCorrect": 362,
+        "noInheritCorrect": 139,
+        "note": "单独对照，不接入逐步累加"
+      },
+      "canvas": {
+        "y": 202,
+        "height": 868
+      },
+      "plot": {
+        "x1": 140,
+        "x2": 2090,
+        "top": 340,
+        "bottom": 760,
+        "areaBottom": 760,
+        "min": 0,
+        "max": 100,
+        "ticks": [100, 80, 60, 40, 20, 0],
+        "axisTitle": "EXACT",
+        "axisX": 38,
+        "axisY": 326
+      },
+      "pointStart": 140,
+      "pointStep": 178,
+      "bands": [
+        { "x": 140, "width": 175, "label": "BASELINE", "tone": "neutral" },
+        { "x": 315, "width": 715, "label": "STRUCTURED MEMORY", "tone": "green" },
+        { "x": 1030, "width": 534, "label": "BOUNDARY / NORMALIZE", "tone": "greenMid" },
+        { "x": 1564, "width": 526, "label": "RECOVERY / CACHE", "tone": "greenStrong" }
+      ],
+      "card": {
+        "y": 800,
+        "width": 170,
+        "height": 232
+      },
+      "points": [
+        { "id": "A", "title": "无历史", "lines": ["只看当前句", "不读取会话状态"], "correct": 407, "replayCorrect": 32, "noInheritCorrect": 375 },
+        { "id": "C", "title": "近期状态", "lines": ["任务结构化", "替代原文拼接"], "correct": 625, "replayCorrect": 294, "noInheritCorrect": 331 },
+        { "id": "D", "title": "规则摘要", "lines": ["保存窗口外任务", "固定规则写入"], "correct": 736, "replayCorrect": 405, "noInheritCorrect": 331 },
+        { "id": "E", "title": "按需记忆", "lines": ["对象 + 关键词", "查找完整记录"], "correct": 849, "replayCorrect": 518, "noInheritCorrect": 331 },
+        { "id": "F", "title": "近期优先", "lines": ["“刚才”先查近处", "再处理宽泛历史词"], "correct": 849, "replayCorrect": 518, "noInheritCorrect": 331 },
+        { "id": "G", "title": "请求边界", "lines": ["区分新任务", "与继承历史"], "correct": 913, "replayCorrect": 542, "noInheritCorrect": 371 },
+        { "id": "H", "title": "目标归并", "lines": ["把被拆散的请求", "还原为完整目标"], "correct": 918, "replayCorrect": 547, "noInheritCorrect": 371 },
+        { "id": "I", "title": "名称直达", "lines": ["只有严格工具名称", "才跳过规划"], "correct": 918, "replayCorrect": 547, "noInheritCorrect": 371 },
+        { "id": "J", "title": "完整恢复", "lines": ["找到来源轮后", "恢复整项任务"], "correct": 939, "replayCorrect": 568, "noInheritCorrect": 371 },
+        { "id": "K", "title": "新请求保护", "lines": ["完整多目标请求", "保持原文不继承"], "correct": 939, "replayCorrect": 568, "noInheritCorrect": 371 },
+        { "id": "L", "title": "计划复用", "lines": ["版本与配置一致", "校验通过才复用"], "correct": 939, "replayCorrect": 568, "noInheritCorrect": 371, "plannerCalls": 394, "kind": "final" }
+      ],
+      "footer": {
+        "note": "不修改任何模型权重",
+        "summary": "恢复能力显著提高，同时保留新请求边界"
+      }
+    }
+  }
 };

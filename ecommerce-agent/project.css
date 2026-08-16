@@ -5660,9 +5660,19 @@ main summary {
   -webkit-overflow-scrolling: touch;
 }
 
-.system-progress-image img {
+.system-progress-image .progress-chart-svg {
+  display: block;
   width: 100%;
   height: auto;
+}
+
+.progress-chart-fallback {
+  margin: 0;
+  padding: 72px 20px;
+  color: var(--mute);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
 }
 
 .system-progress-figure figcaption {
@@ -6299,7 +6309,7 @@ main summary {
     padding: 12px;
   }
 
-  .system-progress-image img {
+  .system-progress-image .progress-chart-svg {
     min-width: 900px;
   }
 
