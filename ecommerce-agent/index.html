@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026080801">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：9,000 条请求中有 8,336 条生成完全正确的有序工具链">
 
-  <link rel="stylesheet" href="project.css?v=54">
+  <link rel="stylesheet" href="project.css?v=55">
   <script defer src="project-data.js?v=20"></script>
   <script defer src="project.js?v=25"></script>
 </head>
@@ -1569,14 +1569,157 @@
 
         <details class="narrative-disclosure multiturn-disclosure" id="multiturnEngineeringDetails">
           <summary>
-            <span class="disclosure-summary-copy"><small>数据与工程复核</small><strong>查看数据来源、输入成本和异常场景测试</strong></span>
-            <span class="disclosure-summary-meta">按需展开 · 主线之外的证据</span>
+            <span class="disclosure-summary-copy"><small>评测集明细</small><strong>查看会话构成、自然引用、工具覆盖与数据检查</strong></span>
+            <span class="disclosure-summary-meta">1,984 段 · 5,628 轮 · 按需展开</span>
             <i aria-hidden="true">+</i>
           </summary>
           <div class="disclosure-body multiturn-disclosure-body">
+            <div class="multiturn-dataset-intro">
+              <div>
+                <span>多轮 Agent 封存评测集 · 不参与训练</span>
+                <h4>历史该读时找对任务，当前句完整时不带入旧任务</h4>
+                <p>每段会话只统计最后一个目标轮；此前历史轮仍会按顺序执行，并写入同一会话的状态、摘要与记忆。</p>
+              </div>
+              <div class="multiturn-dataset-grid" role="group" aria-label="评测集的两类目标任务">
+                <article><span>历史任务恢复</span><strong>短句信息不足，必须读取历史</strong><small>定位唯一来源轮，恢复该轮的全部工具、数量与原顺序。</small></article>
+                <article><span>完整新请求切换</span><strong>当前句已经完整，必须拒绝无关历史</strong><small>只规划当前新任务，专门检查是否误带旧任务和旧工具。</small></article>
+              </div>
+            </div>
+
+            <div class="multiturn-dataset-ledger">
+              <section class="full-results-group" aria-labelledby="multiturnDatasetScaleTitle">
+                <div class="full-results-group-head"><span>01</span><div><h4 id="multiturnDatasetScaleTitle">总体构成</h4><p>开发集用于选择方案，独立测试集在方案锁定后一次性运行；两边都只统计审核通过的会话。</p></div></div>
+                <div class="result-table-wrap" tabindex="0">
+                  <table class="result-table result-table-compact numeric-result-table multiturn-dataset-table multiturn-dataset-table-wide" aria-label="多轮 Agent 评测集总体构成">
+                    <thead><tr><th scope="col">数据项</th><th scope="col">开发集</th><th scope="col">独立测试集</th><th scope="col">合计</th></tr></thead>
+                    <tbody>
+                      <tr><td>计划会话</td><td>1,000</td><td>1,000</td><td>2,000</td></tr>
+                      <tr><td>审核通过会话</td><td>991</td><td>993</td><td>1,984</td></tr>
+                      <tr><td>审核排除</td><td>9</td><td>7</td><td>16</td></tr>
+                      <tr><td>实际执行用户轮</td><td>2,793</td><td>2,835</td><td>5,628</td></tr>
+                      <tr><td>普通历史轮</td><td>1,802</td><td>1,842</td><td>3,644</td></tr>
+                      <tr class="table-divider"><td>最终计分目标轮</td><td>991</td><td>993</td><td>1,984</td></tr>
+                      <tr><td>其中：历史任务恢复</td><td>605</td><td>612</td><td>1,217</td></tr>
+                      <tr><td>其中：完整新请求切换</td><td>386</td><td>381</td><td>767</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="multiturn-dataset-note">历史任务恢复约占 60%，完整新请求约占 40%；这个比例用于让两类能力都有足够样本，不代表线上流量比例。</p>
+              </section>
+
+              <section class="full-results-group" aria-labelledby="multiturnDatasetSessionTitle">
+                <div class="full-results-group-head"><span>02</span><div><h4 id="multiturnDatasetSessionTitle">会话有多长，引用隔了几轮</h4><p>主体是 2～4 轮的自然短会话，同时保留少量 5～7 轮和跨出近期窗口的压力样本。</p></div></div>
+                <div class="multiturn-dataset-table-grid">
+                  <div class="multiturn-dataset-table-block">
+                    <div class="multiturn-dataset-table-heading"><h5>会话长度</h5><p>平均 2.818 / 2.855 轮</p></div>
+                    <div class="result-table-wrap" tabindex="0">
+                      <table class="result-table result-table-compact numeric-result-table multiturn-dataset-table" aria-label="开发集和测试集会话长度分布">
+                        <thead><tr><th scope="col">用户轮数</th><th scope="col">开发集</th><th scope="col">测试集</th><th scope="col">合计</th></tr></thead>
+                        <tbody>
+                          <tr><td>2 轮</td><td>471</td><td>462</td><td>933</td></tr>
+                          <tr><td>3 轮</td><td>313</td><td>307</td><td>620</td></tr>
+                          <tr><td>4 轮</td><td>140</td><td>152</td><td>292</td></tr>
+                          <tr><td>5 轮</td><td>52</td><td>52</td><td>104</td></tr>
+                          <tr><td>6 轮</td><td>13</td><td>18</td><td>31</td></tr>
+                          <tr><td>7 轮</td><td>2</td><td>2</td><td>4</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="multiturn-dataset-table-block">
+                    <div class="multiturn-dataset-table-heading"><h5>历史任务恢复的引用距离</h5><p>目标轮向前查找</p></div>
+                    <div class="result-table-wrap" tabindex="0">
+                      <table class="result-table result-table-compact numeric-result-table multiturn-dataset-table" aria-label="历史任务恢复目标的引用距离分布">
+                        <thead><tr><th scope="col">相距轮数</th><th scope="col">开发集</th><th scope="col">测试集</th><th scope="col">合计</th></tr></thead>
+                        <tbody>
+                          <tr><td>1 轮</td><td>344</td><td>349</td><td>693</td></tr>
+                          <tr><td>2 轮</td><td>136</td><td>138</td><td>274</td></tr>
+                          <tr><td>3 轮</td><td>80</td><td>75</td><td>155</td></tr>
+                          <tr><td>4 轮</td><td>34</td><td>36</td><td>70</td></tr>
+                          <tr><td>5 轮</td><td>11</td><td>14</td><td>25</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <p class="multiturn-dataset-note">来源与目标之间可以插入无关任务，但本次干扰任务会避开来源任务的工具和业务域，以保证自然表达仍有唯一指向；同对象、同业务域的极端歧义不在本次范围内。</p>
+              </section>
+
+              <section class="full-results-group" aria-labelledby="multiturnDatasetTaskTitle">
+                <div class="full-results-group-head"><span>03</span><div><h4 id="multiturnDatasetTaskTitle">引用怎样表达，目标工具链有多长</h4><p>历史恢复使用三类自然说法；1～6 个工具的数量比例取自 24K 训练轨迹，并非人为平均分配。</p></div></div>
+                <div class="multiturn-dataset-table-grid">
+                  <div class="multiturn-dataset-table-block">
+                    <div class="multiturn-dataset-table-heading"><h5>自然引用表达</h5><p>只统计历史任务恢复</p></div>
+                    <div class="result-table-wrap" tabindex="0">
+                      <table class="result-table result-table-compact numeric-result-table multiturn-dataset-table multiturn-reference-table" aria-label="历史任务恢复的自然引用表达分布">
+                        <thead><tr><th scope="col">表达类型</th><th scope="col">典型形式</th><th scope="col">开发集</th><th scope="col">测试集</th></tr></thead>
+                        <tbody>
+                          <tr><td>自然确认</td><td>“行，就按刚才说的办”</td><td>209</td><td>204</td></tr>
+                          <tr><td>近期续办</td><td>“洗衣机那些事接着看下”</td><td>212</td><td>216</td></tr>
+                          <tr><td>对象线索</td><td>“戴森吸尘器那个售后单继续处理”</td><td>184</td><td>192</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="multiturn-dataset-table-block">
+                    <div class="multiturn-dataset-table-heading"><h5>计分目标的工具数量</h5><p>历史恢复 + 完整新请求</p></div>
+                    <div class="result-table-wrap" tabindex="0">
+                      <table class="result-table result-table-compact numeric-result-table multiturn-dataset-table" aria-label="全部计分目标的工具数量分布">
+                        <thead><tr><th scope="col">目标工具数</th><th scope="col">开发集</th><th scope="col">测试集</th><th scope="col">合计</th></tr></thead>
+                        <tbody>
+                          <tr><td>1</td><td>399</td><td>389</td><td>788</td></tr>
+                          <tr><td>2</td><td>80</td><td>69</td><td>149</td></tr>
+                          <tr><td>3</td><td>157</td><td>172</td><td>329</td></tr>
+                          <tr><td>4</td><td>122</td><td>128</td><td>250</td></tr>
+                          <tr><td>5</td><td>121</td><td>111</td><td>232</td></tr>
+                          <tr><td>6</td><td>112</td><td>124</td><td>236</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <p class="multiturn-dataset-note">目标句不使用“第 N 轮”“完整原样重做”“步骤和顺序都别变”等提示答案的说法；评分时，工具 ID、数量和顺序任一不一致，整条都算错误。</p>
+              </section>
+
+              <section class="full-results-group" aria-labelledby="multiturnDatasetDomainTitle">
+                <div class="full-results-group-head"><span>04</span><div><h4 id="multiturnDatasetDomainTitle">100 个工具覆盖八个业务域</h4><p>开发集和测试集的计分目标都覆盖全部 100 个工具；下表后两列统计标准答案里实际出现的工具次数，因此多工具目标会贡献多次。</p></div></div>
+                <div class="result-table-wrap" tabindex="0">
+                  <table class="result-table result-table-compact numeric-result-table multiturn-dataset-table multiturn-dataset-table-wide" aria-label="多轮 Agent 评测目标的业务域覆盖">
+                    <thead><tr><th scope="col">业务域</th><th scope="col">目录工具数</th><th scope="col">开发目标工具次数</th><th scope="col">测试目标工具次数</th></tr></thead>
+                    <tbody>
+                      <tr><td>商品</td><td>18</td><td>560</td><td>600</td></tr>
+                      <tr><td>订单</td><td>15</td><td>550</td><td>562</td></tr>
+                      <tr><td>售后</td><td>15</td><td>343</td><td>334</td></tr>
+                      <tr><td>营销</td><td>15</td><td>272</td><td>293</td></tr>
+                      <tr><td>配送</td><td>12</td><td>287</td><td>269</td></tr>
+                      <tr><td>用户</td><td>10</td><td>408</td><td>392</td></tr>
+                      <tr><td>购物车</td><td>8</td><td>248</td><td>274</td></tr>
+                      <tr><td>风控</td><td>7</td><td>127</td><td>130</td></tr>
+                      <tr class="table-divider"><td>合计</td><td>100</td><td>2,795</td><td>2,854</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              <section class="full-results-group" aria-labelledby="multiturnDatasetAuditTitle">
+                <div class="full-results-group-head"><span>05</span><div><h4 id="multiturnDatasetAuditTitle">先锁定答案与隔离规则，再运行 Agent 方案</h4><p>页面保留能判断数据可信度的关键步骤；完整生成日志、逐条字段和排除记录留在机器证据中。</p></div></div>
+                <div class="result-table-wrap" tabindex="0">
+                  <table class="result-table result-table-compact multiturn-dataset-table multiturn-dataset-audit-table" aria-label="多轮 Agent 评测集构造与隔离检查">
+                    <thead><tr><th scope="col">检查环节</th><th scope="col">具体做法</th><th scope="col">锁定结果</th></tr></thead>
+                    <tbody>
+                      <tr><td>先定工具答案</td><td>先生成来源与干扰任务的工具链，再生成自然请求文本；固定随机种子为 2026081601。</td><td><strong>2,767 份先定好的工具链</strong></td></tr>
+                      <tr><td>自然性与语义审核</td><td>先用规则过滤提示答案、范围不完整等问题，再由独立模型检查自然性和唯一指向。</td><td><strong>1,984 段通过，16 段保留为排除项</strong></td></tr>
+                      <tr><td>保护数据隔离</td><td>与 42,400 条训练、冻结和独立保护数据比对请求文本、来源任务、表达类型与会话结构。</td><td><strong>请求、来源、表达与结构重合均为 0</strong></td></tr>
+                      <tr><td>开发与测试分开</td><td>两边的完整会话和计分目标均无重合；开发集选型和实现锁定后，才允许运行独立测试集。</td><td><strong>会话 / 目标重合为 0，测试未提前打开</strong></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+
             <section class="multiturn-detail-block multiturn-runtime-detail" aria-labelledby="multiturnRuntimeTitle">
               <div class="planner-table-heading">
-                <h4 id="multiturnRuntimeTitle">运行成本与完整性</h4>
+                <h4 id="multiturnRuntimeTitle">运行成本与工程检查</h4>
                 <p>十二种候选共享固定 100 工具目录、Top-10 检索、Qwen3-8B Planner、提示词、候选顺序和贪心生成。</p>
               </div>
               <div class="multiturn-runtime-grid">
@@ -1586,23 +1729,10 @@
                 <article><span>异常场景检查</span><strong>8 / 8</strong><small>来源不足、超限、非法输出、隔离和超时均通过。</small></article>
               </div>
             </section>
-
-            <section class="multiturn-detail-block multiturn-data-detail" aria-labelledby="multiturnDataDetailTitle">
-              <div class="planner-table-heading">
-                <h4 id="multiturnDataDetailTitle">数据来源与隔离</h4>
-                <p>会话由 API 模型生成，并由另一模型独立审核语义是否自然、引用是否唯一；计划各 1,000 段，最终接纳率为 99.1% / 99.3%。</p>
-              </div>
-              <div class="multiturn-guard-grid">
-                <article><span>会话长度</span><strong>2～7 个用户轮</strong><small>测试实际执行 2,835 轮，只统计 993 个最后目标轮。</small></article>
-                <article><span>任务范围</span><strong>1～6 个工具 · 最多跨 5 轮</strong><small>历史回放覆盖确认、续办和对象线索三类自然表达。</small></article>
-                <article><span>数据隔离</span><strong>四项重合均为 0</strong><small>归一化请求、来源轨迹、表达簇和会话结构均隔离。</small></article>
-                <article><span>原句保持检查</span><strong>7,000 / 7,000 一致</strong><small>两套既有单轮数据的原始请求都没有被多轮层改写。</small></article>
-              </div>
-            </section>
           </div>
         </details>
 
-        <p class="metric-contract-note multiturn-closing-note"><strong>结果适用范围：</strong>数据来自模型生成并经独立审核的固定 100 工具、2～7 轮受控会话，覆盖整轮回放和完整新请求切换；不代表线上准确率，也不覆盖部分继承、参数共指、局部增删改、真实工具执行或开放域长对话。</p>
+        <p class="metric-contract-note multiturn-closing-note"><strong>结果适用范围：</strong>数据来自模型生成并经独立审核的固定 100 工具、2～7 轮受控会话，覆盖整轮回放和完整新请求切换；不代表线上准确率，也不覆盖部分继承、参数共指、局部增删改、同业务域高度歧义干扰、真实工具执行或开放域长对话。</p>
       </div>
     </section>
 

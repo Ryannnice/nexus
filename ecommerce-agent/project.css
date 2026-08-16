@@ -9543,6 +9543,132 @@ details table.result-table-compact td {
   border: 1px solid var(--hairline);
 }
 
+.multiturn-dataset-intro,
+.multiturn-dataset-ledger {
+  border: 1px solid var(--hairline);
+  background: var(--canvas);
+}
+
+.multiturn-dataset-intro > div:first-child {
+  padding: 22px 24px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.multiturn-dataset-intro > div:first-child > span {
+  color: var(--primary-text);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .4px;
+}
+
+.multiturn-dataset-intro h4 {
+  margin-top: 8px;
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.multiturn-dataset-intro p {
+  max-width: 820px;
+  margin-top: 7px;
+  color: var(--body);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.multiturn-dataset-intro .multiturn-dataset-grid {
+  margin: 0;
+  border: 0;
+}
+
+.multiturn-dataset-ledger {
+  margin-top: 18px;
+}
+
+.multiturn-dataset-ledger .full-results-group {
+  margin: 0;
+  padding: 24px;
+  border-top: 1px solid var(--hairline);
+}
+
+.multiturn-dataset-ledger .full-results-group:first-child {
+  border-top: 0;
+}
+
+.multiturn-dataset-table-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.multiturn-dataset-table-block {
+  min-width: 0;
+}
+
+.multiturn-dataset-table-heading {
+  display: flex;
+  min-height: 34px;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 9px;
+}
+
+.multiturn-dataset-table-heading h5 {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.multiturn-dataset-table-heading p {
+  margin: 0;
+  color: var(--mute);
+  font-size: 9px;
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.result-table-compact.multiturn-dataset-table {
+  min-width: 480px;
+  table-layout: fixed;
+}
+
+.result-table-compact.multiturn-dataset-table-wide {
+  min-width: 680px;
+}
+
+.multiturn-reference-table :is(th, td):nth-child(1) {
+  width: 96px;
+}
+
+.result-table.numeric-result-table.multiturn-reference-table :is(th, td):nth-child(2) {
+  width: 270px;
+  text-align: left;
+  white-space: normal;
+}
+
+.result-table-compact.multiturn-dataset-audit-table {
+  min-width: 760px;
+}
+
+.multiturn-dataset-audit-table :is(th, td) {
+  text-align: left;
+}
+
+.multiturn-dataset-audit-table :is(th, td):nth-child(1) { width: 150px; }
+.multiturn-dataset-audit-table :is(th, td):nth-child(2) { width: 440px; }
+.multiturn-dataset-audit-table :is(th, td):nth-child(3) { width: 250px; }
+
+.multiturn-dataset-note {
+  margin-top: 12px;
+  padding: 11px 13px;
+  border-left: 3px solid var(--primary);
+  background: var(--surface-soft);
+  color: var(--body);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
 @media (max-width: 1100px) {
   .multiturn-result-lead {
     grid-template-columns: minmax(0, 1fr);
@@ -9557,6 +9683,10 @@ details table.result-table-compact td {
 
   .multiturn-waterfall,
   .multiturn-path-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .multiturn-dataset-table-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -9646,6 +9776,26 @@ details table.result-table-compact td {
 }
 
 @media (max-width: 620px) {
+  .multiturn-dataset-intro > div:first-child,
+  .multiturn-dataset-ledger .full-results-group {
+    padding: 18px 16px;
+  }
+
+  .multiturn-dataset-intro h4 {
+    font-size: 18px;
+  }
+
+  .multiturn-dataset-table-heading {
+    min-height: 0;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .multiturn-dataset-table-heading p {
+    text-align: left;
+  }
+
   .multiturn-primer-head {
     padding: 18px 16px;
   }
