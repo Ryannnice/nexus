@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026080801">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：9,000 条请求中有 8,336 条生成完全正确的有序工具链">
 
-  <link rel="stylesheet" href="project.css?v=55">
+  <link rel="stylesheet" href="project.css?v=56">
   <script defer src="project-data.js?v=20"></script>
   <script defer src="project.js?v=25"></script>
 </head>
@@ -1416,6 +1416,24 @@
               </tbody>
             </table>
           </div>
+
+          <figure class="system-progress-figure multiturn-progress-figure" aria-labelledby="multiturnProgressTitle">
+            <header class="system-progress-figure-head">
+              <div>
+                <span>03A · A + C～L 逐步累加</span>
+                <h3 id="multiturnProgressTitle">从不读历史，到按需恢复完整任务并安全复用</h3>
+              </div>
+              <p>绿色主线从 A 直接进入 C～L；B 是直接拼接历史的单独对照，不属于逐步累加顺序。图中同时保留整体、历史恢复和完整新请求三条曲线，避免只看整体分数而忽略误继承。</p>
+            </header>
+            <div class="system-progress-image" tabindex="0" aria-label="可横向滚动查看多轮 Agent 完整进步图">
+              <img src="assets/agent-multiturn-trace-progress.svg?v=2026081601" width="2200" height="1360" loading="lazy" decoding="async" alt="多轮 Agent 独立测试进步图：A 不读取历史时，993 个目标的整体工具链完全正确率为 40.99%，历史任务恢复为 5.23%，完整新请求为 98.43%；结构化主线依次加入近期状态、规则摘要、按需记忆、近期优先、请求边界、目标归并、严格名称直达、完整任务恢复、新请求保护和计划复用，最终 L 的整体正确率为 94.56%，历史恢复为 92.81%，完整新请求为 97.38%，Planner 调用从 993 次降至 394 次。B 直接拼接历史单独列出，完整新请求仅为 36.48%，不接入逐步累加主线。">
+            </div>
+            <figcaption>
+              <strong>三条线怎样读</strong>
+              <span>绿色统计全部 993 个目标，橙色只看 612 个历史任务恢复，黑色虚线只看 381 个完整新请求。最终方案把历史恢复提高 87.58 个百分点，同时将完整新请求保持在 97.38%。</span>
+              <small class="system-progress-scroll-hint">小屏可横向滑动图表，查看全部主线点。</small>
+            </figcaption>
+          </figure>
 
           <div class="multiturn-waterfall-notes">
             <article><span>为什么不直接拼原文</span><strong>回放 5.2% → 59.2%，新请求却降到 36.5%</strong><small>B 证明历史确实有用，也证明无条件拼接会把旧工具带进当前任务。</small></article>

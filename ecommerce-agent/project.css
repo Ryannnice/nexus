@@ -9344,6 +9344,10 @@ details table.result-table-compact td {
   font-weight: 800;
 }
 
+.multiturn-progress-figure {
+  margin: 24px auto 0;
+}
+
 .multiturn-path-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
