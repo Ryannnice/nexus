@@ -8115,14 +8115,10 @@ details table.result-table-compact td {
   border-left: 0;
 }
 
-.multiturn-primer + .multiturn-result-lead {
-  margin-top: 18px;
-}
-
 .multiturn-result-lead {
   display: grid;
   grid-template-columns: minmax(0, 1.18fr) minmax(420px, .82fr);
-  margin-top: 24px;
+  margin-top: 0;
   border: 1px solid var(--hairline-strong);
   background: var(--hairline-strong);
   gap: 1px;
@@ -9036,7 +9032,6 @@ details table.result-table-compact td {
   overflow-wrap: anywhere;
 }
 
-.multiturn-protocol-grid,
 .multiturn-waterfall-notes,
 .multiturn-acceptance-grid,
 .multiturn-runtime-grid {
@@ -9046,13 +9041,11 @@ details table.result-table-compact td {
   background: var(--hairline);
 }
 
-.multiturn-protocol-grid,
 .multiturn-acceptance-grid,
 .multiturn-runtime-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.multiturn-protocol-grid article,
 .multiturn-waterfall-notes article,
 .multiturn-acceptance-grid article,
 .multiturn-runtime-grid article {
@@ -9061,7 +9054,6 @@ details table.result-table-compact td {
   background: var(--canvas);
 }
 
-.multiturn-protocol-grid article > span,
 .multiturn-waterfall-notes article > span,
 .multiturn-path-card header > span,
 .multiturn-protection-strip article > span,
@@ -9073,14 +9065,12 @@ details table.result-table-compact td {
   letter-spacing: .35px;
 }
 
-.multiturn-protocol-grid :is(strong, small),
 .multiturn-waterfall-notes :is(strong, small),
 .multiturn-acceptance-grid :is(strong, small),
 .multiturn-runtime-grid :is(strong, small) {
   display: block;
 }
 
-.multiturn-protocol-grid strong,
 .multiturn-waterfall-notes strong,
 .multiturn-acceptance-grid strong,
 .multiturn-runtime-grid strong {
@@ -9089,7 +9079,6 @@ details table.result-table-compact td {
   line-height: 1.4;
 }
 
-.multiturn-protocol-grid small,
 .multiturn-waterfall-notes small,
 .multiturn-acceptance-grid small,
 .multiturn-runtime-grid small {
@@ -9691,7 +9680,6 @@ details table.result-table-compact td {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .multiturn-protocol-grid,
   .multiturn-acceptance-grid,
   .multiturn-runtime-grid,
   .multiturn-protection-strip {
@@ -9892,7 +9880,6 @@ details table.result-table-compact td {
   .multiturn-dataset-grid,
   .multiturn-guard-grid,
   .multiturn-safety-rail,
-  .multiturn-protocol-grid,
   .multiturn-acceptance-grid,
   .multiturn-runtime-grid,
   .multiturn-protection-strip {
