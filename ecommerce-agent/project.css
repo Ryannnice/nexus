@@ -5832,7 +5832,7 @@ main summary {
 
 .final-runtime-routes {
   display: grid;
-  grid-template-columns: 1.35fr repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1px;
   border-top: 1px solid var(--hairline);
   background: var(--hairline);
@@ -5877,8 +5877,7 @@ main summary {
   line-height: 1.4;
 }
 
-.final-runtime-routes article > p,
-.final-runtime-routes li {
+.final-runtime-routes article > p {
   color: var(--mute);
   font-size: 10px;
   line-height: 1.55;
@@ -5886,17 +5885,6 @@ main summary {
 
 .final-runtime-routes article > p {
   margin-top: 9px;
-}
-
-.final-runtime-routes ul {
-  display: grid;
-  gap: 6px;
-  margin: 10px 0 0;
-  padding-left: 16px;
-}
-
-.final-runtime-routes li b {
-  color: var(--ink);
 }
 
 .final-runtime-decision figcaption {
@@ -5934,7 +5922,7 @@ main summary {
 }
 
 .final-system-overview .final-route-phases {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   margin-bottom: 24px;
 }
 
@@ -6131,6 +6119,17 @@ main summary {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .final-runtime-main {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 7px;
+    padding: 18px;
+  }
+
+  .final-runtime-main > i {
+    min-height: 20px;
+    transform: rotate(90deg);
+  }
+
   .planner-storyline {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -6162,19 +6161,12 @@ main summary {
     gap: 8px;
   }
 
-  .final-runtime-main {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 7px;
-    padding: 18px;
-  }
-
-  .final-runtime-main > i {
-    min-height: 20px;
-    transform: rotate(90deg);
-  }
-
   .final-system-overview .final-route-phases {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .final-system-overview .final-route-phases li::after {
+    display: none;
   }
 
   .final-route-phases li:nth-child(n) {
@@ -6186,14 +6178,8 @@ main summary {
     border-right: 0;
   }
 
-  .final-route-phases li:last-child {
-    grid-column: 1 / -1;
-    border-right: 0;
-    border-bottom: 0;
-  }
-
-  .final-route-phases li:nth-child(3),
-  .final-route-phases li:nth-child(4) {
+  .final-route-phases li:nth-child(5),
+  .final-route-phases li:nth-child(6) {
     border-bottom: 0;
   }
 

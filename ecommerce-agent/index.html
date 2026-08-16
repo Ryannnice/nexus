@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026080801">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：9,000 条请求中有 8,336 条生成完全正确的有序工具链">
 
-  <link rel="stylesheet" href="project.css?v=52">
+  <link rel="stylesheet" href="project.css?v=53">
   <script defer src="project-data.js?v=20"></script>
   <script defer src="project.js?v=25"></script>
 </head>
@@ -1637,24 +1637,24 @@
           <header class="final-system-heading">
             <div>
               <span>最终运行决策 · Agent + 三阶段固定后端</span>
-              <h3 id="systemTitle">先整理历史，再决定走完整链路还是安全直达</h3>
+              <h3 id="systemTitle">先判断当前句是否需要历史，再选择恢复、复用或完整链路</h3>
             </div>
-            <p>Agent 只负责判断和整理历史，不替代后端模型。普通请求保持原文，历史依赖请求恢复成一条完整请求；仅在严格条件满足时复用原计划或按标准工具名称直达。下方 9K 数字仍只统计原 Intent、检索和 Planner 链路。</p>
+            <p>Agent 在入口判断和整理历史，在出口保存本轮结果。当前句完整就保持原文；引用历史时恢复唯一来源的完整任务；只有严格条件满足时才复用原计划或按标准工具名称直达。下方 9K 数字仍只统计原 Intent、检索和 Planner 链路。</p>
           </header>
 
           <figure class="final-runtime-decision" aria-labelledby="finalRuntimeDecisionTitle">
             <header>
               <div>
-                <span>统一运行路径</span>
-                <h4 id="finalRuntimeDecisionTitle">用户请求如何进入最终系统</h4>
+                <span>端到端决策链路</span>
+                <h4 id="finalRuntimeDecisionTitle">从当前原句到工具计划，再写回下一轮可用的状态</h4>
               </div>
-              <p>上方是默认顺序；下方四张卡说明哪些请求走完整链路，哪些可以提前结束。</p>
+              <p>上方是需要模型处理时的主链路；下方四张卡说明 Agent 怎样准备请求、何时可以安全直达，以及来源不足时如何停止猜测。</p>
             </header>
 
-            <div class="final-runtime-main" role="group" aria-label="用户请求经过 Agent、意图判断、候选检索和 Planner 的默认路径">
+            <div class="final-runtime-main" role="group" aria-label="需要模型处理的用户请求经过 Agent、意图判断、候选检索、Planner、结果检查和状态写回的端到端路径">
               <div class="final-runtime-node"><small>入口</small><strong>用户请求</strong><span>当前原句 + 会话编号</span></div>
               <i aria-hidden="true">→</i>
-              <div class="final-runtime-node is-agent"><small>模型外 Agent</small><strong>判断并整理历史</strong><span>原句不变 / 恢复完整请求</span></div>
+              <div class="final-runtime-node is-agent"><small>模型外 Agent</small><strong>判断并准备本轮任务</strong><span>当前句完整则保持原文；引用历史时定位唯一来源</span></div>
               <i aria-hidden="true">→</i>
               <div class="final-runtime-node"><small>意图判断</small><strong>电商 / 闲聊</strong><span>0.6B Intent</span></div>
               <i aria-hidden="true">→</i>
@@ -1662,57 +1662,55 @@
               <i aria-hidden="true">→</i>
               <div class="final-runtime-node"><small>工具链规划</small><strong>8B Planner</strong><span>选择工具并确定顺序</span></div>
               <i aria-hidden="true">→</i>
-              <div class="final-runtime-node is-output"><small>最终输出</small><strong>有序工具计划</strong><span>严格校验工具 ID</span></div>
+              <div class="final-runtime-node is-output"><small>输出与收尾</small><strong>检查结果并写回</strong><span>返回合法计划；本轮事件和会话状态一次性保存</span></div>
             </div>
 
-            <div class="final-runtime-routes" role="group" aria-label="最终系统的四类处理分支">
+            <div class="final-runtime-routes" role="group" aria-label="最终系统的三条自然会话路径和一条结构化快速路径">
               <article class="is-full-route">
-                <span>进入完整链路</span>
-                <strong>普通电商请求 / 历史依赖请求</strong>
-                <ul>
-                  <li><b>普通请求：</b>Agent 保持原句，依次进入意图、检索和 Planner。</li>
-                  <li><b>依赖历史：</b>Agent 先恢复成完整请求，再进入同一条后端链路。</li>
-                </ul>
+                <span>路径 1 · 当前句完整</span>
+                <strong>保持原句进入固定后端</strong>
+                <p>没有可靠历史依赖证据就不继承旧工具；电商请求继续检索和规划，闲聊在意图判断后结束。</p>
               </article>
-              <article>
-                <span>意图处结束</span>
-                <strong>闲聊直接响应</strong>
-                <p>意图判断为闲聊后，不再进入工具检索和 Planner。</p>
+              <article class="is-full-route">
+                <span>路径 2 · 引用历史</span>
+                <strong>定位来源并恢复完整任务</strong>
+                <p>找到唯一来源后，以完整请求进入同一后端；纯引用找不到可靠来源时返回合法空工具结果，不猜测其他历史。</p>
               </article>
               <article class="is-direct">
-                <span>Agent 安全直达</span>
-                <strong>完整回放一个历史任务</strong>
-                <p>来源计划有效且系统版本一致时，直接复用原有序计划，不再调用意图、检索或 Planner；否则恢复请求并走完整链路。</p>
+                <span>路径 3 · 同一任务完整回放</span>
+                <strong>通过校验才复用原计划</strong>
+                <p>来源状态正常、计划非空且通过输出检查，同时检索路线、检索版本和 Agent 配置一致时直接复用；任一条件失败，就恢复完整请求并走固定后端。</p>
               </article>
               <article class="is-catalog">
-                <span>极少数请求 · 工具名称安全直达</span>
-                <strong>结构完整且唯一命中标准名称</strong>
-                <p>只有全部目标都符合固定结构，并唯一对应目录中的完整工具名称时才直达；任何不确定都回到完整链路。</p>
+                <span>结构化快速路径</span>
+                <strong>完整标准工具名称严格直达</strong>
+                <p>只有每个目标都按固定结构完整写出目录中的标准能力名称，并且唯一命中时才直接输出；任一目标不确定，整轮回到固定后端。</p>
               </article>
             </div>
 
-            <figcaption><strong>怎样读这张图</strong><span>默认路径不是每轮都调用所有模块：闲聊在意图判断后结束；两个直达分支都采用严格保护条件，未满足时自动回到完整后端。A～L 对比中，标准工具全名直达没有增加正确数；同版本计划复用保持 94.6% 不变，并把目标轮 Planner 调用降到 394 次。</span></figcaption>
+            <figcaption><strong>怎样读这张图</strong><span>路径 1 和找到唯一来源的路径 2，如果没有命中结构化直达，就进入上方模型主链；路径 3 未通过复用校验时回到路径 2。纯引用找不到可靠来源则跳过固定后端，返回空工具结果；闲聊在意图判断后结束。成功或失败都会保存本轮事件，只有有效结果会更新可复用计划。A～L 对比中，标准工具全名直达没有增加正确数；同版本计划复用保持 94.6% 不变，并把目标轮 Planner 调用降到 394 次。</span></figcaption>
           </figure>
 
-          <p class="final-system-detail-label"><strong>完整链路明细</strong><span>步骤 01 是所有请求共同经过的 Agent 入口；在单轮 9K 中它保持原句不变、不新增计分，后端仍按 Intent → 检索 → Planner 逐阶段统计。</span></p>
+          <p class="final-system-detail-label"><strong>模型主链与会话收尾</strong><span>这张图描述组合后的运行架构。实验 04 在 993 个会话的最后目标轮评价 Agent；下方 9K 沿用单轮 Intent → 检索 → Planner 口径，不把 Agent 另算为一个得分阶段。</span></p>
 
           <ol class="route-phases final-route-phases">
-            <li class="is-agent-step"><span>步骤 01 · 模块 01</span><strong>判断并整理历史</strong><small>模型外 Agent · 原句不变 / 按需恢复</small></li>
-            <li><span>步骤 02 · 模块 02</span><strong>请求分流</strong><small>0.6B LoRA · checkpoint-2000</small></li>
-            <li><span>步骤 03 · 模块 03</span><strong>混合检索</strong><small>向量模型 + BM25</small></li>
-            <li><span>步骤 04 · 模块 03</span><strong>重排与融合</strong><small>bge-reranker-v2-m3 + RRF</small></li>
-            <li><span>步骤 05 · 模块 04</span><strong>选择并排序工具</strong><small>8B · SFT + RPO + DPO · 一次生成</small></li>
+            <li class="is-agent-step"><span>步骤 01 · Agent 入口</span><strong>判断并准备本轮任务</strong><small>原句不变 / 恢复完整请求 / 安全直达</small></li>
+            <li><span>步骤 02 · 后端阶段 01</span><strong>请求分流</strong><small>0.6B LoRA · checkpoint-2000</small></li>
+            <li><span>步骤 03 · 后端阶段 02</span><strong>混合检索</strong><small>向量模型 + BM25</small></li>
+            <li><span>步骤 04 · 后端阶段 02</span><strong>重排与融合</strong><small>bge-reranker-v2-m3 + RRF</small></li>
+            <li><span>步骤 05 · 后端阶段 03</span><strong>选择并排序工具</strong><small>8B · SFT + RPO + DPO · 一次生成</small></li>
+            <li class="is-agent-step"><span>步骤 06 · Agent 收尾</span><strong>严格检查并写回状态</strong><small>无效计划不覆盖上次有效结果</small></li>
           </ol>
 
           <article class="pipeline-lane intent-lane">
             <header>
-              <div><span>模块 02 · 意图分流</span><h3>入口意图分流</h3></div>
+              <div><span>固定后端阶段 01 · 意图分流</span><h3>入口意图分流</h3></div>
               <p>截至分流 · 9,000 / 9,000 · 100.0000%</p>
             </header>
             <div class="pipeline-row pipeline-row-intent">
               <div class="pipeline-node node-input"><small>输入</small><strong>原句或恢复后的请求</strong><span>普通请求保持原文；历史依赖已由 Agent 补全</span></div>
               <div class="pipeline-arrow" aria-hidden="true">→</div>
-              <div class="pipeline-node node-primary"><small>最终路由模型</small><strong>Qwen3-0.6B LoRA</strong><span>checkpoint-2000 · 电商请求继续处理，闲聊直接响应</span></div>
+              <div class="pipeline-node node-primary"><small>最终路由模型</small><strong>Qwen3-0.6B LoRA</strong><span>checkpoint-2000 · 电商请求继续处理，闲聊输出空工具计划并结束</span></div>
               <div class="pipeline-arrow" aria-hidden="true">→</div>
               <div class="pipeline-node node-output"><small>阶段输出</small><strong>结构化分流</strong><span>仅电商请求进入候选检索</span></div>
             </div>
@@ -1722,7 +1720,7 @@
 
           <article class="pipeline-lane retrieval-lane">
             <header>
-              <div><span>模块 03 · 候选检索</span><h3>必要工具完整覆盖</h3></div>
+              <div><span>固定后端阶段 02 · 候选检索</span><h3>必要工具完整覆盖</h3></div>
               <p>截至检索 · 8,842 / 9,000 · 98.2444%</p>
             </header>
             <div class="retrieval-map-v2">
@@ -1767,11 +1765,11 @@
             </div>
           </article>
 
-          <div class="integration-bridge integration-bridge-planner"><span>原始请求与候选进入规划</span></div>
+          <div class="integration-bridge integration-bridge-planner"><span>本轮完整请求与 Top-10 候选进入规划</span></div>
 
           <article class="pipeline-lane planner-lane">
             <header>
-              <div><span>模块 04 · 工具链规划</span><h3>精确工具集合与有序工具链生成</h3></div>
+              <div><span>固定后端阶段 03 · 工具链规划</span><h3>精确工具集合与有序工具链生成</h3></div>
               <p>最终结果 · 集合 8,352 / 9,000 · 92.8000% ｜ 有序工具链 8,336 / 9,000 · 92.6222%</p>
             </header>
             <div class="planner-map">
