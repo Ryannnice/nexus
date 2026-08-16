@@ -8902,7 +8902,7 @@ details table.result-table-compact td {
   border-right: 0;
 }
 
-.multiturn-error-bar .is-context { background: var(--error); }
+.multiturn-error-bar .is-context { background: var(--primary-dark); }
 .multiturn-error-bar .is-retrieval { background: var(--warning); color: var(--ink); }
 .multiturn-error-bar .is-planner { background: var(--ink); }
 
@@ -8970,6 +8970,22 @@ details table.result-table-compact td {
 
 .multiturn-session-flow .is-reference span {
   color: var(--ink);
+}
+
+.multiturn-scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--hairline);
+}
+
+.multiturn-scenario {
+  min-width: 0;
+  padding: 18px;
+}
+
+.multiturn-scenario .multiturn-example-output > strong {
+  overflow-wrap: anywhere;
 }
 
 .multiturn-session-flow strong {
@@ -9330,6 +9346,30 @@ details table.result-table-compact td {
   text-align: left;
 }
 
+.multiturn-candidate-table {
+  min-width: 900px;
+}
+
+.multiturn-candidate-table th:nth-child(1) { width: 84px; }
+.multiturn-candidate-table th:nth-child(2) { width: 430px; }
+.multiturn-candidate-table th:nth-child(n + 3) { width: 142px; }
+
+.multiturn-candidate-table :is(th, td):nth-child(2) {
+  text-align: left;
+}
+
+.multiturn-candidate-table td:first-child small {
+  display: block;
+  margin-top: 4px;
+  color: var(--mute);
+  font-size: 9px;
+}
+
+.multiturn-candidate-table .multiturn-risk-value {
+  color: var(--error);
+  font-weight: 800;
+}
+
 .multiturn-path-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -9444,7 +9484,7 @@ details table.result-table-compact td {
   padding: 8px 5px;
   background: var(--surface-soft);
   color: var(--body);
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 800;
   text-align: center;
 }
@@ -9537,6 +9577,10 @@ details table.result-table-compact td {
   margin-top: 28px;
 }
 
+.multiturn-disclosure-body > .multiturn-detail-block:first-child {
+  margin-top: 0;
+}
+
 .multiturn-runtime-grid {
   margin-top: 16px;
   border: 1px solid var(--hairline);
@@ -9556,6 +9600,10 @@ details table.result-table-compact td {
 
   .multiturn-waterfall,
   .multiturn-path-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .multiturn-scenario-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -9708,8 +9756,9 @@ details table.result-table-compact td {
   }
 
   .multiturn-result-copy h3 .multiturn-result-range {
-    font-size: 39px;
+    font-size: clamp(31px, 10.5vw, 39px);
     letter-spacing: -2px;
+    white-space: normal;
   }
 
   .multiturn-result-stats,

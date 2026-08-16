@@ -1,6 +1,6 @@
-> 历史材料（已停用）
+> 框架设计工作记录
 >
-> 本文件记录 2026-08-09 的旧 594 轮 / v1 实验，保留用于追溯，不再作为页面或最终结果证据。当前 canonical 以 `PROJECT/reports/07_多轮对话与记忆系统设计.md`、`natural_multiturn_agent_protocol_20260811/unified_ablation/results.json`、`confirmation_result.json` 和 `PROJECT/configs/agent_runtime.json` 为准；最终配置为 `E3-n2-k2-t640`，Search 与 Confirmation 各 500 轮 / 100 会话，TraceEM 均为 93.2%。
+> 页面量化口径以 `PROJECT/reports/08_自然短会话记忆评测.md` 与 `PROJECT/data/agent/_aux/natural_short_memory_evaluation/results_final.json` 为准：开发集 991 段、独立测试 993 段 2～7 轮自然短会话；方案 L 的测试集整体分数为 94.56%，历史回放为 92.81%，完整新请求不继承为 97.38%，目标轮 Planner 调用由 993 次降至 394 次。下文集中保存框架设计与实现过程，不作为页面量化结果表。
 
 完整汇报你做的工作
 
