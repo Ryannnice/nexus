@@ -419,6 +419,44 @@
     revealHashTarget();
   }
 
+  function setupScrollableTables() {
+    var wrappers = $$('main .data-table-wrap, main .result-table-wrap');
+    if (!wrappers.length) return;
+    var scheduled = false;
+
+    wrappers.forEach(function (wrapper, index) {
+      var hint = document.createElement('small');
+      var hintId = 'tableScrollHint' + (index + 1);
+      hint.className = 'table-scroll-hint';
+      hint.id = hintId;
+      hint.hidden = true;
+      hint.textContent = '左右滑动或使用方向键查看完整表格';
+      wrapper.parentNode.insertBefore(hint, wrapper);
+      wrapper.setAttribute('aria-describedby', hintId);
+      wrapper._scrollHint = hint;
+    });
+
+    function sync() {
+      scheduled = false;
+      wrappers.forEach(function (wrapper) {
+        var hasOverflow = wrapper.clientWidth > 0 && wrapper.scrollWidth > wrapper.clientWidth + 1;
+        wrapper._scrollHint.hidden = !hasOverflow;
+      });
+    }
+
+    function scheduleSync() {
+      if (scheduled) return;
+      scheduled = true;
+      window.requestAnimationFrame(sync);
+    }
+
+    window.addEventListener('resize', scheduleSync, { passive: true });
+    document.addEventListener('toggle', function (event) {
+      if (event.target && event.target.matches('details')) scheduleSync();
+    }, true);
+    scheduleSync();
+  }
+
   function setupCopy() {
     var button = $('#copyCommands');
     var source = $('#reproCommands');
@@ -461,5 +499,6 @@
   renderIntent();
   setupNavigation();
   setupDisclosureAnchors();
+  setupScrollableTables();
   setupCopy();
 })();

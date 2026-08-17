@@ -309,7 +309,7 @@
     var gain = score(finalPoint, 'correct', chart.total) - score(first, 'correct', chart.total);
     return element('rect', { x: 70, y: 1090, width: 12, height: 150, fill: COLORS.green }) +
       text(108, 1125, '累计净增益', { fill: COLORS.green, 'font-size': 20, 'font-weight': 700 }) +
-      text(108, 1182, signed(gain, 2) + 'pp', { fill: COLORS.white, 'font-family': 'Arial,sans-serif', 'font-size': 48, 'font-weight': 700 }) +
+      text(108, 1182, signed(gain, 2) + ' 个百分点', { fill: COLORS.white, 'font-family': 'Arial,sans-serif', 'font-size': 38, 'font-weight': 700 }) +
       text(108, 1224, formatInteger(first.correct) + ' → ' + formatInteger(finalPoint.correct) + '（' + signedInteger(finalPoint.correct - first.correct) + ' 条）', { fill: '#bbb', 'font-family': 'Arial,sans-serif', 'font-size': 22 }) +
       element('line', { x1: 650, y1: 1090, x2: 650, y2: 1240, stroke: '#555' }) +
       text(690, 1125, chart.footer.pathTitle, { fill: COLORS.green, 'font-size': 20, 'font-weight': 700 }) +
@@ -330,7 +330,7 @@
     var callReduction = (1 - finalPoint.plannerCalls / chart.total) * 100;
     return element('rect', { x: 70, y: 1104, width: 12, height: 176, fill: COLORS.green }) +
       text(108, 1142, '整体净增益', { fill: COLORS.green, 'font-size': 20, 'font-weight': 700 }) +
-      text(108, 1200, signed(gain, 2) + 'pp', { fill: COLORS.white, 'font-family': 'Arial,sans-serif', 'font-size': 48, 'font-weight': 700 }) +
+      text(108, 1200, signed(gain, 2) + ' 个百分点', { fill: COLORS.white, 'font-family': 'Arial,sans-serif', 'font-size': 38, 'font-weight': 700 }) +
       text(108, 1243, formatInteger(first.correct) + ' → ' + formatInteger(finalPoint.correct) + '（' + signedInteger(finalPoint.correct - first.correct) + ' 条）', { fill: '#bbb', 'font-family': 'Arial,sans-serif', 'font-size': 22 }) +
       text(108, 1277, chart.footer.note, { fill: '#888', 'font-size': 17 }) +
       element('line', { x1: 650, y1: 1104, x2: 650, y2: 1280, stroke: '#555' }) +
