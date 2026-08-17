@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://ryannnice.github.io/nexus/ecommerce-agent/assets/og-cover.png?v=2026080801">
   <meta name="twitter:image:alt" content="100-Tool Commerce Agent：9,000 条请求中有 8,336 条生成完全正确的有序工具链">
 
-  <link rel="stylesheet" href="project.css?v=63">
+  <link rel="stylesheet" href="project.css?v=65">
   <script defer src="project-data.js?v=21"></script>
   <script defer src="progress-charts.js?v=2"></script>
   <script defer src="project.js?v=26"></script>
@@ -1884,9 +1884,17 @@
               <div class="pipeline-arrow planner-arrow" aria-hidden="true">→</div>
               <div class="planner-output">
                 <small>9K 最终 · 有序输出</small>
-                <strong>92.62% · 有序工具 ID</strong>
-                <span>工具链 8,336 / 9,000；集合 8,352 / 9,000 · 92.80%；本阶段新增失败 506 条。</span>
-                <span>6K 日常电商请求工具链全对率 88.93%；保持严格 JSON 输出。</span>
+                <strong class="planner-output-score">92.62%</strong>
+                <b class="planner-output-kind">有序工具 ID</b>
+                <dl class="planner-output-score-grid">
+                  <div><dt>工具链</dt><dd>8,336 / 9,000</dd></div>
+                  <div><dt>集合</dt><dd>92.80%<small>8,352 / 9,000</small></dd></div>
+                </dl>
+                <div class="planner-output-meta">
+                  <span><b>6K 日常请求</b><em>88.93%</em></span>
+                  <span><b>新增失败</b><em>506 条</em></span>
+                  <span><b>输出格式</b><em>严格 JSON</em></span>
+                </div>
               </div>
             </div>
             <p class="planner-boundary">规划模型一次生成同时完成工具选择与排序；集合全对率与工具链全对率是对同一输出的两种评分。实验只评测有序工具 ID，不包含参数生成、真实工具调用或调用失败恢复。</p>
