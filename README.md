@@ -1,6 +1,6 @@
 # TEAM NEXUS
 
-**高校 AI 技术交流社区**
+**AI 技术交流社区**
 *AI Research & Engineering Community*
 
 **NEXUS**（纽带 / 核心）代表连接与协作。成员来自粤港澳、内地及海外，在这里分享学习资料、交流研究问题，并开展项目实践。
