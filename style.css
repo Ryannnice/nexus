@@ -313,8 +313,6 @@ h1, h2, h3, h4, p { margin: 0; }
   padding-left: var(--s-lg);
   margin-bottom: var(--s-xl);
 }
-.hero-motto .cn { color: var(--on-dark); font-weight: 700; }
-
 .hero-actions { display: flex; flex-wrap: wrap; gap: var(--s-md); }
 
 .hero-visual {
@@ -350,7 +348,7 @@ h1, h2, h3, h4, p { margin: 0; }
   background: var(--primary);
 }
 
-/* ----------------------------- Tech-stack (N-E-X-U-S) ------ */
+/* ----------------------------- Technical areas ------------- */
 .stack-card { padding: var(--s-xxl); }
 .stack-letter {
   font-size: 48px;
@@ -549,12 +547,6 @@ h1, h2, h3, h4, p { margin: 0; }
   line-height: 1.6;
   max-width: 320px;
 }
-.footer-brand .motto {
-  margin-top: var(--s-md);
-  font-size: 13px;
-  color: var(--primary);
-  font-weight: 700;
-}
 .footer-col h4 {
   font-size: 14px;
   font-weight: 700;
@@ -616,7 +608,6 @@ h1, h2, h3, h4, p { margin: 0; }
   align-items: baseline;
   gap: 2px;
 }
-.stat-number .suffix { font-size: 24px; font-weight: 700; }
 .stat-label {
   font-size: 15px;
   font-weight: 700;
