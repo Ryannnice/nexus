@@ -422,28 +422,6 @@ h1, h2, h3, h4, p { margin: 0; }
   letter-spacing: 0.3px;
 }
 
-/* ----------------------------- Objectives ------------------ */
-.obj-card { padding: var(--s-xxl); display: flex; flex-direction: column; gap: var(--s-md); }
-.obj-icon { font-size: 28px; line-height: 1; }
-.obj-title { font-size: 24px; font-weight: 700; line-height: 1.25; }
-.obj-en {
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--mute);
-}
-.obj-body { font-size: 16px; line-height: 1.5; color: var(--body); }
-.obj-body strong { font-weight: 700; color: var(--ink); }
-
-.obj-lead {
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1.4;
-  color: var(--ink);
-}
-.obj-lead .accent { color: var(--primary); }
-
 /* ----------------------------- Resources ------------------- */
 .res-group { margin-top: var(--s-xxl); }
 .res-group + .res-group { margin-top: var(--s-section); }
