@@ -25,7 +25,7 @@ export function getSceneState(progress: number): SceneState {
   return {
     spread: opening * (1 - closing),
     dock: smooth((p - 0.035) / 0.125) * (1 - smooth((p - 0.77) / 0.09)),
-    table: smooth((p - 0.86) / 0.1),
+    table: smooth((p - 0.941) / 0.037),
     focus: p >= 0.155 && p < 0.755 ? focusOrder[section] : -1,
   }
 }

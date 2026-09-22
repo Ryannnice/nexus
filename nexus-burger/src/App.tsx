@@ -4,7 +4,7 @@ import { Icon } from './components/Icons'
 import { PassionSeal } from './components/PassionSeal'
 import { getSceneState, progressAt, smooth, type ScrollAnchor } from './scene/timeline'
 import type { StoryProgress } from './scene/Scene'
-import { resourcesPerScene } from './scene/recipes'
+import { resourcesPerScene, recipeTravel } from './scene/recipes'
 
 const Scene = lazy(() => import('./scene/Scene'))
 
@@ -37,6 +37,7 @@ function SchoolList() {
 export default function App() {
   const app = useRef<HTMLDivElement>(null)
   const story = useRef<HTMLDivElement>(null)
+  const contents = useRef<HTMLElement>(null)
   const progress = useRef<StoryProgress>({ value: 0 })
   const [ready, setReady] = useState(false)
   const [failed, setFailed] = useState(false)
@@ -62,8 +63,15 @@ export default function App() {
     const sections = [...document.querySelectorAll<HTMLElement>('.resource-section')]
     const reunion = document.querySelector<HTMLElement>('.reunion')!
     const gallery = document.querySelector<HTMLElement>('.schools')!
+    const transition = document.querySelector<HTMLElement>('.table-transition')!
+    const ending = document.querySelector<HTMLElement>('.seat-invitation')!
+    const stage = document.querySelector<HTMLElement>('.scene-stage')!
+    const toc = [...contents.current!.querySelectorAll('a')]
     let galleryTop = 0,
-      reunionTop = 0
+      reunionTop = 0,
+      transitionTop = 0,
+      endingTop = 0,
+      start = 0
     const topOf = (el: HTMLElement) => el.getBoundingClientRect().top + scrollY
     const update = () => {
       frame = 0
@@ -72,19 +80,29 @@ export default function App() {
       const state = getSceneState(p)
       app.current!.style.setProperty('--dock', String(state.dock))
       app.current!.style.setProperty('--table', String(state.table))
-      const transitionTop =
-        document.querySelector('.table-transition')!.getBoundingClientRect().top + scrollY
       const leaving =
         1 - smooth((scrollY - (transitionTop - innerHeight * 0.15)) / (innerHeight * 0.5))
-      const arriving = smooth((scrollY - (reunionTop - innerHeight * 0.25)) / (innerHeight * 0.45))
+      const arriving = smooth((scrollY - reunionTop) / (innerHeight * 0.18))
       app.current!.style.setProperty('--scene-opacity', String(Math.max(leaving, arriving)))
       app.current!.dataset.reading = String(state.dock > 0.7 && state.table < 0.1)
       app.current!.dataset.activeLayer = String(state.focus)
       const theme = categories.findIndex((category) => category.layer === state.focus)
       app.current!.dataset.theme = String(theme < 0 ? 0 : theme)
       app.current!.dataset.tableActive = String(state.table > 0.85)
-      const stage = document.querySelector<HTMLElement>('.scene-stage')!
       stage.tabIndex = state.table > 0.85 ? 0 : -1
+      contents.current!.dataset.visible = String(
+        scrollY > start - innerHeight * 0.3 && scrollY < endingTop - innerHeight * 0.35
+      )
+      const current =
+        scrollY >= reunionTop - innerHeight * 0.15
+          ? 'join'
+          : scrollY >= transitionTop - innerHeight * 0.15
+            ? 'members'
+            : categories[Math.max(0, theme)].id
+      toc.forEach((link) => {
+        if (link.hash === `#${current}`) link.setAttribute('aria-current', 'location')
+        else link.removeAttribute('aria-current')
+      })
       sections.forEach((section, i) => {
         section.dataset.active = String(state.focus === categories[i].layer && state.spread > 0.8)
       })
@@ -95,12 +113,13 @@ export default function App() {
       const inset = 0
       sections.forEach((section, i) => {
         const count = resources.filter((resource) => resource.category === categories[i].id).length
-        const pages = Math.ceil(count / resourcesPerScene(innerWidth, innerHeight))
-        section.style.height = `${h * (1.55 + (pages - 1) * 0.65)}px`
+        section.style.height = `${h + recipeTravel(count, innerWidth, innerHeight)}px`
       })
       galleryTop = topOf(gallery)
       reunionTop = topOf(reunion)
-      const start = topOf(sections[0]) - inset
+      transitionTop = topOf(transition)
+      endingTop = topOf(ending)
+      start = topOf(sections[0]) - inset
       anchors = [
         { y: 0, value: 0 },
         { y: h * 0.08, value: 0.035 },
@@ -120,8 +139,8 @@ export default function App() {
         { y: galleryTop - h * 0.1, value: 0.825 },
         { y: galleryTop + h * 0.3, value: 0.855 },
         { y: end, value: 0.86 },
-        { y: end + h * 0.55, value: 0.97 },
-        { y: end + h * 1.1, value: 1 }
+        { y: end + h * 1.55, value: 0.98 },
+        { y: end + h * 1.9, value: 1 }
       )
       update()
     }
@@ -154,7 +173,6 @@ export default function App() {
       <header className="site-header">
         <a className="brand" href="#home" aria-label="汉堡王 首页">
           <span className="wordmark">BURGER KING</span>
-          <span className="brand-note">汉堡王 · NEXUS 的别称</span>
         </a>
         <nav aria-label="主导航">
           <a href="#resources" aria-label="我们的配方" title="我们的配方">
@@ -174,6 +192,21 @@ export default function App() {
           </a>
         </nav>
       </header>
+      <nav className="chapter-nav" ref={contents} aria-label="章节目录" data-visible="false">
+        <span className="contents-label">我们的配方</span>
+        {categories.map((category, index) => (
+          <a key={category.id} href={`#${category.id}`}>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            {category.name}
+          </a>
+        ))}
+        <a href="#members">
+          <span>07</span>伙伴院校
+        </a>
+        <a href="#join">
+          <span>08</span>一起入席
+        </a>
+      </nav>
 
       <main>
         <div className="scroll-story" ref={story}>
@@ -198,13 +231,6 @@ export default function App() {
               <h1 id="hero-title" aria-label="汉堡王 Burger King">
                 BURGER <span>KING</span>
               </h1>
-              <p className="hero-alias">汉堡王 · NEXUS 的别称</p>
-            </div>
-            <div className="hero-caption">
-              <p>连接不同高校的 AI 学习者与研究者。</p>
-              <p className="hero-directions">
-                LLM 后训练算法<span> / </span>Agent<span> / </span>具身智能<span> / </span>推荐系统
-              </p>
             </div>
             <a className="scroll-cue" href="#resources" aria-label="向下探索我们的配方">
               <Icon name="down" />
@@ -247,15 +273,21 @@ export default function App() {
                             target="_blank"
                             rel="noopener noreferrer"
                             onFocus={(event) => {
+                              if (event.currentTarget.dataset.fullyVisible === 'true') return
                               const section =
                                 event.currentTarget.closest<HTMLElement>('.resource-section')!
                               const capacity = resourcesPerScene(innerWidth, innerHeight)
-                              const pages = Math.ceil(items.length / capacity)
-                              const page = Math.floor(itemIndex / capacity)
+                              const offset = Math.max(
+                                0,
+                                Math.min(
+                                  items.length - capacity,
+                                  itemIndex - Math.floor(capacity / 2)
+                                )
+                              )
                               const top = section.getBoundingClientRect().top + scrollY
                               const travel = section.offsetHeight - innerHeight
                               window.scrollTo({
-                                top: top + ((page + 0.2) / pages) * travel,
+                                top: top + (offset / Math.max(1, items.length - capacity)) * travel,
                                 behavior: 'instant',
                               })
                             }}
@@ -316,6 +348,7 @@ export default function App() {
         <span className="brand">
           <span className="wordmark">BURGER KING</span>
           <span className="brand-note">汉堡王 · NEXUS 的别称</span>
+          <span className="footer-motto">我们热爱汉堡，正如我们热爱大语言模型！</span>
         </span>
         <div>
           <a href="../index.html">原站</a>

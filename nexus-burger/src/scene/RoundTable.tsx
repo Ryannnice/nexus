@@ -4,151 +4,9 @@ import * as THREE from 'three'
 import { schools, members, assetUrl } from '../data'
 import { memberSeatAngle, tableYaw } from './seating'
 import { GuestSeat } from './GuestSeat'
+import { Avatars } from './Avatars'
+import { TableThoughts } from './TableThoughts'
 import type { MutableRefObject } from 'react'
-
-function Avatars({ paused }: { paused: MutableRefObject<boolean> }) {
-  const count = members.length
-  const { gl } = useThree()
-  const heads = useRef<THREE.InstancedMesh>(null),
-    torsos = useRef<THREE.InstancedMesh>(null)
-  const hair = useRef<THREE.InstancedMesh>(null),
-    eyes = useRef<THREE.InstancedMesh>(null)
-  const arms = useRef<THREE.InstancedMesh>(null),
-    hands = useRef<THREE.InstancedMesh>(null)
-  const legs = useRef<THREE.InstancedMesh>(null),
-    seats = useRef<THREE.InstancedMesh>(null)
-  const backs = useRef<THREE.InstancedMesh>(null),
-    chairLegs = useRef<THREE.InstancedMesh>(null)
-  const dummy = useMemo(() => new THREE.Object3D(), [])
-  const transforms = useMemo(
-    () =>
-      members.map((_, i) => {
-        const a = memberSeatAngle(i, count)
-        return { x: Math.sin(a) * 7.45, z: Math.cos(a) * 7.45, a: a + Math.PI }
-      }),
-    [count]
-  )
-  function place(
-    mesh: THREE.InstancedMesh,
-    index: number,
-    person: number,
-    x: number,
-    y: number,
-    z: number,
-    sx: number,
-    sy: number,
-    sz: number,
-    rz = 0
-  ) {
-    const p = transforms[person]
-    const size = 0.6
-    dummy.position.set(
-      p.x + (Math.cos(p.a) * x + Math.sin(p.a) * z) * size,
-      y * size - 0.5,
-      p.z + (-Math.sin(p.a) * x + Math.cos(p.a) * z) * size
-    )
-    dummy.rotation.set(0, p.a, rz)
-    dummy.scale.set(sx * size, sy * size, sz * size)
-    dummy.updateMatrix()
-    mesh.setMatrixAt(index, dummy.matrix)
-  }
-  useLayoutEffect(() => {
-    for (let i = 0; i < count; i++) {
-      const skin = new THREE.Color(['#e6af80', '#ba825e', '#e0a476', '#d8a27e'][i % 4])
-      place(heads.current!, i, i, 0, -0.52, 0, 0.235, 0.27, 0.235)
-      heads.current!.setColorAt(i, skin)
-      place(hair.current!, i, i, 0, -0.35, -0.035, 0.247, 0.16, 0.237)
-      hair.current!.setColorAt(i, new THREE.Color(i % 5 === 0 ? '#74503b' : '#33251d'))
-      place(torsos.current!, i, i, 0, -1.17, 0, 0.3, 0.43, 0.22)
-      torsos.current!.setColorAt(i, new THREE.Color(members[i].color))
-      for (let j = 0; j < 2; j++) {
-        const sign = j === 0 ? -1 : 1,
-          index = i * 2 + j
-        place(eyes.current!, index, i, sign * 0.08, -0.5, 0.207, 0.026, 0.03, 0.017)
-        place(arms.current!, index, i, sign * 0.36, -1.07, 0.03, 0.115, 0.33, 0.115, sign * -0.25)
-        arms.current!.setColorAt(index, new THREE.Color(members[i].color))
-        place(hands.current!, index, i, sign * 0.42, -1.35, 0.11, 0.11, 0.13, 0.1)
-        hands.current!.setColorAt(index, skin)
-        place(legs.current!, index, i, sign * 0.16, -2.07, 0.15, 0.12, 0.39, 0.13)
-      }
-      place(seats.current!, i, i, 0, -1.78, -0.07, 0.71, 0.13, 0.64)
-      place(backs.current!, i, i, 0, -1.23, -0.33, 0.7, 0.74, 0.12)
-      for (let j = 0; j < 4; j++)
-        place(
-          chairLegs.current!,
-          i * 4 + j,
-          i,
-          j % 2 ? 0.26 : -0.26,
-          -2.31,
-          j < 2 ? -0.3 : 0.17,
-          0.055,
-          1.05,
-          0.055
-        )
-    }
-    ;[heads, torsos, hair, eyes, arms, hands, legs, seats, backs, chairLegs].forEach((ref) => {
-      ref.current!.instanceMatrix.needsUpdate = true
-      if (ref.current!.instanceColor) ref.current!.instanceColor.needsUpdate = true
-      ref.current!.computeBoundingSphere()
-    })
-    gl.domElement.dataset.memberInstances = String(heads.current!.count)
-  }, [transforms])
-  useFrame(({ clock }) => {
-    if (paused.current) return
-    // A few partners wave; the rest stay calm so that the scene remains readable.
-    for (const i of [0, 8, 16, 25, 34, 42]) {
-      const phase = Math.sin(clock.elapsedTime * 1.7 + i)
-      place(arms.current!, i * 2 + 1, i, 0.4, -0.77, 0.04, 0.115, 0.33, 0.115, -0.6 + phase * 0.12)
-      place(hands.current!, i * 2 + 1, i, 0.57 + phase * 0.025, -0.54, 0.04, 0.11, 0.13, 0.1)
-    }
-    arms.current!.instanceMatrix.needsUpdate = true
-    hands.current!.instanceMatrix.needsUpdate = true
-  })
-  return (
-    <group>
-      <instancedMesh ref={heads} args={[undefined, undefined, count]} castShadow>
-        <sphereGeometry args={[1, 20, 16]} />
-        <meshStandardMaterial roughness={0.65} />
-      </instancedMesh>
-      <instancedMesh ref={hair} args={[undefined, undefined, count]} castShadow>
-        <sphereGeometry args={[1, 16, 12]} />
-        <meshStandardMaterial roughness={0.85} />
-      </instancedMesh>
-      <instancedMesh ref={torsos} args={[undefined, undefined, count]} castShadow>
-        <capsuleGeometry args={[1, 1, 4, 12]} />
-        <meshStandardMaterial roughness={0.86} />
-      </instancedMesh>
-      <instancedMesh ref={arms} args={[undefined, undefined, count * 2]} castShadow>
-        <capsuleGeometry args={[1, 1, 4, 10]} />
-        <meshStandardMaterial roughness={0.82} />
-      </instancedMesh>
-      <instancedMesh ref={hands} args={[undefined, undefined, count * 2]}>
-        <sphereGeometry args={[1, 12, 8]} />
-        <meshStandardMaterial roughness={0.65} />
-      </instancedMesh>
-      <instancedMesh ref={eyes} args={[undefined, undefined, count * 2]}>
-        <sphereGeometry args={[1, 8, 6]} />
-        <meshStandardMaterial color="#2e251d" />
-      </instancedMesh>
-      <instancedMesh ref={legs} args={[undefined, undefined, count * 2]} castShadow>
-        <capsuleGeometry args={[1, 1, 4, 8]} />
-        <meshStandardMaterial color="#343b37" roughness={0.9} />
-      </instancedMesh>
-      <instancedMesh ref={seats} args={[undefined, undefined, count]} castShadow>
-        <boxGeometry />
-        <meshStandardMaterial color="#a84127" roughness={0.66} />
-      </instancedMesh>
-      <instancedMesh ref={backs} args={[undefined, undefined, count]} castShadow>
-        <boxGeometry />
-        <meshStandardMaterial color="#b55333" roughness={0.66} />
-      </instancedMesh>
-      <instancedMesh ref={chairLegs} args={[undefined, undefined, count * 4]} castShadow>
-        <boxGeometry />
-        <meshStandardMaterial color="#694029" roughness={0.75} />
-      </instancedMesh>
-    </group>
-  )
-}
 
 function SchoolSigns() {
   const group = useRef<THREE.Group>(null)
@@ -278,6 +136,7 @@ export default function RoundTable({
       <SchoolSigns />
       <Avatars paused={paused} />
       <GuestSeat reveal={reveal} />
+      <TableThoughts paused={paused} reveal={reveal} />
     </group>
   )
 }

@@ -1,4 +1,11 @@
 @font-face {
+  font-family: 'Nexus Menu';
+  src: url('/fonts/Nexus-Menu-Semibold.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
   font-family: 'Lilita One';
   src: url('/fonts/LilitaOne-Regular.ttf') format('truetype');
   font-display: swap;
@@ -128,6 +135,64 @@ p {
 .site-header nav a:hover {
   background: #eadac4;
 }
+.chapter-nav {
+  font-family: 'Nexus Menu', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-weight: 600;
+  position: fixed;
+  z-index: 7;
+  left: 2vw;
+  top: 48%;
+  transform: translateY(-50%);
+  width: 146px;
+  padding: 17px 12px;
+  border-radius: 18px;
+  background: rgb(247 239 223 / 87%);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s;
+}
+.chapter-nav[data-visible='true'] {
+  opacity: 1;
+  visibility: visible;
+}
+.contents-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  margin: 0 4px 13px;
+}
+.chapter-nav a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 35px;
+  font-size: 12px;
+  padding: 5px 5px;
+  border-radius: 7px;
+  color: #796858;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.chapter-nav a > span {
+  font-family: inherit;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.5;
+}
+.chapter-nav a[aria-current='location'] {
+  background: var(--red);
+  color: var(--paper);
+}
+.chapter-nav a[aria-current='location'] > span {
+  opacity: 0.85;
+}
+.chapter-nav a:hover {
+  background: #e6d6be;
+  color: var(--ink);
+}
 .scroll-story {
   position: relative;
 }
@@ -251,7 +316,7 @@ p {
 }
 .hero-directions {
   font-size: 10px;
-  color: var(--muted);
+  color: var(--paper);
 }
 .hero-directions span {
   padding: 0 6px;
@@ -288,6 +353,10 @@ p {
   position: absolute;
   top: 14svh;
   left: 4vw;
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
   display: flex;
   align-items: flex-start;
   gap: 11px;
@@ -399,19 +468,21 @@ p {
   color: var(--red);
 }
 .reunion {
-  height: 172svh;
+  height: 290svh;
   position: relative;
   pointer-events: none;
 }
 .members-anchor {
   position: absolute;
-  top: 72svh;
+  top: 190svh;
 }
 .reunion-caption {
-  position: absolute;
+  position: sticky;
   z-index: 3;
-  top: calc(72svh + 110px);
-  left: 5vw;
+  top: 110px;
+  margin-left: 5vw;
+  width: max-content;
+  opacity: var(--table);
   text-align: left;
   pointer-events: none;
 }
@@ -492,7 +563,7 @@ p {
   z-index: 3;
   max-width: 1560px;
   min-height: calc(100svh - 90px);
-  padding: 100px 5vw;
+  padding: 100px 5vw 100px max(14vw, 178px);
   margin: 0 auto;
   background: var(--paper);
 }
@@ -600,6 +671,12 @@ p {
 .site-footer .brand-note {
   color: rgb(247 239 223 / 70%);
 }
+.footer-motto {
+  margin-top: 4px;
+  font-size: 11px;
+  line-height: 1.65;
+  color: rgb(247 239 223 / 85%);
+}
 .site-footer > div {
   display: flex;
   align-items: center;
@@ -619,6 +696,64 @@ p {
   width: 13px;
   height: 13px;
 }
+.table-conversation {
+  position: absolute;
+  inset: 0 auto auto 0;
+  pointer-events: none;
+}
+.table-conversation > svg {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+.table-conversation path {
+  stroke: #ae8252;
+  stroke-width: 1;
+  fill: none;
+  opacity: 0;
+}
+.member-thought {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: normal;
+  padding: 10px 14px;
+  border-radius: 18px 18px 18px 3px;
+  background: #fff7e7;
+  color: #563b28;
+  box-shadow: 0 5px 20px rgb(68 40 18 / 12%);
+  font-size: 11.5px;
+  line-height: 1.5;
+  will-change: transform;
+  pointer-events: none;
+}
+.thought-topic {
+  display: block;
+  margin-bottom: 4px;
+  color: #a66c30;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.thought-text {
+  display: block;
+}
+.member-thought code {
+  display: block;
+  margin-top: 6px;
+  padding-top: 5px;
+  border-top: 1px solid #e6d4b7;
+  color: #8f431f;
+  font:
+    10px/1.45 Consolas,
+    'SFMono-Regular',
+    monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.member-thought code[hidden] {
+  display: none;
+}
 @media (min-width: 760px) and (max-width: 1100px) {
   .resource-heading h2 {
     font-size: 20px;
@@ -631,6 +766,28 @@ p {
   }
 }
 @media (max-width: 759px) {
+  .chapter-nav {
+    left: 10px;
+    top: 110px;
+    transform: none;
+    width: 103px;
+    padding: 10px 6px;
+    border-radius: 12px;
+  }
+  .chapter-nav a {
+    min-height: 26px;
+    font-size: 10px;
+    gap: 5px;
+    padding: 4px;
+  }
+  .chapter-nav a > span {
+    font-size: 8px;
+  }
+  .contents-label {
+    font-size: 8px;
+    margin-bottom: 7px;
+    letter-spacing: 0.08em;
+  }
   .hero::before {
     width: 100%;
     height: 36svh;
@@ -670,7 +827,8 @@ p {
     display: block;
   }
   .hero-alias {
-    font-size: 8px;
+    font-size: 9px;
+    color: var(--paper);
   }
   .passion-seal {
     width: 90px;
@@ -685,6 +843,7 @@ p {
     text-align: center;
     font-size: 11px;
     gap: 8px;
+    color: var(--paper);
   }
   .hero-directions {
     font-size: 8px;
@@ -728,16 +887,15 @@ p {
     top: 18%;
   }
   .reunion {
-    height: 156svh;
+    height: 280svh;
   }
   .members-anchor {
-    top: 56svh;
+    top: 180svh;
   }
   .reunion-caption {
-    top: auto;
-    bottom: 4svh;
-    left: 0;
-    right: 0;
+    top: calc(100svh - 135px);
+    margin-left: 0;
+    width: 100%;
     text-align: center;
   }
   .reunion-caption h2 {
@@ -750,7 +908,7 @@ p {
     font-size: 12px;
   }
   .schools {
-    padding: 80px 6vw 60px;
+    padding: 80px 6vw 60px 126px;
   }
   .table-transition {
     min-height: 70svh;
@@ -773,7 +931,7 @@ p {
     font-size: 16vw;
   }
   .school-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     column-gap: 22px;
   }
   .school-item {
@@ -796,6 +954,9 @@ p {
   .site-footer {
     padding-left: 6vw;
     padding-right: 6vw;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
   }
   .site-footer > div {
     gap: 13px;
@@ -803,8 +964,50 @@ p {
   .site-footer .wordmark {
     font-size: 18px;
   }
+  .member-thought {
+    font-size: 10.5px;
+    padding: 8px 10px;
+  }
+  .member-thought code {
+    font-size: 9px;
+  }
+}
+@media (max-height: 820px) and (min-width: 760px) {
+  .reunion-caption {
+    top: 90px;
+    margin-left: auto;
+    margin-right: 3vw;
+    width: min(25vw, 260px);
+  }
+  .reunion-caption h2 {
+    font-size: clamp(20px, 2vw, 26px);
+  }
+  .reunion-caption p {
+    font-size: 10px;
+  }
 }
 @media (max-height: 540px) and (min-width: 760px) {
+  .member-thought {
+    font-size: 10px;
+    padding: 7px 10px;
+  }
+  .member-thought code {
+    font-size: 9px;
+  }
+  .chapter-nav {
+    left: 1.5vw;
+    width: 116px;
+    top: 52%;
+    padding: 8px 6px;
+  }
+  .chapter-nav a {
+    min-height: 26px;
+    font-size: 9px;
+  }
+  .contents-label {
+    margin-bottom: 5px;
+    font-size: 8px;
+  }
   .site-header {
     height: 62px;
   }
@@ -840,10 +1043,10 @@ p {
     margin-bottom: 3px;
   }
   .reunion-caption {
-    top: calc(72svh + 80px);
+    top: 80px;
   }
   .reunion-caption h2 {
-    font-size: 24px;
+    font-size: 20px;
     margin-bottom: 6px;
   }
   .reunion-caption p {

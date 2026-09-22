@@ -17,6 +17,7 @@ export function GuestSeat({ reveal }: { reveal: MutableRefObject<number> }) {
       sphere: new THREE.SphereGeometry(1, 24, 16),
       capsule: new THREE.CapsuleGeometry(1, 1, 6, 16),
       box: new THREE.BoxGeometry(),
+      cylinder: new THREE.CylinderGeometry(1, 1, 1, 16),
     }),
     []
   )
@@ -94,6 +95,29 @@ export function GuestSeat({ reveal }: { reveal: MutableRefObject<number> }) {
       material={material.glass}
     />
   )
+  const segment = (
+    key: string,
+    from: [number, number, number],
+    to: [number, number, number],
+    radius: number
+  ) => {
+    const a = new THREE.Vector3(...from),
+      b = new THREE.Vector3(...to),
+      direction = b.clone().sub(a)
+    return (
+      <mesh
+        key={key}
+        geometry={geometry.cylinder}
+        material={material.glass}
+        position={a.clone().add(b).multiplyScalar(0.5)}
+        quaternion={new THREE.Quaternion().setFromUnitVectors(
+          new THREE.Vector3(0, 1, 0),
+          direction.clone().normalize()
+        )}
+        scale={[radius, direction.length(), radius]}
+      />
+    )
+  }
   return (
     <group
       name="invitation-seat"
@@ -112,16 +136,11 @@ export function GuestSeat({ reveal }: { reveal: MutableRefObject<number> }) {
       </mesh>
       <group position={[0, -0.42, 0]} scale={0.67}>
         {part('head', 'sphere', [0, -0.52, 0], [0.245, 0.28, 0.245])}
-        {part('body', 'capsule', [0, -1.17, 0], [0.3, 0.43, 0.22])}
+        {part('body', 'capsule', [0, -1.17, 0], [0.3, 0.255, 0.22])}
         {[-1, 1].flatMap((sign) => [
-          part(
-            `arm-${sign}`,
-            'capsule',
-            [sign * 0.36, -1.07, 0.03],
-            [0.115, 0.33, 0.115],
-            sign * -0.25
-          ),
-          part(`hand-${sign}`, 'sphere', [sign * 0.42, -1.35, 0.11], [0.11, 0.13, 0.1]),
+          segment(`upper-${sign}`, [sign * 0.28, -0.88, 0.03], [sign * 0.43, -1.12, 0.3], 0.1),
+          segment(`forearm-${sign}`, [sign * 0.43, -1.12, 0.3], [sign * 0.33, -1.17, 0.8], 0.083),
+          part(`hand-${sign}`, 'sphere', [sign * 0.33, -1.17, 0.8], [0.1, 0.11, 0.1]),
           part(`leg-${sign}`, 'capsule', [sign * 0.16, -2.07, 0.15], [0.12, 0.39, 0.13]),
         ])}
         <mesh

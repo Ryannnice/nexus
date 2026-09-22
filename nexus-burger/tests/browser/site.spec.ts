@@ -28,7 +28,7 @@ async function checkLayers(page: Page, mobile = false) {
   const subject = layers[active]
   expect(subject.scale).toBeGreaterThan(1.28)
   expect(subject.min[0]).toBeGreaterThan(-0.06)
-  expect(subject.max[0]).toBeLessThan(mobile ? 1.12 : 0.84)
+  expect(subject.max[0]).toBeLessThan(mobile ? 1.12 : 1.04)
   expect(subject.max[0] - subject.min[0]).toBeGreaterThan(mobile ? 0.35 : 0.3)
   expect((subject.min[1] + subject.max[1]) / 2).toBeGreaterThan(0.15)
   expect((subject.min[1] + subject.max[1]) / 2).toBeLessThan(0.7)
@@ -42,7 +42,9 @@ test('all 107 original links are inline, with no menus, filters, or expandable c
   await expect(page).toHaveTitle('汉堡王 Burger King · NEXUS')
   await expect(page.locator('#hero-title')).toHaveText('BURGER KING')
   await expect(page.locator('.brand .wordmark')).toHaveText(['BURGER KING', 'BURGER KING'])
-  await expect(page.locator('.hero-alias')).toContainText('NEXUS 的别称')
+  await expect(page.locator('.brand-note')).toHaveCount(1)
+  await expect(page.locator('.site-footer .brand-note')).toContainText('NEXUS 的别称')
+  await expect(page.locator('.footer-motto')).toHaveText('我们热爱汉堡，正如我们热爱大语言模型！')
   await expect(page.locator('.resource-link')).toHaveCount(107)
   await expect(page.locator('dialog, button, input, details')).toHaveCount(0)
   const links = await page.locator('.resource-link').evaluateAll((els) =>
@@ -59,6 +61,10 @@ test('all 107 original links are inline, with no menus, filters, or expandable c
     route.fulfill({ contentType: 'text/html', body: '<title>Resource destination</title>' })
   )
   await readSection(page, 'foundations')
+  await expect(page.locator('.chapter-nav')).toHaveCSS('font-family', /Nexus Menu/)
+  expect(await page.evaluate(() => document.fonts.check('600 12px "Nexus Menu"', '基础必修'))).toBe(
+    true
+  )
   const popup = page.waitForEvent('popup')
   await page.locator('.resource-link').first().click()
   const destination = await popup
@@ -92,7 +98,11 @@ test('desktop: camera close-ups follow six themes while preserving the ingredien
     await expect(page.locator('canvas')).toHaveAttribute('data-focus-layer', String(layer))
     await expect(page.locator('canvas')).toHaveAttribute('data-backdrop', backdrop)
     await checkLayers(page)
-    await expect(page.locator(`#${id} h2`)).toBeInViewport()
+    await expect(page.locator(`.chapter-nav a[href="#${id}"]`)).toHaveAttribute(
+      'aria-current',
+      'location'
+    )
+    await expect(page.locator('.chapter-nav')).toBeVisible()
   }
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }))
   await expect(page.locator('canvas')).toHaveAttribute('data-scene-progress', '0.0000')
@@ -123,9 +133,9 @@ test('1920-wide layout keeps the burger dominant beside physical recipes and ren
       area: (width * height) / (innerWidth * innerHeight),
     }
   })
-  expect(footprint.width).toBeGreaterThan(0.27)
-  expect(footprint.width).toBeLessThan(0.4)
-  expect(footprint.area).toBeLessThan(0.3)
+  expect(footprint.width).toBeGreaterThan(0.6)
+  expect(footprint.width).toBeLessThan(0.85)
+  expect(footprint.area).toBeLessThan(0.32)
   await readSection(page, 'join')
   await expect(page.locator('canvas')).toHaveAttribute('data-table-reveal', '1.0000')
   await expect(page.locator('canvas')).toHaveAttribute('data-member-instances', '46')
@@ -160,6 +170,20 @@ test('1920-wide layout keeps the burger dominant beside physical recipes and ren
     footer: document.querySelector('.site-footer')!.getBoundingClientRect().top,
   }))
   expect(ending.scene).toBeLessThanOrEqual(ending.footer + 1)
+  for (const viewport of [
+    { width: 1366, height: 768 },
+    { width: 844, height: 390 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await readSection(page, 'join')
+    const caption = (await page.locator('.reunion-caption').boundingBox())!
+    const directory = (await page.locator('.chapter-nav').boundingBox())!
+    expect(caption.x).toBeGreaterThan(directory.x + directory.width)
+    expect(caption.x + caption.width).toBeLessThan(viewport.width)
+    expect(caption.y).toBeGreaterThan(60)
+    expect(caption.y + caption.height).toBeLessThan(viewport.height)
+    await expect(page.locator('#reunion-title')).toBeInViewport()
+  }
 })
 
 test('mobile preserves focused food and direct prop links without horizontal overflow', async ({
@@ -178,7 +202,7 @@ test('mobile preserves focused food and direct prop links without horizontal ove
         return { y: r.y, bottom: r.bottom, width: r.width }
       })
     )
-    expect(links.length).toBe(6)
+    expect(links.length).toBe(3)
     for (const link of links) {
       expect(link.y).toBeGreaterThan(844 * 0.5)
       expect(link.bottom).toBeLessThan(844)
@@ -233,34 +257,39 @@ test('native scrolling exposes all 107 physical recipes and keyboard focus reach
   const seen = new Set<string>()
   for (const id of ['foundations', 'infra', 'agent', 'humanoid', 'posttraining', 'recsys']) {
     const count = content.resources.filter((r) => r.category === id).length
-    const pages = Math.ceil(count / 9)
-    for (let batch = 0; batch < pages; batch++) {
+    const last = count - 5
+    const offsets = [...Array.from({ length: Math.ceil(last / 4) }, (_, i) => i * 4), last]
+    for (const offset of offsets) {
       await page.evaluate(
-        ({ id, batch, pages }) => {
+        ({ id, offset, last }) => {
           const section = document.getElementById(id)!
           scrollTo({
             top:
               section.getBoundingClientRect().top +
               scrollY +
-              ((batch + 0.2) / pages) * (section.offsetHeight - innerHeight),
+              (offset / Math.max(1, last)) * (section.offsetHeight - innerHeight),
             behavior: 'instant',
           })
         },
-        { id, batch, pages }
+        { id, offset, last }
       )
-      await expect(page.locator('canvas')).toHaveAttribute('data-recipe-page', String(batch))
-      await page.waitForTimeout(350)
+      await expect(page.locator('canvas')).toHaveAttribute('data-recipe-mode', 'continuous-shelf')
+      await expect
+        .poll(async () => Number(await page.locator('canvas').getAttribute('data-recipe-offset')))
+        .toBeCloseTo(offset, 3)
+      await expect(page.locator(`#${id} [data-projected="true"]`)).toHaveCount(5)
+      await expect(page.locator('.chapter-nav')).toBeVisible()
       const targets = JSON.parse(
         (await page.locator('canvas').getAttribute('data-recipe-targets'))!
       ) as { id: string; min: number[]; max: number[]; meshes: number }[]
-      expect(targets.length).toBe(Math.min(9, count - batch * 9))
+      expect(targets.length).toBe(5)
       for (const target of targets) {
         seen.add(target.id)
         expect(target.meshes).toBeGreaterThanOrEqual(4)
         const bounds = await page.locator(`[data-resource="${target.id}"]`).boundingBox()
         expect(Math.abs(bounds!.x - target.min[0])).toBeLessThan(2)
         expect(Math.abs(bounds!.y - target.min[1])).toBeLessThan(2)
-        expect(bounds!.x).toBeGreaterThan(1440 * 0.58)
+        expect(bounds!.x).toBeGreaterThan(1440 * 0.12)
         expect(bounds!.x + bounds!.width).toBeLessThan(1440)
         expect(bounds!.y + bounds!.height).toBeLessThan(900)
       }
@@ -287,7 +316,10 @@ test('icon navigation and reduced motion still follow the document', async ({ br
   await open(page)
   await expect(page.locator('.app')).toHaveClass(/is-reduced/)
   await page.getByRole('link', { name: '我们的配方', exact: true }).click()
-  await expect(page.locator('#foundations h2')).toBeInViewport()
+  await expect(page.locator('.chapter-nav a[href="#foundations"]')).toHaveAttribute(
+    'aria-current',
+    'location'
+  )
   await checkLayers(page)
   await page.getByRole('link', { name: '成员院校', exact: true }).click()
   await expect(page.locator('.school-item').first()).toBeInViewport()
@@ -295,6 +327,8 @@ test('icon navigation and reduced motion still follow the document', async ({ br
   await expect(page.locator('canvas')).toHaveAttribute('data-table-reveal', '1.0000')
   await expect(page.locator('canvas')).toHaveAttribute('data-member-instances', '46')
   await expect(page.locator('.seat-callout')).toHaveCSS('opacity', '1')
+  await expect(page.locator('canvas')).toHaveAttribute('data-assembly', '1.0000')
+  await expect(page.locator('.member-thought').first()).toHaveCSS('opacity', '0')
   const before = Number(await page.locator('canvas').getAttribute('data-table-angle'))
   await page.waitForTimeout(400)
   expect(Number(await page.locator('canvas').getAttribute('data-table-angle'))).toBe(before)
@@ -306,6 +340,141 @@ test('icon navigation and reduced motion still follow the document', async ({ br
   await page.getByRole('link', { name: '汉堡王 首页' }).click()
   await expect(page.locator('canvas')).toHaveAttribute('data-scene-progress', '0.0000')
   await context.close()
+})
+
+test('continuous shelf motion, persistent directory and a randomized elastic arrival', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await open(page)
+  await readSection(page, 'agent')
+  const toc = await page.locator('.chapter-nav').boundingBox()
+  const sample: number[] = []
+  for (let i = 0; i < 5; i++) {
+    await page.mouse.wheel(0, 60)
+    await page.waitForTimeout(200)
+    sample.push(Number(await page.locator('canvas').getAttribute('data-recipe-offset')))
+    await expect(page.locator('.chapter-nav a[href="#agent"]')).toHaveAttribute(
+      'aria-current',
+      'location'
+    )
+    expect((await page.locator('.chapter-nav').boundingBox())!.y).toBe(toc!.y)
+  }
+  for (let i = 1; i < sample.length; i++) {
+    expect(sample[i]).toBeGreaterThan(sample[i - 1])
+    expect(sample[i] - sample[i - 1]).toBeLessThan(1)
+  }
+  await page.locator('.chapter-nav a[href="#humanoid"]').click()
+  await expect(page.locator('.chapter-nav a[href="#humanoid"]')).toHaveAttribute(
+    'aria-current',
+    'location'
+  )
+  await expect(page.locator('canvas')).toHaveAttribute('data-backdrop', 'farm')
+  await page.locator('.reunion').evaluate((el) =>
+    scrollTo({
+      top: el.getBoundingClientRect().top + scrollY + innerHeight * 0.75,
+      behavior: 'instant',
+    })
+  )
+  await expect
+    .poll(async () => Number(await page.locator('canvas').getAttribute('data-assembly')))
+    .toBeGreaterThan(0.4)
+  const seed = await page.locator('canvas').getAttribute('data-assembly-seed')
+  const progress = Number(await page.locator('canvas').getAttribute('data-assembly'))
+  expect(progress).toBeLessThan(0.75)
+  const flying = JSON.parse((await page.locator('canvas').getAttribute('data-layers'))!) as {
+    x: number
+    z: number
+  }[]
+  expect(flying.some((layer) => Math.abs(layer.x) + Math.abs(layer.z) > 0.05)).toBe(true)
+  await readSection(page, 'join')
+  await expect(page.locator('canvas')).toHaveAttribute('data-assembly', '1.0000')
+  expect(Number(await page.locator('canvas').getAttribute('data-burger-spin'))).toBeGreaterThan(18)
+  const styles = JSON.parse((await page.locator('canvas').getAttribute('data-avatar-styles'))!) as {
+    school: string
+    hair: string
+    hat: string
+    outfit: string
+  }[]
+  expect(styles).toHaveLength(46)
+  expect(styles.find((person) => person.school === '普渡大学')!.hair).toBe('long')
+  expect(new Set(styles.map((person) => person.outfit)).size).toBe(4)
+  expect(styles.some((person) => person.hat === 'cap')).toBe(true)
+  await expect
+    .poll(
+      () =>
+        page
+          .locator('.member-thought')
+          .evaluateAll(
+            (els) => els.filter((el) => Number(getComputedStyle(el).opacity) > 0.5).length
+          ),
+      { timeout: 12000 }
+    )
+    .toBe(5)
+  await readSection(page, 'members')
+  await readSection(page, 'join')
+  expect(await page.locator('canvas').getAttribute('data-assembly-seed')).not.toBe(seed)
+})
+
+test('four or five technical conversations remain visible, readable and rotate through different members', async ({
+  page,
+}) => {
+  await open(page)
+  for (const viewport of [
+    { width: 1440, height: 900 },
+    { width: 1366, height: 768 },
+    { width: 390, height: 844 },
+    { width: 844, height: 390 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await readSection(page, 'join')
+    const count = viewport.width < 760 || viewport.height < 540 ? 4 : 5
+    await expect(page.locator('canvas')).toHaveAttribute('data-active-speakers', String(count))
+    const state = () =>
+      page.locator('.member-thought').evaluateAll((els) =>
+        els
+          .filter((el) => Number(getComputedStyle(el).opacity) > 0.9)
+          .map((el) => {
+            const node = el as HTMLElement,
+              r = node.getBoundingClientRect()
+            return {
+              id: node.dataset.thoughtId,
+              member: node.dataset.member,
+              text: node.textContent,
+              x: r.x,
+              y: r.y,
+              width: r.width,
+              height: r.height,
+            }
+          })
+      )
+    const current = await state()
+    expect(current).toHaveLength(count)
+    expect(new Set(current.map((item) => item.member)).size).toBe(count)
+    for (let i = 0; i < current.length; i++) {
+      const a = current[i]
+      expect(a.text!.length).toBeGreaterThan(10)
+      expect(a.x).toBeGreaterThanOrEqual(10)
+      expect(a.y).toBeGreaterThanOrEqual(64)
+      expect(a.x + a.width).toBeLessThanOrEqual(viewport.width - 8)
+      expect(a.y + a.height).toBeLessThanOrEqual(viewport.height - 8)
+      for (const b of current.slice(i + 1)) {
+        const area =
+          Math.max(0, Math.min(a.x + a.width, b.x + b.width) - Math.max(a.x, b.x)) *
+          Math.max(0, Math.min(a.y + a.height, b.y + b.height) - Math.max(a.y, b.y))
+        expect(area).toBeLessThan(4)
+      }
+    }
+    if (viewport.width === 1440) {
+      for (let tick = 0; tick < 6; tick++) {
+        await page.waitForTimeout(1000)
+        expect(await state()).toHaveLength(5)
+      }
+      expect((await state()).map((item) => item.id).join()).not.toBe(
+        current.map((item) => item.id).join()
+      )
+    }
+  }
 })
 
 test('WebGL fallback leaves all resources and institutions readable without interaction', async ({

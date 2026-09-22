@@ -13,12 +13,15 @@ import {
 } from './geometry'
 import { foodMaterial } from './materials'
 import { layerPose } from './timeline'
+import { arrivalPose } from './arrival'
 import type { MutableRefObject } from 'react'
 
 export type MotionState = {
   spread: number
   reduced: boolean
   focus: number
+  arrival?: number
+  seed?: number
 }
 
 function Sesame() {
@@ -78,9 +81,9 @@ function EggBlisters() {
     for (let i = 0; i < 90; i++) {
       const a = rng() * Math.PI * 2,
         r = 0.55 + rng() * 0.39
-      o.position.set(Math.cos(a) * r, 0.035 + 0.027 * Math.sqrt(1 - r * r), Math.sin(a) * r * 0.9)
-      const s = 0.008 + rng() * 0.025
-      o.scale.set(s, s * 0.5, s * 0.8)
+      o.position.set(Math.cos(a) * r, 0.03 + 0.027 * Math.sqrt(1 - r * r), Math.sin(a) * r * 0.9)
+      const s = 0.007 + rng() * 0.018
+      o.scale.set(s, s * 0.18, s * 0.9)
       o.updateMatrix()
       mesh.current!.setMatrixAt(i, o.matrix)
       mesh.current!.setColorAt(i, new THREE.Color(r > 0.86 && i % 3 === 0 ? '#cb8a3c' : '#f4e8c9'))
@@ -238,6 +241,17 @@ export function Burger({ motion }: { motion: MutableRefObject<MotionState> }) {
   useFrame(({ clock }, delta) => {
     groups.current.forEach((group, i) => {
       if (!group) return
+      if (
+        motion.current.arrival !== undefined &&
+        motion.current.arrival >= 0 &&
+        !motion.current.reduced
+      ) {
+        const flight = arrivalPose(i, motion.current.arrival, motion.current.seed ?? 1)
+        group.position.set(flight.x, flight.y, flight.z)
+        group.rotation.set(flight.rx, flight.ry, flight.rz)
+        group.scale.set(flight.stretch, flight.squash, flight.stretch)
+        return
+      }
       const targetWeight = motion.current.focus === i ? 1 : 0
       focusWeights.current[i] = motion.current.reduced
         ? targetWeight
@@ -247,8 +261,7 @@ export function Burger({ motion }: { motion: MutableRefObject<MotionState> }) {
         ? 0
         : Math.sin(clock.elapsedTime * 0.8 + i * 0.8) * 0.008 * motion.current.spread
       group.position.set(pose.x, pose.y + sway, pose.z)
-      group.rotation.y = pose.rotation
-      group.rotation.z = i === 4 ? sway * 0.2 : 0
+      group.rotation.set(0, pose.rotation, i === 4 ? sway * 0.2 : 0)
       group.scale.setScalar(pose.scale)
     })
     // Opt-in QA reports actual projected mesh bounds, not just requested animation state.

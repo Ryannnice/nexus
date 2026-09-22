@@ -3,6 +3,7 @@ import assert from 'node:assert/strict'
 import { readFileSync, existsSync } from 'node:fs'
 import { getSceneState, layerPose, layerBase, progressAt } from '../src/scene/timeline.ts'
 import { guestAngle, memberSeatAngle, tableYaw } from '../src/scene/seating.ts'
+import { arrivalPose, arrivalMotion } from '../src/scene/arrival.ts'
 
 const content = JSON.parse(
   readFileSync(new URL('../src/data/content.json', import.meta.url), 'utf8')
@@ -112,4 +113,26 @@ test('document positions control progress without a fixed page height', () => {
   assert.equal(progressAt(-100, anchors), 0)
   assert.equal(progressAt(3000, anchors), 1)
   assert.equal(progressAt(10, []), 0)
+})
+
+test('random entrance paths are reversible and every ingredient settles exactly onto the burger', () => {
+  for (let i = 0; i < 6; i++) {
+    const path = Array.from({ length: 101 }, (_, n) => arrivalPose(i, n / 100, 42))
+    for (let n = 100; n >= 0; n--) {
+      assert.deepEqual(arrivalPose(i, n / 100, 42), path[n])
+      assert.ok(
+        Object.values(path[n]).every(
+          (value) => typeof value === 'boolean' || Number.isFinite(value)
+        )
+      )
+    }
+    assert.notEqual(arrivalPose(i, 0.1, 42).x, arrivalPose(i, 0.1, 729).x)
+    assert.equal(Math.abs(path[100].x), 0)
+    assert.equal(path[100].y, layerBase[i])
+    assert.equal(path[100].squash, 1)
+    assert.equal(path[100].landed, true)
+  }
+  assert.equal(arrivalMotion(1).lift, 0)
+  assert.equal(arrivalMotion(1).glow, 1)
+  assert.ok(arrivalMotion(0.7).spin > Math.PI * 4)
 })

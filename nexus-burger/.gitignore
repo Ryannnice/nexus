@@ -4,3 +4,6 @@ test-results/
 artifacts/
 *.tsbuildinfo
 *.log
+
+# Private reference material; only rewritten fictional dialogue is published.
+/聊天记录.md
