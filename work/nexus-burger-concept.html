@@ -1,0 +1,260 @@
+<div id="nexus-burger-concept" aria-label="NEXUS 汉堡分层与圆桌交互概念">
+  <style>
+    #nexus-burger-concept{--nb-paper:#f8f1e7;--nb-ink:#502719;--nb-red:#c92f17;--nb-rule:#d9c5ab;--nb-soft:#eadcc8;--nb-menu:#fffaf1;color:var(--nb-ink);background:var(--nb-paper);font-family:Arial,"Microsoft YaHei",sans-serif;border-radius:20px;overflow:hidden;line-height:1.55}
+    #nexus-burger-concept *{box-sizing:border-box}
+    #nexus-burger-concept button,#nexus-burger-concept input{font:inherit}
+    #nexus-burger-concept button{color:inherit}
+    #nexus-burger-concept button:focus-visible,#nexus-burger-concept a:focus-visible,#nexus-burger-concept input:focus-visible{outline:3px solid var(--nb-red);outline-offset:4px}
+    #nexus-burger-concept [hidden]{display:none!important}
+    #nexus-burger-concept .nb-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px;border-bottom:1px solid var(--nb-rule);flex-wrap:wrap}
+    #nexus-burger-concept .nb-brand{font-family:Georgia,serif;font-size:24px;font-weight:900;letter-spacing:-1px;line-height:1}
+    #nexus-burger-concept .nb-brand small{display:block;font:10px Arial,sans-serif;letter-spacing:2px;margin-top:6px}
+    #nexus-burger-concept .nb-tabs{display:flex;gap:6px;flex-wrap:wrap}
+    #nexus-burger-concept .nb-tab,#nexus-burger-concept .nb-action{border:1px solid var(--nb-rule);background:transparent;border-radius:30px;padding:8px 14px;font-size:13px;min-height:40px}
+    #nexus-burger-concept .nb-tab[aria-selected=true]{background:var(--nb-ink);color:var(--nb-paper);border-color:var(--nb-ink)}
+    #nexus-burger-concept .nb-heading{padding:22px 24px 0}
+    #nexus-burger-concept .nb-eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;margin:0 0 7px}
+    #nexus-burger-concept h2{font:900 36px/1.12 Georgia,"Microsoft YaHei",serif;letter-spacing:-1px;margin:0}
+    #nexus-burger-concept .nb-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:center;gap:8px;padding:0 24px 20px}
+    #nexus-burger-concept .nb-stage{height:440px;position:relative;min-width:0;isolation:isolate}
+    #nexus-burger-concept .nb-shadow{position:absolute;bottom:20px;left:12%;width:64%;height:25px;background:radial-gradient(ellipse,rgba(76,37,19,.2),transparent 68%);transition:transform .6s}
+    #nexus-burger-concept .nb-layer{position:absolute;left:39%;width:61%;min-height:44px;padding:0;border:0;background:transparent;transform:translateX(-50%);transition:top .65s cubic-bezier(.2,.75,.2,1),transform .45s;display:block;isolation:isolate}
+    #nexus-burger-concept .nb-layer[aria-pressed=true]{transform:translateX(-54%) rotate(-3deg)}
+    #nexus-burger-concept[data-dragging=true] .nb-layer{transition:top .07s linear,transform .25s}
+    #nexus-burger-concept .nb-food{display:block;width:100%;height:100%;filter:drop-shadow(0 6px 3px rgba(71,31,11,.2));position:relative}
+    #nexus-burger-concept .nb-bun-top{height:78px;border-radius:54% 55% 24% 23%/80% 79% 25% 26%;background:radial-gradient(ellipse at 35% 12%,#ffd790,transparent 60%),radial-gradient(ellipse at 52% 80%,#a44d19 1px,transparent 2px) 0 0/9px 7px,linear-gradient(#eaa546,#c67627 80%,#8e4017);box-shadow:inset 0 -9px 7px #a9571d,inset 0 3px 2px #f8c169}
+    #nexus-burger-concept .nb-seed{position:absolute;width:8px;height:3px;background:#fff0c6;border-radius:70%;box-shadow:0 1px 1px #aa612c;transform:rotate(var(--seed-angle))}
+    #nexus-burger-concept .nb-lettuce{height:36px;clip-path:polygon(1% 40%,8% 14%,18% 29%,29% 5%,39% 21%,51% 0,62% 24%,73% 6%,82% 26%,96% 13%,100% 49%,92% 82%,80% 71%,70% 100%,59% 78%,45% 100%,34% 74%,22% 96%,13% 74%,3% 88%);background:repeating-linear-gradient(130deg,transparent 0 15px,#bed663 17px,transparent 20px),linear-gradient(#a9c943,#517d2b 58%,#89a739);box-shadow:inset 0 7px 8px #afcf61}
+    #nexus-burger-concept .nb-egg{height:35px;width:92%;margin:auto;border-radius:45% 52% 42% 49%;background:radial-gradient(ellipse at 58% 36%,#ffbc19 0 14%,#ef8612 17%,#e89723 24%,#fff6d8 27%,#ffefd0 50%,#e6cfa2 100%);box-shadow:inset 0 -5px 1px #d5ae69}
+    #nexus-burger-concept .nb-cheese{height:30px;width:103%;clip-path:polygon(4% 14%,84% 0,98% 26%,91% 55%,100% 78%,72% 70%,54% 100%,32% 68%,0 78%,7% 47%);background:linear-gradient(173deg,#ffd964 20%,#f5b333 44%,#d88a12 51%,#ffc44b 69%)}
+    #nexus-burger-concept .nb-beef{height:43px;border-radius:48% 45% 38% 40%/35% 37% 40% 42%;background:radial-gradient(ellipse,#2c1910 1px,transparent 3px) 2px 3px/12px 9px,radial-gradient(ellipse,#a67143 1px,transparent 4px) 4px 5px/17px 11px,repeating-linear-gradient(150deg,transparent 0 20px,#472819 24px,transparent 28px),linear-gradient(#805335,#3c2117);box-shadow:inset 0 5px 4px #9d7048,inset 0 -5px 4px #3c2216}
+    #nexus-burger-concept .nb-bun-bottom{height:39px;border-radius:20% 20% 42% 44%/22% 22% 69% 68%;background:radial-gradient(ellipse,#c9984e 1px,transparent 2px) 0 0/8px 6px,linear-gradient(#f3d59a,#da9a43 53%,#b46229);box-shadow:inset 0 6px 4px #f9ddb0,inset 0 -4px 4px #b06a30}
+    #nexus-burger-concept .nb-label{position:absolute;left:calc(100% + 10px);top:8px;width:84px;text-align:left;font-size:12px;font-weight:700;white-space:nowrap;opacity:0;transform:translateX(-8px);transition:opacity .3s,transform .3s;pointer-events:none}
+    #nexus-burger-concept[data-expanded=true] .nb-label{opacity:1;transform:translateX(0)}
+    #nexus-burger-concept .nb-label:before{content:"";position:absolute;width:8px;height:1px;background:var(--nb-rule);left:-12px;top:10px}
+    #nexus-burger-concept .nb-label small{display:block;font-size:10px;font-weight:400;opacity:.75}
+    #nexus-burger-concept .nb-menu{position:relative;min-width:0;background:var(--nb-menu);padding:22px 20px 26px;border-top:4px solid var(--nb-red);box-shadow:0 8px 25px rgba(90,50,25,.07);transition:transform .3s}
+    #nexus-burger-concept .nb-menu:after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:8px;background:linear-gradient(135deg,var(--nb-menu) 25%,transparent 25%) -4px 0/16px 16px,linear-gradient(225deg,var(--nb-menu) 25%,transparent 25%) -4px 0/16px 16px}
+    #nexus-burger-concept[data-receipt=floating] .nb-menu{transform:rotate(2deg) translateY(-7px)}
+    #nexus-burger-concept .nb-menu h3{font-size:24px;line-height:1.25;margin:5px 0 10px;letter-spacing:-.5px}
+    #nexus-burger-concept .nb-menu p{font-size:13px;margin:10px 0}
+    #nexus-burger-concept .nb-menu .nb-count{display:inline-block;font-size:11px;border:1px solid var(--nb-rule);border-radius:4px;padding:2px 7px}
+    #nexus-burger-concept .nb-items{display:grid;gap:0;margin:16px 0}
+    #nexus-burger-concept .nb-item{color:var(--nb-ink);text-decoration:none;display:block;padding:10px 0;border-top:1px dashed var(--nb-rule);font-size:13px;overflow-wrap:anywhere}
+    #nexus-burger-concept .nb-item:hover{text-decoration:underline}
+    #nexus-burger-concept .nb-item small{display:block;color:#795d50;font-size:11px;margin-top:3px}
+    #nexus-burger-concept .nb-action{background:var(--nb-red);color:var(--nb-menu);border-color:var(--nb-red)}
+    #nexus-burger-concept .nb-controls{padding:18px 24px 20px;border-top:1px solid var(--nb-rule)}
+    #nexus-burger-concept .nb-control-line{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12px;flex-wrap:wrap}
+    #nexus-burger-concept .nb-range{display:block;width:100%;accent-color:var(--nb-red);margin:14px 0;height:24px}
+    #nexus-burger-concept .nb-presets{display:flex;gap:8px;flex-wrap:wrap}
+    #nexus-burger-concept .nb-presets button{border:1px solid var(--nb-rule);border-radius:24px;padding:6px 12px;min-height:36px;background:transparent;font-size:12px}
+    #nexus-burger-concept .nb-roster-controls{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    #nexus-burger-concept .nb-table-stage{position:relative;height:440px;min-width:0}
+    #nexus-burger-concept .nb-table{position:absolute;left:50%;top:50%;width:69%;height:47%;transform:translate(-50%,-50%);border-radius:50%;background:repeating-linear-gradient(2deg,transparent 0 17px,rgba(137,75,29,.07) 19px,transparent 21px),#deb682;box-shadow:0 13px 0 #976544,0 26px 20px rgba(78,42,18,.18);border:8px solid #e9c89e}
+    #nexus-burger-concept .nb-table-center{position:absolute;left:50%;top:50%;width:110px;transform:translate(-50%,-50%)}
+    #nexus-burger-concept .nb-mini{position:relative;height:100px}
+    #nexus-burger-concept .nb-mini .nb-food{position:absolute;height:22px;filter:none}
+    #nexus-burger-concept .nb-mini .nb-bun-top{height:40px;top:0}
+    #nexus-burger-concept .nb-mini .nb-lettuce{top:34px}
+    #nexus-burger-concept .nb-mini .nb-cheese{top:48px}
+    #nexus-burger-concept .nb-mini .nb-beef{top:59px}
+    #nexus-burger-concept .nb-mini .nb-bun-bottom{top:76px}
+    #nexus-burger-concept .nb-seat{position:absolute;transform:translate(-50%,-50%);width:80px;min-height:64px;padding:4px;border:0;background:transparent;text-align:center;font-size:11px;border-radius:8px}
+    #nexus-burger-concept .nb-seat[aria-pressed=true]{background:var(--nb-menu);box-shadow:0 0 0 2px var(--nb-red)}
+    #nexus-burger-concept .nb-person{width:28px;height:34px;margin:0 auto 3px;position:relative}
+    #nexus-burger-concept .nb-person:before{content:"";position:absolute;left:7px;top:0;width:15px;height:15px;border-radius:50%;background:#d39e70}
+    #nexus-burger-concept .nb-person:after{content:"";position:absolute;left:1px;bottom:0;width:27px;height:20px;border-radius:50% 50% 15% 15%;background:var(--nb-red)}
+    #nexus-burger-concept .nb-seat b{display:block;font-size:10px;line-height:1.2;overflow-wrap:anywhere}
+    #nexus-burger-concept .nb-seat span{font-size:10px}
+    #nexus-burger-concept .nb-member-total{font:900 58px/1.1 Georgia,serif;margin:14px 0 8px}
+    #nexus-burger-concept .nb-catalog{margin:0 24px 24px;border-top:1px dashed var(--nb-rule);padding-top:18px}
+    #nexus-burger-concept .nb-catalog-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    #nexus-burger-concept .nb-catalog h3{margin:0;font-size:20px}
+    #nexus-burger-concept .nb-catalog-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;margin-top:12px}
+    #nexus-burger-concept .nb-school-button{text-align:left;border:0;border-top:1px dashed var(--nb-rule);background:transparent;padding:12px 0;font-size:13px}
+    #nexus-burger-concept .nb-school-button small{display:block;color:#795d50}
+    @media(max-width:620px){#nexus-burger-concept .nb-layout{grid-template-columns:1fr;padding:0 18px 24px;gap:0}#nexus-burger-concept .nb-top{padding:16px 18px;gap:12px}#nexus-burger-concept .nb-heading{padding:20px 18px 0}#nexus-burger-concept h2{font-size:32px}#nexus-burger-concept .nb-stage{max-width:400px;width:100%;margin:auto}#nexus-burger-concept .nb-table-stage{max-width:400px;width:100%;margin:auto}#nexus-burger-concept .nb-menu{padding:20px}#nexus-burger-concept .nb-controls{padding:16px 18px}#nexus-burger-concept .nb-catalog-grid{grid-template-columns:1fr}#nexus-burger-concept .nb-layer{width:57%;left:36%}#nexus-burger-concept .nb-label{width:83px}#nexus-burger-concept .nb-tab{padding:7px 12px}}
+    @media(prefers-reduced-motion:reduce){#nexus-burger-concept *,#nexus-burger-concept *:before,#nexus-burger-concept *:after{transition:none!important}}
+  </style>
+  <header class="nb-top">
+    <div class="nb-brand">NEXUS<small>THE BURGER CLUB</small></div>
+    <div class="nb-tabs" role="tablist" aria-label="场景">
+      <button type="button" class="nb-tab cursor-interaction" data-scene="burger" id="nb-burger-tab" role="tab" aria-selected="true" aria-controls="nb-main">拆开汉堡</button>
+      <button type="button" class="nb-tab cursor-interaction" data-scene="table" id="nb-table-tab" role="tab" aria-selected="false" aria-controls="nb-main">围桌而坐</button>
+    </div>
+  </header>
+  <div class="nb-heading">
+    <p class="nb-eyebrow" id="nb-chapter">01 / OUR RECIPE</p>
+    <h2 id="nb-title">好东西，层出不穷。</h2>
+  </div>
+  <div id="nb-main" role="tabpanel" aria-labelledby="nb-burger-tab">
+    <div class="nb-layout">
+      <div class="nb-stage" id="nb-burger-stage" aria-label="点击食材查看对应技术方向">
+        <div class="nb-shadow" aria-hidden="true"></div>
+        <button class="nb-layer cursor-interaction" type="button" data-layer="community" aria-label="上层面包：NEXUS 社区" aria-pressed="false" style="top:138px;height:78px;z-index:6">
+          <span class="nb-food nb-bun-top" aria-hidden="true">
+            <i class="nb-seed" style="left:22%;top:32%;--seed-angle:-25deg"></i><i class="nb-seed" style="left:42%;top:19%;--seed-angle:25deg"></i><i class="nb-seed" style="left:66%;top:31%;--seed-angle:-32deg"></i><i class="nb-seed" style="left:81%;top:48%;--seed-angle:18deg"></i><i class="nb-seed" style="left:32%;top:60%;--seed-angle:43deg"></i><i class="nb-seed" style="left:57%;top:55%;--seed-angle:-13deg"></i><i class="nb-seed" style="left:16%;top:58%;--seed-angle:25deg"></i><i class="nb-seed" style="left:73%;top:66%;--seed-angle:-5deg"></i>
+          </span>
+          <span class="nb-label">NEXUS<small>一起做点好东西</small></span>
+        </button>
+        <button class="nb-layer cursor-interaction" type="button" data-layer="embodied" aria-label="生菜：具身智能，18 项资料" aria-pressed="false" style="top:205px;height:36px;z-index:5"><span class="nb-food nb-lettuce" aria-hidden="true"></span><span class="nb-label">具身智能<small>18 项资料</small></span></button>
+        <button class="nb-layer cursor-interaction" type="button" data-layer="recommendation" aria-label="煎蛋：推荐系统，8 项资料" aria-pressed="false" style="top:222px;height:35px;z-index:4"><span class="nb-food nb-egg" aria-hidden="true"></span><span class="nb-label">推荐系统<small>8 项资料</small></span></button>
+        <button class="nb-layer cursor-interaction" type="button" data-layer="agent" aria-label="芝士：Agent，23 项资料" aria-pressed="false" style="top:240px;height:30px;z-index:3"><span class="nb-food nb-cheese" aria-hidden="true"></span><span class="nb-label">Agent<small>23 项资料</small></span></button>
+        <button class="nb-layer cursor-interaction" type="button" data-layer="llm" aria-label="肉饼：大模型后训练，16 项资料" aria-pressed="false" style="top:253px;height:43px;z-index:2"><span class="nb-food nb-beef" aria-hidden="true"></span><span class="nb-label">LLM 后训练<small>16 项资料</small></span></button>
+        <button class="nb-layer cursor-interaction" type="button" data-layer="infra" aria-label="底层面包：基础与 AI Infra，42 项资料" aria-pressed="false" style="top:288px;height:39px;z-index:1"><span class="nb-food nb-bun-bottom" aria-hidden="true"></span><span class="nb-label">基础 / Infra<small>42 项资料</small></span></button>
+      </div>
+      <div class="nb-table-stage" id="nb-table-stage" hidden aria-label="成员院校圆桌，每次展示六所">
+        <div class="nb-table" aria-hidden="true"><div class="nb-table-center"><div class="nb-mini"><span class="nb-food nb-bun-top"></span><span class="nb-food nb-lettuce"></span><span class="nb-food nb-cheese"></span><span class="nb-food nb-beef"></span><span class="nb-food nb-bun-bottom"></span></div></div></div>
+        <div id="nb-seats"></div>
+      </div>
+      <aside class="nb-menu" aria-label="食材资料菜单" id="nb-receipt">
+        <div id="nb-menu-content" aria-live="polite"></div>
+      </aside>
+    </div>
+    <div class="nb-controls" id="nb-burger-controls">
+      <div class="nb-control-line"><label for="nb-progress">滚动分层进度</label><output id="nb-progress-label" for="nb-progress">0%</output></div>
+      <input id="nb-progress" class="nb-range" type="range" min="0" max="100" step="1" value="0" aria-label="模拟滚动，将汉堡逐层展开">
+      <div class="nb-presets"><button type="button" class="cursor-interaction" data-progress="0">完整汉堡</button><button type="button" class="cursor-interaction" data-progress="100">展开所有食材</button></div>
+    </div>
+    <div class="nb-controls nb-roster-controls" id="nb-table-controls" hidden>
+      <button type="button" class="nb-tab cursor-interaction" id="nb-previous">上一组</button><span id="nb-page" aria-live="polite"></span><button type="button" class="nb-tab cursor-interaction" id="nb-next">下一组</button>
+    </div>
+    <section class="nb-catalog" id="nb-catalog" hidden aria-label="完整资料菜单">
+      <div class="nb-catalog-heading"><h3 id="nb-catalog-title"></h3><button type="button" class="nb-tab cursor-interaction" id="nb-catalog-close">收起</button></div>
+      <div class="nb-catalog-grid" id="nb-catalog-grid"></div>
+    </section>
+  </div>
+  <script type="application/json" id="nb-source-data">{"resources":{"foundations":[{"title":"CS336：从零构建大语言模型","source":"斯坦福 · 哔哩哔哩","url":"https://www.bilibili.com/video/BV1APuUz7Erx/"},{"title":"CS336 学习笔记","source":"知乎专栏","url":"https://www.zhihu.com/column/c_1944054467675817567"},{"title":"动手学深度学习 Dive into Deep Learning","source":"李沐 · 在线书 + 代码","url":"https://zh.d2l.ai/"},{"title":"图解 Transformer","source":"Jay Alammar","url":"https://jalammar.github.io/illustrated-transformer/"},{"title":"图解注意力机制与 Seq2Seq","source":"Jay Alammar","url":"https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/"},{"title":"The Annotated Transformer","source":"Harvard NLP · 逐行代码注解","url":"https://nlp.seas.harvard.edu/2018/04/03/attention.html"},{"title":"DDA5001 机器学习课程笔记","source":"香港中文大学（深圳）","url":"https://heycys.github.io/cuhksz-ml-notes/"},{"title":"图解量化 A Visual Guide to Quantization","source":"Maarten Grootendorst","url":"https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-quantization"},{"title":"MoE 综述：混合专家与大模型扩展","source":"IEEE TKDE · 微信公众号","url":"https://mp.weixin.qq.com/s/K5TGQysyXGFcqzxY66IY2A?scene=1"},{"title":"Qwen 技术报告解读","source":"知乎","url":"https://zhuanlan.zhihu.com/p/671110914"},{"title":"LeetCode 热题 100","source":"算法基础训练","url":"https://leetcode.cn/studyplan/top-100-liked/"},{"title":"ARIS-in-AI-Offer：AI Offer 教程清单","source":"GitHub · wanshuiyin","url":"https://github.com/wanshuiyin/ARIS-in-AI-Offer/blob/main/README_CN.md#-%E6%95%99%E7%A8%8B%E6%B8%85%E5%8D%95"},{"title":"Kimi K3：Open Frontier Intelligence","source":"Moonshot AI · 官方技术博客","url":"https://www.kimi.com/blog/kimi-k3"},{"title":"Linux Commands Cheat Sheet","source":"Red Hat Developer · 命令行速查","url":"https://developers.redhat.com/cheat-sheets/linux-commands-cheat-sheet"},{"title":"ICLR 2027 Conference","source":"ICLR · 官方网站","url":"https://iclr.cc/"},{"title":"ICLR 2027 投稿指南","source":"知乎 · 截稿日期与投稿新规","url":"https://zhuanlan.zhihu.com/p/2073117052592828952"}],"infra":[{"title":"LeetGPU：GPU 编程挑战","source":"在线 CUDA / 算力练习平台","url":"https://leetgpu.com/challenges"},{"title":"How to Scale Your Model：如何扩展你的模型","source":"中文版 · GPU / 并行 / Roofline","url":"https://lqhl.github.io/scaling-book/"},{"title":"CUDA C++ 编程指南","source":"NVIDIA 官方文档","url":"https://docs.nvidia.com/cuda/cuda-programming-guide/"},{"title":"vLLM 中文站","source":"高吞吐 LLM 推理引擎","url":"https://vllm.hyper.ai/docs/"},{"title":"MiniMind：从零理解 LLM 训练","source":"minimind.wiki · 完整训练链路","url":"https://www.minimind.wiki/docs/"},{"title":"KernelBench：LLM 能写 GPU Kernel 吗","source":"GitHub · Scaling Intelligence","url":"https://github.com/ScalingIntelligence/KernelBench"},{"title":"矩阵乘法：从手搓到 CUTLASS 实现","source":"峰子的乐园","url":"https://dingfen.github.io/2021/10/20/2021-10-20-cuda-with-matmul/"},{"title":"从 305GB 到 7.4GB：KVCache 架构演进全景","source":"博客园 · 银光","url":"https://www.cnblogs.com/cswuyg/p/19981922"},{"title":"GPU Glossary：GPU 术语表","source":"中文版 · 硬件 / 架构速查","url":"https://gpu-glossary-zh.readthedocs.io/en/latest/"},{"title":"How to Scale Your Model：并行计算与分片","source":"中文版 · Parallelism / Sharding","url":"https://lqhl.github.io/scaling-book/sharding/"},{"title":"How to Scale Your Model：Roofline 模型","source":"中文版 · 性能上限分析","url":"https://lqhl.github.io/scaling-book/roofline/"},{"title":"CUDA C++ 最佳实践指南","source":"NVIDIA 官方文档","url":"https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html"},{"title":"Modern GPU Programming for MLSys：GPU 执行模型","source":"MLC.ai","url":"https://mlc.ai/modern-gpu-programming-for-mlsys/chapter_background/index.html"},{"title":"Prefix Caching 详解","source":"知乎","url":"https://zhuanlan.zhihu.com/p/1915173348436054604"},{"title":"vLLM 推理全流程图解","source":"微信公众号","url":"https://mp.weixin.qq.com/s/t2tg278ntVTJGz1IsM2g0A"},{"title":"vLLM Ascend 官方文档","source":"vLLM · Ascend","url":"https://docs.vllm.ai/projects/ascend/en/latest/"},{"title":"MinivLLM：极简 vLLM 实现","source":"GitHub · Wenyueh","url":"https://github.com/Wenyueh/MinivLLM/blob/main/README_zh.md"},{"title":"昇腾开源文档中心","source":"Ascend Open Source","url":"https://ascend.github.io/docs/"},{"title":"CUDA-Agent：高性能 CUDA Kernel 生成强化学习","source":"GitHub · BytedTsinghua-SIA","url":"https://github.com/BytedTsinghua-SIA/CUDA-Agent"},{"title":"CANN-Bench：CANN 算子任务评测","source":"AtomGit · GitCode","url":"https://gitcode.com/cann/cann-bench"},{"title":"DFlash：Block Diffusion for Flash Speculative Decoding","source":"GitHub · z-lab","url":"https://github.com/z-lab/dflash"},{"title":"KernelHive AI Systems Daily","source":"KernelHive · AI 系统论文日报","url":"https://daily-reports.kernelhive.ai/"},{"title":"DeepSeek-V4-Pro：国产算力集群全参数后训练","source":"深圳河套学院 · 昇腾训练实践","url":"https://www.slai.edu.cn/zh-hans/article/495"},{"title":"ConvRot：扩散 Transformer 的即插即用 4-bit 量化","source":"OpenReview · 旋转量化","url":"https://openreview.net/forum?id=SCC11m676G"},{"title":"CUDA Kernel：如何设置 grid_size 与 block_size","source":"知乎 · CUDA 编程","url":"https://zhuanlan.zhihu.com/p/442304996"},{"title":"Kubernetes 一小时入门","source":"哔哩哔哩 · 容器编排基础","url":"https://www.bilibili.com/video/BV1Se411r7vY/"}],"agent":[{"title":"Learn Harness Engineering","source":"walkinglabs · AI 编程智能体工程化","url":"https://walkinglabs.github.io/learn-harness-engineering/zh/"},{"title":"18 种 RAG 技术实测对比","source":"Level Up Coding · Fareed Khan","url":"https://levelup.gitconnected.com/testing-18-rag-techniques-to-find-the-best-094d166af27f"},{"title":"TypeScript 基础语法","source":"菜鸟教程 · Agent 工程语言基础","url":"https://www.runoob.com/typescript/ts-basic-syntax.html"},{"title":"Hello-Agents：动手学智能体","source":"Datawhale · 开源教程","url":"https://datawhalechina.github.io/hello-agents/"},{"title":"The 2025 AI Agent Index","source":"MIT · 智能体全景索引","url":"https://aiagentindex.mit.edu/"},{"title":"Awesome AI Model Routing","source":"GitHub · LLM 路由方案合集","url":"https://github.com/Not-Diamond/awesome-ai-model-routing"},{"title":"大模型 RAG 基础：信息检索、文本向量化及 BGE-M3 实践","source":"Arthur Chiao","url":"https://arthurchiao.art/blog/rag-basis-bge-zh/"},{"title":"Coordinator 编排：Claude Code 并行工作线程解析","source":"Claude 中文社区","url":"https://claudecn.com/docs/source-analysis/coordinator/"},{"title":"多智能体协调器：Claude Code 如何编排并行工作线程","source":"Claude Reviews Claude","url":"https://openedclaude.github.io/claude-reviews-claude/zh-CN/chapters/03-coordinator"},{"title":"Agent Skills：技能生态入口","source":"agentskills.io","url":"https://agentskills.io/home"},{"title":"opencode：开源 AI 编程 Agent","source":"GitHub · anomalyco","url":"https://github.com/anomalyco/opencode/blob/dev/README.zh.md"},{"title":"Agent Foundations 面试 Cheat Sheet","source":"ARIS-in-AI-Offer","url":"https://wanshuiyin.github.io/ARIS-in-AI-Offer/tutorials/agent_foundations_tutorial.html#0-tldr-cheat-sheet"},{"title":"Terminal-Bench：终端智能体能力评测","source":"Stanford × Laude","url":"https://www.tbench.ai/"},{"title":"CoEvoSkills：共进化验证的自进化 Agent Skills","source":"项目主页 · arXiv 2026","url":"https://zhang-henry.github.io/CoEvoSkills/"},{"title":"Elasticsearch：从入门到进阶","source":"CSDN · 检索基础设施","url":"https://blog.csdn.net/sniper_fandc/article/details/153691789"},{"title":"MTEB：文本嵌入模型评测榜单","source":"Hugging Face · mteb","url":"https://huggingface.co/spaces/mteb/leaderboard"},{"title":"STALE：LLM Agent 记忆何时失效","source":"GitHub · shibing624","url":"https://github.com/shibing624/ai-paper-analysis/blob/main/202605/20260522_STALE_%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB_LLM%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E8%AE%B0%E5%BF%86%E4%BD%95%E6%97%B6%E6%82%84%E6%82%84%E8%BF%87%E6%9C%9F.md"},{"title":"Evo-Memory：智能体测试时学习与自进化记忆","source":"知乎 · 论文阅读笔记","url":"https://zhuanlan.zhihu.com/p/2045487432850728375"},{"title":"AI-Research-SKILLs：AI 研究与工程技能库","source":"GitHub · Orchestra Research","url":"https://github.com/Orchestra-Research/AI-Research-SKILLs"},{"title":"MemEvolve：智能体记忆系统的元进化","source":"ICML 2026 · OpenReview","url":"https://openreview.net/forum?id=qpkG0eKx4v"},{"title":"Agent Pulse：AI 行业关键变化与证据","source":"GitHub · Barret Lee","url":"https://barretlee.github.io/agent-pulse/"},{"title":"RLMOpt：递归语言模型驱动的自适应 Prompt 优化","source":"arXiv · Autonomize AI × CMU","url":"https://arxiv.org/html/2608.10471"},{"title":"华为云 AI 办公实践中心","source":"华为云 · AI Agent 实战","url":"https://hands-on-agent.developer.huaweicloud.com/"}],"humanoid":[{"title":"Danfei Xu 访谈：人类数据、行为克隆、机器人 GPT-3","source":"WhynotTV Podcast · 哔哩哔哩","url":"https://www.bilibili.com/video/BV1usRgBEESe"},{"title":"UC Berkeley Ember Seminar：SONIC + BFM zero","source":"小红书 · B 站同步","url":"https://www.xiaohongshu.com/user/profile/587bc19882ec39097318c045"},{"title":"Robotic Manipulation","source":"MIT CSAIL","url":"https://manipulation.csail.mit.edu/index.html"},{"title":"MoveIt Tutorials","source":"MoveIt · ROS 机械臂规划","url":"https://moveit.github.io/moveit_tutorials/"},{"title":"MuJoCo：Advanced Physics Simulation","source":"DeepMind","url":"https://mujoco.org/"},{"title":"LIBERO：Lifelong Learning Algorithms","source":"Lifelong Robot Learning","url":"https://lifelong-robot-learning.github.io/LIBERO/html/algo_data/lifelong_learning_algorithms.html"},{"title":"LEGION：机器人终身强化学习","source":"GitHub · Ghiara","url":"https://github.com/Ghiara/LEGION"},{"title":"Open X-Embodiment：机器人学习数据集与 RT-X 模型","source":"Google DeepMind","url":"https://robotics-transformer-x.github.io/"},{"title":"Awesome World Models for Embodied AI","source":"GitHub · Li-Zn-H","url":"https://github.com/Li-Zn-H/AwesomeWorldModels"},{"title":"X-VLA：跨具身视觉-语言-动作模型","source":"GitHub · 2toinf","url":"https://github.com/2toinf/X-VLA"},{"title":"Data Pyramid & Data Flywheel for Robotic Foundation Models","source":"UT Austin RPL · PDF","url":"https://rpl.cs.utexas.edu/talks/2024_11_04_data_pyramid_and_data_flywheel_for_robotic_foundation_models.pdf"},{"title":"Whole-Body Coordination for Legged Manipulators","source":"GitHub · YoungYNG","url":"https://github.com/YoungYNG/DQ_WBC/tree/main"},{"title":"TransCG：透明物体深度补全和抓取数据集","source":"GraspNet","url":"https://graspnet.net/transcg"},{"title":"Depth Anything V2：单目深度估计","source":"arXiv","url":"https://arxiv.org/html/2406.09414"},{"title":"Marigold：Diffusion-Based Monocular Depth Estimation","source":"Project Page","url":"https://marigoldmonodepth.github.io/"},{"title":"VLA-Handbook：视觉-语言-动作学习与面试手册","source":"GitHub · sou350121","url":"https://github.com/sou350121/VLA-Handbook"},{"title":"ASGrasp：透明物体重建与 6-DoF 抓取","source":"ICRA 2024 · PKU EPIC","url":"https://pku-epic.github.io/ASGrasp/"},{"title":"Reflective Planning：VLM 长程机器人操作规划","source":"Cornell · CUHK · Yale · UC Berkeley","url":"https://reflect-vlm.github.io/"}],"posttraining":[{"title":"强化学习 · 大模型后训练版","source":"walkinglabs · 含具身 RL 路线规划","url":"https://walkinglabs.github.io/hands-on-modern-rl/preface/intro"},{"title":"强化学习入门：从马尔可夫到 PPO / DPPO","source":"知乎","url":"https://zhuanlan.zhihu.com/p/111869532"},{"title":"用 LLaMA 训练你自己的大语言模型","source":"知乎","url":"https://zhuanlan.zhihu.com/p/630335027"},{"title":"从零「手搓」一个大模型","source":"微信公众号","url":"https://mp.weixin.qq.com/s/wcjYPzPq-lADvz-TeKZ7VQ"},{"title":"大模型 LLM 面经（实时更新）","source":"飞书云文档","url":"https://ocnk15rrs0pu.feishu.cn/wiki/XSb5w9SQoiUBWzkOqcSced7pnZe"},{"title":"Modern LLM Notebook","source":"walkinglabs · 现代 LLM 笔记","url":"https://walkinglabs.github.io/modern-llm-notebook/"},{"title":"Tianshou 天授：强化学习库","source":"清华 · 模块化 RL 框架","url":"https://tianshou.org/en/stable/"},{"title":"为什么 base model 还不是 assistant","source":"Hands-on Modern RL","url":"https://walkinglabs.github.io/hands-on-modern-rl/chapter08_rlhf/base-model-to-assistant"},{"title":"后训练介绍","source":"StreamLake 文档","url":"https://www.streamlake.com/document/WANQING/mf6l5idt0lisgftxb5n"},{"title":"DAPO：大规模开源 LLM 强化学习系统","source":"arXiv · 论文 HTML","url":"https://ar5iv.labs.arxiv.org/html/2503.14476v2"},{"title":"PPO：有了奖励模型，为什么还需要价值模型","source":"微信公众号","url":"https://mp.weixin.qq.com/s/Zr16QrWCSmzENgpbn0WT3Q"},{"title":"On-Policy Distillation：Policy Gradient 视角","source":"知乎","url":"https://zhuanlan.zhihu.com/p/2058368749707776341"},{"title":"On-Policy Distillation：2026 上半年综述","source":"知乎 · 三万字长文","url":"https://zhuanlan.zhihu.com/p/2047255993000759999"},{"title":"OPD-Evolver：基于在策略蒸馏的智能体进化","source":"arXiv · LV-NUS Lab","url":"https://arxiv.org/pdf/2606.17628"},{"title":"Off-Policy + On-Policy 两段式蒸馏","source":"知乎 · 大模型蒸馏","url":"https://zhuanlan.zhihu.com/p/2041180570701587116"},{"title":"REOPOLD：将 On-Policy Distillation 作为 RL 调优","source":"知乎 · 训练稳定性解读","url":"https://zhuanlan.zhihu.com/p/2042996386673715116"}],"recsys":[{"title":"推荐系统简介","source":"峰子的乐园","url":"https://dingfen.github.io/2023/02/06/2023-2-6-recommender_systems/"},{"title":"推荐系统：机器学习模型完整指南","source":"Towards Data Science","url":"https://towardsdatascience.com/recommender-systems-a-complete-guide-to-machine-learning-models-96d3f94ea748/"},{"title":"工业界算法实践 Algorithm-Practice-in-Industry","source":"GitHub · Doragd","url":"https://github.com/Doragd/Algorithm-Practice-in-Industry"},{"title":"Avazu CTR 点击率预测","source":"Kaggle · 经典实战竞赛","url":"https://www.kaggle.com/competitions/avazu-ctr-prediction"},{"title":"快手 LLM-Rec 挑战赛 2026","source":"Kuaishou · StreamLake","url":"https://ks-llmrec.streamlake.com/"},{"title":"快手 OpenOneRec 技术报告","source":"知乎","url":"https://zhuanlan.zhihu.com/p/2000832958668497198"},{"title":"腾讯广告算法大赛","source":"Tencent Ads","url":"https://algo.qq.com/"},{"title":"推荐系统公开课：8 小时工业实践完整版","source":"ShusenWang · 哔哩哔哩","url":"https://www.bilibili.com/video/BV1HZ421U77y/"}]},"schools":[{"name":"香港中文大学（深圳）","abbr":"CUHK-SZ","count":11},{"name":"香港科技大学（广州）","abbr":"HKUST-GZ","count":8},{"name":"复旦大学","abbr":"FUDAN","count":4},{"name":"澳门大学","abbr":"UM","count":1},{"name":"电子科技大学","abbr":"UESTC","count":1},{"name":"北京邮电大学","abbr":"BUPT","count":1},{"name":"上海交通大学","abbr":"SJTU","count":1},{"name":"南洋理工大学","abbr":"NTU","count":1},{"name":"太原理工大学","abbr":"TYUT","count":1},{"name":"南方科技大学","abbr":"SUSTech","count":2},{"name":"河南工业大学","abbr":"HAUT","count":1},{"name":"德克萨斯理工大学","abbr":"TTU","count":1},{"name":"新加坡国立大学","abbr":"NUS","count":1},{"name":"北京大学","abbr":"PKU","count":1},{"name":"厦门大学","abbr":"XMU","count":1},{"name":"香港科技大学","abbr":"HKUST","count":1},{"name":"香港城市大学","abbr":"CityU","count":2},{"name":"中国科学院大学","abbr":"UCAS","count":1},{"name":"天津大学","abbr":"TJU","count":2},{"name":"香港城市大学（东莞）","abbr":"CityU-DG","count":1},{"name":"中国科学技术大学","abbr":"USTC","count":1},{"name":"普渡大学","abbr":"PU","count":1},{"name":"香港大学","abbr":"HKU","count":1}]}</script>
+  <script>
+    (() => {
+      const root = document.getElementById('nexus-burger-concept');
+      const data = JSON.parse(root.querySelector('#nb-source-data').textContent);
+      const find = id => root.querySelector('#' + id);
+      const state = { scene:'burger', progress:0, selected:'community', member:0, page:0, catalog:false };
+      const design = { receipt:'side', accent:'#c92f17' };
+      const layers = {
+        community:{ title:'NEXUS', food:'上层面包 / OUR PEOPLE', description:'学习、研究、工程。把不同背景的人，夹进同一个好点子里。', categories:[], closed:138, open:22 },
+        embodied:{ title:'具身智能', food:'新鲜生菜 / EMBODIED AI', description:'从感知到行动，把智能带进真实世界。', categories:['humanoid'], closed:205, open:133 },
+        recommendation:{ title:'推荐系统', food:'煎蛋 / RECOMMENDATION', description:'理解偏好，探索召回、排序与工业实践。', categories:['recsys'], closed:222, open:192 },
+        agent:{ title:'Agent', food:'融化芝士 / AGENTS', description:'连接工具、记忆与任务，让想法开始执行。', categories:['agent'], closed:240, open:250 },
+        llm:{ title:'LLM · 后训练', food:'招牌肉饼 / POST-TRAINING', description:'从监督微调、偏好优化，到强化学习与评测。', categories:['posttraining'], closed:253, open:304 },
+        infra:{ title:'基础与 AI Infra', food:'底层面包 / FOUNDATIONS', description:'基础知识与计算基础设施，托住整份技术配方。', categories:['foundations','infra'], closed:288, open:374 }
+      };
+      const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const resources = key => layers[key].categories.flatMap(category => data.resources[category] || []);
+      const total = Object.values(data.resources).reduce((sum, list) => sum + list.length, 0);
+      const resourceHtml = item => '<a class="nb-item cursor-interaction" href="' + escape(item.url) + '" target="_blank" rel="noopener noreferrer">' + escape(item.title) + '<small>' + escape(item.source) + '</small></a>';
+      function persist(){
+        const snapshot = {modelContent:{scene:state.scene,layer:state.selected,progress:state.progress,school:data.schools[state.member].name},privateContent:{...state}};
+        if(window.openai && window.openai.setWidgetState) window.openai.setWidgetState(snapshot).catch(() => {});
+      }
+      function renderLayers(){
+        const p = state.progress / 100;
+        root.dataset.expanded = p > .57 ? 'true' : 'false';
+        root.querySelectorAll('[data-layer]').forEach(button => {
+          const key = button.dataset.layer;
+          const layer = layers[key];
+          button.style.top = (layer.closed + (layer.open - layer.closed) * p) + 'px';
+          button.setAttribute('aria-pressed', state.selected === key && p > .57 ? 'true' : 'false');
+        });
+        find('nb-progress').value = String(state.progress);
+        find('nb-progress-label').textContent = state.progress + '%';
+      }
+      function renderSeats(){
+        const start = state.page * 6;
+        const group = data.schools.slice(start, start + 6);
+        find('nb-seats').innerHTML = group.map((school, i) => {
+          const angle = (-90 + i * 360 / group.length) * Math.PI / 180;
+          const x = 50 + Math.cos(angle) * 36;
+          const y = 50 + Math.sin(angle) * 34;
+          return '<button type="button" class="nb-seat cursor-interaction" data-member="' + (start + i) + '" style="left:' + x + '%;top:' + y + '%" aria-label="' + escape(school.name) + '，' + school.count + ' 位伙伴" aria-pressed="' + (state.member === start+i) + '"><div class="nb-person" aria-hidden="true"></div><b>' + escape(school.abbr) + '</b><span>×' + school.count + '</span></button>';
+        }).join('');
+        find('nb-page').textContent = (start+1) + '–' + Math.min(start+6,data.schools.length) + ' / ' + data.schools.length + ' 所院校';
+      }
+      function renderMenu(){
+        const container = find('nb-menu-content');
+        if(state.scene === 'table'){
+          const school = data.schools[state.member];
+          container.innerHTML = '<div class="nb-eyebrow">同桌伙伴 / ' + escape(school.abbr) + '</div><h3>' + escape(school.name) + '</h3><div class="nb-member-total">' + school.count + '</div><p>位伙伴，相聚 NEXUS。</p><div class="nb-items"><p>学习 · 研究 · 工程</p></div><button type="button" class="nb-action cursor-interaction" data-open-catalog>查看全部院校 →</button>';
+          return;
+        }
+        const layer = layers[state.selected];
+        const list = resources(state.selected);
+        const intro = state.selected === 'community';
+        container.innerHTML = '<div class="nb-eyebrow">' + escape(layer.food) + '</div><h3>' + escape(layer.title) + '</h3><span class="nb-count">' + (intro ? data.schools.length + ' 所院校 · ' + total + ' 项资料' : list.length + ' 项学习资料') + '</span><p>' + escape(layer.description) + '</p><div class="nb-items">' + (intro ? '<p>探索食材，发现技术方向。</p><p>点开一层，读它的学习菜单。</p>' : list.slice(0,2).map(resourceHtml).join('')) + '</div><button type="button" class="nb-action cursor-interaction" ' + (intro ? 'data-expand-burger' : 'data-open-catalog') + '>' + (intro ? '展开汉堡 →' : '完整学习菜单 →') + '</button>';
+      }
+      function renderCatalog(){
+        find('nb-catalog').hidden = !state.catalog;
+        if(!state.catalog) return;
+        if(state.scene === 'table'){
+          find('nb-catalog-title').textContent = '同桌伙伴 · ' + data.schools.length + ' 所院校';
+          find('nb-catalog-grid').innerHTML = data.schools.map((school,index) => '<button type="button" class="nb-school-button cursor-interaction" data-member="' + index + '">' + escape(school.name) + '<small>' + escape(school.abbr) + ' · ' + school.count + ' 位伙伴</small></button>').join('');
+        }else{
+          find('nb-catalog-title').textContent = layers[state.selected].title + ' · 学习菜单';
+          find('nb-catalog-grid').innerHTML = resources(state.selected).map(resourceHtml).join('');
+        }
+      }
+      function render(){
+        const burger = state.scene === 'burger';
+        root.dataset.receipt = design.receipt;
+        root.style.setProperty('--nb-red', design.accent);
+        root.querySelectorAll('[data-scene]').forEach(button => button.setAttribute('aria-selected',button.dataset.scene === state.scene ? 'true' : 'false'));
+        find('nb-main').setAttribute('aria-labelledby',burger ? 'nb-burger-tab' : 'nb-table-tab');
+        find('nb-chapter').textContent = burger ? '01 / OUR RECIPE' : '02 / OUR TABLE';
+        find('nb-title').textContent = burger ? '好东西，层出不穷。' : '来自各处，坐到一起。';
+        find('nb-burger-stage').hidden = !burger;
+        find('nb-table-stage').hidden = burger;
+        find('nb-burger-controls').hidden = !burger;
+        find('nb-table-controls').hidden = burger;
+        find('nb-receipt').setAttribute('aria-label',burger ? '食材资料菜单' : '成员院校桌牌');
+        renderLayers(); renderSeats(); renderMenu(); renderCatalog();
+      }
+      function restore(snapshot){
+        const previous = snapshot && snapshot.privateContent;
+        if(!previous) return;
+        if(previous.scene === 'burger' || previous.scene === 'table') state.scene = previous.scene;
+        if(Number.isFinite(previous.progress)) state.progress = Math.max(0, Math.min(100, previous.progress));
+        if(layers[previous.selected]) state.selected = previous.selected;
+        if(Number.isInteger(previous.member) && previous.member >= 0 && previous.member < data.schools.length) state.member = previous.member;
+        state.page = Math.floor(state.member / 6);
+        state.catalog = previous.catalog === true;
+      }
+      root.addEventListener('click',event => {
+        const button = event.target.closest('button');
+        if(!button || !root.contains(button)) return;
+        if(button.dataset.scene){state.scene=button.dataset.scene;state.catalog=false;}
+        else if(button.dataset.layer){state.selected=button.dataset.layer;state.progress=100;state.catalog=false;}
+        else if(button.dataset.progress !== undefined){state.progress=Number(button.dataset.progress);}
+        else if(button.dataset.member !== undefined){state.member=Number(button.dataset.member);state.page=Math.floor(state.member/6);}
+        else if(button.hasAttribute('data-expand-burger')){state.progress=100;}
+        else if(button.hasAttribute('data-open-catalog')){state.catalog=!state.catalog;}
+        else if(button.id === 'nb-catalog-close'){state.catalog=false;}
+        else if(button.id === 'nb-next' || button.id === 'nb-previous'){
+          const pages=Math.ceil(data.schools.length/6);
+          state.page=(state.page+(button.id === 'nb-next' ? 1 : -1)+pages)%pages;
+          state.member=state.page*6;
+        }else{return;}
+        root.dataset.dragging='false';
+        render();persist();
+      });
+      find('nb-progress').addEventListener('input',event => {state.progress=Number(event.target.value);root.dataset.dragging='true';renderLayers();});
+      find('nb-progress').addEventListener('change',() => {root.dataset.dragging='false';persist();});
+      root.querySelector('.nb-tabs').addEventListener('keydown',event => {
+        if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+        event.preventDefault();
+        const key=event.key === 'Home' ? 'burger' : event.key === 'End' ? 'table' : state.scene === 'burger' ? 'table' : 'burger';
+        const tab=root.querySelector('[data-scene="' + key + '"]');
+        tab.click();tab.focus();
+      });
+      window.addEventListener('openai:set_globals',event => {const incoming=event.detail && event.detail.globals && event.detail.globals.widgetState;if(incoming){restore(incoming);render();}});
+      restore(window.openai && window.openai.widgetState);
+      render();
+      if(globalThis.Tweak){
+        const tweak=new Tweak({container:find('nb-receipt'),onChange:render});
+        tweak.addSelect(design,'receipt',{label:'资料面板',options:[{label:'侧边菜单',value:'side'},{label:'浮动小票',value:'floating'}]});
+        tweak.addColorPicker(design,'accent',{label:'强调色',reference:'--nb-red'});
+      }
+    })();
+  </script>
+</div>
