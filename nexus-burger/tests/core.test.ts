@@ -47,6 +47,16 @@ test('only visible institutions are public; every logo resolves locally', () => 
     46
   )
   assert.ok(!content.schools.some((s: { abbr: string }) => s.abbr === 'HAUT'))
+  const sourceMembers = [
+    ...original.matchAll(/<article class="card has-corner member-card">(.*?)<\/article>/gs),
+  ].map(([, card]) => ({
+    name: card.match(/class="member-cn">(.*?)<\//s)![1],
+    count: Number(card.match(/class="member-count">[×x](\d+)/)?.[1] || 1),
+  }))
+  assert.deepEqual(
+    content.schools.map((s: { name: string; count: number }) => ({ name: s.name, count: s.count })),
+    sourceMembers
+  )
   for (const school of content.schools)
     assert.ok(existsSync(new URL(`../public/${school.logo}`, import.meta.url)))
 })

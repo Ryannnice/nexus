@@ -4,7 +4,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { members } from '../data'
 import { createDiscussionPicker, type DiscussionTopic } from '../data/discussions'
-import { memberSeatAngle } from './seating'
+import { guestAngle, memberSeatAngle } from './seating'
 
 type Rect = { x: number; y: number; width: number; height: number }
 const origin = () => [0, 0]
@@ -26,7 +26,8 @@ export function TableThoughts({
   const { camera, size, gl } = useThree()
   const compact = size.width < 760 || size.height < 540
   const count = compact ? 4 : 5
-  const width = size.width < 760 ? 145 : size.height < 540 ? 164 : 202
+  const width =
+    size.width < 760 ? Math.min(180, (size.width - 36) / 2) : size.height < 540 ? 164 : 202
   const pick = useMemo(createDiscussionPicker, [])
   const slots = useRef(
     Array.from({ length: 5 }, () => ({
@@ -79,6 +80,30 @@ export function TableThoughts({
       points[i].x = ((vector.x + 1) * size.width) / 2
       points[i].y = ((1 - vector.y) * size.height) / 2
     }
+    const xs = points.map((p) => p.x),
+      ys = points.map((p) => p.y)
+    const tableEdge = {
+      x: (Math.min(...xs) + Math.max(...xs)) / 2,
+      y: (Math.min(...ys) + Math.max(...ys)) / 2,
+      rx: (Math.max(...xs) - Math.min(...xs)) / 2 + 22,
+      ry: (Math.max(...ys) - Math.min(...ys)) / 2 + 22,
+    }
+    vector
+      .set(Math.sin(guestAngle) * 7.45, -0.42 - 0.52 * 0.67, Math.cos(guestAngle) * 7.45)
+      .applyMatrix4(group.current.matrixWorld)
+      .project(camera)
+    const guestWidth = compact ? 40 : 76
+    const invitation = {
+      x: ((vector.x + 1) * size.width) / 2 - guestWidth / 2,
+      y: ((1 - vector.y) * size.height) / 2 - 12,
+      width: guestWidth,
+      height: 0,
+    }
+    vector
+      .set(Math.sin(guestAngle) * 7.45, -2.25, Math.cos(guestAngle) * 7.45)
+      .applyMatrix4(group.current.matrixWorld)
+      .project(camera)
+    invitation.height = Math.max(32, ((1 - vector.y) * size.height) / 2 - invitation.y + 8)
     const food: Rect =
       size.width < 760
         ? {
@@ -94,8 +119,9 @@ export function TableThoughts({
             height: size.height * 0.49,
           }
     let changed = initial || layout.current.dirty
-    if (changed) {
-      // Fixed UI geometry is read only on entrance or viewport resize.
+    if (changed || now >= layout.current.next) {
+      // Sticky headings can settle after a resize or anchor jump; refresh only
+      // on the throttled layout pass, never on every animation frame.
       layout.current.obstacles = ['.chapter-nav', '.reunion-caption'].map((selector) => {
         const r = document.querySelector(selector)!.getBoundingClientRect()
         return { x: r.x, y: r.y, width: r.width, height: r.height }
@@ -151,6 +177,7 @@ export function TableThoughts({
           (initial ? 4.5 + i * 1.6 : Math.max(7, entry.text.length * 0.12) + Math.random() * 3)
         changed = true
       }
+      if (changed || now >= layout.current.next) slot.height = label.offsetHeight
     })
     if (changed || now >= layout.current.next) {
       layout.current.next = now + 0.3
@@ -160,8 +187,16 @@ export function TableThoughts({
           head = points[slot.member]
         const top = size.height < 540 ? 66 : 88,
           bottom = size.height - slot.height - 12
+        const angle = Math.atan2(
+          (head.y - tableEdge.y) / tableEdge.ry,
+          (head.x - tableEdge.x) / tableEdge.rx
+        )
         const candidates = [
           { x: slot.tx, y: slot.ty },
+          {
+            x: tableEdge.x + Math.cos(angle) * (tableEdge.rx + width * 0.6) - width / 2,
+            y: tableEdge.y + Math.sin(angle) * (tableEdge.ry + slot.height * 0.8) - slot.height / 2,
+          },
           { x: head.x - width / 2, y: head.y - slot.height - 32 },
           { x: head.x - width - 30, y: head.y - slot.height / 2 },
           { x: head.x + 30, y: head.y - slot.height / 2 },
@@ -181,14 +216,22 @@ export function TableThoughts({
           const dx = head.x - THREE.MathUtils.clamp(head.x, rect.x, rect.x + width)
           const dy = head.y - THREE.MathUtils.clamp(head.y, rect.y, rect.y + slot.height)
           const distance = Math.hypot(dx, dy)
+          let insideTable = 0
+          for (const px of [0.12, 0.5, 0.88])
+            for (const py of [0.12, 0.5, 0.88]) {
+              const nx = (rect.x + width * px - tableEdge.x) / tableEdge.rx
+              const ny = (rect.y + slot.height * py - tableEdge.y) / tableEdge.ry
+              insideTable += Math.max(0, 1 - nx * nx - ny * ny)
+            }
           const score =
-            (distance - 38) ** 2 +
+            (distance - 66) ** 2 +
             (head.x - rect.x - width / 2) ** 2 * 0.08 +
-            [...layout.current.obstacles, ...placed].reduce(
+            [...layout.current.obstacles, invitation, ...placed].reduce(
               (sum, obstacle) => sum + overlap(rect, obstacle) * 10000,
               0
             ) +
-            overlap(rect, food, 0) * 12 +
+            overlap(rect, food, 0) * 180 +
+            insideTable * 55000 +
             (slot.initialized ? Math.hypot(slot.tx - rect.x, slot.ty - rect.y) * 4 : 0)
           if (score < bestScore) {
             bestScore = score

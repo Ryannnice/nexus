@@ -1,8 +1,12 @@
-import { useMemo, useEffect } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 import * as THREE from 'three'
 import { resources, type CategoryId } from '../data'
 import { Block, PropModel, propName } from './PropModels'
 type Resource = (typeof resources)[number]
+const labelFontsReady = Promise.all([
+  document.fonts.load('29px "Nexus Round"'),
+  document.fonts.load('29px "Lilita One"'),
+])
 
 function labelTexture(resource: Resource, index: number) {
   const canvas = document.createElement('canvas')
@@ -12,11 +16,11 @@ function labelTexture(resource: Resource, index: number) {
   c.fillStyle = '#f9f0dc'
   c.fillRect(0, 0, 320, 128)
   c.fillStyle = '#ac5436'
-  c.font = 'bold 18px Arial'
+  c.font = '400 18px "Lilita One", "Nexus Round", sans-serif'
   c.fillText(String(index + 1).padStart(2, '0'), 17, 23)
   c.fillText('↗', 293, 23)
   c.fillStyle = '#352a20'
-  c.font = '600 29px Arial, "Microsoft YaHei", sans-serif'
+  c.font = '400 29px "Lilita One", "Nexus Round", sans-serif'
   let line = '',
     row = 0
   for (const char of resource.title) {
@@ -49,7 +53,19 @@ export function RecipeItem({
   index: number
   kind: CategoryId
 }) {
-  const texture = useMemo(() => labelTexture(resource, index), [resource, index])
+  const [fontsReady, setFontsReady] = useState(false)
+  useEffect(() => {
+    let alive = true
+    labelFontsReady
+      .then(() => {
+        if (alive) setFontsReady(true)
+      })
+      .catch(() => {})
+    return () => {
+      alive = false
+    }
+  }, [])
+  const texture = useMemo(() => labelTexture(resource, index), [resource, index, fontsReady])
   useEffect(() => () => texture.dispose(), [texture])
   return (
     <group

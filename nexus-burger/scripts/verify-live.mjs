@@ -35,11 +35,20 @@ try {
   await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 })
   await expect(page.locator('.app')).toHaveAttribute('data-scene-ready', 'true', { timeout: 30000 })
   await expect(page.locator('.resource-link')).toHaveCount(107)
+  const content = JSON.parse(
+    await readFile(new URL('../src/data/content.json', import.meta.url), 'utf8')
+  )
+  for (const school of content.schools) {
+    const card = page
+      .locator('.school-item')
+      .filter({ has: page.getByText(school.name, { exact: true }) })
+    await expect(card.locator('.school-count')).toHaveText(String(school.count))
+  }
   await expect(page.locator('.brand-note')).toHaveCount(1)
   await expect(page.locator('.footer-motto')).toHaveText('我们热爱汉堡，正如我们热爱大语言模型！')
-  expect(await page.evaluate(() => document.fonts.check('600 12px "Nexus Menu"', '基础必修'))).toBe(
-    true
-  )
+  expect(
+    await page.evaluate(() => document.fonts.check('400 12px "Nexus Round"', '基础必修'))
+  ).toBe(true)
   await page.locator('#join').evaluate((el) => el.scrollIntoView({ behavior: 'instant' }))
   await expect(page.locator('canvas')).toHaveAttribute('data-active-speakers', '5', {
     timeout: 30000,

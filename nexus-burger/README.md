@@ -48,11 +48,13 @@ python -m http.server 4173 --bind 127.0.0.1
 
 107 个原始链接、22 个公开院校／校区、46 位成员。原 HTML 注释隐藏的院校不公开。运行 `npm run sync-content` 可同步原站公开内容及校徽。
 
+2026-09-23 与在线主站核对：港科广 8 人、南科大 3 人；名录及逐人校徽同步。圆桌的 144 条情景对话采用口语化技术闲聊，气泡优先沿桌子外围分布，并避让目录、汉堡和邀请席。
+
 ## 实现
 
 React 19、TypeScript、Vite、Three.js、React Three Fiber、Drei。字体、校徽、模型与纹理均本地运行。食材是本项目参数化模型，并非食物扫描资产。
 
-目录使用本地 Noto Sans SC 600 字重子集（16 KB），统一中文与数字字体。`scripts/menu-font.py` 可重新生成，需 Python 的 fontTools 和 Brotli。各层特写较上一版缩小 8%，首屏及圆桌尺寸保持原设定。
+全站使用英文 Lilita One 与中文站酷快乐体本地子集（Nexus Round），覆盖目录、成员、气泡与 3D 资料纸签；代码和公式保留等宽字体。`scripts/menu-font.py` 可重新生成，需 Python 的 fontTools 和 Brotli。各层特写较上一版缩小 8%，首屏及圆桌尺寸保持原设定。
 
 | 文件                                                                 | 用途                                 |
 | -------------------------------------------------------------------- | ------------------------------------ |
@@ -83,4 +85,4 @@ node scripts/capture-motion.mjs
 
 浏览器检查使用独立无头 Chromium，需先启动 4173 静态服务器。`?qa` 额外计算实际网格与点击边界，只用于验收。正常访问不计算这些投影报告。截图在 `artifacts/`、报告在 `test-results/`，均不进入发布目录。检查记录见 `VALIDATION.md`。
 
-Vite `base: './'` 支持 GitHub Pages 嵌套路径。发布目标为 `https://ryannnice.github.io/nexus/burger/`，沿用 main 分支的 GitHub Pages 自动发布，旧站路径不变。依赖许可位于 `public/THIRD-PARTY-LICENSES.txt`，字体许可位于 `public/fonts/OFL.txt` 和 `public/fonts/NotoSansSC-OFL.txt`，参考来源见 `public/credits.html`。
+Vite `base: './'` 支持 GitHub Pages 嵌套路径。发布目标为 `https://ryannnice.github.io/nexus/burger/`，沿用 main 分支的 GitHub Pages 自动发布，旧站路径不变。依赖许可位于 `public/THIRD-PARTY-LICENSES.txt`，字体许可位于 `public/fonts/OFL.txt` 和 `public/fonts/ZCOOLKuaiLe-OFL.txt`，参考来源见 `public/credits.html`。

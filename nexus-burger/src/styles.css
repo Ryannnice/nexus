@@ -1,8 +1,8 @@
 @font-face {
-  font-family: 'Nexus Menu';
-  src: url('/fonts/Nexus-Menu-Semibold.woff2') format('woff2');
+  font-family: 'Nexus Round';
+  src: url('/fonts/Nexus-Round.woff2') format('woff2');
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   font-display: swap;
 }
 @font-face {
@@ -11,7 +11,7 @@
   font-display: swap;
 }
 :root {
-  font-family: Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: 'Lilita One', 'Nexus Round', sans-serif;
   color: #48251b;
   background: #f7efdf;
   font-synthesis: none;
@@ -112,6 +112,7 @@ p {
 .wordmark {
   font:
     25px/0.9 'Lilita One',
+    'Nexus Round',
     sans-serif;
   letter-spacing: -0.6px;
   color: var(--red);
@@ -136,8 +137,8 @@ p {
   background: #eadac4;
 }
 .chapter-nav {
-  font-family: 'Nexus Menu', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  font-weight: 600;
+  font-family: 'Lilita One', 'Nexus Round', sans-serif;
+  font-weight: 400;
   position: fixed;
   z-index: 7;
   left: 2vw;
@@ -264,6 +265,7 @@ p {
   color: var(--red);
   font:
     clamp(72px, 8.2vw, 210px)/0.88 'Lilita One',
+    'Nexus Round',
     sans-serif;
   letter-spacing: -0.025em;
 }
@@ -288,17 +290,19 @@ p {
 .seal-percent {
   font:
     58px 'Lilita One',
+    'Nexus Round',
     sans-serif;
 }
 .seal-small {
   font:
-    16px Arial,
+    16px 'Lilita One',
     sans-serif;
   letter-spacing: 2px;
 }
 .seal-passion {
   font:
     24px 'Lilita One',
+    'Nexus Round',
     sans-serif;
   letter-spacing: 1px;
 }
@@ -365,6 +369,7 @@ p {
 .section-number {
   font:
     12px 'Lilita One',
+    'Nexus Round',
     sans-serif;
   opacity: 0.55;
   padding-top: 4px;
@@ -392,6 +397,7 @@ p {
   margin-left: 4px;
   font:
     11px 'Lilita One',
+    'Nexus Round',
     sans-serif;
   opacity: 0.5;
   padding-top: 4px;
@@ -463,6 +469,7 @@ p {
   display: block;
   font:
     18px 'Lilita One',
+    'Nexus Round',
     sans-serif;
   margin-bottom: 6px;
   color: var(--red);
@@ -514,8 +521,8 @@ p {
 .seat-callout text {
   fill: currentColor;
   font:
-    600 14px Arial,
-    'Microsoft YaHei',
+    400 14px 'Lilita One',
+    'Nexus Round',
     sans-serif;
   letter-spacing: 0.07em;
 }
@@ -541,6 +548,7 @@ p {
 .table-transition p {
   font:
     clamp(52px, 8.1vw, 154px)/0.98 'Lilita One',
+    'Nexus Round',
     sans-serif;
   letter-spacing: -0.025em;
 }
@@ -573,6 +581,7 @@ p {
 .schools-heading > span {
   font:
     12px 'Lilita One',
+    'Nexus Round',
     sans-serif;
   letter-spacing: 0.18em;
   color: var(--red);
@@ -611,7 +620,7 @@ p {
 }
 .school-abbr {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 400;
   display: block;
   margin-bottom: 6px;
 }
@@ -625,6 +634,7 @@ p {
   margin-left: auto;
   font:
     17px 'Lilita One',
+    'Nexus Round',
     sans-serif;
   color: var(--muted);
 }
@@ -641,6 +651,7 @@ p {
 .seat-invitation h2 {
   font:
     clamp(76px, 11.8vw, 226px)/0.89 'Lilita One',
+    'Nexus Round',
     sans-serif;
   text-transform: uppercase;
   letter-spacing: -0.035em;
@@ -722,7 +733,7 @@ p {
   background: #fff7e7;
   color: #563b28;
   box-shadow: 0 5px 20px rgb(68 40 18 / 12%);
-  font-size: 11.5px;
+  font-size: 12px;
   line-height: 1.5;
   will-change: transform;
   pointer-events: none;
@@ -965,7 +976,7 @@ p {
     font-size: 18px;
   }
   .member-thought {
-    font-size: 10.5px;
+    font-size: 11px;
     padding: 8px 10px;
   }
   .member-thought code {

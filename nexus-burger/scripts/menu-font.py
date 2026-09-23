@@ -1,31 +1,27 @@
-"""Build the small, self-hosted menu font from the OFL Noto Sans SC source."""
+"""Subset the OFL ZCOOL KuaiLe font for all public site copy, not private notes."""
 import io
-import re
 from pathlib import Path
 from urllib.request import urlopen
-
 from fontTools import subset
 from fontTools.ttLib import TTFont
-from fontTools.varLib.instancer import instantiateVariableFont
 
 root = Path(__file__).resolve().parent.parent
-base = "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanssc/"
-source = (root / "src/data/index.ts").read_text(encoding="utf-8")
-source += (root / "src/App.tsx").read_text(encoding="utf-8")
-labels = "".join(re.findall(r"[\u4e00-\u9fff]", source))
-labels += "0123456789 /"
-font = TTFont(io.BytesIO(urlopen(base + "NotoSansSC%5Bwght%5D.ttf").read()))
-instantiateVariableFont(font, {"wght": 600}, inplace=True)
+base = 'https://raw.githubusercontent.com/google/fonts/main/ofl/zcoolkuaile/'
+source = ''.join(path.read_text(encoding='utf-8') for path in (root / 'src').rglob('*')
+                 if path.suffix in {'.tsx', '.ts', '.json'})
+source += (root / 'public/credits.html').read_text(encoding='utf-8')
+source += ''.join(chr(n) for n in range(32, 127)) + '↗…×·'
+font = TTFont(io.BytesIO(urlopen(base + 'ZCOOLKuaiLe-Regular.ttf').read()))
 options = subset.Options()
 subsetter = subset.Subsetter(options=options)
-subsetter.populate(text=labels)
+subsetter.populate(text=source)
 subsetter.subset(font)
-names = {1: 'Nexus Menu', 2: 'SemiBold', 3: 'NexusMenu-Semibold', 4: 'Nexus Menu SemiBold', 6: 'NexusMenu-Semibold', 16: 'Nexus Menu', 17: 'SemiBold'}
+names = {1: 'Nexus Round', 2: 'Regular', 3: 'NexusRound-Regular', 4: 'Nexus Round Regular', 6: 'NexusRound-Regular', 16: 'Nexus Round', 17: 'Regular'}
 for record in font['name'].names:
     if record.nameID in names:
         record.string = names[record.nameID].encode(record.getEncoding())
-font.flavor = "woff2"
-folder = root / "public/fonts"
-font.save(folder / "Nexus-Menu-Semibold.woff2")
-(folder / "NotoSansSC-OFL.txt").write_bytes(urlopen(base + "OFL.txt").read())
-print(f"Saved menu font: {(folder / 'Nexus-Menu-Semibold.woff2').stat().st_size} bytes")
+font.flavor = 'woff2'
+folder = root / 'public/fonts'
+font.save(folder / 'Nexus-Round.woff2')
+(folder / 'ZCOOLKuaiLe-OFL.txt').write_bytes(urlopen(base + 'OFL.txt').read())
+print(f"Saved rounded font: {(folder / 'Nexus-Round.woff2').stat().st_size} bytes")

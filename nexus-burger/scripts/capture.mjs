@@ -67,3 +67,5 @@ const result = { errors, failed, screenshots: captured.length, captured }
 await writeFile(new URL('browser-errors.json', folder), JSON.stringify(result, null, 2))
 console.log(JSON.stringify(result, null, 2))
 await browser.close()
+if (errors.length || failed.length)
+  throw new Error('Visual capture contains browser or resource errors')

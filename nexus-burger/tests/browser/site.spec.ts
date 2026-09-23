@@ -61,10 +61,10 @@ test('all 107 original links are inline, with no menus, filters, or expandable c
     route.fulfill({ contentType: 'text/html', body: '<title>Resource destination</title>' })
   )
   await readSection(page, 'foundations')
-  await expect(page.locator('.chapter-nav')).toHaveCSS('font-family', /Nexus Menu/)
-  expect(await page.evaluate(() => document.fonts.check('600 12px "Nexus Menu"', '基础必修'))).toBe(
-    true
-  )
+  await expect(page.locator('.chapter-nav')).toHaveCSS('font-family', /Nexus Round/)
+  expect(
+    await page.evaluate(() => document.fonts.check('400 12px "Nexus Round"', '基础必修'))
+  ).toBe(true)
   const popup = page.waitForEvent('popup')
   await page.locator('.resource-link').first().click()
   const destination = await popup
@@ -451,6 +451,12 @@ test('four or five technical conversations remain visible, readable and rotate t
     const current = await state()
     expect(current).toHaveLength(count)
     expect(new Set(current.map((item) => item.member)).size).toBe(count)
+    const fixedUI = await page.locator('.chapter-nav, .reunion-caption').evaluateAll((els) =>
+      els.map((el) => {
+        const r = el.getBoundingClientRect()
+        return { x: r.x, y: r.y, width: r.width, height: r.height }
+      })
+    )
     for (let i = 0; i < current.length; i++) {
       const a = current[i]
       expect(a.text!.length).toBeGreaterThan(10)
@@ -458,7 +464,7 @@ test('four or five technical conversations remain visible, readable and rotate t
       expect(a.y).toBeGreaterThanOrEqual(64)
       expect(a.x + a.width).toBeLessThanOrEqual(viewport.width - 8)
       expect(a.y + a.height).toBeLessThanOrEqual(viewport.height - 8)
-      for (const b of current.slice(i + 1)) {
+      for (const b of [...current.slice(i + 1), ...fixedUI]) {
         const area =
           Math.max(0, Math.min(a.x + a.width, b.x + b.width) - Math.max(a.x, b.x)) *
           Math.max(0, Math.min(a.y + a.height, b.y + b.height) - Math.max(a.y, b.y))
