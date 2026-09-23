@@ -468,7 +468,10 @@ test('four or five technical conversations remain visible, readable and rotate t
         const area =
           Math.max(0, Math.min(a.x + a.width, b.x + b.width) - Math.max(a.x, b.x)) *
           Math.max(0, Math.min(a.y + a.height, b.y + b.height) - Math.max(a.y, b.y))
-        expect(area).toBeLessThan(4)
+        expect(
+          area,
+          `Bubble overlaps another bubble or fixed UI at ${viewport.width}×${viewport.height}`
+        ).toBeLessThan(4)
       }
     }
     if (viewport.width === 1440) {

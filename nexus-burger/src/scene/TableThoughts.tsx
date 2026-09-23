@@ -46,6 +46,9 @@ export function TableThoughts({
   const layout = useRef({ next: 0, active: false, dirty: true, obstacles: [] as Rect[] })
   useEffect(() => {
     layout.current.dirty = true
+    slots.current.forEach((slot) => {
+      slot.initialized = false
+    })
   }, [size.width, size.height])
 
   useFrame(({ clock }, delta) => {
@@ -123,8 +126,18 @@ export function TableThoughts({
       // Sticky headings can settle after a resize or anchor jump; refresh only
       // on the throttled layout pass, never on every animation frame.
       layout.current.obstacles = ['.chapter-nav', '.reunion-caption'].map((selector) => {
-        const r = document.querySelector(selector)!.getBoundingClientRect()
-        return { x: r.x, y: r.y, width: r.width, height: r.height }
+        const element = document.querySelector(selector)!
+        const r = element.getBoundingClientRect()
+        // Reserve the heading's settled sticky position even while an anchor
+        // jump or viewport resize briefly pushes its measured box offscreen.
+        const stickyTop =
+          selector === '.reunion-caption' ? parseFloat(getComputedStyle(element).top) : NaN
+        return {
+          x: r.x,
+          y: Number.isFinite(stickyTop) ? stickyTop : r.y,
+          width: r.width,
+          height: r.height,
+        }
       })
       layout.current.dirty = false
     }
